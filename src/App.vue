@@ -1,23 +1,17 @@
 <template>
-  <BaseHeader />
-  <img alt="Vue logo" class="element-plus-logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3.0 + Element Plus + Vite" />
+  <el-config-provider :size="getGlobalSize" :zIndex="3000">
+    <router-view/>
+  </el-config-provider>
 </template>
 
 <script setup lang="ts">
-import BaseHeader from "./components/layouts/BaseHeader.vue";
-import HelloWorld from "./components/HelloWorld.vue";
-</script>
+import {configItemsApi} from '~/api/configs'
+import {useRootSetting} from '~/composables/setting/useRootSeeting'
+import store from "~/store";
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-.element-plus-logo {
-  width: 50%;
-}
-</style>
+const {getGlobalSize} = useRootSetting();
+
+configItemsApi().then((response) => {
+  store.commit('config/setConfig', response.data.data);
+});
+</script>
