@@ -1,11 +1,7 @@
 import {useStore} from "vuex";
 import {computed} from "vue";
 
-/**
- *
- * @returns {{getMenus: ComputedRef<function(*): *>}}
- */
-export function useLayoutMenus() {
+export function useLayoutMenus():Object {
   const {getters} = useStore();
   const getMenus = computed(() => getters.getMenus);
 

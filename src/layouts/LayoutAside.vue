@@ -11,29 +11,10 @@
     </el-main>
   </el-container>
 </template>
-<script>
-
+<script lang="ts" setup>
 import LayoutHeader from './header/index.vue';
 import LayoutContent from './content/index.vue';
 import LayoutSidebar from "~/layouts/sidebar/index.vue";
-import LayoutMenu from '~/layouts/menu/index.vue'
-import {useMenuSetting} from "~/composables/setting/useMenuSeeting.ts";
-
-export default {
-  name: 'Layout2',
-  components: {
-    LayoutSidebar,
-    LayoutHeader,
-    LayoutContent,
-    LayoutMenu,
-  },
-  setup() {
-    const {getCollapsed} = useMenuSetting();
-    return {
-      getCollapsed
-    }
-  }
-};
 </script>
 
 <style lang="scss" scoped>

@@ -7,43 +7,18 @@
     </el-breadcrumb>
   </div>
 </template>
-<script>
-import {onMounted, reactive, toRefs, watch} from "vue";
+<script lang="ts" setup>
+import {onMounted, Ref, ref, watch} from "vue";
 import {useRouter} from "vue-router";
-// import dashboardRoute from '~/router/routes/modules/demo/bak/dashboard';
 
-export default {
-  setup() {
-    const state = reactive({
-      levelList: [],
-    });
+const levelList: Ref = ref([]);
+const {currentRoute} = useRouter();
 
-    const {currentRoute} = useRouter();
-    const isDashboard = (route) => {
-      const name = route && route.name;
-      if (!name) return false;
-      return name.trim().toLocaleLowerCase() === 'Dashboard'.toLocaleLowerCase();
-    }
-
-    const getBreadcrumb = () => {
-      let matched = currentRoute.value.matched.filter(item => item.meta && item.meta['title']);
-      if (matched.length >= 1 && !isDashboard(matched[0])) {
-        // matched = dashboardRoute.concat(matched);
-      }
-      state.levelList = matched.filter(item => item.meta && item.meta['title'] && item.meta['breadcrumb'] !== false);
-    }
-
-    watch(currentRoute, () => {
-      getBreadcrumb();
-    })
-
-    onMounted(() => {
-      getBreadcrumb();
-    })
-
-    return {
-      ...toRefs(state),
-    }
-  },
+const getBreadcrumb = () => {
+  let matched = currentRoute.value.matched.filter(item => item.meta && item.meta['title']);
+  levelList.value = matched.filter(item => item.meta && item.meta['title'] && item.meta['breadcrumb'] !== false);
 }
+
+watch(currentRoute, () => getBreadcrumb())
+onMounted(() => getBreadcrumb());
 </script>

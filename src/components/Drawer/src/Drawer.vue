@@ -18,23 +18,14 @@
   </div>
 </template>
 
-<script>
-import {useRootSetting} from "~/composables/setting/useRootSeeting.ts";
-import {props} from './props.js'
+<script lang="ts" setup>
+import {useRootSetting} from "~/composables/setting/useRootSeeting";
+import {props as _props} from './props'
 
-export default {
-  name: "BasicDrawer",
-  props: props,
-  setup(props, {emit}) {
-    const {getIsMobile} = useRootSetting();
-    const drawerClose = () => emit('update:modelValue', false);
-
-    return {
-      getIsMobile,
-      drawerClose,
-    }
-  }
-}
+const props = defineProps(_props);
+const {getIsMobile} = useRootSetting();
+const emit = defineEmits(['update:modelValue']);
+const drawerClose = () => emit('update:modelValue', false);
 </script>
 
 <style lang="scss" scoped>

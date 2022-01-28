@@ -17,7 +17,7 @@
 
       <!--  right start  -->
       <div class="header-right flex-row center align-center ">
-        <GitHub class="action-item" />
+        <GitHub class="action-item"/>
         <Notify class="action-item"/>
         <FullScreen class="action-item"/>
         <UserDropdown class="action-item"/>
@@ -30,7 +30,7 @@
   </el-affix>
 </template>
 
-<script>
+<script lang="ts" setup>
 import Logo from "~/layouts/header/components/Logo.vue";
 import Notify from "~/layouts/header/components/Notify.vue";
 import FullScreen from "~/layouts/header/components/FullScreen.vue";
@@ -41,38 +41,18 @@ import Setting from "~/layouts/setting/index.vue";
 import LayoutMenu from '~/layouts/menu/index.vue';
 import HeaderTrigger from "~/layouts/trigger/HeaderTrigger.vue";
 import TagView from "~/layouts/tagview/tagView.vue";
-import {useRootSetting} from "~/composables/setting/useRootSeeting.ts";
-import {useMenuSetting} from "~/composables/setting/useMenuSeeting.ts";
-import {useHeaderSetting} from "~/composables/setting/useHeaderSeeting.ts";
+import {useRootSetting} from "~/composables/setting/useRootSeeting";
+import {useHeaderSetting} from "~/composables/setting/useHeaderSeeting";
 
-export default {
-  name: "LayoutHeader",
-  components: {Logo,GitHub, Notify, FullScreen, UserDropdown, Breadcrumb, LayoutMenu, Setting, HeaderTrigger, TagView},
-  setup() {
-    const {
-      getDarkMode,
-      getShowLogo,
-      getShowBreadcrumb,
-      getShowHeaderLogo,
-      getShowHeaderTrigger,
-      getIsTopMenuMode,
-      getShowTagView,
-    } = useRootSetting();
-    const {getMenuMode} = useMenuSetting();
-    const {getHeaderFixed} = useHeaderSetting();
-    return {
-      getDarkMode,
-      getShowLogo,
-      getShowBreadcrumb,
-      getMenuMode,
-      getShowHeaderLogo,
-      getShowHeaderTrigger,
-      getIsTopMenuMode,
-      getHeaderFixed,
-      getShowTagView,
-    }
-  },
-}
+const {
+  getShowBreadcrumb,
+  getShowHeaderLogo,
+  getShowHeaderTrigger,
+  getIsTopMenuMode,
+  getShowTagView,
+} = useRootSetting();
+
+const {getHeaderFixed} = useHeaderSetting();
 </script>
 
 <style lang="scss" scoped>

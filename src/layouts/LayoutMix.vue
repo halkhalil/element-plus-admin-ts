@@ -18,24 +18,11 @@
     </el-container>
   </el-container>
 </template>
-<script>
-
+<script lang="ts" setup>
 import LayoutHeader from './header/index.vue';
 import LayoutContent from './content/index.vue';
 import LayoutSidebar from "~/layouts/sidebar/index.vue";
-import LayoutMenu from '~/layouts/menu/index.vue';
 import TagView from '~/layouts/tagview/tagView.vue';
-
-export default {
-  name: 'Layout1',
-  components: {
-    LayoutSidebar,
-    LayoutHeader,
-    LayoutContent,
-    LayoutMenu,
-    TagView
-  }
-};
 </script>
 
 <style lang="scss" scoped>

@@ -4,51 +4,38 @@
     <sub-menu v-for="menu in getMenus" :index="menu.path" :key="menu.path" :menu="menu"/>
   </el-menu>
 </template>
-<script>
+<script lang="ts" setup>
 import SubMenu from "~/layouts/menu/SubMenu.vue";
 import SidebarLogo from "~/layouts/menu/SidebarLogo.vue";
-import {useMenuSetting} from "~/composables/setting/useMenuSeeting.ts";
-import {useRootSetting} from "~/composables/setting/useRootSeeting.ts";
-import {useLayoutMenus} from "~/layouts/menu/useLayoutMenus.js";
+import {useMenuSetting} from "~/composables/setting/useMenuSeeting";
+import {useRootSetting} from "~/composables/setting/useRootSeeting";
+import {useLayoutMenus} from "~/layouts/menu/useLayoutMenus";
 import {computed} from "vue";
 import {useRouter} from 'vue-router';
 
-export default {
-  name: 'LayoutMenu',
-  components: {SubMenu, SidebarLogo},
-  setup() {
-    const {currentRoute} = useRouter();
-    const {getMenuSetting} = useMenuSetting();
+const {currentRoute} = useRouter();
+const {getMenuSetting} = useMenuSetting();
 
-    const defaultActive = computed(() => {
-      const {meta, path} = currentRoute.value;
-      return meta && meta['activeMenu'] ? meta['activeMenu'] : path;
-    })
+const defaultActive = computed(() => {
+  const {meta, path} = currentRoute.value;
+  return meta && meta['activeMenu'] ? meta['activeMenu'] : path;
+})
 
-    const {getMenus} = useLayoutMenus();
-    const {getShowSidebarLogo, getIsTopMenuMode} = useRootSetting();
-    const menuSetting = computed(() => {
-      if (getIsTopMenuMode.value) {
-        return {
-          ...getMenuSetting.value, ...{
-            mode: 'horizontal',
-            collapse: false,
-            backgroundColor: null,
-            textColor: '#303133'
-          }
-        }
-      }
-      return getMenuSetting.value;
-    });
-
+const {getMenus} = useLayoutMenus();
+const {getShowSidebarLogo, getIsTopMenuMode} = useRootSetting();
+const menuSetting = computed(() => {
+  if (getIsTopMenuMode.value) {
     return {
-      menuSetting,
-      defaultActive,
-      getMenus,
-      getShowSidebarLogo
+      ...getMenuSetting.value, ...{
+        mode: 'horizontal',
+        collapse: false,
+        backgroundColor: null,
+        textColor: '#303133'
+      }
     }
-  },
-};
+  }
+  return getMenuSetting.value;
+})
 </script>
 <style lang="scss" scoped>
 :deep(.el-scrollbar__view) {

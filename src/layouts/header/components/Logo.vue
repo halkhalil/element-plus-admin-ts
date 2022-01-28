@@ -6,18 +6,10 @@
     </div>
   </div>
 </template>
-<script>
-import {useGlobalSetting} from "~/composables/setting/useGlobalSeeting.ts";
+<script lang="ts" setup>
+import {useGlobalSetting} from "~/composables/setting/useGlobalSeeting";
 
-export default {
-  setup() {
-    const {title, logo} = useGlobalSetting();
-    return {
-      title,
-      logo
-    }
-  },
-}
+const {title, logo} = useGlobalSetting();
 </script>
 <style lang="scss" scoped>
 .container {

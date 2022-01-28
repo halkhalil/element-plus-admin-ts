@@ -1,3 +1,3 @@
-import BasicDrawer from "~/components/Drawer/src/BasicDrawer.vue";
+import * as BasicDrawer from "~/components/Drawer/src/Drawer.vue";
 
 export {BasicDrawer};

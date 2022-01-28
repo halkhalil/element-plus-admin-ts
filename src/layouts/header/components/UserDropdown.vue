@@ -27,25 +27,17 @@
     </el-dropdown>
   </div>
 </template>
-<script>
+<script lang="ts" setup>
 import {useUser} from "~/composables/useUser";
 import {useStore} from "vuex";
 
-export default {
-  setup() {
-    const {getUser} = useUser();
-    const {dispatch} = useStore()
+const {getUser} = useUser();
+const {dispatch} = useStore()
 
-    const logout = async () => {
-      await dispatch('user/logout');
-      location.reload();
-    }
-    return {
-      getUser,
-      logout
-    }
-  },
-};
+const logout = async () => {
+  await dispatch('user/logout');
+  location.reload();
+}
 </script>
 <style lang="scss" scoped>
 .container {

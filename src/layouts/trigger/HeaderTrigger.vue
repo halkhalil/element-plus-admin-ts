@@ -4,20 +4,10 @@
   </div>
 </template>
 
-<script>
+<script lang="ts" setup>
 import {useMenuSetting} from '~/composables/setting/useMenuSeeting'
 
-export default {
-  name: "HeaderTrigger",
-  setup() {
-    const {getDarkMode, getCollapsed, toggleCollapsed} = useMenuSetting();
-    return {
-      getDarkMode,
-      getCollapsed,
-      toggleCollapsed
-    }
-  }
-}
+const {getCollapsed, toggleCollapsed} = useMenuSetting();
 </script>
 <style lang="scss" scoped>
 .container {

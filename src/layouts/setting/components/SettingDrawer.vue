@@ -102,104 +102,63 @@
     </el-scrollbar>
   </el-drawer>
 </template>
-<script>
-import {useRootSetting} from "~/composables/setting/useRootSeeting.ts";
-import {useHeaderSetting} from "~/composables/setting/useHeaderSeeting.ts";
-import {useTransitionSetting} from "~/composables/setting/useTransitionSeeting.ts";
-import {useTagViewSetting} from "~/composables/setting/useTagViewSeeting.ts";
+<script lang="ts" setup>
+import {useRootSetting} from "~/composables/setting/useRootSeeting";
+import {useHeaderSetting} from "~/composables/setting/useHeaderSeeting";
+import {useTransitionSetting} from "~/composables/setting/useTransitionSeeting";
+import {useTagViewSetting} from "~/composables/setting/useTagViewSeeting";
 import {useDark, useToggle} from '@vueuse/core'
-import {elementSizeEnum, routerTransitionEnum,} from '~/enums/appEnum.ts'
+import {elementSizeEnum, routerTransitionEnum,} from '~/enums/appEnum'
+import {ref} from "vue";
 
-export default {
-  name: 'setting',
-  data() {
-    return {
-      color1: '',
-      selectedMenuTheme: 'dark',
-      dark: '',
-      navbarModes: [
-        {
-          mode: 'light',
-          type: 'sidebar',
-          title: '左侧菜单模式',
-          img: 'https://gw.alipayobjects.com/zos/rmsportal/LCkqqYNmvBEbokSDscrm.svg',
-        },
-        {
-          mode: 'dark',
-          type: 'mix',
-          title: '顶部菜单混合模式',
-          img: 'https://gw.alipayobjects.com/zos/rmsportal/jpRkZQMyYRryryPNtyIC.svg',
-        },
-        {
-          mode: 'other',
-          type: 'top-menu',
-          title: '顶部菜单模式',
-          img: 'https://gw.alipayobjects.com/zos/antfincdn/hmKaLQvmY2/LCkqqYNmvBEbokSDscrm.svg',
-        }
-      ],
-
-    }
+const navbarModes = ref([
+  {
+    mode: 'light',
+    type: 'sidebar',
+    title: '左侧菜单模式',
+    img: 'https://gw.alipayobjects.com/zos/rmsportal/LCkqqYNmvBEbokSDscrm.svg',
   },
-  setup() {
-    const isDark = useDark()
-    const toggleDark = useToggle(isDark)
-    const {
-      getShowLogo,
-      getShowBreadcrumb,
-      getShowSettingDrawer,
-      getDarkMode,
-      getNavbarMode,
-      getGlobalSize,
-      closedSettingDrawer,
-      toggleLogo,
-      toggleBreadcrumb,
-      toggleNavbarMode,
-      toggleElementSize,
-    } = useRootSetting();
-
-    const {getHeaderFixed, toggleHeaderFixed} = useHeaderSetting();
-    const {
-      getOpenNProgress,
-      toggleOpenNProgress,
-      getOpenPageLoading,
-      toggleOpenPageLoading,
-      getEnableTransition,
-      toggleEnableTransition,
-      setBasicTransition,
-      getBasicTransition,
-    } = useTransitionSetting();
-
-    const {getEnableTagView, toggleEnableTagView} = useTagViewSetting();
-    return {
-      getShowLogo,
-      getShowBreadcrumb,
-      getShowSettingDrawer,
-      getDarkMode,
-      getNavbarMode,
-      getGlobalSize,
-      closedSettingDrawer,
-      toggleElementSize,
-      toggleLogo,
-      toggleBreadcrumb,
-      toggleNavbarMode,
-      toggleDark,
-      getHeaderFixed,
-      toggleHeaderFixed,
-      getOpenNProgress,
-      toggleOpenNProgress,
-      getOpenPageLoading,
-      toggleOpenPageLoading,
-      getEnableTransition,
-      toggleEnableTransition,
-      getEnableTagView,
-      toggleEnableTagView,
-      routerTransitionEnum,
-      elementSizeEnum,
-      setBasicTransition,
-      getBasicTransition
-    }
+  {
+    mode: 'dark',
+    type: 'mix',
+    title: '顶部菜单混合模式',
+    img: 'https://gw.alipayobjects.com/zos/rmsportal/jpRkZQMyYRryryPNtyIC.svg',
   },
-};
+  {
+    mode: 'other',
+    type: 'top-menu',
+    title: '顶部菜单模式',
+    img: 'https://gw.alipayobjects.com/zos/antfincdn/hmKaLQvmY2/LCkqqYNmvBEbokSDscrm.svg',
+  }
+]);
+const isDark = useDark()
+const toggleDark = useToggle(isDark)
+const {
+  getShowLogo,
+  getShowBreadcrumb,
+  getShowSettingDrawer,
+  getNavbarMode,
+  getGlobalSize,
+  closedSettingDrawer,
+  toggleLogo,
+  toggleBreadcrumb,
+  toggleNavbarMode,
+  toggleElementSize,
+} = useRootSetting();
+
+const {getHeaderFixed, toggleHeaderFixed} = useHeaderSetting();
+const {
+  getOpenNProgress,
+  toggleOpenNProgress,
+  getOpenPageLoading,
+  toggleOpenPageLoading,
+  getEnableTransition,
+  toggleEnableTransition,
+  setBasicTransition,
+  getBasicTransition,
+} = useTransitionSetting();
+
+const {getEnableTagView, toggleEnableTagView} = useTagViewSetting();
 </script>
 <style lang="scss">
 .drawer-setting {

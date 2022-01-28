@@ -1,15 +1,15 @@
 import path from "path";
-import store from "~/store/index.ts";
-import {useRouter} from "vue-router";
-import {computed, nextTick, onMounted, ref, unref, watch} from 'vue';
+import store from "~/store/index";
+import {RouteLocation, RouteRecord, useRouter} from "vue-router";
+import {computed, nextTick, onMounted, Ref, ref, unref, UnwrapRef, watch} from 'vue';
 
 export function useTagView() {
 
   const {getters, dispatch} = store;
   const {push, replace, currentRoute, getRoutes} = useRouter();
 
-  const scrollbarRef = ref();
-  const getViewRefs = ref([]);
+  const scrollbarRef: UnwrapRef<any> = ref();
+  const getViewRefs: Ref<UnwrapRef<any[]>> = ref([]);
   const getSelectView = ref();
   const getVisitedViews = computed(() => getters.getVisitedViews);
 
@@ -20,8 +20,8 @@ export function useTagView() {
   async function initViews() {
     const affixViews = filterAffixViews(getRoutes());
     for (const view of affixViews) {
-      const {name, path, fullPath, meta} = view;
-      view.name && await dispatch('tagView/addVisitedView', {name, path, fullPath, meta});
+      const {name, path, fullPath, meta} = view as RouteLocation;
+      name && await dispatch('tagView/addVisitedView', {name, path, fullPath, meta});
     }
   }
 
@@ -30,7 +30,7 @@ export function useTagView() {
    * @param view
    * @returns {Promise<void>}
    */
-  async function goView(view) {
+  async function goView(view: RouteLocation) {
     const {path, fullPath} = view;
     if (path === unref(currentRoute).path) return;
     await replace({path: fullPath})
@@ -50,10 +50,10 @@ export function useTagView() {
    * @param view
    * @returns {Promise<void>}
    */
-  async function closeView({name, path, fullPath, meta}) {
+  async function closeView({name, path, fullPath, meta}: RouteLocation) {
     const {visitedViews} = await dispatch('tagView/delView', {name, path, fullPath, meta});
-    if (viewIsActive({name, path, fullPath, meta})) {
-      await toLastView(visitedViews, {name, path, fullPath, meta});
+    if (viewIsActive({name, path, fullPath, meta} as RouteLocation)) {
+      await toLastView(visitedViews, {name, path, fullPath, meta} as RouteLocation);
     }
   }
 
@@ -62,7 +62,7 @@ export function useTagView() {
    * @param view
    * @returns {Promise<void>}
    */
-  async function refreshView({name, path, fullPath, meta}) {
+  async function refreshView({name, path, fullPath, meta}: RouteLocation) {
     await dispatch('tagView/delCachedView', {name, path, fullPath, meta});
     await nextTick(() => {
       replace({path: '/redirect' + fullPath});
@@ -74,9 +74,9 @@ export function useTagView() {
    * @param view
    * @returns {Promise<void>}
    */
-  async function closeOtherView({name, path, fullPath, meta}) {
+  async function closeOtherView({name, path, fullPath, meta}: RouteLocation) {
     if (fullPath !== currentRoute.value.fullPath) {
-      await push({name, path, fullPath, meta});
+      await push({name, path, fullPath, meta} as RouteLocation);
     }
     await dispatch('tagView/delOtherViews', currentRoute);
     await moveToCurrentTagView();
@@ -85,11 +85,10 @@ export function useTagView() {
   /**
    * 关闭所有视图
    * @param view
-   * @returns {Promise<void>}
    */
-  async function closeAllView({name, path, fullPath, meta}) {
+  async function closeAllView(view: RouteLocation) {
     const {visitedViews} = await dispatch('tagView/delAllViews');
-    await toLastView(visitedViews, {name, path, fullPath, meta});
+    await toLastView(visitedViews, view);
   }
 
   /**
@@ -98,15 +97,15 @@ export function useTagView() {
    * @param basePath
    * @returns {[]}
    */
-  function filterAffixViews(routes, basePath = '/') {
-    let views = [];
+  function filterAffixViews(routes: RouteRecord[], basePath = '/') {
+    let views: object[] = [];
     routes.forEach(route => {
       if (route.meta && route.meta.affix) {
         const viewPath = path.resolve(basePath, route.path)
         views.push({fullPath: viewPath, path: viewPath, name: route.name, meta: {...route.meta}})
       }
       if (route.children) {
-        const childViews = filterAffixViews(route.children, route.path)
+        const childViews = filterAffixViews(route.children as RouteRecord[], route.path)
         if (childViews.length >= 1) {
           views = [...views, ...childViews]
         }
@@ -137,7 +136,7 @@ export function useTagView() {
    * 移动到指定标签位置
    * @param currentTag
    */
-  function moveToTarget(currentTag) {
+  function moveToTarget(currentTag: UnwrapRef<any>) {
     let offsetLeft = 0;
     const tagList = getViewRefs.value;
 
@@ -166,7 +165,6 @@ export function useTagView() {
           offsetLeft = beforePrevTagOffsetLeft
         }
       }
-
       scrollbarRef.value.setScrollLeft(offsetLeft);
     }
   }
@@ -177,8 +175,8 @@ export function useTagView() {
    * @param view
    * @returns {Promise<void>}
    */
-  async function toLastView(visitedViews, {name, path, fullPath, meta}) {
-    const latestView = visitedViews.slice(-1)[0];
+  async function toLastView(visitedViews: RouteLocation[], {name, fullPath}: RouteLocation) {
+    const latestView: RouteLocation = visitedViews.slice(-1)[0];
     if (latestView) {
       await push({path: latestView.fullPath})
     } else {
@@ -195,7 +193,7 @@ export function useTagView() {
    * @param view
    * @returns {boolean}
    */
-  function viewIsActive({path}) {
+  function viewIsActive({path}: RouteLocation) {
     return path === currentRoute.value.path;
   }
 
@@ -204,7 +202,7 @@ export function useTagView() {
    * @param view
    * @returns {boolean|*}
    */
-  function viewIsAffix({meta}) {
+  function viewIsAffix({meta}: RouteLocation) {
     return meta && meta.affix;
   }
 

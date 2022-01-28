@@ -4,22 +4,11 @@
   </div>
 </template>
 
-<script>
-import {useTransitionSetting} from "~/composables/setting/useTransitionSeeting.ts";
-import {useRootSetting} from "~/composables/setting/useRootSeeting.ts";
+<script lang="ts" setup>
+import {useTransitionSetting} from "~/composables/setting/useTransitionSeeting";
+import {useRootSetting} from "~/composables/setting/useRootSeeting";
 import Content from "~/layouts/content/Content.vue";
 
-export default {
-  name: "LayoutContent",
-  components:{Content},
-  setup() {
-    const {getOpenPageLoading} = useTransitionSetting();
-    const {getPageLoading} = useRootSetting();
-
-    return {
-      getOpenPageLoading,
-      getPageLoading,
-    }
-  }
-}
+const {getOpenPageLoading} = useTransitionSetting();
+const {getPageLoading} = useRootSetting();
 </script>

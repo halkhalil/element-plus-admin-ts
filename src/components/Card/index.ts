@@ -1,7 +1,5 @@
-// import Card from '~/components/Card/src/card';
-import BasicCard from '~/components/Card/src/BasicCard.vue'
+import * as BaseCard from '~/components/Card/src/Card.vue'
 
 export {
-  BasicCard,
-  // Card
+  BaseCard,
 }

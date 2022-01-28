@@ -4,20 +4,9 @@
     <SettingDrawer/>
   </div>
 </template>
-<script>
+<script lang="ts" setup>
 import SettingDrawer from "~/layouts/setting/components/SettingDrawer.vue";
-import {useRootSetting} from "~/composables/setting/useRootSeeting.ts";
+import {useRootSetting} from "~/composables/setting/useRootSeeting";
 
-export default {
-  name: 'setting',
-  components: {
-    SettingDrawer
-  },
-  setup() {
-    const {openSettingDrawer} = useRootSetting();
-    return {
-      openSettingDrawer,
-    }
-  }
-};
+const {openSettingDrawer} = useRootSetting();
 </script>

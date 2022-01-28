@@ -8,22 +8,9 @@
     </el-main>
   </el-container>
 </template>
-<script>
-
+<script lang="ts" setup>
 import LayoutHeader from './header/index.vue';
 import LayoutContent from './content/index.vue';
-import LayoutSidebar from "~/layouts/sidebar/index.vue";
-import LayoutMenu from '~/layouts/menu/index.vue'
-
-export default {
-  name: 'Layout3',
-  components: {
-    LayoutSidebar,
-    LayoutHeader,
-    LayoutContent,
-    LayoutMenu
-  }
-};
 </script>
 
 <style lang="scss" scoped>

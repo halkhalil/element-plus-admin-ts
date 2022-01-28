@@ -8,8 +8,8 @@
   </el-row>
 </template>
 
-<script>
-import {BasicCard} from '~/components/Card'
+<script lang="ts">
+import {BaseCard} from '~/components/Card'
 import {useECharts} from "~/composables/useECharts";
 import {getGradientStackedData} from '../data.js'
 import {onMounted} from "vue";

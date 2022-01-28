@@ -17,34 +17,22 @@
   </el-scrollbar>
 </template>
 
-<script>
+<script lang="ts" setup>
 import LayoutMenu from '~/layouts/menu/index.vue'
-import {useRootSetting} from "~/composables/setting/useRootSeeting.ts";
-import {useMenuSetting} from "~/composables/setting/useMenuSeeting.ts";
+import {useRootSetting} from "~/composables/setting/useRootSeeting";
+import {useMenuSetting} from "~/composables/setting/useMenuSeeting";
 import {watch} from "vue";
 
-export default {
-  name: "LayoutSidebar",
-  components: {LayoutMenu},
-  setup() {
-    const {getIsMobile} = useRootSetting();
-    const {getCollapsed, setMenuSetting} = useMenuSetting();
+const {getIsMobile} = useRootSetting();
+const {getCollapsed, setMenuSetting} = useMenuSetting();
 
-    watch(getIsMobile, (val) => {
-      setMenuSetting({collapse: val})
-    })
-
-    return {
-      getIsMobile,
-      getCollapsed,
-      setMenuSetting,
-    }
-  },
-}
+watch(getIsMobile, (val) => {
+  setMenuSetting({collapse: val})
+})
 </script>
 
 <style lang="scss">
-.scrollbar{
+.scrollbar {
   height: 100%;
   padding: 0;
 }

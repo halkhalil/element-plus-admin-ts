@@ -13,35 +13,25 @@
   </router-view>
 </template>
 
-<script>
+<script lang="ts" setup>
 import {useStore} from 'vuex';
-import {useTransitionSetting} from "~/composables/setting/useTransitionSeeting.ts";
-import {useRootSetting} from "~/composables/setting/useRootSeeting.ts";
+import {useTransitionSetting} from "~/composables/setting/useTransitionSeeting";
+import {useRootSetting} from "~/composables/setting/useRootSeeting";
+import {_RouteLocationBase} from "vue-router";
 
-export default {
-  name: "Content",
-  setup() {
-    const {getters} = useStore();
-    const {getCachedViews} = getters;
+const {getters} = useStore();
+const {getCachedViews} = getters;
 
-    const {getEnableTransition, getBasicTransition} = useTransitionSetting();
-    const {getOpenKeepAlive} = useRootSetting();
+const {getEnableTransition, getBasicTransition} = useTransitionSetting();
+const {getOpenKeepAlive} = useRootSetting();
 
-    function getTransitionName(route) {
-      if (!getEnableTransition.value) return null;
-      let name = '';
-      if (getOpenKeepAlive) {
-        name = route.meta.loaded ? "fade-slide" : null;
-      }
-
-      return name || route.meta.transitionName || getBasicTransition.value;
-    }
-
-    return {
-      getCachedViews,
-      getOpenKeepAlive,
-      getTransitionName
-    };
+function getTransitionName(route: _RouteLocationBase) {
+  if (!getEnableTransition.value) return null;
+  let name: string | null = '';
+  if (getOpenKeepAlive) {
+    name = route.meta.loaded ? "fade-slide" : null;
   }
-};
+
+  return name || route.meta.transitionName || getBasicTransition.value;
+}
 </script>

@@ -28,19 +28,23 @@
     </v-contextmenu>
   </div>
 </template>
-<script>
-import {useTagView} from "~/layouts/tagview/useTagView.js";
-import {toRefs} from "vue";
+<script lang="ts" setup>
+import {useTagView} from "~/layouts/tagview/useTagView";
 
-export default {
-  name: 'TagView',
-  setup() {
-    const tagView = useTagView();
-    return {
-      ...tagView,
-    }
-  }
-};
+const {
+  scrollbarRef,
+  getViewRefs,
+  getSelectView,
+  getVisitedViews,
+  goView,
+  closeView,
+  refreshView,
+  closeOtherView,
+  closeAllView,
+  viewIsActive,
+  viewIsAffix
+} = useTagView();
+
 </script>
 <style lang="scss" scoped>
 .tag-view {

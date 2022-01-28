@@ -3,19 +3,10 @@
     <icon name="el-github" size="18" @click="openGitHub"/>
   </div>
 </template>
-<script>
-import {defineComponent, computed, unref} from 'vue';
-import {openWindow} from "~/utils/index.ts";
+<script lang="ts" setup>
+import {openWindow} from "~/utils";
 
-export default defineComponent({
-  name: 'GitHub',
-  setup() {
-    const openGitHub = () => {
-      openWindow('https://github.com/shiwuhao/element-plus-admin')
-    }
-    return {
-      openGitHub
-    };
-  },
-});
+const openGitHub = () => {
+  openWindow('https://github.com/shiwuhao/element-plus-admin')
+}
 </script>

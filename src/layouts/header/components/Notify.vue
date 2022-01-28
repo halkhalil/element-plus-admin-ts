@@ -22,18 +22,9 @@
     </el-popover>
   </div>
 </template>
-<script>
-import {defineComponent, ref} from 'vue';
+<script lang="ts" setup>
+import {ref} from 'vue';
 
-export default defineComponent({
-  name: 'Notify',
-  setup() {
-    const visible = ref(false);
-    const activeName = ref('first');
-    return {
-      visible,
-      activeName
-    }
-  },
-});
+const visible = ref(false);
+const activeName = ref('first');
 </script>

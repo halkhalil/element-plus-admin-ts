@@ -17,14 +17,11 @@
   </el-card>
 </template>
 
-<script>
-import {InfoFilled} from '@element-plus/icons'
-
-export default {
-  name: "BasicCard",
-  props: ['title', 'notice'],
-  components: {InfoFilled}
-}
+<script lang="ts" setup>
+const props = defineProps({
+  title: String,
+  notice: String
+})
 </script>
 
 <style lang="scss" scoped>
