@@ -11,7 +11,7 @@
 <script>
 import {BasicCard} from '~/components/Card'
 import {useECharts} from "~/composables/useECharts";
-import {getFunnelData} from '../data.js'
+import {getFunnelData} from '../data.ts'
 import {onMounted} from "vue";
 
 export default {

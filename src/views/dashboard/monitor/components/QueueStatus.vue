@@ -20,48 +20,34 @@
   </BasicCard>
 </template>
 
-<script>
+<script lang="ts" setup>
 import {BasicTable} from '~/components/Table'
 import {BasicCard} from '~/components/Card'
-import {shallowReactive, toRefs} from "vue";
+import {shallowReactive} from "vue";
 
-export default {
-  name: "ServerStatus",
-  components: {BasicCard, BasicTable},
-  setup() {
-    const state = shallowReactive({
-      tableColumn: [
-        {prop: 'queue', label: 'Queue', minWidth: 100},
-        {prop: 'processes', label: 'Processes', minWidth: 80},
-        {prop: 'jobs', label: 'Jobs', minWidth: 100},
-        {prop: 'wait', label: 'Wait', minWidth: 120},
-      ],
-      tableData: [
-        {queue: 'default', processes: '4', jobs: 1000, wait: 'A Few Seconds'},
-        {queue: 'hot', processes: '5', jobs: 5000, wait: 'A Few Seconds'},
-        {queue: 'promotion', processes: '6', jobs: 1000, wait: 'A Few Seconds'},
-        {queue: 'first', processes: '8', jobs: 2000, wait: 'A Few Seconds'},
-        {queue: 'second', processes: '8', jobs: 2000, wait: 'A Few Seconds'},
-      ],
-      queueStatus: [
-        {label: 'JOBS PER MINUTE', value: 117},
-        {label: 'JOBS PAST HOUR', value: '5,808'},
-        {label: 'FAILED JOBS', value: '701'},
-        {label: 'STATUS', value: 'Active'},
-        {label: 'TOTAL PROCESSES', value: '14'},
-        {label: 'MAX WAIT TIME', value: '--'},
-        {label: 'MAX RUNTIME', value: 'First'},
-        {label: 'MAX THROUGHPUT', value: 'First'},
-      ]
-    })
+const tableColumn = shallowReactive([
+  {prop: 'queue', label: 'Queue', minWidth: 100},
+  {prop: 'processes', label: 'Processes', minWidth: 80},
+  {prop: 'jobs', label: 'Jobs', minWidth: 100},
+  {prop: 'wait', label: 'Wait', minWidth: 120},
+]);
 
-    return {
-      ...toRefs(state)
-    }
-  }
-}
+const tableData = shallowReactive([
+  {queue: 'default', processes: '4', jobs: 1000, wait: 'A Few Seconds'},
+  {queue: 'hot', processes: '5', jobs: 5000, wait: 'A Few Seconds'},
+  {queue: 'promotion', processes: '6', jobs: 1000, wait: 'A Few Seconds'},
+  {queue: 'first', processes: '8', jobs: 2000, wait: 'A Few Seconds'},
+  {queue: 'second', processes: '8', jobs: 2000, wait: 'A Few Seconds'},
+])
+
+const queueStatus = shallowReactive([
+  {label: 'JOBS PER MINUTE', value: 117},
+  {label: 'JOBS PAST HOUR', value: '5,808'},
+  {label: 'FAILED JOBS', value: '701'},
+  {label: 'STATUS', value: 'Active'},
+  {label: 'TOTAL PROCESSES', value: '14'},
+  {label: 'MAX WAIT TIME', value: '--'},
+  {label: 'MAX RUNTIME', value: 'First'},
+  {label: 'MAX THROUGHPUT', value: 'First'},
+])
 </script>
-
-<style scoped>
-
-</style>

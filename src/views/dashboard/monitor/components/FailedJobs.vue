@@ -12,46 +12,31 @@
   </BasicCard>
 </template>
 
-<script>
+<script lang="ts" setup>
 import {BasicTable} from '~/components/Table'
 import {BasicCard} from '~/components/Card'
 import {Refresh} from '@element-plus/icons'
-import {shallowReactive, toRefs} from "vue";
+import {shallowReactive} from "vue";
 
-export default {
-  name: "FailedJobs",
-  components: {BasicCard, BasicTable, Refresh},
-  setup() {
-    const state = shallowReactive({
-      tableColumn: [
-        {prop: 'job', label: 'Job', minWidth: 90},
-        {prop: 'runtime', label: 'Runtime', minWidth: 70},
-        {prop: 'failed_at', label: 'Failed At', minWidth: 110},
-        {prop: 'action', label: 'Action', slot: 'action', minWidth: 80},
-      ],
-      tableData: [
-        {job: 'SendSms', runtime: '4', failed_at: '10-14 16:23:09', Retry: 'A Few Seconds'},
-        {job: 'SendSms', runtime: '4', failed_at: '10-14 16:23:09', Retry: 'A Few Seconds'},
-        {job: 'CallTask', runtime: '4', failed_at: '10-14 16:23:09', Retry: 'A Few Seconds'},
-        {job: 'SendPush', runtime: '4', failed_at: '10-14 16:23:09', Retry: 'A Few Seconds'},
-        {job: 'Callback', runtime: '4', failed_at: '10-14 16:23:09', Retry: 'A Few Seconds'},
-        {job: 'Callback', runtime: '4', failed_at: '10-14 16:23:09', Retry: 'A Few Seconds'},
-        {job: 'SendSms', runtime: '4', failed_at: '10-14 16:23:09', Retry: 'A Few Seconds'},
-        {job: 'SendSms', runtime: '4', failed_at: '10-14 16:23:09', Retry: 'A Few Seconds'},
-        {job: 'CallTask', runtime: '4', failed_at: '10-14 16:23:09', Retry: 'A Few Seconds'},
-        {job: 'SendPush', runtime: '4', failed_at: '10-14 16:23:09', Retry: 'A Few Seconds'},
-        {job: 'Callback', runtime: '4', failed_at: '10-14 16:23:09', Retry: 'A Few Seconds'},
-        {job: 'Callback', runtime: '4', failed_at: '10-14 16:23:09', Retry: 'A Few Seconds'},
-      ]
-    })
+const tableColumn = shallowReactive([
+  {prop: 'job', label: 'Job', minWidth: 90},
+  {prop: 'runtime', label: 'Runtime', minWidth: 70},
+  {prop: 'failed_at', label: 'Failed At', minWidth: 110},
+  {prop: 'action', label: 'Action', slot: 'action', minWidth: 80},
+])
 
-    return {
-      ...toRefs(state)
-    }
-  }
-}
+const tableData = shallowReactive([
+  {job: 'SendSms', runtime: '4', failed_at: '10-14 16:23:09', Retry: 'A Few Seconds'},
+  {job: 'SendSms', runtime: '4', failed_at: '10-14 16:23:09', Retry: 'A Few Seconds'},
+  {job: 'CallTask', runtime: '4', failed_at: '10-14 16:23:09', Retry: 'A Few Seconds'},
+  {job: 'SendPush', runtime: '4', failed_at: '10-14 16:23:09', Retry: 'A Few Seconds'},
+  {job: 'Callback', runtime: '4', failed_at: '10-14 16:23:09', Retry: 'A Few Seconds'},
+  {job: 'Callback', runtime: '4', failed_at: '10-14 16:23:09', Retry: 'A Few Seconds'},
+  {job: 'SendSms', runtime: '4', failed_at: '10-14 16:23:09', Retry: 'A Few Seconds'},
+  {job: 'SendSms', runtime: '4', failed_at: '10-14 16:23:09', Retry: 'A Few Seconds'},
+  {job: 'CallTask', runtime: '4', failed_at: '10-14 16:23:09', Retry: 'A Few Seconds'},
+  {job: 'SendPush', runtime: '4', failed_at: '10-14 16:23:09', Retry: 'A Few Seconds'},
+  {job: 'Callback', runtime: '4', failed_at: '10-14 16:23:09', Retry: 'A Few Seconds'},
+  {job: 'Callback', runtime: '4', failed_at: '10-14 16:23:09', Retry: 'A Few Seconds'},
+])
 </script>
-
-<style scoped>
-
-</style>

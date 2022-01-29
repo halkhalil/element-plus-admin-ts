@@ -44,15 +44,6 @@
   </BasicCard>
 </template>
 
-<script>
+<script lang="ts" setup>
 import {BasicCard} from '~/components/Card'
-
-export default {
-  name: "ServerStatus",
-  components: {BasicCard},
-}
 </script>
-
-<style scoped>
-
-</style>

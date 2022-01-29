@@ -1,6 +1,19 @@
 import Mock from "mockjs";
+import type {ECharts} from "echarts";
+import {ECOptions} from "~/utils/lib/echarts";
 
-export const getFunnelData = () => {
+export interface GrowCardItem {
+  title: string,
+  notice: string,
+  description: string,
+  value: number,
+  chart?: string,
+  chartStyle: object,
+  chartOption: ECOptions,
+  setOptions?: (options: ECOptions) => any
+}
+
+export const getFunnelData = (): ECOptions => {
   return {
     tooltip: {
       trigger: 'item',
@@ -57,7 +70,7 @@ export const getFunnelData = () => {
     ]
   };
 }
-export const getBarPolarStack = () => {
+export const getBarPolarStack = (): ECOptions => {
   return {
     angleAxis: {},
     radiusAxis: {
@@ -105,8 +118,9 @@ export const getBarPolarStack = () => {
   };
 }
 
-export const getGradientStackedData = (echarts) => {
+export const getGradientStackedData = (echarts: ECharts): ECOptions => {
   return {
+    dataset: undefined, polar: undefined, title: undefined,
     color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
     tooltip: {
       trigger: 'axis',
@@ -155,16 +169,16 @@ export const getGradientStackedData = (echarts) => {
         showSymbol: false,
         areaStyle: {
           opacity: 0.8,
-          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            {
-              offset: 0,
-              color: 'rgba(128, 255, 165)'
-            },
-            {
-              offset: 1,
-              color: 'rgba(1, 191, 236)'
-            }
-          ])
+          // color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          //   {
+          //     offset: 0,
+          //     color: 'rgba(128, 255, 165)'
+          //   },
+          //   {
+          //     offset: 1,
+          //     color: 'rgba(1, 191, 236)'
+          //   }
+          // ])
         },
         emphasis: {
           focus: 'series'
@@ -228,13 +242,13 @@ export const getGradientStackedData = (echarts) => {
     ]
   };
 }
-export const getGrowData = () => {
+export const getGrowData = (): GrowCardItem[] => {
   return [
     {
       title: '访问量',
       notice: '最近一周访问量',
       description: '比上周增加30%',
-      value: '4.2K',
+      value: 42000,
       chart: 'bar',
       chartStyle: {width: '100%', height: '50px'},
       chartOption: {
@@ -257,7 +271,7 @@ export const getGrowData = () => {
       title: '销售额',
       notice: '最近一周销售额',
       description: '比上周增加20%',
-      value: '￥12640',
+      value: 12640,
       chartStyle: {width: '100%', height: '50px'},
       chartOption: {
         tooltip: {trigger: 'axis',},
@@ -279,7 +293,7 @@ export const getGrowData = () => {
       title: '用户增长',
       notice: '最近一周用户增长量',
       description: '45.5%来自facebook',
-      value: '44150',
+      value: 44150,
       chartStyle: {width: '100%', height: '50px'},
       chartOption: {
         tooltip: {},
@@ -300,7 +314,7 @@ export const getGrowData = () => {
       title: '订单量',
       notice: '最近一周订单量',
       description: '45.5%来自微信小程序',
-      value: '12640',
+      value: 12640,
       chartStyle: {width: '100%', height: '50px'},
       chartOption: {
         tooltip: {},
@@ -320,7 +334,7 @@ export const getGrowData = () => {
   ]
 }
 
-export const getVisitData = () => {
+export const getVisitData = (): ECOptions => {
   return {
     tooltip: {
       trigger: 'axis',

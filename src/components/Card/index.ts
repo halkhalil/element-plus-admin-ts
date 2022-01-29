@@ -1,5 +1,7 @@
-import * as BaseCard from '~/components/Card/src/Card.vue'
+import BasicCard from '~/components/Card/src/BasicCard.vue'
+
+import {withInstall} from "~/utils";
 
 export {
-  BaseCard,
+  BasicCard
 }

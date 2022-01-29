@@ -11,13 +11,20 @@ import {
 // 引入提示框，标题，直角坐标系，数据集，内置数据转换器组件，组件后缀都为 Component
 import {
   PolarComponent,
+  PolarComponentOption,
   TitleComponent,
+  TitleComponentOption,
   ToolboxComponent,
+  ToolboxComponentOption,
   GridComponent,
+  GraphicComponentOption,
   DatasetComponent,
+  DatasetComponentOption,
   TransformComponent,
   LegendComponent,
+  LegendComponentOption,
   TooltipComponent,
+  GraphicComponent,
 } from 'echarts/components';
 
 // 标签自动布局，全局过渡动画等特性
@@ -28,6 +35,7 @@ import {CanvasRenderer} from "echarts/renderers";
 
 // 注册必须的组件
 echarts.use([
+  GraphicComponent,
   TitleComponent,
   ToolboxComponent,
   GridComponent,
@@ -44,5 +52,12 @@ echarts.use([
   PolarComponent,
   FunnelChart,
 ])
+
+export type ECOptions = echarts.ComposeOption<| PolarComponentOption
+  | TitleComponentOption
+  | ToolboxComponentOption
+  | GraphicComponentOption
+  | DatasetComponentOption
+  | LegendComponentOption>;
 
 export default echarts;

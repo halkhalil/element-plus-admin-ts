@@ -12,18 +12,8 @@
     </el-row>
   </el-card>
 </template>
-<script>
-import {defineComponent} from 'vue';
+<script lang="ts" setup>
 import {usePermission} from "~/composables/usePermission";
 
-export default defineComponent({
-  name: 'QuickNav',
-  setup() {
-    const {getMenus} = usePermission()
-
-    return {
-      getMenus,
-    }
-  }
-})
+const {getMenus} = usePermission()
 </script>

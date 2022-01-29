@@ -8,27 +8,18 @@
   </BasicCard>
 </template>
 
-<script>
+<script lang="ts" setup>
 import {BasicCard} from '~/components/Card'
 import {useECharts} from "~/composables/useECharts";
-import {getThroughputData} from "../data.js";
+import {getThroughputData} from "./../data";
 import {onMounted} from "vue";
 
-export default {
-  name: "ServerStatus",
-  components: {BasicCard},
-  setup() {
-    const {elRef, setOptions} = useECharts();
+const {elRef, setOptions} = useECharts();
 
-    onMounted(() => {
-      setOptions(getThroughputData());
-    })
+onMounted(() => {
+  setOptions(getThroughputData());
+})
 
-    return {
-      elRef,
-    }
-  }
-}
 </script>
 
 <style scoped>

@@ -19,19 +19,9 @@
     </el-row>
   </el-card>
 </template>
-<script>
-import {defineComponent, shallowReactive, toRefs} from 'vue';
-import {getProjectData} from "~/views/dashboard/workplace/data.js";
+<script lang="ts" setup>
+import {shallowReactive} from 'vue';
+import {getProjectData} from "~/views/dashboard/workplace/data";
 
-export default defineComponent({
-  setup() {
-    const state = shallowReactive({
-      projects: getProjectData(),
-    })
-
-    return {
-      ...toRefs(state),
-    }
-  }
-})
+const projects = shallowReactive(getProjectData());
 </script>

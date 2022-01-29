@@ -16,7 +16,7 @@
     </el-row>
   </PageWrapper>
 </template>
-<script>
+<script lang="ts" setup>
 import {PageWrapper} from '~/components/Page'
 import UserInfo from "~/views/dashboard/workplace/components/UserInfo.vue";
 import Project from "~/views/dashboard/workplace/components/Project.vue";
@@ -25,19 +25,9 @@ import QuickNav from "~/views/dashboard/workplace/components/QuickNav.vue";
 import Carousel from "~/views/dashboard/workplace/components/Carousel.vue";
 import ProjectStatistic from "~/views/dashboard/workplace/components/ProjectStatistic.vue";
 
-import {defineComponent} from 'vue';
 import {useRootSetting} from "~/composables/setting/useRootSeeting";
 
-export default defineComponent({
-  components: {PageWrapper, UserInfo, Project, Dynamic, QuickNav, Carousel, ProjectStatistic},
-  setup() {
-    const {getIsMobile} = useRootSetting();
-
-    return {
-      getIsMobile
-    }
-  }
-})
+const {getIsMobile} = useRootSetting();
 </script>
 <style lang="scss" scoped>
 :deep(.el-card__header) {

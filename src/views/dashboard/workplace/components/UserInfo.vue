@@ -30,19 +30,10 @@
   </el-row>
 </template>
 
-<script>
-import {useUser} from "~/composables/useUser.ts";
+<script lang="ts" setup>
+import {useUser} from "~/composables/useUser";
 
-export default {
-  name: "UserInfo",
-  setup() {
-    const {getUser} = useUser();
-
-    return {
-      getUser
-    }
-  },
-}
+const {getUser} = useUser();
 </script>
 
 <style lang="scss" scoped>

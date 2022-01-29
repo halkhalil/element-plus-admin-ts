@@ -46,7 +46,7 @@
 <script>
 import {useUser} from "~/composables/useUser.ts";
 import {shallowReactive, toRefs} from "vue";
-import {getTeamData, getTagData} from "~/views/demo/page/personal/center/data.js";
+import {getTeamData, getTagData} from "~/views/demo/page/personal/center/data.ts";
 
 export default {
   name: "UserInfo",

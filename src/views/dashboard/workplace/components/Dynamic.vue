@@ -24,21 +24,11 @@
     </el-row>
   </el-card>
 </template>
-<script>
-import {defineComponent, shallowReactive, toRefs} from 'vue';
-import {getDynamicData} from "~/views/dashboard/workplace/data.js";
+<script lang="ts" setup>
+import {shallowReactive} from 'vue';
+import {getDynamicData} from "~/views/dashboard/workplace/data";
 
-export default defineComponent({
-  setup() {
-    const state = shallowReactive({
-      projects: getDynamicData(),
-    })
-
-    return {
-      ...toRefs(state),
-    }
-  }
-})
+const projects = shallowReactive(getDynamicData())
 </script>
 <style lang="scss" scoped>
 .item {

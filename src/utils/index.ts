@@ -1,3 +1,4 @@
+import type { App, Plugin } from 'vue';
 /**
  * listToTree
  * @param oldArr
@@ -47,3 +48,14 @@ export function openWindow(url:string,opt?:string) {
 
   window.open(url, target, feature.join(','));
 }
+
+export const withInstall = <T>(component: T, alias?: string) => {
+  const comp = component as any;
+  comp.install = (app: App) => {
+    app.component(comp.name || comp.displayName, component);
+    if (alias) {
+      app.config.globalProperties[alias] = component;
+    }
+  };
+  return component as T & Plugin;
+};

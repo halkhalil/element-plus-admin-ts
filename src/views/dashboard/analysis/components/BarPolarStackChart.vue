@@ -11,7 +11,7 @@
 <script>
 import {BasicCard} from '~/components/Card'
 import {useECharts} from "~/composables/useECharts";
-import {getBarPolarStack} from '../data.js'
+import {getBarPolarStack} from '../data.ts'
 import {onMounted} from "vue";
 
 export default {

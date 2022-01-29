@@ -1,4 +1,4 @@
-import echarts from "~/utils/lib/echarts.js";
+import echarts, {ECOptions} from "~/utils/lib/echarts";
 import {nextTick, ref} from "vue";
 import {tryOnUnmounted, useDebounceFn, useTimeoutFn} from "@vueuse/core";
 import {useEventListener} from '@vueuse/core';
@@ -27,7 +27,7 @@ export function useECharts(chartRef = null, theme = 'light') {
   }
 
   // 设置配置项
-  const setOptions = async (options) => {
+  const setOptions = async (options:ECOptions) => {
     const el = elRef.value;
     if (el && el.offsetHeight === 0) {
       useTimeoutFn(() => {

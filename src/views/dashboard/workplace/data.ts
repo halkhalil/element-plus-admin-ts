@@ -1,6 +1,6 @@
 import Mock from "mockjs";
 
-export const getProjectData = () => {
+export const getProjectData = (): object[] => {
   const result = [];
   for (let i = 0; i < 6; i++) {
     result.push({
@@ -14,7 +14,7 @@ export const getProjectData = () => {
   return result;
 };
 
-export const getDynamicData = () => {
+export const getDynamicData = (): object[] => {
   const result = [];
   for (let i = 0; i < 7; i++) {
     result.push({

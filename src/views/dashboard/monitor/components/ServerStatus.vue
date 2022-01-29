@@ -58,33 +58,22 @@
   </BasicCard>
 </template>
 
-<script>
+<script lang="ts" setup>
 import {BasicCard} from '~/components/Card'
 import {useECharts} from "~/composables/useECharts";
-import {getServerStatusData, getDiskStatusData} from "../data";
+import {getServerStatusData, getDiskStatusData} from "./../data";
 import {onMounted} from "vue";
 
-export default {
-  name: "ServerStatus",
-  components: {BasicCard},
-  setup() {
-    const {elRef, setOptions} = useECharts();
-    const {elRef: elRef2, setOptions: setOptions2} = useECharts();
-    const {elRef: elRef3, setOptions: setOptions3} = useECharts();
+const {elRef, setOptions} = useECharts();
+const {elRef: elRef2, setOptions: setOptions2} = useECharts();
+const {elRef: elRef3, setOptions: setOptions3} = useECharts();
 
-    onMounted(() => {
-      setOptions(getServerStatusData());
-      setOptions2(getDiskStatusData());
-      setOptions3(getDiskStatusData())
-    })
+onMounted(() => {
+  setOptions(getServerStatusData());
+  setOptions2(getDiskStatusData());
+  setOptions3(getDiskStatusData())
+})
 
-    return {
-      elRef,
-      elRef2,
-      elRef3,
-    }
-  }
-}
 </script>
 
 <style scoped>

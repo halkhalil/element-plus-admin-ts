@@ -4,29 +4,13 @@
   </el-card>
 </template>
 
-<script>
-import {BasicCard} from '~/components/Card'
+<script lang="ts" setup>
 import {useECharts} from "~/composables/useECharts";
-import {getFunnelData} from '../data.js'
+import {getFunnelData} from './../data'
 import {onMounted} from "vue";
+const {elRef, setOptions} = useECharts();
 
-export default {
-  name: "BarPolarStack",
-  components: {BasicCard},
-  setup() {
-    const {elRef, setOptions} = useECharts();
-
-    onMounted(() => {
-      setOptions(getFunnelData())
-    })
-
-    return {
-      elRef,
-    }
-  }
-}
+onMounted(() => {
+  setOptions(getFunnelData())
+})
 </script>
-
-<style scoped>
-
-</style>
