@@ -1,5 +1,5 @@
 <template>
-  <BasicCard title="Queue Status">
+  <el-card header="Queue Status">
     <el-row :gutter="10">
       <el-col :span="24" class="mb-2">
         <el-row>
@@ -17,12 +17,11 @@
         <BasicTable :columns="tableColumn" :data="tableData"></BasicTable>
       </el-col>
     </el-row>
-  </BasicCard>
+  </el-card>
 </template>
 
 <script lang="ts" setup>
 import {BasicTable} from '~/components/Table'
-import {BasicCard} from '~/components/Card'
 import {shallowReactive} from "vue";
 
 const tableColumn = shallowReactive([

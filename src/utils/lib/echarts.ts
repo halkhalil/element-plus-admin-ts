@@ -59,5 +59,5 @@ export type ECOptions = echarts.ComposeOption<| PolarComponentOption
   | GraphicComponentOption
   | DatasetComponentOption
   | LegendComponentOption>;
-
+new echarts.graphic.LinearGradient(0, 0, 0, 1)
 export default echarts;

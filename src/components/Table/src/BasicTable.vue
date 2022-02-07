@@ -17,27 +17,19 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "BasicTable",
-  props: {
-    columns: {
-      type: Array,
-      default: () => ([]),
-    },
-    paginate: {
-      type: Object,
-      default: () => ({}),
-    },
+<script lang="ts" setup>
+const props = defineProps({
+  columns: {
+    type: Array,
+    default: () => ([]),
   },
-  setup(props, {emit}) {
-    const changePage = (currentPage) => {
-      emit('change-page', currentPage);
-    }
-
-    return {
-      changePage
-    }
-  }
+  paginate: {
+    type: Object,
+    default: () => ({}),
+  },
+})
+const emit = defineEmits(['change-page'])
+const changePage = (currentPage) => {
+  emit('change-page', currentPage);
 }
 </script>

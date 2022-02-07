@@ -1,22 +1,21 @@
 <template>
-  <BasicCard title="Failed Jobs">
+  <el-card header="Failed Jobs">
     <BasicTable :columns="tableColumn" :data="tableData" size="small">
       <template #action="scope">
         <el-button type="primary">
           <el-icon :size="14">
-            <Refresh/>
+            <Refresh />
           </el-icon>
         </el-button>
       </template>
     </BasicTable>
-  </BasicCard>
+  </el-card>
 </template>
 
 <script lang="ts" setup>
 import {BasicTable} from '~/components/Table'
-import {BasicCard} from '~/components/Card'
-import {Refresh} from '@element-plus/icons'
 import {shallowReactive} from "vue";
+import {Refresh} from "@element-plus/icons";
 
 const tableColumn = shallowReactive([
   {prop: 'job', label: 'Job', minWidth: 90},

@@ -28,76 +28,82 @@
         </div>
         <el-divider/>
 
-        <div class="setting-group">
-          <h3 class="setting-title">内容区域</h3>
-          <div>
-            <div class="drawer-item">
-              <span>dark</span>
-              <el-switch size="small" :model-value="dark" class="drawer-switch" @change="toggleDark"/>
-            </div>
-            <div class="drawer-item">
-              <span>Tag视图</span>
-              <el-switch size="small" :model-value="getEnableTagView" class="drawer-switch"
-                         @change="toggleEnableTagView"/>
-            </div>
+        <el-form size="small">
+          <div class="setting-group">
+            <h3 class="setting-title">内容区域</h3>
+            <div>
+              <div class="drawer-item">
+                <span>dark</span>
+                <el-switch :model-value="isDark"
+                           :active-value="true"
+                           :inactive-value="false"
+                           class="drawer-switch"
+                           @change="toggleDark"/>
+              </div>
+              <div class="drawer-item">
+                <span>Tag视图</span>
+                <el-switch :model-value="getEnableTagView" class="drawer-switch"
+                           @change="toggleEnableTagView"/>
+              </div>
 
-            <div class="drawer-item">
-              <span>固定Header</span>
-              <el-switch size="small" :model-value="getHeaderFixed" class="drawer-switch"
-                         @change="toggleHeaderFixed"/>
-            </div>
+              <div class="drawer-item">
+                <span>固定Header</span>
+                <el-switch :model-value="getHeaderFixed" class="drawer-switch"
+                           @change="toggleHeaderFixed"/>
+              </div>
 
-            <div class="drawer-item">
-              <span>侧边栏Logo</span>
-              <el-switch size="small" :model-value="getShowLogo" class="drawer-switch" @change="toggleLogo"/>
-            </div>
-            <div class="drawer-item">
-              <span>面包屑导航</span>
-              <el-switch size="small" :model-value="getShowBreadcrumb" class="drawer-switch"
-                         @change="toggleBreadcrumb"/>
-            </div>
-            <div class="drawer-item">
-              <span>布局大小</span>
-              <el-select :model-value="getGlobalSize" size="small" style="width: 120px"
-                         @change="toggleElementSize($event)">
-                <el-option v-for="(value,key) in elementSizeEnum"
-                           :key="key"
-                           :label="value"
-                           :value="value"></el-option>
-              </el-select>
+              <div class="drawer-item">
+                <span>侧边栏Logo</span>
+                <el-switch :model-value="getShowLogo" class="drawer-switch" @change="toggleLogo"/>
+              </div>
+              <div class="drawer-item">
+                <span>面包屑导航</span>
+                <el-switch :model-value="getShowBreadcrumb" class="drawer-switch"
+                           @change="toggleBreadcrumb"/>
+              </div>
+              <div class="drawer-item">
+                <span>布局大小</span>
+                <el-select :model-value="getGlobalSize" style="width: 120px"
+                           @change="toggleElementSize($event)">
+                  <el-option v-for="value in SizeEnum"
+                             :key="value"
+                             :label="value"
+                             :value="value"></el-option>
+                </el-select>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="setting-group">
-          <h3 class="setting-title">动画</h3>
-          <div>
-            <div class="drawer-item">
-              <span>顶部进度条</span>
-              <el-switch size="small" :model-value="getOpenNProgress" class="drawer-switch"
-                         @change="toggleOpenNProgress"/>
-            </div>
-            <div class="drawer-item">
-              <span>切换Loading</span>
-              <el-switch size="small" :model-value="getOpenPageLoading" class="drawer-switch"
-                         @change="toggleOpenPageLoading"/>
-            </div>
-            <div class="drawer-item">
-              <span>切换动画</span>
-              <el-switch size="small" :model-value="getEnableTransition" class="drawer-switch"
-                         @change="toggleEnableTransition"/>
-            </div>
-            <div class="drawer-item">
-              <span>动画类型</span>
-              <el-select :model-value="getBasicTransition" size="small" style="width: 120px"
-                         @change="setBasicTransition($event)">
-                <el-option v-for="(value,key) in routerTransitionEnum"
-                           :key="key"
-                           :label="value"
-                           :value="value"></el-option>
-              </el-select>
+          <div class="setting-group">
+            <h3 class="setting-title">动画</h3>
+            <div>
+              <div class="drawer-item">
+                <span>顶部进度条</span>
+                <el-switch :model-value="getOpenNProgress" class="drawer-switch"
+                           @change="toggleOpenNProgress"/>
+              </div>
+              <div class="drawer-item">
+                <span>切换Loading</span>
+                <el-switch :model-value="getOpenPageLoading" class="drawer-switch"
+                           @change="toggleOpenPageLoading"/>
+              </div>
+              <div class="drawer-item">
+                <span>切换动画</span>
+                <el-switch :model-value="getEnableTransition" class="drawer-switch"
+                           @change="toggleEnableTransition"/>
+              </div>
+              <div class="drawer-item">
+                <span>动画类型</span>
+                <el-select :model-value="getBasicTransition" style="width: 120px"
+                           @change="setBasicTransition($event)">
+                  <el-option v-for="value in TransitionEnum"
+                             :key="value"
+                             :label="value"
+                             :value="value"></el-option>
+                </el-select>
+              </div>
             </div>
           </div>
-        </div>
+        </el-form>
       </div>
     </el-scrollbar>
   </el-drawer>
@@ -107,8 +113,8 @@ import {useRootSetting} from "~/composables/setting/useRootSeeting";
 import {useHeaderSetting} from "~/composables/setting/useHeaderSeeting";
 import {useTransitionSetting} from "~/composables/setting/useTransitionSeeting";
 import {useTagViewSetting} from "~/composables/setting/useTagViewSeeting";
+import {SizeEnum, TransitionEnum} from '~/enums/app';
 import {useDark, useToggle} from '@vueuse/core'
-import {elementSizeEnum, routerTransitionEnum,} from '~/enums/appEnum'
 import {ref} from "vue";
 
 const navbarModes = ref([
@@ -131,8 +137,6 @@ const navbarModes = ref([
     img: 'https://gw.alipayobjects.com/zos/antfincdn/hmKaLQvmY2/LCkqqYNmvBEbokSDscrm.svg',
   }
 ]);
-const isDark = useDark()
-const toggleDark = useToggle(isDark)
 const {
   getShowLogo,
   getShowBreadcrumb,
@@ -144,7 +148,12 @@ const {
   toggleBreadcrumb,
   toggleNavbarMode,
   toggleElementSize,
+  getDarkMode,
+  toggleDarkMode,
 } = useRootSetting();
+
+const isDark = useDark()
+const toggleDark = useToggle(isDark);
 
 const {getHeaderFixed, toggleHeaderFixed} = useHeaderSetting();
 const {

@@ -1,5 +1,5 @@
-import {setupPermissionDirective} from "~/directives/permission.ts";
-import {setupRoleDirective} from "~/directives/role.js";
+import {setupPermissionDirective} from "~/directives/permission";
+import {setupRoleDirective} from "~/directives/role";
 
 export function setupGlobalDirectives(app) {
   setupPermissionDirective(app);

@@ -4,41 +4,34 @@
   </svg>
 </template>
 
-<script>
-import {computed, defineComponent, toRefs} from 'vue';
+<script lang="ts" setup>
+import {computed, toRefs} from 'vue';
 
-export default defineComponent({
-  name: 'icon-svg',
-  props: {
-    prefix: {
-      type: String,
-      default: '',
-    },
-    name: {
-      type: String,
-      required: true,
-    },
-    size: {
-      type: [String, Number],
-      required: 16,
-    },
-    spin: {
-      type: Boolean,
-      default: false,
-    },
+const props = defineProps({
+  prefix: {
+    type: String,
+    default: '',
   },
-  setup(props) {
-    const {prefix, name, size} = toRefs(props);
-    const symbolId = computed(() => `#${prefix.value}${name.value}`)
-    const getWrapStyle = computed(() => {
-      const s = `${size.value}`.replace('px', '') + 'px';
-      return {width: s, height: s};
-    })
-    return {
-      symbolId,
-      getWrapStyle,
-    }
-  }
+  name: {
+    type: String,
+    required: true,
+  },
+  size: {
+    type: [String, Number],
+    required: true,
+    default: 16,
+  },
+  spin: {
+    type: Boolean,
+    default: false,
+  },
+});
+
+const {prefix, name, size} = toRefs(props);
+const symbolId = computed(() => `#${prefix.value}${name.value}`)
+const getWrapStyle = computed(() => {
+  const s = `${size.value}`.replace('px', '') + 'px';
+  return {width: s, height: s};
 })
 </script>
 <style lang="scss" scoped>

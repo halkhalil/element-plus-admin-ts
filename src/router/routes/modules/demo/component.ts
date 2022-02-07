@@ -1,7 +1,8 @@
 import Layout from "~/layouts/index.vue";
 import LayoutContent from "~/layouts/content/Content.vue"
+import {AppRouteRecordRaw} from "~/router/types";
 
-export default [
+const componentRoute: AppRouteRecordRaw[] = [
   {
     path: '/component',
     component: Layout,
@@ -161,3 +162,5 @@ export default [
     ]
   }
 ];
+
+export default componentRoute;

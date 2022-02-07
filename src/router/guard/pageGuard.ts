@@ -1,8 +1,6 @@
-/**
- * PageGuard
- * @param router
- */
-export function createPageGuard(router) {
+import {Router} from "vue-router";
+
+export function createPageGuard(router: Router) {
   const loadedPageMap = new Map;
   router.beforeEach(async (to) => {
     to.meta.loaded = !!loadedPageMap.get(to.path);

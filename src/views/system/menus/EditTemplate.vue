@@ -56,7 +56,7 @@ import {BasicDrawer} from "~/components/Drawer";
 import {toRefs, shallowReactive, inject, watch} from "vue";
 import {useConfig} from "~/composables/config/useConfig";
 import {IconPicker} from '~/components/Icon'
-import {menuTypeEnum} from "~/enums/appEnum";
+import {MenuTypeEnum} from "~/enums/app";
 import {useFetchAllMenus} from '~/api/all';
 
 export default {
@@ -72,7 +72,7 @@ export default {
         method: [{required: true, message: '请选择请求方式', trigger: 'change'}],
         url: [{required: true, message: '请输入后端url地址', trigger: 'blur'}],
       },
-      menuTypes: menuTypeEnum,
+      menuTypes: MenuTypeEnum,
     })
 
     const {getPermissionRoutes} = useConfig();

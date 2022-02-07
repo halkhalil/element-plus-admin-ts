@@ -10,10 +10,20 @@
     "sourceMap": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "noImplicitAny": false,
     "lib": ["esnext", "dom"],
+    "typeRoots": ["./node_modules/@types/", "./types"],
     "paths": {
       "~/*": ["src/*"],
+      "#/*": ["types/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "types/**/*.d.ts",
+    "types/**/*.ts"
+  ]
 }

@@ -1,5 +1,5 @@
 <template>
-  <BasicCard title="System Info">
+  <el-card header="System Info">
     <el-descriptions
       class="mb-2"
       :column="1"
@@ -41,9 +41,5 @@
         100MB
       </el-descriptions-item>
     </el-descriptions>
-  </BasicCard>
+  </el-card>
 </template>
-
-<script lang="ts" setup>
-import {BasicCard} from '~/components/Card'
-</script>

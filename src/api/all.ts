@@ -1,5 +1,5 @@
 import axios from "~/utils/axios";
-import {listToTree} from "~/utils";
+import {listToTree} from "~/utils/helper/treeHelper";
 import {ref} from "vue";
 
 export const fetchAllMenus = (query = {}) => axios.get('/all/menus', {params: query});

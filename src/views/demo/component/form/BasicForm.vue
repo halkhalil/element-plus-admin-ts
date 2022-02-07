@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import {componentMap} from '~/components/Form/src/componentMap.js'
-import {getFormData} from "~/views/demo/component/form/formData.js";
+import {componentMap} from '~/components/Form/src/componentMap.ts'
+import {getFormData} from "~/views/demo/component/form/formData.ts";
 import {BasicForm} from "~/components/Form/index.ts";
 import {PageWrapper} from '~/components/Page/index.ts';
 import {useRootSetting} from "~/composables/setting/useRootSeeting.ts";

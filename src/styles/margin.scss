@@ -1,48 +1,49 @@
 @for $i from 0 through 6 {
   .m-#{$i} {
-    margin: #{$i/ 4}rem;
+    margin: calc(#{$i}rem / 4);
   }
   .mt-#{$i} {
-    margin-top: #{$i/ 4}rem;
+    margin-top: calc(#{$i}rem / 4);
   }
   .mr-#{$i} {
-    margin-right: #{$i/ 4}rem;
+    margin-right: calc(#{$i}rem / 4);
   }
   .mb-#{$i} {
-    margin-bottom: #{$i/ 4}rem;
+    margin-bottom: calc(#{$i}rem / 4);
   }
   .ml-#{$i} {
-    margin-left: #{$i/ 4}rem;
+    margin-left: calc(#{$i}rem / 4);
   }
   .my-#{$i} {
-    margin: #{$i/ 4}rem 0;
+    margin: calc(#{$i}rem / 4) 0;
   }
   .mx-#{$i} {
-    margin: 0 #{$i/ 4}rem;
+    margin: 0 calc(#{$i}rem / 4);
   }
 
   .p-#{$i} {
-    padding: #{$i/ 4}rem;
+    padding: calc(#{$i}rem / 4);
   }
   .pt-#{$i} {
-    padding-top: #{$i/ 4}rem;
+    padding-top: calc(#{$i}rem / 4);
   }
   .pr-#{$i} {
-    padding-right: #{$i/ 4}rem;
+    padding-right: calc(#{$i}rem / 4);
   }
   .pb-#{$i} {
-    padding-bottom: #{$i/ 4}rem;
+    padding-bottom: calc(#{$i}rem / 4);
   }
   .pl-#{$i} {
-    padding-left: #{$i/ 4}rem;
+    padding-left: calc(#{$i}rem / 4);
   }
   .py-#{$i} {
-    padding: #{$i/ 4}rem 0;
+    padding: calc(#{$i}rem / 4) 0;
   }
   .px-#{$i} {
-    padding: 0 #{$i/ 4}rem;
+    padding: 0 calc(#{$i}rem / 4);
   }
 }
+
 .w-full {
   width: 100% !important;
 }

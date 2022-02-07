@@ -1,16 +1,15 @@
 import {resolve} from "path";
-import { defineConfig } from "vite";
+import {defineConfig} from "vite";
 import vue from "@vitejs/plugin-vue";
 import viteSvgIcons from 'vite-plugin-svg-icons';
-
+import AutoImport from 'unplugin-auto-import/vite';
 import Components from "unplugin-vue-components/vite";
-import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
+import {ElementPlusResolver} from "unplugin-vue-components/resolvers";
 
-function pathResolve(dir:string) {
+function pathResolve(dir: string) {
   return resolve(process.cwd(), '.', dir)
 }
 
-// https://vitejs.dev/config/
 export default defineConfig({
   base: '/element-plus-admin',
   resolve: {
@@ -27,7 +26,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@use "~/styles/element/index.scss" as *;`,
+        additionalData: `@use "~/styles/index.scss" as *;`,
       },
     },
   },
@@ -39,6 +38,9 @@ export default defineConfig({
     }),
     Components({
       resolvers: [
+        AutoImport({
+          resolvers: [ElementPlusResolver()],
+        }),
         ElementPlusResolver({
           importStyle: "sass",
         }),

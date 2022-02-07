@@ -27,63 +27,52 @@
   </div>
 </template>
 
-<script>
+<script lang="ts" setup>
 
 import {onMounted, ref, computed} from "vue";
 import {useWindowSize,} from '@vueuse/core'
 import {useSlots} from "vue";
 
-export default {
-  name: "PageWrapper",
-  props: {
-    title: {
-      type: String,
-      default: '',
-    },
-    subTitle: {
-      type: String,
-      default: '',
-    },
-    content: {
-      type: String,
-      default: '',
-    },
-    contentBackground: {
-      type: Boolean,
-      default: false,
-    },
-    contentFullHeight: {
-      type: Boolean,
-      default: false,
-    },
-    class: {
-      type: String,
-      default: '',
-    }
+defineProps({
+  title: {
+    type: String,
+    default: '',
   },
-  setup() {
-    const contentRef = ref(null);
-    const contentHeight = ref(null);
-    const slotTitle = !!useSlots().title;
-    const slotSubTitle = !!useSlots().subTitle;
-
-    const resizeHeight = () => {
-      const {height} = useWindowSize();
-      contentHeight.value = height.value - contentRef.value.offsetTop - 22;
-    }
-
-    onMounted(() => {
-      resizeHeight();
-    })
-
-    return {
-      contentRef,
-      contentHeight,
-      slotTitle,
-      slotSubTitle
-    }
+  subTitle: {
+    type: String,
+    default: '',
+  },
+  content: {
+    type: String,
+    default: '',
+  },
+  contentBackground: {
+    type: Boolean,
+    default: false,
+  },
+  contentFullHeight: {
+    type: Boolean,
+    default: false,
+  },
+  class: {
+    type: String,
+    default: '',
   }
+})
+
+const contentRef = ref();
+const contentHeight = ref();
+const slotTitle = !!useSlots().title;
+const slotSubTitle = !!useSlots().subTitle;
+
+const resizeHeight = () => {
+  const {height} = useWindowSize();
+  contentHeight.value = height.value - contentRef.value.offsetTop - 22;
 }
+
+onMounted(() => {
+  resizeHeight();
+})
 </script>
 
 <style lang="scss" scoped>

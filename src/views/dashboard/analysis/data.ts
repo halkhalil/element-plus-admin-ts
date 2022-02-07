@@ -8,7 +8,6 @@ export interface GrowCardItem {
   description: string,
   value: number,
   chart?: string,
-  chartStyle: object,
   chartOption: ECOptions,
   setOptions?: (options: ECOptions) => any
 }
@@ -119,7 +118,10 @@ export const getBarPolarStack = (): ECOptions => {
 }
 
 export const getGradientStackedData = (echarts: ECharts): ECOptions => {
+
   return {
+    radiusAxis: undefined,
+    graphic: undefined,
     dataset: undefined, polar: undefined, title: undefined,
     color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
     tooltip: {
@@ -196,6 +198,7 @@ export const getGradientStackedData = (echarts: ECharts): ECOptions => {
         showSymbol: false,
         areaStyle: {
           opacity: 0.8,
+          // @ts-ignore
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
               offset: 0,
@@ -223,6 +226,7 @@ export const getGradientStackedData = (echarts: ECharts): ECOptions => {
         showSymbol: false,
         areaStyle: {
           opacity: 0.8,
+          // @ts-ignore
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
               offset: 0,
@@ -250,18 +254,17 @@ export const getGrowData = (): GrowCardItem[] => {
       description: '比上周增加30%',
       value: 42000,
       chart: 'bar',
-      chartStyle: {width: '100%', height: '50px'},
       chartOption: {
         tooltip: {trigger: 'axis',},
         xAxis: {
           type: 'category',
           data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-          show: false
+          show: true
         },
         yAxis: {type: 'value', show: false},
         series: [
           {
-            data: [30, 52, 30, 20, 30, 45, 30],
+            data: [30, 49, 30, 20, 30, 45, 30],
             type: 'bar'
           }
         ]
@@ -272,13 +275,12 @@ export const getGrowData = (): GrowCardItem[] => {
       notice: '最近一周销售额',
       description: '比上周增加20%',
       value: 12640,
-      chartStyle: {width: '100%', height: '50px'},
       chartOption: {
         tooltip: {trigger: 'axis',},
         xAxis: {
           type: 'category',
           data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-          show: false
+          show: true
         },
         yAxis: {type: 'value', show: false},
         series: [
@@ -294,7 +296,6 @@ export const getGrowData = (): GrowCardItem[] => {
       notice: '最近一周用户增长量',
       description: '45.5%来自facebook',
       value: 44150,
-      chartStyle: {width: '100%', height: '50px'},
       chartOption: {
         tooltip: {},
         series: [
@@ -315,7 +316,6 @@ export const getGrowData = (): GrowCardItem[] => {
       notice: '最近一周订单量',
       description: '45.5%来自微信小程序',
       value: 12640,
-      chartStyle: {width: '100%', height: '50px'},
       chartOption: {
         tooltip: {},
         series: [
@@ -438,9 +438,9 @@ export const rankColumn = () => {
   ]
 }
 
-export const rankData = () => {
-  const data = [];
-  for (let i = 0; i < 8; i++) {
+export const rankData = (): object[] => {
+  const data: object[] = [];
+  for (let i = 0; i < 10; i++) {
     const item = {
       rank: i + 1,
       title: Mock.Random.ctitle(5),

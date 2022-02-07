@@ -9,34 +9,26 @@
   </PageWrapper>
 </template>
 
-<script>
+<script lang="ts" setup>
 import {PageWrapper} from "~/components/Page";
 import {CodeEditor} from '~/components/CodeEditor'
-import {jsonData, htmlData, javascriptData} from "./codeData";
+import {jsonData, htmlData, javascriptData} from "./data";
+import {ref} from "vue";
 
-export default {
-  name: "json",
-  components: {CodeEditor, PageWrapper},
-  data() {
-    return {
-      codeMode: 'json',
-      codeData: jsonData,
-    }
-  },
-  methods: {
-    handleChange(v) {
-      switch (v) {
-        case 'json':
-          this.codeData = jsonData;
-          break;
-        case 'html':
-          this.codeData = htmlData;
-          break;
-        case 'javascript':
-          this.codeData = javascriptData;
-          break;
-      }
-    }
+const codeMode = ref('json');
+const codeData = ref(jsonData);
+
+const handleChange = (v) => {
+  switch (v) {
+    case 'json':
+      codeData.value = jsonData;
+      break;
+    case 'html':
+      codeData.value = htmlData;
+      break;
+    case 'javascript':
+      codeData.value = javascriptData;
+      break;
   }
 }
 </script>

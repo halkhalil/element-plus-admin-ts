@@ -1,6 +1,7 @@
 import Layout from "~/layouts/index.vue";
+import {AppRouteRecordRaw} from "~/router/types";
 
-export default [
+const permissionRoute: AppRouteRecordRaw[] = [
   {
     path: '/permission',
     component: Layout,
@@ -22,3 +23,5 @@ export default [
     ]
   },
 ];
+
+export default permissionRoute;

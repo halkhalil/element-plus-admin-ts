@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts" setup>
 import Cropper from 'cropperjs';
 import 'cropperjs/dist/cropper.css';
 import {ref} from "vue";
@@ -32,45 +32,7 @@ const defaultOptions = {
   rotatable: true,
 };
 
-export default {
-  name: "Cropper",
-  props: {},
-  setup() {
-    const cropper = ref(null);
-    const imgElRef = ref(null);
+const cropper = ref(null);
+const imgElRef = ref(null);
 
-    const croppered = () => {
-
-    }
-
-    const init = () => {
-      const imgEl = imgElRef.value;
-      if (!imgEl) return;
-      cropper.value = new Cropper(imgEl, {
-        ...defaultOptions,
-        ready: () => {
-          isReady.value = true;
-          realTimeCroppered();
-          emit('ready', cropper.value);
-        },
-        crop() {
-          debounceRealTimeCroppered();
-        },
-        zoom() {
-          debounceRealTimeCroppered();
-        },
-        cropmove() {
-          debounceRealTimeCroppered();
-        },
-        ...props.options,
-      })
-
-    }
-
-  }
-}
 </script>
-
-<style scoped>
-
-</style>

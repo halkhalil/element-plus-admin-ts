@@ -2,7 +2,7 @@
   <div ref="el"></div>
 </template>
 
-<script>
+<script lang="ts" setup>
 import CodeMirror from 'codemirror';
 import {onMounted, onUnmounted, ref, watch} from "vue";
 
@@ -13,59 +13,48 @@ import 'codemirror/mode/javascript/javascript.js';
 import 'codemirror/mode/css/css.js';
 import 'codemirror/mode/htmlmixed/htmlmixed.js';
 
-export default {
-  name: "CodeEditor",
-  props: {
-    modelValue: {
-      type: String,
-      default: '',
-    },
-    mode: {
-      type: String,
-      default: 'javascript',
-    },
-    readonly: {
-      type: Boolean,
-      default: false,
-    }
+const props = defineProps({
+  modelValue: {
+    type: String,
+    default: '',
   },
-  setup(props) {
-    let el = ref();
-    let editor;
-
-    onMounted(() => {
-      editor = CodeMirror(el.value, {
-        value: props.modelValue,
-        mode: props.mode,
-        readOnly: props.readonly,
-        tabSize: 2,
-        // theme: 'idea',
-        lineWrapping: true,
-        lineNumbers: true,
-        autoCloseBrackets: true,
-        autoCloseTags: true,
-        foldGutter: true,
-        fullScreen: true,
-        gutters: ['CodeMirror-linenumbers'],
-        height: 1000
-      });
-    })
-
-    watch(() => props.modelValue, (newVal) => {
-      editor.setValue(newVal);
-    })
-
-    onUnmounted(() => {
-      editor = null;
-    });
-
-    return {
-      el,
-    }
+  mode: {
+    type: String,
+    default: 'javascript',
   },
-}
+  readonly: {
+    type: Boolean,
+    default: false,
+  }
+})
+
+const el = ref();
+let editor;
+
+onMounted(() => {
+  editor = CodeMirror(el.value, {
+    value: props.modelValue,
+    mode: props.mode,
+    readOnly: props.readonly,
+    tabSize: 2,
+    // theme: 'idea',
+    lineWrapping: true,
+    lineNumbers: true,
+    autoCloseBrackets: true,
+    autoCloseTags: true,
+    foldGutter: true,
+    fullScreen: true,
+    gutters: ['CodeMirror-linenumbers'],
+    height: 1000
+  });
+})
+
+watch(() => props.modelValue, (newVal) => {
+  editor.setValue(newVal);
+})
+
+onUnmounted(() => {
+  editor = null;
+});
+
 </script>
-
-<style scoped>
-
-</style>

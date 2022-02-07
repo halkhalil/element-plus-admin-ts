@@ -1,16 +1,13 @@
 import {createApp} from "vue";
 import App from "./App.vue";
-
-
-import "~/styles/index.scss";
-
-import {setupElementPlus} from '~/plugins/element'
-import {setupContentment} from '~/plugins/contextmenu.js'
-import {router, setupRouter} from '~/router/index.js'
-import {setupStore} from '~/store/index.js'
-import {setupRouterGuard} from "~/router/guard/index.js";
-import {setupGlobalDirectives} from "~/directives/index.js";
-import {registerGlobComp} from "~/components/registerGlobComp.js";
+import {router, setupRouter} from '~/router'
+import 'element-plus/dist/index.css'
+import {setupStore} from '~/store'
+import {setupRouterGuard} from "~/router/guard";
+import {setupGlobalDirectives} from "~/directives";
+import {registerGlobComp} from "~/components/registerGlobComp";
+import {setupProjectConfig} from "~/logics/setupProjectConfig";
+import {setupPlugins} from "~/logics/setupPlugins";
 
 
 (async () => {
@@ -22,13 +19,13 @@ import {registerGlobComp} from "~/components/registerGlobComp.js";
 
   setupRouterGuard();
 
-  setupContentment(app);
+  setupPlugins(app);
 
   setupGlobalDirectives(app);
 
   registerGlobComp(app);
 
-  await setupElementPlus(app);
+  await setupProjectConfig();
 
   await router.isReady();
 

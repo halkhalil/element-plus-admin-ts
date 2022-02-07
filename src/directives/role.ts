@@ -1,4 +1,4 @@
-import {usePermission} from "~/composables/usePermission.js";
+import {usePermission} from "~/composables/usePermission";
 
 const mounted = (el, binding) => {
   const {hasRole} = usePermission();

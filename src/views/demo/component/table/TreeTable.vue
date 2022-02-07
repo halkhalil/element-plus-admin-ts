@@ -18,7 +18,7 @@
 import {BasicTable} from "~/components/Table/index.ts";
 import {PageWrapper} from '~/components/Page/index.ts';
 
-import {getBasicColumns, getTreeData} from './tableData.js';
+import {getBasicColumns, getTreeData} from './tableData.ts';
 import {reactive, toRefs} from "vue";
 
 export default {

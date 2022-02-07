@@ -4,35 +4,22 @@
       <div ref="elRef" style="height: 380px;width: 100%;"></div>
     </el-col>
     <el-col :xl="8" :lg="8" :md="8" :sm="24" :xs="24">
-      <BasicTable :columns="rankColumn" :data="rankData" size="small"></BasicTable>
+      <BasicTable :columns="rankColumns" :data="rankLists" size="small"></BasicTable>
     </el-col>
   </el-row>
 </template>
-<script>
-import {onMounted, shallowReactive, toRefs} from 'vue';
-import {getVisitData, rankColumn, rankData} from '../data';
+<script lang="ts" setup>
+import {onMounted, shallowReactive} from 'vue';
+import {getVisitData, rankColumn, rankData} from './../data';
 import {BasicTable} from "~/components/Table";
 import {useECharts} from "~/composables/useECharts";
 
-export default {
-  name: "Sale",
-  components: {BasicTable},
-  setup() {
-    const state = shallowReactive({
-      rankData: rankData(),
-      rankColumn: rankColumn()
-    })
+const rankLists:object[] = shallowReactive(rankData());
+const rankColumns:object[] = shallowReactive(rankColumn());
 
-    const {elRef, setOptions} = useECharts();
+const {elRef, setOptions} = useECharts();
 
-    onMounted(() => {
-      setOptions(getVisitData())
-    })
-
-    return {
-      elRef,
-      ...toRefs(state),
-    }
-  }
-}
+onMounted(() => {
+  setOptions(getVisitData())
+})
 </script>

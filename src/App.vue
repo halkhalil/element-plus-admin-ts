@@ -10,7 +10,6 @@ import {useRootSetting} from '~/composables/setting/useRootSeeting'
 import store from "~/store";
 
 const {getGlobalSize} = useRootSetting();
-
 configItemsApi().then((response) => {
   store.commit('config/setConfig', response.data.data);
 });

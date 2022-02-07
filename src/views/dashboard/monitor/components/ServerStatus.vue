@@ -1,5 +1,5 @@
 <template>
-  <BasicCard title="Server Status">
+  <el-card header="Server Status">
     <el-row>
       <el-col :xs="24">
         <div ref="elRef" style="height: 300px;width: 100%;"></div>
@@ -55,7 +55,7 @@
         </el-row>
       </el-col>
     </el-row>
-  </BasicCard>
+  </el-card>
 </template>
 
 <script lang="ts" setup>

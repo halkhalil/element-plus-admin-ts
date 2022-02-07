@@ -15,8 +15,8 @@
 <script>
 import {BasicForm} from "~/components/Form/index.ts";
 import EditGroup from "~/views/system/configs/EditGroup.vue";
-import {useConfig} from "~/composables/config/useConfig.js";
-import {useRootSetting} from "~/composables/setting/useRootSeeting.ts";
+import {useConfig} from "~/composables/config/useConfig";
+import {useRootSetting} from "~/composables/setting/useRootSeeting";
 import {ref} from "vue";
 
 export default {

@@ -1,12 +1,10 @@
 import {unref} from 'vue'
 import {useTransitionSetting} from "~/composables/setting/useTransitionSeeting";
 import store from "~/store";
+import {Router} from "vue-router";
 
-/**
- * PageLoadingGuard
- * @param router
- */
-export function createPageLoadingGuard(router) {
+
+export function createPageLoadingGuard(router:Router) {
   const {getOpenPageLoading} = useTransitionSetting();
   router.beforeEach(async ({meta}) => {
     if (meta.loaded) return true;

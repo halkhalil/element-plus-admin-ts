@@ -20,7 +20,7 @@
 </template>
 <script>
 import {defineComponent, ref, shallowReactive, toRefs} from 'vue';
-import {getProjectData} from "./data.js";
+import {getProjectData} from "./data.ts";
 
 export default defineComponent({
   setup() {

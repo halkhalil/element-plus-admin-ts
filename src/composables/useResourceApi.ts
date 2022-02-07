@@ -1,7 +1,6 @@
 import {reactive, ref, toRefs, onMounted, nextTick} from 'vue';
 import {useDebounceFn} from '@vueuse/core';
 import {AxiosPromise} from "axios";
-import {BaseModel} from "~/api/model/BaseModel";
 
 interface ResourceApi {
   listApi: () => AxiosPromise,

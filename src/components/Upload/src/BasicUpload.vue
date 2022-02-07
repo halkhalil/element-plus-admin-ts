@@ -1,11 +1,11 @@
 <template>
   <el-upload
     :on-preview="handlePreview"
-    v-bind="$props"
+    v-bind="props"
   >
-    <el-button v-bind="$props">点击上传</el-button>
+    <el-button v-bind="props">点击上传</el-button>
     <template #tip>
-      <div class="el-upload__tip">{{ $props.tips }}</div>
+      <div class="el-upload__tip">{{ props.tips }}</div>
     </template>
   </el-upload>
   <el-dialog v-model="dialogVisible">
@@ -13,32 +13,15 @@
   </el-dialog>
 </template>
 
-<script>
-import {reactive, toRefs, unref} from 'vue';
-import {basicProps} from "./props.js";
+<script lang="ts" setup>
+import {ref} from 'vue';
+import {props} from "./props";
 
-export default {
-  name: "BasicUpload",
-  props: basicProps,
-  setup() {
-    const state = reactive({
-      dialogImageUrl: '',
-      dialogVisible: false,
-    })
+const dialogImageUrl = ref();
+const dialogVisible = ref(false)
 
-    function handlePreview(file) {
-      state.dialogImageUrl = file.url ? file.url : file.response['data'][0]['url'];
-      state.dialogVisible = true;
-    }
-
-    return {
-      ...toRefs(state),
-      handlePreview
-    }
-  },
+function handlePreview(file) {
+  dialogImageUrl.value = file.url ? file.url : file.response['data'][0]['url'];
+  dialogVisible.value = true;
 }
 </script>
-
-<style scoped>
-
-</style>

@@ -44,83 +44,65 @@
 
 </template>
 
-<script>
-import {icons} from '../data'
-import {defineComponent, reactive, ref, toRefs, watch} from 'vue';
+<script lang="ts" setup>
+import {icons as iconData} from '../data'
+import {ref} from 'vue';
 import {useDebounceFn, useElementBounding, useVModel} from "@vueuse/core";
 
-
-export default defineComponent({
-  name: 'icon-picker',
-  props: {
-    modelValue: {
-      type: String,
-      default: '',
-    },
-    size: {
-      type: [String, Number],
-      default: 18,
-    },
-    placement: {
-      type: String,
-      default: 'bottom',
-    },
-    placeholder: {
-      type: String,
-      default: '请选择图标'
-    },
-    clearable: {
-      type: Boolean,
-      default: false,
-    },
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
-    readonly: {
-      type: Boolean,
-      default: false,
-    },
-    emptyText: {
-      type: String,
-      default: '没有匹配到可用图标'
-    }
+const props = defineProps({
+  modelValue: {
+    type: String,
+    default: '',
   },
-  setup(props, {emit}) {
-    const state = reactive({
-      icons: icons,
-      visible: false,
-    })
-
-    const inputElRef = ref()
-    const selectIcon = useVModel(props, 'modelValue', emit);
-
-    const {width: popWrapWidth} = useElementBounding(inputElRef)
-
-    const handleSelect = (item) => {
-      selectIcon.value = item;
-    }
-
-    const handleSearch = useDebounceFn((value) => {
-      state.icons = icons.filter(item => item.includes(value))
-    }, 200)
-
-    const handleFocus = () => state.visible = true;
-    const handleBlur = () => state.visible = false;
-
-
-    return {
-      ...toRefs(state),
-      inputElRef,
-      selectIcon,
-      popWrapWidth,
-      handleSearch,
-      handleSelect,
-      handleFocus,
-      handleBlur,
-    }
+  size: {
+    type: [String, Number],
+    default: 18,
+  },
+  placement: {
+    type: String,
+    default: 'bottom',
+  },
+  placeholder: {
+    type: String,
+    default: '请选择图标'
+  },
+  clearable: {
+    type: Boolean,
+    default: false,
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
+  readonly: {
+    type: Boolean,
+    default: false,
+  },
+  emptyText: {
+    type: String,
+    default: '没有匹配到可用图标'
   }
-})
+});
+const emit = defineEmits(['modelValue'])
+
+const icons = ref(iconData);
+const visible = ref(false);
+
+const inputElRef = ref()
+const selectIcon = useVModel(props, 'modelValue', emit);
+
+const {width: popWrapWidth} = useElementBounding(inputElRef)
+
+const handleSelect = (item) => {
+  selectIcon.value = item;
+}
+
+const handleSearch = useDebounceFn((value) => {
+  icons.value = icons.value.filter(item => item.includes(value))
+}, 200)
+
+const handleFocus = () => visible.value = true;
+const handleBlur = () => visible.value = false;
 </script>
 <style lang="scss" scoped>
 .icon-list {

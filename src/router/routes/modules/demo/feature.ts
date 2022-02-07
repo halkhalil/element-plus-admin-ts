@@ -1,6 +1,7 @@
 import Layout from "~/layouts/index.vue";
+import {AppRouteRecordRaw} from "~/router/types";
 
-export default [
+const featureRoute: AppRouteRecordRaw[] = [
   {
     path: '/feature',
     component: Layout,
@@ -64,3 +65,5 @@ export default [
     ]
   }
 ];
+
+export default featureRoute;

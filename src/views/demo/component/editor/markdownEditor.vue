@@ -1,42 +1,28 @@
 <template>
-  <page-wrapper :title="$route.meta['title']" content-full-height content-background>
+  <PageWrapper :title="$route.meta['title']" content-full-height content-background>
     <div class="mt-2">
-      <Markdown ref="markdownRef" v-model="codeData" :options="options"></Markdown>
+      <Markdown ref="markdownRef" v-model="markdownData" :options="options"></Markdown>
     </div>
-  </page-wrapper>
+  </PageWrapper>
 </template>
 
-<script>
+<script lang="ts" setup>
 import {PageWrapper} from "~/components/Page";
 import {Markdown} from '~/components/Markdown'
-import {markdownData} from "./codeData.js";
-import {reactive, toRefs} from "vue";
+import {markdownData} from "./data";
+import {ref} from "vue";
 
-export default {
-  name: "json",
-  components: {Markdown, PageWrapper},
-  setup() {
-    const state = reactive({
-      editorMode: 'classic',
-      codeData: markdownData,
-      options: {
-        height: '100%',
-        upload: {
-          url: 'https://security-company.runhub.cn/backend/uploads',
-          format: (files, responseText) => {
-            const response = JSON.parse(responseText)
-            const returnData = {code: 0, msg: '', data: {errFiles: [], succMap: {url: response.files[0]['url']}}}
-            return JSON.stringify(returnData);
-          },
-        }
-      }
-    })
-
-    return {
-      ...toRefs(state)
-    }
+const options = ref({
+  height: '100%',
+  upload: {
+    url: 'https://security-company.runhub.cn/backend/uploads',
+    format: (files, responseText) => {
+      const response = JSON.parse(responseText)
+      const returnData = {code: 0, msg: '', data: {errFiles: [], succMap: {url: response.files[0]['url']}}}
+      return JSON.stringify(returnData);
+    },
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

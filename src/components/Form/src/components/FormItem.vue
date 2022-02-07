@@ -17,7 +17,7 @@
 <script>
 import {computed, toRefs, unref, ref, watch, inject, h} from 'vue'
 import {isFunction, isBoolean} from "~/utils/is.ts";
-import {componentMap} from '../componentMap.js'
+import {componentMap} from '../componentMap.ts'
 import {useVModel} from "@vueuse/core";
 
 export default {

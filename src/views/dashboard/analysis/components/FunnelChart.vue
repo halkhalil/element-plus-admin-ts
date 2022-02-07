@@ -1,9 +1,9 @@
 <template>
   <el-row>
     <el-col>
-      <BasicCard title="漏斗图">
+      <el-card header="漏斗图">
         <div ref="elRef" style="height: 380px;width: 100%;"></div>
-      </BasicCard>
+      </el-card>
     </el-col>
   </el-row>
 </template>
@@ -30,7 +30,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>

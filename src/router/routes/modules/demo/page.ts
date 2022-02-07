@@ -1,7 +1,8 @@
 import Layout from "~/layouts/index.vue";
 import LayoutContent from "~/layouts/content/Content.vue"
+import {AppRouteRecordRaw} from "~/router/types";
 
-export default [
+const pageRoute: AppRouteRecordRaw[] = [
   {
     path: '/page',
     component: Layout,
@@ -87,3 +88,5 @@ export default [
     ]
   }
 ];
+
+export default pageRoute;

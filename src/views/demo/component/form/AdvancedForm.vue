@@ -45,7 +45,7 @@ const colProps = {
 }
 
 import {BasicForm} from "~/components/Form/index.ts";
-import {selectOptions, cascaderOptions} from './formData.js'
+import {selectOptions, cascaderOptions} from './formData.ts'
 import {PageWrapper} from '~/components/Page/index.ts';
 
 export default {

@@ -61,6 +61,4 @@ const drawerClose = () => emit('update:modelValue', false);
     }
   }
 }
-
-
 </style>

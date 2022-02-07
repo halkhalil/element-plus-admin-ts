@@ -15,18 +15,9 @@
   </el-row>
 </template>
 
-<script>
+<script lang="ts" setup>
 import {ref} from "vue";
 import Sale from "~/views/dashboard/analysis/components/Sale.vue";
 
-export default {
-  name: "VisitCard",
-  components: {Sale},
-  setup() {
-    const activeName = ref('first');
-    return {
-      activeName,
-    }
-  }
-}
+const activeName = ref('first');
 </script>

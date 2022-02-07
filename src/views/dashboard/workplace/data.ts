@@ -1,7 +1,7 @@
 import Mock from "mockjs";
 
 export const getProjectData = (): object[] => {
-  const result = [];
+  const result: object[] = [];
   for (let i = 0; i < 6; i++) {
     result.push({
       title: Mock.Random.ctitle(),
@@ -14,8 +14,16 @@ export const getProjectData = (): object[] => {
   return result;
 };
 
-export const getDynamicData = (): object[] => {
-  const result = [];
+export interface DynamicDataItem {
+  title: string,
+  time: string,
+  image: string,
+  desc: string,
+  name: string,
+}
+
+export const getDynamicData = (): DynamicDataItem[] => {
+  const result: DynamicDataItem[] = [];
   for (let i = 0; i < 7; i++) {
     result.push({
       title: Mock.Random.ctitle(),
@@ -112,8 +120,8 @@ export const getFunnelData = () => {
   };
 }
 
-export const getCoverData = () => {
-  const result = [];
+export const getCoverData = (): object[] => {
+  const result: object[] = [];
   for (let i = 0; i < 3; i++) {
     result.push({
       title: Mock.Random.ctitle(),

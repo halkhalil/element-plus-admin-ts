@@ -26,9 +26,9 @@
 </template>
 <script lang="ts" setup>
 import {shallowReactive} from 'vue';
-import {getDynamicData} from "~/views/dashboard/workplace/data";
+import {DynamicDataItem, getDynamicData} from "~/views/dashboard/workplace/data";
 
-const projects = shallowReactive(getDynamicData())
+const projects: DynamicDataItem[] = shallowReactive(getDynamicData())
 </script>
 <style lang="scss" scoped>
 .item {
@@ -39,6 +39,4 @@ const projects = shallowReactive(getDynamicData())
     border-bottom: 0;
   }
 }
-
-
 </style>

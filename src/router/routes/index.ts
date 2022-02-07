@@ -1,42 +1,32 @@
-import basic from "~/router/routes/basic";
-import component from "~/router/routes/modules/demo/component";
-import dashboard from "~/router/routes/modules/demo/dashboard";
-import feature from "~/router/routes/modules/demo/feature";
-import page from "~/router/routes/modules/demo/page";
-import permission from "~/router/routes/modules/demo/permission";
+import basicRoute from "~/router/routes/basic";
+import componentRoute from "~/router/routes/modules/demo/component";
+import dashboardRoute from "~/router/routes/modules/dashboard";
+import featureRoute from "~/router/routes/modules/demo/feature";
+import pageRoute from "~/router/routes/modules/demo/page";
+import permissionRoute from "~/router/routes/modules/demo/permission";
+import {AppRouteModule, AppRouteRecordRaw} from "~/router/types";
 
 // demo中生成菜单
-const demoRoutes = [
-  ...dashboard,
-  ...component,
-  ...page,
-  ...feature,
-  ...permission,
+const demoRoutes: AppRouteRecordRaw[] = [
+  ...dashboardRoute,
+  ...componentRoute,
+  ...pageRoute,
+  ...featureRoute,
+  ...permissionRoute,
 ];
 
 
 // module
-const moduleRoutes: string[] = [];
+const moduleRoutes: AppRouteModule[] = [];
 const moduleFiles = import.meta.globEager('./modules/*.ts');
 Object.keys(moduleFiles).forEach((key) => moduleRoutes.push(...moduleFiles[key].default));
 
 
 // 异步路由
-const asyncRoutes = [
-  ...demoRoutes,
-  ...moduleRoutes
-];
+export const asyncRoutes: AppRouteRecordRaw[] = [...demoRoutes, ...moduleRoutes];
 
 // 需要生成菜单的路由
-const menuRoutes = [
-  ...demoRoutes,
-];
+export const menuRoutes: AppRouteRecordRaw[] = [...demoRoutes];
 
 // 基础路由
-const basicRoutes = [...basic];
-
-export {
-  basicRoutes,
-  asyncRoutes,
-  menuRoutes,
-};
+export const basicRoutes: AppRouteRecordRaw[] = [...basicRoute];

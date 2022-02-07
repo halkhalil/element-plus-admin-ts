@@ -1,45 +1,47 @@
 <template>
-  <el-row :gutter="10">
-    <el-col :xl="6" :lg="6" :md="12" :sm="12" :xs="24" class="mb-2">
-      <BasicCard :title="title" :notice="notice">
-        <el-row :gutter="10">
-          <el-col :span="10">{{ transitionValue }}</el-col>
-          <el-col :span="14">
-            <div ref="elRef" :style="chartStyle"></div>
-          </el-col>
-        </el-row>
-        <template #footer>{{ description }}</template>
-      </BasicCard>
-    </el-col>
-  </el-row>
+  <el-card>
+    <el-row :gutter="10">
+      <el-col :span="10">
+        <div class="flex-col between">
+          <span class="label">{{ title }}</span>
+          <h1 class="mt-5">{{ transitionValue.toFixed() }}</h1>
+          <span class="label text-overflow-1">{{ description }}</span>
+        </div>
+      </el-col>
+      <el-col :span="14">
+        <div ref="elRef" style="width: 100%;height: 80px;"></div>
+      </el-col>
+    </el-row>
+  </el-card>
 </template>
 
 <script lang="ts" setup>
-import {BasicCard} from "~/components/Card";
 import {useTransition} from '@vueuse/core'
-import {onMounted, ref, toRefs} from "vue";
+import {onMounted, ref} from "vue";
 import {useECharts} from "~/composables/useECharts";
-import {getGrowData, GrowCardItem} from "~/views/dashboard/analysis/data";
 
 const props = defineProps({
   title: String,
   notice: String,
   description: String,
-  chartOption: {},
-  chartStyle: {},
-  options: {}
+  chartOption: Object,
+  chartStyle: Object,
+  options: Object,
+  value: Number,
 });
 
-const {chartOption} = toRefs(props);
-
-const duration = 500;
-const baseNumber = ref(0);
-const transitionValue = useTransition(ref(100), {duration})
-const customNumber = useTransition(baseNumber, {duration})
+const duration = 1000;
+const baseValue = ref(0);
+const transitionValue = useTransition(baseValue, {duration})
 const {elRef, setOptions} = useECharts();
 
-
 onMounted(() => {
-  setOptions(chartOption)
+  setOptions(props.chartOption);
+  baseValue.value = props.value as number;
 })
 </script>
+<style lang="scss" scoped>
+.label {
+  color: var(--el-color-info);
+}
+</style>

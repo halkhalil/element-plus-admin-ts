@@ -1,6 +1,10 @@
 import {asyncRoutes, menuRoutes} from '~/router/routes';
 import {permissions} from "~/api/personal";
-import {listToTree} from "~/utils";
+import {listToTree} from "~/utils/helper/treeHelper";
+import {AppRouteRecordRaw} from "~/router/types";
+import {PermissionModeEnum} from "~/enums/permission";
+import {filter} from "~/utils/helper/treeHelper";
+import {buildRouter, routeFilter} from "~/router/helper/routeHelper";
 
 /**
  * 判断是否有路由权限
@@ -43,7 +47,7 @@ function filterMenus(routes, parentPath = '') {
   const res = [];
   routes.forEach(({path, meta: {icon, title, menu}, children}) => {
     let fullPath = parentPath + '/' + path.replace('/', '');
-    let tmp = {path: fullPath, icon: icon, title: title};
+    let tmp = {path: fullPath, icon: icon, title: title, children: []};
     if (menu) {
       if (children) {
         tmp.children = filterMenus(children, fullPath);
@@ -57,7 +61,9 @@ function filterMenus(routes, parentPath = '') {
 const permission = {
   namespaced: true,
   state: {
-    menus: [],// 菜单
+    backMenus:[],
+    frontMenus:[],
+    menus:[],
     roles: [],// 角色
     actions: [],// 动作
     isLoaded: false, // 是否已加载，该字段禁止缓存
@@ -71,16 +77,16 @@ const permission = {
     },
   },
   actions: {
-    getPermissions: async ({commit}) => {
+    getPermissions: async ({commit, dispatch}) => {
+
       const {data: {data: permission}} = await permissions();
       const {roles = [], menus = [], actions = []} = permission;
       const _menus = menus.map(({id, pid, label, url, icon, type}) => ({id, pid, title: label, path: url, icon, type}))
       const backendMenu = listToTree(_menus);// 后端菜单
       const frontedMenu = filterMenus(menuRoutes);// 前端菜单
       commit('SET_PERMISSIONS', {roles, menus: [...frontedMenu, ...backendMenu], actions});
-      // 按需是否过滤权限路由 @TODO
-      const permissionRoutes = filterAsyncRoutes(asyncRoutes, permission);
-      return Promise.resolve(permissionRoutes);
+      const routes = buildRouter(asyncRoutes);
+      return Promise.resolve(routes);
     },
   }
 };

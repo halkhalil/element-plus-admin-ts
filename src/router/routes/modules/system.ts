@@ -1,9 +1,11 @@
 import Layout from "~/layouts/index.vue";
+import {AppRouteRecordRaw} from "~/router/types";
 
-export default [
+const systemRoute: AppRouteRecordRaw[] = [
   {
     path: '/system',
     component: Layout,
+    name: 'System',
     redirect: '/system/configs',
     meta: {title: '系统', icon: 'el-windows', menu: true},
     children: [
@@ -46,3 +48,5 @@ export default [
     ]
   },
 ];
+
+export default systemRoute;

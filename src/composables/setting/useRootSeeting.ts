@@ -1,8 +1,9 @@
 import {computed, unref} from 'vue'
-import store from "~/store/index.ts";
-import {useMenuSetting} from "~/composables/setting/useMenuSeeting.ts";
+import store from "~/store";
+import {useMenuSetting} from "~/composables/setting/useMenuSeeting";
 import {useWindowSize} from "@vueuse/core";
 import {useTagViewSetting} from "~/composables/setting/useTagViewSeeting.js";
+import {ThemeEnum, SizeEnum} from "~/enums/app";
 
 
 export function useRootSetting() {
@@ -98,8 +99,17 @@ export function useRootSetting() {
    * @param size
    * @returns {Promise<void>}
    */
-  async function toggleElementSize(size) {
+  async function toggleElementSize(size:SizeEnum) {
     await setRootSetting({size: size});
+  }
+
+  /**
+   * 切换DarkMode
+   * @param mode
+   * @returns {Promise<void>}
+   */
+  async function toggleDarkMode(mode: ThemeEnum) {
+    await setRootSetting({darkMode: mode});
   }
 
 
@@ -107,6 +117,7 @@ export function useRootSetting() {
     toggleLogo,
     toggleBreadcrumb,
     toggleNavbarMode,
+    toggleDarkMode,
     openSettingDrawer,
     closedSettingDrawer,
     toggleElementSize,

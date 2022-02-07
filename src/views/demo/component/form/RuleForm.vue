@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import {getRuleFormData} from "~/views/demo/component/form/formData.js";
+import {getRuleFormData} from "~/views/demo/component/form/formData.ts";
 import {useRootSetting} from "~/composables/setting/useRootSeeting.ts";
 import {BasicForm} from "~/components/Form/index.ts";
 import {PageWrapper} from '~/components/Page/index.ts';
