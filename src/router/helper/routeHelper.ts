@@ -4,6 +4,7 @@ import store from '~/store'
 import {filter} from "~/utils/helper/treeHelper";
 import {LAYOUT, IFRAME} from "~/router/constant";
 import {warn} from "~/utils/log";
+import {permissions} from "~/api/personal";
 
 
 let dynamicViewsModules: Record<string, () => Promise<Record<any, any>>>;
@@ -33,7 +34,7 @@ function asyncImportRoute(routes: AppRouteRecordRaw[]) {
         item.component = dynamicImport(dynamicViewsModules, component as string);
       }
     } else if (name) {
-      item.component = getParentLayout();
+      // item.component = getParentLayout();
     }
     children && asyncImportRoute(children);
   });
@@ -58,9 +59,7 @@ function dynamicImport(dynamicViewsModules: Record<string, () => Promise<Record<
     const matchKey = matchKeys[0];
     return dynamicViewsModules[matchKey];
   } else if (matchKeys?.length > 1) {
-    warn(
-      'Please do not create `.vue` and `.TSXPlease do not create `.vue` and `.TSX` files with the same file name in the same hierarchical directory under the views folder. This will cause dynamic introduction failure` files with the same file name in the same hierarchical directory under the views folder. This will cause dynamic introduction failure',
-    );
+    warn('Please do not create `.vue` and `.TSXPlease do not create `.vue` and `.TSX` files with the same file name in the same hierarchical directory under the views folder. This will cause dynamic introduction failure` files with the same file name in the same hierarchical directory under the views folder. This will cause dynamic introduction failure',);
     return;
   } else {
     warn('在src/views/下找不到`' + component + '.vue` 或 `' + component + '.tsx`, 请自行创建!');
@@ -68,7 +67,7 @@ function dynamicImport(dynamicViewsModules: Record<string, () => Promise<Record<
   }
 }
 
-export const buildRouter = (routes: AppRouteRecordRaw[]) => {
+export const buildRouter = async (routes: AppRouteRecordRaw[]) => {
 
   const {getters} = store;
   const {permissionMode} = getters.getProjectConfig;
@@ -83,7 +82,21 @@ export const buildRouter = (routes: AppRouteRecordRaw[]) => {
     return permissionList.some(permission => permissions.includes(permission as Permission));
   }
 
-  routes = filter(routes, routePermissionFilter);
+  switch (permissionMode) {
+    case PermissionModeEnum.ROLE:
+      routes = filter(routes, routePermissionFilter);
+      break;
+    case PermissionModeEnum.ACTION:
+      const {data: {data: permission}} = await permissions();
+      const {roles = [], menus = [], actions = []} = permission;
+
+      routes = filter(routes, routePermissionFilter);
+      break;
+  }
 
   return routes;
+}
+
+export const buildRouteByBackMenu = () => {
+
 }

@@ -5,44 +5,47 @@ import {AppRouteRecordRaw} from "~/router/types";
 const pageRoute: AppRouteRecordRaw[] = [
   {
     path: '/page',
+    name: 'Page',
     component: Layout,
     redirect: '/error-page',
-    meta: {title: '页面', icon: 'el-compass', menu: true},
+    meta: {title: '页面', icon: 'el-compass', sort:40},
     children: [
       {
         path: 'personal',
-        name: 'personal',
+        name: 'Personal',
         component: LayoutContent,
-        meta: {title: '个人页', menu: true, affix: false},
+        meta: {title: '个人页'},
         children: [
           {
             path: 'center',
-            name: 'personal-center',
+            name: 'PersonalCenter',
             component: () => import('~/views/demo/page/personal/center/index.vue'),
-            meta: {title: '个人中心', menu: true, affix: false}
+            meta: {title: '个人中心'}
           },
           {
             path: 'setting',
-            name: 'personal-setting',
+            name: 'PersonalSetting',
             component: () => import('~/views/demo/page/personal/setting/index.vue'),
-            meta: {title: '个人设置', menu: true, affix: false}
+            meta: {title: '个人设置'}
           },
         ]
       },
       {
         path: 'form',
-        name: 'form',
+        name: 'FormPage',
         component: LayoutContent,
-        meta: {title: '表单页', menu: true, affix: false},
+        meta: {title: '表单页'},
         children: [
           {
             path: 'basic',
-            meta: {title: '基础表单', menu: true, affix: false},
+            name: 'BasicFormPage',
+            meta: {title: '基础表单'},
             component: () => import('~/views/demo/page/form/basic/index.vue'),
           },
           {
             path: 'step',
-            meta: {title: '分步表单', menu: true, affix: false},
+            name: 'StepFormPage',
+            meta: {title: '分步表单'},
             component: () => import('~/views/demo/page/form/step/index.vue'),
           },
         ]
@@ -51,36 +54,38 @@ const pageRoute: AppRouteRecordRaw[] = [
         path: 'list',
         name: 'list-page',
         component: LayoutContent,
-        meta: {title: '列表页', menu: true, affix: false},
+        meta: {title: '列表页'},
         children: [
           {
             path: 'basic',
-            meta: {title: '基础表单', menu: true, affix: false},
+            name: 'BasicListPage',
+            meta: {title: '基础表单'},
             component: () => import('~/views/demo/page/form/basic/index.vue'),
           },
           {
             path: 'step',
-            meta: {title: '分步表单', menu: true, affix: false},
+            name: 'BasicStepPage',
+            meta: {title: '分步表单'},
             component: () => import('~/views/demo/page/form/step/index.vue'),
           },
         ]
       },
       {
         path: 'error',
-        name: 'error',
+        name: 'Error',
         component: LayoutContent,
-        meta: {title: '错误页', menu: true, affix: false},
+        meta: {title: '错误页'},
         children: [
           {
             path: '403',
-            name: '403',
-            meta: {title: '403', menu: true, affix: false},
+            name: '403Page',
+            meta: {title: '403'},
             component: () => import('~/views/demo/page/error/403.vue'),
           },
           {
             path: '404',
-            name: '404',
-            meta: {title: '404', menu: true, affix: false},
+            name: '404Page',
+            meta: {title: '404'},
             component: () => import('~/views/demo/page/error/404.vue'),
           },
         ]

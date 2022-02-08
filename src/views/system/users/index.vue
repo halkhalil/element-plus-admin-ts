@@ -1,7 +1,7 @@
 <template>
   <page-wrapper :title="$route.meta['title']">
     <template #extra>
-      <el-button type="primary" size="mini" @click="addItem">新增</el-button>
+      <el-button type="primary" @click="addItem">新增</el-button>
     </template>
     <el-card shadow="none">
       <basic-query v-model="query" :schemas="schemas" @submit="getQuery"></basic-query>
@@ -15,7 +15,7 @@
                    @change-page="changePage">
 
         <template #roles="{row:{roles}}">
-          <el-tag class="mr-2" v-for="(item,index) in roles" :key="index" size="mini">{{ item.label }}</el-tag>
+          <el-tag class="mr-2" v-for="(item,index) in roles" :key="index">{{ item.label }}</el-tag>
         </template>
         <el-table-column label="操作" width="120">
           <template #default="{row}">

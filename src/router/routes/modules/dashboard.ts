@@ -1,29 +1,30 @@
 import Layout from "~/layouts/index.vue";
 import {AppRouteRecordRaw} from "~/router/types";
+
 const dashboardRoute: AppRouteRecordRaw[] = [
   {
     path: '/dashboard',
     name: 'Dashboard',
     component: Layout,
     redirect: '/dashboard/workplace',
-    meta: {title: '首页', icon: 'el-home', menu: true},
+    meta: {title: '首页', icon: 'el-home', sort: 10},
     children: [
       {
         path: 'analysis',
         name: 'analysis',
-        meta: {title: '分析页', menu: true, affix: true},
+        meta: {title: '分析页', affix: true},
         component: () => import('~/views/dashboard/analysis/index.vue'),
       },
       {
         path: 'workplace',
         name: 'workplace',
-        meta: {title: '工作台', menu: true},
+        meta: {title: '工作台'},
         component: () => import('~/views/dashboard/workplace/index.vue'),
       },
       {
         path: 'monitor',
         name: 'monitor',
-        meta: {title: '监控页', menu: true},
+        meta: {title: '监控页'},
         component: () => import('~/views/dashboard/monitor/index.vue'),
       },
     ]

@@ -7,8 +7,8 @@
       el-table的所有属性都可以直接使用
     </template>
     <template #extra>
-      <el-button type="primary" size="mini">操作1</el-button>
-      <el-button type="primary" size="mini">操作2</el-button>
+      <el-button type="primary">操作1</el-button>
+      <el-button type="primary">操作2</el-button>
     </template>
     <el-card shadow="none">
       <basic-table :data="tableData" :columns="tableColumns" border>

@@ -4,20 +4,21 @@ import {AppRouteRecordRaw} from "~/router/types";
 const permissionRoute: AppRouteRecordRaw[] = [
   {
     path: '/permission',
-    component: Layout,
+    name: 'Permission',
     redirect: '/permission/page',
-    meta: {title: '权限', icon: 'el-lock', menu: true},
+    component: Layout,
+    meta: {title: '权限', icon: 'el-lock', sort: 50},
     children: [
       {
         path: 'page',
-        name: 'permission-page',
-        meta: {title: '页面权限', menu: true, affix: false},
+        name: 'permissionPage',
+        meta: {title: '页面权限'},
         component: () => import('~/views/demo/permission/page.vue'),
       },
       {
         path: 'button',
-        name: 'permission-button',
-        meta: {title: '按钮权限', menu: true, affix: false},
+        name: 'PermissionButton',
+        meta: {title: '按钮权限'},
         component: () => import('~/views/demo/permission/button.vue'),
       },
     ]

@@ -10,23 +10,47 @@ export type Component<T = any> =
 export type Permission = RoleEnum | ActionEnum;
 
 export interface RouteMeta {
+  // 路由标题
   title: string;
-  cache?: boolean;
+  // 图标
   icon?: string;
+  // 权限，可以访问的角色或动作节点
   permissions?: Permission[];
+  // 固定标签
   affix?: boolean;
+  // 当前路由不显示菜单
   hideMenu?: boolean;
+  // 菜单排序
   sort?: number;
+  // 是否忽略KeepAlive缓存
+  ignoreKeepAlive?: boolean;
+  //
   ignoreRoute?: boolean,
+  // 单个菜单，当需要将子集菜单第一个路由作为一级菜单时，需要配置该项
+  single?: boolean;
+  // 内嵌iframe的地址
   frameSrc?: string;
+  // 默认激活的index
+  defaultActive?: string,
 }
 
 export interface Menu {
-  name: string,
-  icon?: string,
-  path: string,
-  sort?: number,
-  meta?: Partial<RouteMeta>,
+  // 菜单名称
+  title: string;
+  // 图标
+  icon?: string;
+  // 路径
+  path: string;
+  // 路径参数
+  pathParam?: string,
+  // 排序
+  sort?: number;
+  // 分组名称
+  group?: string,
+  // 是否禁用
+  disabled?: boolean,
+  // 子集菜单
+  children?: Menu[];
 }
 
 // @ts-ignore

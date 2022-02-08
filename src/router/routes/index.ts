@@ -8,7 +8,6 @@ import {AppRouteModule, AppRouteRecordRaw} from "~/router/types";
 
 // demo中生成菜单
 const demoRoutes: AppRouteRecordRaw[] = [
-  ...dashboardRoute,
   ...componentRoute,
   ...pageRoute,
   ...featureRoute,

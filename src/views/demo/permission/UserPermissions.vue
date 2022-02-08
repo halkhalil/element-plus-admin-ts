@@ -2,7 +2,7 @@
   <el-card shadow="none">
     <template #header>
       当前用户：
-      <el-select v-model="currentUser" placeholder="Select" size="mini" @change="changeUser">
+      <el-select v-model="currentUser" placeholder="Select" @change="changeUser">
         <el-option v-for="item in changeUsers" :key="item.value" :label="item.username" :value="item.id">
           <span style="float: left">{{ item.username }}</span>
           <span style="float: right;color: var(--el-text-color-secondary);font-size: 13px;">

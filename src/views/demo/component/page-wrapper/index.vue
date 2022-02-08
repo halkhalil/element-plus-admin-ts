@@ -6,9 +6,9 @@
     content-full-height
   >
     <template #extra>
-      <el-button type="primary" size="mini">按钮1</el-button>
-      <el-button type="primary" size="mini">按钮2</el-button>
-      <el-button type="primary" size="mini">按钮3</el-button>
+      <el-button type="primary">按钮1</el-button>
+      <el-button type="primary">按钮2</el-button>
+      <el-button type="primary">按钮3</el-button>
     </template>
     <template #content>
       <div class="text-sm text-secondary">
