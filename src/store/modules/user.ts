@@ -1,4 +1,4 @@
-import * as personal from '~/api/personal';
+import * as personal from '~/api/account';
 
 const user = {
   namespaced: true,

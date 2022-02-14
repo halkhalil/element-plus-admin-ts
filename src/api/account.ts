@@ -15,14 +15,20 @@ const info = () => {
   return axios.get('/personal/info');
 };
 
-// 菜单 权限节点
-const permissions = () => {
+// 权限节点
+const fetchPermissions = () => {
   return axios.get('/personal/permissions');
+};
+
+// 菜单
+const fetchMenus = () => {
+  return axios.get('/personal/menus');
 };
 
 export {
   login,
   logout,
   info,
-  permissions,
+  fetchPermissions,
+  fetchMenus,
 };

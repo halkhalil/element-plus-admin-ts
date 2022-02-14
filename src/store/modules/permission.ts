@@ -1,5 +1,5 @@
 import {asyncRoutes} from '~/router/routes';
-import {permissions} from "~/api/personal";
+import {fetchPermissions} from "~/api/account";
 import {buildRouter} from "~/router/helper/routeHelper";
 import {transformRouteToMenu} from "~/router/helper/menuHelper";
 
@@ -11,6 +11,7 @@ const permission = {
     menus: [],
     roles: [],// 角色
     actions: [],// 动作
+    permissions:[],
     isLoaded: false, // 是否已加载，该字段禁止缓存
   },
   mutations: {
@@ -23,20 +24,18 @@ const permission = {
   },
   actions: {
     getPermissions: async ({commit, dispatch}) => {
-
-      const {data: {data: permission}} = await permissions();
-      const {roles = [], actions = []} = permission;
-      // const _menus = menus.map(({id, pid, label, url, icon, type}) => ({id, pid, title: label, path: url, icon, type}))
-      // const backendMenu = listToTree(_menus);// 后端菜单
-      const routes = buildRouter(asyncRoutes);
+      const {data: {data: permission}} = await fetchPermissions();
+      const routes = await buildRouter(permission);
       const menus = transformRouteToMenu(routes);
       menus.sort((a, b) => (a?.sort || 0) - (b?.sort || 0));
-      commit('SET_PERMISSIONS', {roles, menus, actions});
+      commit('SET_PERMISSIONS', { menus, permission});
       return Promise.resolve(routes);
     },
 
-    buildRouteAction:()=>{
-
+    buildRouteAction:async ({commit})=>{
+      const {data: {data: permission}} = await fetchPermissions();
+      commit('SET_PERMISSIONS', permission);
+      return Promise.resolve(permission);
     }
   }
 };

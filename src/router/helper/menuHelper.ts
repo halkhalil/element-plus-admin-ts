@@ -19,7 +19,7 @@ function joinParentPath(menus: Menu[], parentPath = '') {
 export function transformRouteToMenu(routeModList: AppRouteModule[]) {
   const cloneRouteModList = cloneDeep(routeModList);
   const routeList: AppRouteRecordRaw[] = [];
-
+  console.log('cloneRouteModList',routeModList);
   cloneRouteModList.forEach((item) => {
     if (item.meta?.single) {
       const realItem = item?.children?.[0];

@@ -2,9 +2,10 @@ import {AppRouteModule, AppRouteRecordRaw, Permission} from "~/router/types";
 import {PermissionModeEnum} from "~/enums/permission";
 import store from '~/store'
 import {filter} from "~/utils/helper/treeHelper";
-import {LAYOUT, IFRAME} from "~/router/constant";
+import {LAYOUT, IFRAME, EXCEPTION_COMPONENT} from "~/router/constant";
 import {warn} from "~/utils/log";
-import {permissions} from "~/api/personal";
+import {fetchMenus, fetchPermissions} from "~/api/account";
+import {asyncRoutes} from "~/router/routes";
 
 
 let dynamicViewsModules: Record<string, () => Promise<Record<any, any>>>;
@@ -13,11 +14,89 @@ const LayoutMap = new Map();
 LayoutMap.set('LAYOUT', LAYOUT);
 LayoutMap.set('IFRAME', IFRAME);
 
+
+/**
+ * 动态引入组件
+ * @param dynamicViewsModules
+ * @param component
+ */
+const dynamicImport = (dynamicViewsModules: Record<string, () => Promise<Record<any, any>>>, component: string,) => {
+  const keys = Object.keys(dynamicViewsModules);
+  const matchKeys = keys.filter((key) => {
+    const k = key.replace('../../views', '');
+    const startFlag = component.startsWith('/');
+    const endFlag = component.endsWith('.vue') || component.endsWith('.tsx');
+    const startIndex = startFlag ? 0 : 1;
+    const lastIndex = endFlag ? k.length : k.lastIndexOf('.');
+    return k.substring(startIndex, lastIndex) === component;
+  });
+  if (matchKeys?.length === 1) {
+    const matchKey = matchKeys[0];
+    return dynamicViewsModules[matchKey];
+  } else if (matchKeys?.length > 1) {
+    warn('Please do not create `.vue` and `.TSXPlease do not create `.vue` and `.TSX` files with the same file name in the same hierarchical directory under the views folder. This will cause dynamic introduction failure` files with the same file name in the same hierarchical directory under the views folder. This will cause dynamic introduction failure',);
+    return;
+  } else {
+    warn('在src/views/下找不到`' + component + '.vue` 或 `' + component + '.tsx`, 请自行创建!');
+    return EXCEPTION_COMPONENT;
+  }
+}
+
+
+export const buildRouter = async (permissionList) => {
+  const {getters} = store;
+  const {permissionMode} = getters.getProjectConfig;
+  let routes: AppRouteRecordRaw[] = [];
+
+  switch (permissionMode) {
+    case PermissionModeEnum.FROND_MENU: // 前端菜单模式，根据返回的权限节点过滤路由
+      routes = buildRouteByFrontMenu(permissionList);
+      break;
+    case PermissionModeEnum.BACK_MENU:// 后端菜单模式，根据后端返回的菜单生成路由
+      routes = await buildRouteByBackMenu();
+      break;
+  }
+
+  return routes;
+}
+
+/**
+ * 前端菜单模式
+ * 根据权限节点过滤路由
+ * @param permissionList
+ */
+const buildRouteByFrontMenu = (permissionList) => {
+  let routes = asyncRoutes;
+
+  const routePermissionFilter = (route: AppRouteRecordRaw) => {
+    const {meta} = route;
+    const {permissions} = meta || {};
+    if (!permissions) return true;
+    return permissionList.some(permission => permissions.includes(permission as Permission));
+  }
+
+  routes = filter(routes, routePermissionFilter);
+
+  return routes;
+}
+
+/**
+ * 后端菜单模式
+ * 将返回的菜单异步引入路由
+ */
+const buildRouteByBackMenu = async () => {
+  const {data: {data: routes}} = await fetchMenus();
+
+  asyncImportRoute(routes as AppRouteRecordRaw[]);
+
+  return routes as AppRouteRecordRaw[];
+}
+
 /**
  * 动态加载路由组件
  * @param routes
  */
-function asyncImportRoute(routes: AppRouteRecordRaw[]) {
+const asyncImportRoute = (routes: AppRouteRecordRaw[]) => {
   dynamicViewsModules = dynamicViewsModules || import.meta.glob('../../views/**/*.{vue,tsx}');
   if (!routes) return;
   routes.forEach((item) => {
@@ -38,65 +117,4 @@ function asyncImportRoute(routes: AppRouteRecordRaw[]) {
     }
     children && asyncImportRoute(children);
   });
-}
-
-/**
- * 动态引入组件
- * @param dynamicViewsModules
- * @param component
- */
-function dynamicImport(dynamicViewsModules: Record<string, () => Promise<Record<any, any>>>, component: string,) {
-  const keys = Object.keys(dynamicViewsModules);
-  const matchKeys = keys.filter((key) => {
-    const k = key.replace('../../views', '');
-    const startFlag = component.startsWith('/');
-    const endFlag = component.endsWith('.vue') || component.endsWith('.tsx');
-    const startIndex = startFlag ? 0 : 1;
-    const lastIndex = endFlag ? k.length : k.lastIndexOf('.');
-    return k.substring(startIndex, lastIndex) === component;
-  });
-  if (matchKeys?.length === 1) {
-    const matchKey = matchKeys[0];
-    return dynamicViewsModules[matchKey];
-  } else if (matchKeys?.length > 1) {
-    warn('Please do not create `.vue` and `.TSXPlease do not create `.vue` and `.TSX` files with the same file name in the same hierarchical directory under the views folder. This will cause dynamic introduction failure` files with the same file name in the same hierarchical directory under the views folder. This will cause dynamic introduction failure',);
-    return;
-  } else {
-    warn('在src/views/下找不到`' + component + '.vue` 或 `' + component + '.tsx`, 请自行创建!');
-    // return EXCEPTION_COMPONENT;
-  }
-}
-
-export const buildRouter = async (routes: AppRouteRecordRaw[]) => {
-
-  const {getters} = store;
-  const {permissionMode} = getters.getProjectConfig;
-
-  const permissionList = permissionMode === PermissionModeEnum.ROLE ? getters.getRoles : getters.getActions;
-
-
-  const routePermissionFilter = (route: AppRouteRecordRaw) => {
-    const {meta} = route;
-    const {permissions} = meta || {};
-    if (!permissions) return true;
-    return permissionList.some(permission => permissions.includes(permission as Permission));
-  }
-
-  switch (permissionMode) {
-    case PermissionModeEnum.ROLE:
-      routes = filter(routes, routePermissionFilter);
-      break;
-    case PermissionModeEnum.ACTION:
-      const {data: {data: permission}} = await permissions();
-      const {roles = [], menus = [], actions = []} = permission;
-
-      routes = filter(routes, routePermissionFilter);
-      break;
-  }
-
-  return routes;
-}
-
-export const buildRouteByBackMenu = () => {
-
 }
