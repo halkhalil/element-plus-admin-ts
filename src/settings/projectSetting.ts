@@ -44,5 +44,7 @@ export const setting: ProjectSetting = {
   showSettingDrawer: false,
   openKeepAlive: false,
   size: SizeEnum.DEFAULT,
-  permissionMode:PermissionModeEnum.FROND_MENU,
+  permissionMode:PermissionModeEnum.FRONT_MENU,
 }
+
+export default setting;

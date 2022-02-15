@@ -13,7 +13,7 @@ const getters = {
   getVisitedViews: (state: any) => state.tagView.visitedViews,
   getRoles: (state: any) => state.permission.roles,
   getMenus: (state: any) => state.permission.menus,
-  getActions: (state: any) => state.permission.actions,
+  getPermissions: (state: any) => state.permission.permissions,
   getIsLoaded: (state: any) => state.permission.isLoaded,
 };
 export default getters

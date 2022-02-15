@@ -1,7 +1,7 @@
 // 权限模式
 export const enum PermissionModeEnum {
   BACK_MENU = 'backMenu',// 后端菜单模式
-  FROND_MENU = 'frontMenu',// 前端菜单模式
+  FRONT_MENU = 'frontMenu',// 前端菜单模式
 }
 
 // 角色节点

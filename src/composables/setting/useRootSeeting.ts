@@ -114,6 +114,7 @@ export function useRootSetting() {
 
 
   return {
+    setRootSetting,
     toggleLogo,
     toggleBreadcrumb,
     toggleNavbarMode,

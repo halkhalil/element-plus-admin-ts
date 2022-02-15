@@ -1,10 +1,8 @@
-import {AppRouteModule, AppRouteRecordRaw, Permission} from "~/router/types";
-import {PermissionModeEnum} from "~/enums/permission";
-import store from '~/store'
+import {AppRouteRecordRaw, Permission} from "~/router/types";
 import {filter} from "~/utils/helper/treeHelper";
 import {LAYOUT, IFRAME, EXCEPTION_COMPONENT} from "~/router/constant";
 import {warn} from "~/utils/log";
-import {fetchMenus, fetchPermissions} from "~/api/account";
+import {fetchMenus} from "~/api/account";
 import {asyncRoutes} from "~/router/routes";
 
 
@@ -43,29 +41,12 @@ const dynamicImport = (dynamicViewsModules: Record<string, () => Promise<Record<
 }
 
 
-export const buildRouter = async (permissionList) => {
-  const {getters} = store;
-  const {permissionMode} = getters.getProjectConfig;
-  let routes: AppRouteRecordRaw[] = [];
-
-  switch (permissionMode) {
-    case PermissionModeEnum.FROND_MENU: // 前端菜单模式，根据返回的权限节点过滤路由
-      routes = buildRouteByFrontMenu(permissionList);
-      break;
-    case PermissionModeEnum.BACK_MENU:// 后端菜单模式，根据后端返回的菜单生成路由
-      routes = await buildRouteByBackMenu();
-      break;
-  }
-
-  return routes;
-}
-
 /**
  * 前端菜单模式
  * 根据权限节点过滤路由
  * @param permissionList
  */
-const buildRouteByFrontMenu = (permissionList) => {
+export const buildRouteByFrontMenu = async (permissionList) => {
   let routes = asyncRoutes;
 
   const routePermissionFilter = (route: AppRouteRecordRaw) => {
@@ -84,7 +65,7 @@ const buildRouteByFrontMenu = (permissionList) => {
  * 后端菜单模式
  * 将返回的菜单异步引入路由
  */
-const buildRouteByBackMenu = async () => {
+export const buildRouteByBackMenu = async () => {
   const {data: {data: routes}} = await fetchMenus();
 
   asyncImportRoute(routes as AppRouteRecordRaw[]);

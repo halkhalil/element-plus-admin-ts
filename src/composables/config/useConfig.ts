@@ -8,10 +8,6 @@ export function useConfig() {
   const getConfigComponents = computed(() => store.getters.getConfigs['config_components']);
 
   const getMenuTypes = computed(() => store.getters.getConfigs['menu_types']);
-  const getPermissions = computed(() => store.getters.getConfigs['permissions']);
-
-
-  const getRoles = computed(() => store.getters.getConfigs.roles);
 
   const getPermissionRoutes = shallowReactive(useRouter().getRoutes().filter(item => item.meta.menu));
 
@@ -20,8 +16,6 @@ export function useConfig() {
     getConfigTypes,
     getConfigComponents,
     getMenuTypes,
-    getPermissions,
-    getRoles,
     getPermissionRoutes,
   }
 }
