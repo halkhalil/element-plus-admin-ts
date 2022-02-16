@@ -3,9 +3,9 @@
   <router-view/>
 </template>
 <script lang="ts" setup>
-import LayoutMix from "~/layouts/LayoutMix.vue";
-import LayoutAside from "~/layouts/LayoutAside.vue";
-import LayoutTopMenu from "~/layouts/LayoutTopMenu.vue";
+import LayoutMix from "~/layouts/default/LayoutMix.vue";
+import LayoutAside from "~/layouts/default/LayoutAside.vue";
+import LayoutTopMenu from "~/layouts/default/LayoutTopMenu.vue";
 import {useRootSetting} from "~/composables/setting/useRootSeeting";
 import {computed} from "vue";
 

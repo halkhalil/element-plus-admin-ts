@@ -9,9 +9,11 @@ export const EXCEPTION_COMPONENT = () => import('~/views/sys/exception/404.vue')
 /**
  * @description: default layout
  */
-export const LAYOUT = () => import('~/layouts/index.vue');
+export const LAYOUT = () => import('~/layouts/default/index.vue');
 
-export const IFRAME = () => import('~/layouts/index.vue');
+export const CONTENT = () => import('~/layouts/page/index.vue');
+
+export const IFRAME = () => import('~/layouts/default/index.vue');
 
 /**
  * @description: parent-layout

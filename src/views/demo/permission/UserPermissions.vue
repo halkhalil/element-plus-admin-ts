@@ -32,7 +32,7 @@
 }
 </style>
 <script>
-import Menu from '~/layouts/menu/index.vue';
+import Menu from '~/layouts/default/menu/index.vue';
 import {PageWrapper} from "~/components/Page"
 import {defineComponent, toRefs, reactive, computed} from "vue";
 import {usePermission} from "~/composables/usePermission";

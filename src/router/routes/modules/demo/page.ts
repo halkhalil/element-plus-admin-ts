@@ -1,5 +1,5 @@
-import Layout from "~/layouts/index.vue";
-import LayoutContent from "~/layouts/content/Content.vue"
+import Layout from "~/layouts/default/index.vue";
+import LayoutContent from "~/layouts/page/index.vue"
 import {AppRouteRecordRaw} from "~/router/types";
 
 const pageRoute: AppRouteRecordRaw[] = [

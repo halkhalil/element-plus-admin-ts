@@ -24,19 +24,19 @@ export function usePermission() {
 
     if (permissionMode == PermissionModeEnum.FRONT_MENU) {
       const getRoles = computed(() => getters.getRoles);
-      return unref(getRoles).some((item => checks.includes(item as RoleEnum));
+      return unref(getRoles).some(item => checks.includes(item as RoleEnum));
     }
 
     if (permissionMode == PermissionModeEnum.BACK_MENU) {
       const getPermissions = computed(() => getters.getPermissions);
-      return unref(getPermissions).some((item => checks.includes(item as PermissionEnum));
+      return unref(getPermissions).some(item => checks.includes(item as PermissionEnum));
     }
 
     return true;
   }
 
   /**
-   * 更改权限模式
+   * 切换权限模式
    */
   const togglePermissionMode = async () => {
     const {setRootSetting} = useRootSetting();

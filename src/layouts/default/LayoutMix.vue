@@ -21,8 +21,8 @@
 <script lang="ts" setup>
 import LayoutHeader from './header/index.vue';
 import LayoutContent from './content/index.vue';
-import LayoutSidebar from "~/layouts/sidebar/index.vue";
-import TagView from '~/layouts/tagview/tagView.vue';
+import LayoutSidebar from "~/layouts/default/sidebar/index.vue";
+import TagView from '~/layouts/default/tagview/tagView.vue';
 </script>
 
 <style lang="scss" scoped>

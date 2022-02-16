@@ -13,7 +13,7 @@
 </template>
 <script>
 
-import ItemMenu from "~/layouts/menu/ItemMenu.vue";
+import ItemMenu from "~/layouts/default/menu/ItemMenu.vue";
 
 export default {
   name: 'SubMenu',

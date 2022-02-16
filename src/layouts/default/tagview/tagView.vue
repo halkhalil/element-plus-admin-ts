@@ -29,7 +29,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import {useTagView} from "~/layouts/tagview/useTagView";
+import {useTagView} from "~/layouts/default/tagview/useTagView";
 
 const {
   scrollbarRef,

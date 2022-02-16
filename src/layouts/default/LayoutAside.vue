@@ -14,7 +14,7 @@
 <script lang="ts" setup>
 import LayoutHeader from './header/index.vue';
 import LayoutContent from './content/index.vue';
-import LayoutSidebar from "~/layouts/sidebar/index.vue";
+import LayoutSidebar from "~/layouts/default/sidebar/index.vue";
 </script>
 
 <style lang="scss" scoped>

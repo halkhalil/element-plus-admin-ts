@@ -5,7 +5,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import SettingDrawer from "~/layouts/setting/components/SettingDrawer.vue";
+import SettingDrawer from "~/layouts/default/setting/components/SettingDrawer.vue";
 import {useRootSetting} from "~/composables/setting/useRootSeeting";
 
 const {openSettingDrawer} = useRootSetting();
