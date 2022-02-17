@@ -1,6 +1,6 @@
-// import Layout from "~/layouts/index.vue";
 import {AppRouteRecordRaw} from "~/router/types";
-import {LAYOUT, getParentLayout, CONTENT} from "~/router/constant";
+import {CONTENT, LAYOUT} from "~/router/constant";
+import {RoleEnum} from "~/enums/permission";
 
 const permissionRoute: AppRouteRecordRaw[] = [
   {
@@ -21,13 +21,25 @@ const permissionRoute: AppRouteRecordRaw[] = [
             path: 'page',
             name: 'FrontPermissionPage',
             meta: {title: '页面权限'},
-            component: () => import('~/views/demo/permission/page.vue'),
+            component: () => import('~/views/demo/permission/front/index.vue'),
           },
           {
             path: 'button',
             name: 'FrontPermissionButton',
             meta: {title: '按钮权限'},
             component: () => import('~/views/demo/permission/button.vue'),
+          },
+          {
+            path: 'auth-pageA',
+            name: 'AuthPageA',
+            meta: {title: '权限测试页A', roles: [RoleEnum.ADMINISTRATOR]},
+            component: () => import('~/views/demo/permission/authPageA.vue'),
+          },
+          {
+            path: 'auth-pageB',
+            name: 'AuthPageB',
+            meta: {title: '权限测试页A', roles: [RoleEnum.TEST]},
+            component: () => import('~/views/demo/permission/authPageB.vue'),
           },
         ]
       },

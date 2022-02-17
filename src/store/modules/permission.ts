@@ -1,6 +1,6 @@
 import {asyncRoutes} from '~/router/routes';
 import {fetchPermissions} from "~/api/account";
-import {buildRouteByBackMenu, buildRouteByFrontMenu} from "~/router/helper/routeHelper";
+import {buildRouteByBackMenu, buildRouteByRole} from "~/router/helper/routeHelper";
 import {transformRouteToMenu} from "~/router/helper/menuHelper";
 import store from "~/store";
 import {AppRouteRecordRaw} from "~/router/types";
@@ -21,22 +21,23 @@ const permission = {
     },
   },
   actions: {
-    _getPermissions: async ({commit, dispatch}) => {
+    // 获取权限节点
+    getPermissions: async ({commit, dispatch}) => {
       const {data: {data: permissions}} = await fetchPermissions();
       commit('SET_PERMISSIONS', {permissions});
       return Promise.resolve(permissions);
     },
-
+    // 生成路由
     buildRoutes: async ({commit, dispatch}) => {
       const {permissionMode} = store.getters.getProjectConfig;
       let routes: AppRouteRecordRaw[] = [];
 
       switch (permissionMode) {
-        case PermissionModeEnum.FRONT_MENU: // 前端菜单模式，根据返回的权限节点过滤路由
-          const permissions = await dispatch('_getPermissions');
-          routes = await buildRouteByFrontMenu(permissions);
+        case PermissionModeEnum.FRONT_MENU: // 前端菜单模式，更绝用户角色过滤路由
+          routes = await buildRouteByRole();
           break;
         case PermissionModeEnum.BACK_MENU:// 后端菜单模式，根据后端返回的菜单生成路由
+          const permissions = await dispatch('getPermissions');
           routes = await buildRouteByBackMenu();
           break;
       }

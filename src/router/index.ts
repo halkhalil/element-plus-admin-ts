@@ -9,6 +9,15 @@ export const router = createRouter({
   scrollBehavior: () => ({left: 0, top: 0}),
 })
 
-export function setupRouter(app: App<Element>) {
+export const setupRouter = (app: App<Element>) => {
   app.use(router);
+}
+
+export const resetRouter = () => {
+  router.getRoutes().forEach((route) => {
+    const { name } = route;
+    if (name && !WHITE_NAME_LIST.includes(name as string)) {
+      router.hasRoute(name) && router.removeRoute(name);
+    }
+  });
 }

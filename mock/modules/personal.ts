@@ -110,7 +110,8 @@ const userInfo1 = {
   "status": 1,
   "source": "1",
   "created_at": "2021-09-24 07:32:54",
-  "status_label": "正常"
+  "status_label": "正常",
+  "roles": [{name: 'Administrator', label: '超级管理员'}],
 }
 
 const userInfo2 = {
@@ -123,7 +124,8 @@ const userInfo2 = {
   "status": 1,
   "source": "1",
   "created_at": "2021-09-24 07:32:54",
-  "status_label": "正常"
+  "status_label": "正常",
+  "roles": [{name: 'Test', label: '测试'}],
 }
 
 export default [

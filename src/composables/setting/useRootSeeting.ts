@@ -4,6 +4,7 @@ import {useMenuSetting} from "~/composables/setting/useMenuSeeting";
 import {useWindowSize} from "@vueuse/core";
 import {useTagViewSetting} from "~/composables/setting/useTagViewSeeting.js";
 import {ThemeEnum, SizeEnum} from "~/enums/app";
+import {PermissionModeEnum} from "~/enums/permission";
 
 
 export function useRootSetting() {
@@ -40,6 +41,9 @@ export function useRootSetting() {
   const getNavbarMode = computed(() => unref(getProjectConfig).navbarMode);
   const getPageLoading = computed(() => getters.getPageLoading);
   const getOpenKeepAlive = computed(() => unref(getProjectConfig).openKeepAlive);
+
+  // 权限模式
+  const getPermissionMode = computed(() => unref(getProjectConfig).permissionMode);
 
 
   /**
@@ -112,6 +116,16 @@ export function useRootSetting() {
     await setRootSetting({darkMode: mode});
   }
 
+  /**
+   * 切换权限模式
+   */
+  const togglePermissionMode = async () => {
+    const {setRootSetting} = useRootSetting();
+    const mode = getPermissionMode.value == PermissionModeEnum.BACK_MENU ? PermissionModeEnum.FRONT_MENU : PermissionModeEnum.BACK_MENU
+    await setRootSetting({permissionMode: mode});
+    location.reload();
+  }
+
 
   return {
     setRootSetting,
@@ -122,6 +136,7 @@ export function useRootSetting() {
     openSettingDrawer,
     closedSettingDrawer,
     toggleElementSize,
+    togglePermissionMode,
     getDarkMode,
     getNavbarMode,
     getShowLogo,
@@ -138,5 +153,6 @@ export function useRootSetting() {
     getPageLoading,
     getOpenKeepAlive,
     getGlobalSize,
+    getPermissionMode,
   };
 }

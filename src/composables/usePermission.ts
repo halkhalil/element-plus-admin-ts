@@ -3,14 +3,12 @@ import store from "~/store";
 import {isString} from "~/utils/is";
 import {PermissionEnum, PermissionModeEnum, RoleEnum} from "~/enums/permission";
 import projectSetting from '~/settings/projectSetting';
-import {useRootSetting} from "~/composables/setting/useRootSeeting";
 
 type Permission = RoleEnum | PermissionEnum | string;
 
 export function usePermission() {
-  const {getters} = store;
+  const {getters, dispatch} = store;
   const permissionMode = projectSetting.permissionMode;
-
 
   /**
    * 权限校验
@@ -35,18 +33,13 @@ export function usePermission() {
     return true;
   }
 
-  /**
-   * 切换权限模式
-   */
-  const togglePermissionMode = async () => {
-    const {setRootSetting} = useRootSetting();
-    const mode = permissionMode == PermissionModeEnum.BACK_MENU ? PermissionModeEnum.FRONT_MENU : PermissionModeEnum.BACK_MENU
-    await setRootSetting({permissionMode: mode});
-    location.reload();
+  const changeRoles = async (roles: RoleEnum | RoleEnum[]) => {
+    const _roles = isString(roles) ? [roles] : roles;
+    await dispatch('user/setRoles', _roles);
   }
 
   return {
     hasPermission,
-    togglePermissionMode,
+    changeRoles,
   }
 }

@@ -1,27 +1,31 @@
 import * as personal from '~/api/account';
+import {RoleEnum} from "~/enums/permission";
+
+interface UserState {
+  accessToken: string,
+  user: object,
+  roles: string[],
+}
 
 const user = {
   namespaced: true,
   state: {
     accessToken: undefined,
     user: undefined,
-    roles: undefined,
+    roles: [],
   },
   mutations: {
-    setAccessToken: (state, accessToken) => {
+    setAccessToken: (state, accessToken: string) => {
       state.accessToken = accessToken;
     },
-    setUser: (state, user) => {
+    setUser: (state, user: object | null) => {
       state.user = user;
     },
-    setRoles: (state, roles) => {
+    setRoles: (state, roles: string[]) => {
       state.roles = roles;
-    }
+    },
   },
   actions: {
-    async setToken({commit}, accessToken) {
-      await commit('setAccessToken', accessToken);
-    },
     async login({commit}, params) {
       const {data: {data}} = await personal.login(params);
       commit('setAccessToken', data.access_token);
@@ -33,10 +37,15 @@ const user = {
       commit('setUser', undefined);
     },
     async getUserInfo({commit}) {
-      const {data: {data}} = await personal.info();
-      commit('setUser', data);
-      return data;
+      const {data: {data: {roles, ...user}}} = await personal.info();
+      console.log('roles', roles);
+      commit('setUser', user);
+      commit('setRoles', roles.map(item => item.name));
+      return user;
     },
+    async setRoles({commit}, roles: RoleEnum[]) {
+      commit('setRoles', roles);
+    }
   }
 };
 export default user;

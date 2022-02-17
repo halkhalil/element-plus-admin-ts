@@ -7,7 +7,6 @@ export type Component<T = any> =
   | (() => Promise<typeof import('*.vue')>)
   | (() => Promise<T>);
 
-export type Permission = RoleEnum | ActionEnum;
 
 export interface RouteMeta {
   // 路由标题
@@ -15,7 +14,7 @@ export interface RouteMeta {
   // 图标
   icon?: string;
   // 权限，可以访问的角色或动作节点
-  permissions?: Permission[];
+  roles?: RoleEnum[];
   // 固定标签
   affix?: boolean;
   // 当前路由不显示菜单

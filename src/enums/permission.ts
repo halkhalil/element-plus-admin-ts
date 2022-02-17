@@ -7,6 +7,7 @@ export const enum PermissionModeEnum {
 // 角色节点
 export const enum RoleEnum {
   ADMINISTRATOR = 'Administrator',
+  TEST = 'Test',
 }
 
 // 动作节点

@@ -1,9 +1,11 @@
-import {AppRouteRecordRaw, Permission} from "~/router/types";
+import {AppRouteRecordRaw} from "~/router/types";
 import {filter} from "~/utils/helper/treeHelper";
 import {LAYOUT, IFRAME, EXCEPTION_COMPONENT} from "~/router/constant";
 import {warn} from "~/utils/log";
 import {fetchMenus} from "~/api/account";
 import {asyncRoutes} from "~/router/routes";
+import {RoleEnum} from "~/enums/permission";
+import store from "~/store";
 
 
 let dynamicViewsModules: Record<string, () => Promise<Record<any, any>>>;
@@ -43,17 +45,17 @@ const dynamicImport = (dynamicViewsModules: Record<string, () => Promise<Record<
 
 /**
  * 前端菜单模式
- * 根据权限节点过滤路由
- * @param permissionList
+ * 根据用户角色过滤路由
  */
-export const buildRouteByFrontMenu = async (permissionList) => {
+export const buildRouteByRole = async () => {
   let routes = asyncRoutes;
+  const roleList = store.getters.getRoles;
 
   const routePermissionFilter = (route: AppRouteRecordRaw) => {
     const {meta} = route;
-    const {permissions} = meta || {};
-    if (!permissions) return true;
-    return permissionList.some(permission => permissions.includes(permission as Permission));
+    const {roles} = meta || {};
+    if (!roles) return true;
+    return roleList.some(role => roles.includes(role as RoleEnum));
   }
 
   routes = filter(routes, routePermissionFilter);
