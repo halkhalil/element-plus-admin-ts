@@ -15,13 +15,13 @@ Object.keys(moduleFiles).forEach((key) => {
 // vuex plugin
 const localStoragePlugin = createPersistedState({
   storage: localStorage,
-  paths: ['setting', 'config', 'app', 'tagView']
+  paths: ['setting', 'config', 'app', 'tagView','user.roles','permission']
 });
 
 // vuex plugin
 const sessionStoragePlugin = createPersistedState({
   storage: sessionStorage,
-  paths: ['user.accessToken',]
+  paths: ['user.accessToken']
 });
 
 const store = createStore({

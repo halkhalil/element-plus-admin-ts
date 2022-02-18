@@ -1,5 +1,4 @@
-import Layout from "~/layouts/default/index.vue";
-import LayoutContent from "~/layouts/page/index.vue"
+import {LAYOUT,CONTENT} from "~/router/constant";
 import {AppRouteRecordRaw} from "~/router/types";
 import {PageEnum} from "~/enums/page";
 
@@ -21,7 +20,7 @@ export const RootRoute: AppRouteRecordRaw = {
 export const NotFoundRoute: AppRouteRecordRaw = {
   path: '/:path(.*)*',
   name: 'PageNotFound',
-  component: Layout,
+  component: LAYOUT,
   meta: {title: 'ErrorPage'},
   children: [
     {
@@ -36,7 +35,7 @@ export const NotFoundRoute: AppRouteRecordRaw = {
 export const RedirectRoute: AppRouteRecordRaw = {
   path: '/redirect',
   name: 'RedirectTo',
-  component: LayoutContent,
+  component: CONTENT,
   meta: {title: 'redirect'},
   children: [
     {

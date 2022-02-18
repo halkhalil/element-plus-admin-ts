@@ -3,6 +3,7 @@ import store from "~/store";
 import {isString} from "~/utils/is";
 import {PermissionEnum, PermissionModeEnum, RoleEnum} from "~/enums/permission";
 import projectSetting from '~/settings/projectSetting';
+import {resetRouter, router} from "~/router";
 
 type Permission = RoleEnum | PermissionEnum | string;
 
@@ -33,9 +34,16 @@ export function usePermission() {
     return true;
   }
 
+  /**
+   * 更改角色
+   * @param roles
+   */
   const changeRoles = async (roles: RoleEnum | RoleEnum[]) => {
     const _roles = isString(roles) ? [roles] : roles;
     await dispatch('user/setRoles', _roles);
+    resetRouter();
+    const routes = await dispatch('permission/buildRoutes');
+    routes.forEach(route => router.addRoute(route));
   }
 
   return {

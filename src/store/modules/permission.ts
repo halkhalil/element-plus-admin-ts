@@ -45,7 +45,7 @@ const permission = {
       const menus = transformRouteToMenu(routes);
       menus.sort((a, b) => (a?.sort || 0) - (b?.sort || 0));
       commit('SET_PERMISSIONS', {menus});
-
+      console.log(menus);
       return Promise.resolve(routes);
     }
   }

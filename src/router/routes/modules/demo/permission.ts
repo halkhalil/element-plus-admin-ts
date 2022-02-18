@@ -38,7 +38,7 @@ const permissionRoute: AppRouteRecordRaw[] = [
           {
             path: 'auth-pageB',
             name: 'AuthPageB',
-            meta: {title: '权限测试页A', roles: [RoleEnum.TEST]},
+            meta: {title: '权限测试页B', roles: [RoleEnum.TEST]},
             component: () => import('~/views/demo/permission/authPageB.vue'),
           },
         ]

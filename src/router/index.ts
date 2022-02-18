@@ -14,10 +14,6 @@ export const setupRouter = (app: App<Element>) => {
 }
 
 export const resetRouter = () => {
-  router.getRoutes().forEach((route) => {
-    const { name } = route;
-    if (name && !WHITE_NAME_LIST.includes(name as string)) {
-      router.hasRoute(name) && router.removeRoute(name);
-    }
-  });
+  router.getRoutes().forEach(({name = ''}) => router.hasRoute(name) && router.removeRoute(name));
+  basicRoutes.forEach(item => router.addRoute(item as unknown as RouteRecordRaw));
 }
