@@ -13,7 +13,6 @@ export function createPermissionGuard(router: Router) {
       if (!getters.getUser) await dispatch('user/getUserInfo');
       if (!getters.getIsLoaded) {
         const accessRoutes: RouteRecordRaw[] = await dispatch('permission/buildRoutes');
-        console.log(accessRoutes);
         accessRoutes.forEach(item => router.addRoute(item));
         next({path: to.fullPath, replace: true, query: to.query});
       } else {

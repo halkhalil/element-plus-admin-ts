@@ -1,7 +1,6 @@
 import {setupPermissionDirective} from "~/directives/permission";
-import {setupRoleDirective} from "~/directives/role";
+import {App} from "vue";
 
-export function setupGlobalDirectives(app) {
+export function setupGlobalDirectives(app: App) {
   setupPermissionDirective(app);
-  setupRoleDirective(app);
 }

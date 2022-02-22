@@ -8,9 +8,12 @@
 import {configItemsApi} from '~/api/configs'
 import {useRootSetting} from '~/composables/setting/useRootSeeting'
 import store from "~/store";
+import {useRouter} from "vue-router";
 
 const {getGlobalSize} = useRootSetting();
 configItemsApi().then((response) => {
   store.commit('config/setConfig', response.data.data);
 });
+// const {getRoutes} = useRouter();
+// console.log('getRoutes',getRoutes());
 </script>

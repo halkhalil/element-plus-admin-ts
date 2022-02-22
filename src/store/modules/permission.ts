@@ -37,7 +37,7 @@ const permission = {
           routes = await buildRouteByRole();
           break;
         case PermissionModeEnum.BACK_MENU:// 后端菜单模式，根据后端返回的菜单生成路由
-          const permissions = await dispatch('getPermissions');
+          await dispatch('getPermissions');
           routes = await buildRouteByBackMenu();
           break;
       }
@@ -45,7 +45,6 @@ const permission = {
       const menus = transformRouteToMenu(routes);
       menus.sort((a, b) => (a?.sort || 0) - (b?.sort || 0));
       commit('SET_PERMISSIONS', {menus});
-      console.log(menus);
       return Promise.resolve(routes);
     }
   }

@@ -20,7 +20,6 @@ export function usePermission() {
     if (!value) return def;
 
     const checks = isString(value) ? [value] : value;
-
     if (permissionMode == PermissionModeEnum.FRONT_MENU) {
       const getRoles = computed(() => getters.getRoles);
       return unref(getRoles).some(item => checks.includes(item as RoleEnum));

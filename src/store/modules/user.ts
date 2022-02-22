@@ -38,7 +38,6 @@ const user = {
     },
     async getUserInfo({commit}) {
       const {data: {data: {roles, ...user}}} = await personal.info();
-      console.log('roles', roles);
       commit('setUser', user);
       commit('setRoles', roles.map(item => item.name));
       return user;
