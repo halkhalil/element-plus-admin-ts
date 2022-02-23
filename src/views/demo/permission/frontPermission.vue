@@ -23,7 +23,7 @@
     </el-card>
 
     <el-card class="mt-2" header="按钮权限">
-      <el-divider content-position="left">指令方式判断权限 v-permission 该方式不能动态修改权限</el-divider>
+      <el-divider content-position="left">指令方式判断权限 v-permission</el-divider>
       <el-alert class="mb-2" title="该方式不能动态修改权限" type="error"/>
       <el-space wrap>
         <el-button type="primary" plain v-permission="RoleEnum.ADMINISTRATOR">
