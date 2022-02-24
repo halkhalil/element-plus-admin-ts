@@ -103,7 +103,7 @@ export function useRootSetting() {
    * @param size
    * @returns {Promise<void>}
    */
-  async function toggleElementSize(size:SizeEnum) {
+  async function toggleElementSize(size: SizeEnum) {
     await setRootSetting({size: size});
   }
 
@@ -123,9 +123,10 @@ export function useRootSetting() {
     const {setRootSetting} = useRootSetting();
     const mode = getPermissionMode.value == PermissionModeEnum.BACK_MENU ? PermissionModeEnum.FRONT_MENU : PermissionModeEnum.BACK_MENU
     await setRootSetting({permissionMode: mode});
-    location.reload();
+    await dispatch('user/setToken', 'mockToken1');
+    await dispatch('user/getUserInfo');
+    await dispatch('permission/buildRoutes');
   }
-
 
   return {
     setRootSetting,

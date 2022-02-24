@@ -42,6 +42,9 @@ const user = {
       commit('setRoles', roles.map(item => item.name));
       return user;
     },
+    setToken({commit},token){
+      commit('setAccessToken', token);
+    },
     async setRoles({commit}, roles: RoleEnum[]) {
       commit('setRoles', roles);
     }

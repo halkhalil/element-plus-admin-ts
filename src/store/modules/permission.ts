@@ -16,7 +16,7 @@ const permission = {
   mutations: {
     SET_PERMISSIONS(state, {menus, permissions}) {
       if (menus) state.menus = menus;
-      if (permissions) state.menus = permissions;
+      if (permissions) state.permissions = permissions;
       state.isLoaded = true;
     },
   },

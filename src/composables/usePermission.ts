@@ -2,14 +2,16 @@ import {computed, unref} from "vue";
 import store from "~/store";
 import {isString} from "~/utils/is";
 import {PermissionEnum, PermissionModeEnum, RoleEnum} from "~/enums/permission";
-import projectSetting from '~/settings/projectSetting';
 import {resetRouter, router} from "~/router";
+import {useRootSetting} from "~/composables/setting/useRootSeeting";
 
 type Permission = RoleEnum | PermissionEnum | string;
 
 export function usePermission() {
   const {getters, dispatch} = store;
-  const permissionMode = projectSetting.permissionMode;
+  const {getPermissionMode} = useRootSetting();
+  const getPermissions = computed(() => getters.getPermissions);
+  const getRoles = computed(() => getters.getRoles);
 
   /**
    * 权限校验
@@ -18,15 +20,13 @@ export function usePermission() {
    */
   const hasPermission = (value?: Permission | Permission[], def = true): boolean => {
     if (!value) return def;
-
     const checks = isString(value) ? [value] : value;
-    if (permissionMode == PermissionModeEnum.FRONT_MENU) {
+    if (getPermissionMode.value == PermissionModeEnum.FRONT_MENU) {
       const getRoles = computed(() => getters.getRoles);
       return unref(getRoles).some(item => checks.includes(item as RoleEnum));
     }
 
-    if (permissionMode == PermissionModeEnum.BACK_MENU) {
-      const getPermissions = computed(() => getters.getPermissions);
+    if (getPermissionMode.value == PermissionModeEnum.BACK_MENU) {
       return unref(getPermissions).some(item => checks.includes(item as PermissionEnum));
     }
 
@@ -48,5 +48,8 @@ export function usePermission() {
   return {
     hasPermission,
     changeRoles,
+    getPermissions,
+    getRoles,
+    getPermissionMode,
   }
 }

@@ -1,8 +1,6 @@
 import {responseSuccess} from "../_utils.js";
-import {LAYOUT} from "../../src/router/constant";
-import {RoleEnum} from "../../src/enums/permission";
 
-const permissions1 = ["Role:update", "User:index", "User:store", "User:show", "User:update", "User:destroy", "Role:index", "Role:store", "Role:show", "Config:destroy", "Role:destroy", "Permission:index", "Permission:store", "Permission:autoGenerate", "Permission:show", "Permission:update", "Permission:destroy", "Config:update", "Config:show", "Config:groupUpdate", "Config:group", "Config:store", "Config:index", "Config:configItems"];
+const permissions1 = ["user:list", "user:add", "user:update", "user:delete"];
 const menus1 = [
   {
     path: '/dashboard',
@@ -98,34 +96,62 @@ const menus1 = [
     ]
   },
 ];
-const menus2 = menus1;
-const permissions2 = {
-  "menus": [{
-    "id": 6,
-    "pid": 5,
-    "title": "用户管理",
-    "icon": "el-icon-user-solid",
-    "url": "/system/users",
-    "type": "menu",
-    "unique": "get,/system/users"
-  }, {
-    "id": 5,
-    "pid": 0,
-    "title": "系统",
-    "icon": "el-windows",
-    "url": "/system",
-    "type": "menu",
-    "unique": "get,/system"
+const menus2 = [
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: 'Layout',
+    redirect: '/dashboard/workplace',
+    meta: {title: '首页', icon: 'el-home', sort: 10},
+    children: [
+      {
+        path: 'analysis',
+        name: 'analysis',
+        meta: {title: '分析页', affix: true},
+        component: '/views/dashboard/analysis/index.vue',
+      },
+      {
+        path: 'workplace',
+        name: 'workplace',
+        meta: {title: '工作台'},
+        component: '/views/dashboard/workplace/index.vue',
+      },
+      {
+        path: 'monitor',
+        name: 'monitor',
+        meta: {title: '监控页'},
+        component: '/views/dashboard/monitor/index.vue',
+      },
+    ]
+  },
+  {
+    path: '/permission',
+    name: 'Permission',
+    redirect: '/permission/page',
+    component: 'Layout',
+    meta: {title: '权限', icon: 'el-lock', sort: 50},
+    children: [
+      {
+        path: 'front',
+        name: 'permissionPage2',
+        meta: {title: '基于前端权限'},
+        component: '/views/demo/permission/frontPermission.vue',
+      },
+      {
+        path: 'back',
+        name: 'BackPermission',
+        meta: {title: '基于后端权限'},
+        component: '/views/demo/permission/backPermission.vue',
+      },
+    ]
   }
-  ],
-  "roles": ["Test"],
-  "actions": ["User:index", "User:store"]
-};
+];
+const permissions2 = ["user:list"];
 
 const userInfo1 = {
   "id": 1,
-  "username": "shiwuhao",
-  "nickname": "shiwuhao",
+  "username": "Administrator",
+  "nickname": "Administrator",
   "email": "admin@shiwuhao.com",
   "desc": "今天天气不错，挺风和日丽的",
   "avatar": "https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLJt7bicBACKAWlkCacxl072UAfaOsxQgfbfpquHItiaPsDj4CoaC9Q02sI0DhSZdnKlQaUAb2E8Vicg/132",
