@@ -5,6 +5,7 @@ import {useWindowSize} from "@vueuse/core";
 import {useTagViewSetting} from "~/composables/setting/useTagViewSeeting.js";
 import {ThemeEnum, SizeEnum} from "~/enums/app";
 import {PermissionModeEnum} from "~/enums/permission";
+import {resetRouter} from "~/router";
 
 
 export function useRootSetting() {
@@ -123,9 +124,7 @@ export function useRootSetting() {
     const {setRootSetting} = useRootSetting();
     const mode = getPermissionMode.value == PermissionModeEnum.BACK_MENU ? PermissionModeEnum.FRONT_MENU : PermissionModeEnum.BACK_MENU
     await setRootSetting({permissionMode: mode});
-    await dispatch('user/setToken', 'mockToken1');
-    await dispatch('user/getUserInfo');
-    await dispatch('permission/buildRoutes');
+    location.reload();
   }
 
   return {
