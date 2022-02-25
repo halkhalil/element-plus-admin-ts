@@ -1,30 +1,20 @@
 <template>
   <el-menu-item :index="menu.path" :route="menu">
-    <icon v-if="menu.icon" :name="menu.icon" :size="18" />
+    <el-icon v-if="menu.icon">
+      <icon :name="menu.icon" :size="18" class="mr-1"/>
+    </el-icon>
     <template #title>{{ menu.title }}</template>
   </el-menu-item>
 </template>
-<script>
-export default {
-  name: 'ItemMenu',
-  props: {
-    menu: {
-      type: Object,
-      required: true
-    },
-    basePath: {
-      type: String,
-      default: '',
-    }
+<script lang="ts" setup>
+defineProps({
+  menu: {
+    type: Object,
+    required: true
   },
-};
+  basePath: {
+    type: String,
+    default: '',
+  }
+});
 </script>
-<style lang="scss" scoped>
-.el-menu-item i {
-  vertical-align: middle;
-  margin-right: 5px;
-  width: 24px;
-  text-align: center;
-  font-size: 18px;
-}
-</style>
