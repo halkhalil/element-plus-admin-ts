@@ -7,7 +7,7 @@ const componentRoute: AppRouteRecordRaw[] = [
     path: '/component',
     name: 'Component',
     component: Layout,
-    redirect: '/component/table/basic',
+    redirect: '/component/table/basicTable',
     meta: {title: '组件', icon: 'el-component', sort: 20},
     children: [
       {
@@ -52,7 +52,7 @@ const componentRoute: AppRouteRecordRaw[] = [
       {
         path: 'table',
         name: 'Table',
-        redirect: '/component/table/basic',
+        redirect: '/component/table/basicTable',
         meta: {title: '表格', icon: 'el-table'},
         component: LayoutContent,
         children: [
