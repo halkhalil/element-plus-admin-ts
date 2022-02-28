@@ -1,25 +1,10 @@
 <template>
-  <iframe
-    :src="frameSrc"
-    :class="`${prefixCls}__main`"
-    ref="frameRef"
-    @load="hideLoading"
-  ></iframe>
+  <div class="h-full">
+    <iframe class="wh-full" :src="src"></iframe>
+  </div>
 </template>
 
-<script lang="ts" setup>
-import { ref, unref, computed } from 'vue';
-defineProps({
-  frameSrc: String,
-});
-
-const loading = ref(true);
-const topRef = ref(50);
-const heightRef = ref(window.innerHeight);
-const frameRef = ref<HTMLFrameElement>();
-
+<script setup lang="ts">
+const src = 'https://www.naiveui.com';
 </script>
-
-<style scoped>
-
-</style>
+<style scoped></style>
