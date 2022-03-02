@@ -1,5 +1,5 @@
 <template>
-  <el-menu class="menu-container" v-bind="menuSetting" :default-active="defaultActive">
+  <el-menu class="menu-container" v-bind="getMenuSetting" :default-active="defaultActive">
     <SidebarLogo class="logo" v-if="getShowSidebarLogo"/>
     <sub-menu v-for="menu in getMenus" :index="menu.path" :key="menu.path" :menu="menu"/>
   </el-menu>
@@ -14,27 +14,13 @@ import {computed} from "vue";
 import {useRouter} from 'vue-router';
 
 const {currentRoute} = useRouter();
+const {getMenus} = useLayoutMenus();
 const {getMenuSetting} = useMenuSetting();
+const {getShowSidebarLogo} = useRootSetting();
 
 const defaultActive = computed(() => {
   const {meta, path} = currentRoute.value;
-  return meta && meta['activeMenu'] ? meta['activeMenu'] : path;
-})
-
-const {getMenus} = useLayoutMenus();
-const {getShowSidebarLogo, getIsTopMenuMode} = useRootSetting();
-const menuSetting = computed(() => {
-  if (getIsTopMenuMode.value) {
-    return {
-      ...getMenuSetting.value, ...{
-        mode: 'horizontal',
-        collapse: false,
-        backgroundColor: null,
-        textColor: '#303133'
-      }
-    }
-  }
-  return getMenuSetting.value;
+  return meta?.activeMenu || path;
 })
 </script>
 <style lang="scss" scoped>
