@@ -1,5 +1,5 @@
 <template>
-  <el-container class="container">
+  <el-container>
     <el-aside width='auto'>
       <LayoutSidebar/>
     </el-aside>
@@ -20,15 +20,5 @@ import LayoutSidebar from "~/layouts/default/sidebar/index.vue";
 <style lang="scss" scoped>
 .el-container, .el-header, .el-main, .el-aside {
   padding: 0;
-}
-
-.container {
-  width: 100%;
-  height: 100vh;
-  padding: 0 0;
-
-  .content {
-    //margin-top: 10px;
-  }
 }
 </style>

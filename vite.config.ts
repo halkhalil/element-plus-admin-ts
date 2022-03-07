@@ -6,6 +6,8 @@ import viteSvgIcons from 'vite-plugin-svg-icons';
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from "unplugin-vue-components/vite";
 import {ElementPlusResolver} from "unplugin-vue-components/resolvers";
+import WindiCSS from 'vite-plugin-windicss'
+
 
 function pathResolve(dir: string) {
   return resolve(process.cwd(), '.', dir)
@@ -34,6 +36,7 @@ export default ({command}: ConfigEnv): UserConfig => {
     },
     plugins: [
       vue(),
+      WindiCSS(),
       viteSvgIcons({
         iconDirs: [pathResolve('src/assets/svg')],
         symbolId: 'icon-[dir]-[name]',

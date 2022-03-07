@@ -26,10 +26,12 @@
     "v-contextmenu": "^3.0.0-alpha.4",
     "vditor": "^3.8.6",
     "vite-plugin-svg-icons": "^1.0.5",
+    "vite-plugin-windicss": "^1.8.3",
     "vue": "^3.2.20",
     "vue-router": "^4.0.0-0",
     "vuex": "4.0",
-    "vuex-persistedstate": "^4.0.0-beta.3"
+    "vuex-persistedstate": "^4.0.0-beta.3",
+    "windicss": "^3.5.1"
   },
   "devDependencies": {
     "@types/node": "^16.11.6",

@@ -1,5 +1,5 @@
 <template>
-  <el-config-provider :size="getGlobalSize" :zIndex="3000">
+  <el-config-provider :size="getGlobalSize" :zIndex="3000" class="h-full">
     <router-view/>
   </el-config-provider>
 </template>

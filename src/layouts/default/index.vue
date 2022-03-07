@@ -1,6 +1,5 @@
 <template>
   <component :is="componentId"></component>
-  <router-view/>
 </template>
 <script lang="ts" setup>
 import LayoutMix from "~/layouts/default/LayoutMix.vue";

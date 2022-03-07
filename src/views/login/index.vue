@@ -1,5 +1,5 @@
 <template>
-  <div class="container flex-row center align-center">
+  <div class="login flex-row center align-center">
     <el-form ref="loginForm" size="large" :model="form" :rules="rules" class="login-form m-3">
       <el-row>
         <el-col>
@@ -77,7 +77,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.container {
+.login {
   height: 100vh;
   background: #283443;
 
