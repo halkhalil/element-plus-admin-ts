@@ -31,6 +31,7 @@
 <script lang="ts" setup>
 import {useTagView} from "~/layouts/default/tagview/useTagView";
 
+
 const {
   scrollbarRef,
   getViewRefs,
@@ -44,7 +45,6 @@ const {
   viewIsActive,
   viewIsAffix
 } = useTagView();
-
 </script>
 <style lang="scss" scoped>
 .tag-view {
