@@ -3,9 +3,11 @@ import store from "~/store";
 import {useMenuSetting} from "~/composables/setting/useMenuSeeting";
 import {useWindowSize} from "@vueuse/core";
 import {useTagViewSetting} from "~/composables/setting/useTagViewSeeting.js";
-import {ThemeEnum, SizeEnum} from "~/enums/app";
+import {NavbarModeEnum, SizeEnum, ThemeEnum} from "~/enums/app";
 import {PermissionModeEnum} from "~/enums/permission";
-import {resetRouter} from "~/router";
+import {MenuModeEnum} from "~/enums/menu";
+import {setting} from '~/settings/projectSetting'
+import {ProjectSetting} from "#/config";
 
 
 export function useRootSetting() {
@@ -89,14 +91,17 @@ export function useRootSetting() {
 
   /**
    * 切换导航栏模式
-   * @param mode top-menu,side-menu,mix-menu
+   * @param mode
    * @returns {Promise<void>}
    */
-  async function toggleNavbarMode(mode) {
-    const menuMode = mode === 'top-menu' ? 'horizontal' : 'vertical';
+  async function toggleNavbarMode(mode: NavbarModeEnum) {
+    let menuSetting = setting.menuSetting;
+    if (mode === NavbarModeEnum.TOP_MENU) {
+      menuSetting = {...menuSetting, mode: MenuModeEnum.HORIZONTAL, backgroundColor: 'white',textColor:'black'}
+    }
     await setRootSetting({navbarMode: mode});
 
-    await setMenuSetting({mode: menuMode});
+    await setMenuSetting(menuSetting);
   }
 
   /**

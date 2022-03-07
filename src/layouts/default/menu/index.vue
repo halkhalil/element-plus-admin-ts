@@ -5,13 +5,13 @@
   </el-menu>
 </template>
 <script lang="ts" setup>
+import {computed} from "vue";
+import {useRouter} from 'vue-router';
 import SubMenu from "~/layouts/default/menu/SubMenu.vue";
 import SidebarLogo from "~/layouts/default/menu/SidebarLogo.vue";
 import {useMenuSetting} from "~/composables/setting/useMenuSeeting";
 import {useRootSetting} from "~/composables/setting/useRootSeeting";
 import {useLayoutMenus} from "~/layouts/default/menu/useLayoutMenus";
-import {computed} from "vue";
-import {useRouter} from 'vue-router';
 
 const {currentRoute} = useRouter();
 const {getMenus} = useLayoutMenus();
@@ -20,7 +20,7 @@ const {getShowSidebarLogo} = useRootSetting();
 
 const defaultActive = computed(() => {
   const {meta, path} = currentRoute.value;
-  return meta?.activeMenu || path;
+  return meta?.defaultActive || path;
 })
 </script>
 <style lang="scss" scoped>
