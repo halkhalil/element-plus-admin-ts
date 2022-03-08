@@ -3,9 +3,9 @@
     <el-row :gutter="10">
       <el-col :span="10">
         <div class="flex-col between">
-          <span class="label">{{ title }}</span>
-          <h1 class="mt-5">{{ transitionValue.toFixed() }}</h1>
-          <span class="label text-overflow-1">{{ description }}</span>
+          <span class="label text-sm">{{ title }}</span>
+          <h1 class="mt-4 text-xl bold">{{ transitionValue.toFixed() }}</h1>
+          <span class="label truncate text-sm">{{ description }}</span>
         </div>
       </el-col>
       <el-col :span="14">

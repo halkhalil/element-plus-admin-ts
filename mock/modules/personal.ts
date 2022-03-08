@@ -150,8 +150,8 @@ const permissions2 = ["user:list"];
 
 const userInfo1 = {
   "id": 1,
-  "username": "Administrator",
-  "nickname": "Administrator",
+  "username": "Admin",
+  "nickname": "Admin",
   "email": "admin@shiwuhao.com",
   "desc": "今天天气不错，挺风和日丽的",
   "avatar": "https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLJt7bicBACKAWlkCacxl072UAfaOsxQgfbfpquHItiaPsDj4CoaC9Q02sI0DhSZdnKlQaUAb2E8Vicg/132",

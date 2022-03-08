@@ -31,6 +31,7 @@ export interface RouteMeta {
   frameSrc?: string;
   // 默认激活的index
   defaultActive?: string,
+  href?: string,
 }
 
 export interface Menu {

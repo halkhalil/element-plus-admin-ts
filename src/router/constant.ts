@@ -13,7 +13,7 @@ export const LAYOUT = () => import('~/layouts/default/index.vue');
 
 export const CONTENT = () => import('~/layouts/page/index.vue');
 
-export const IFRAME = () => import('~/layouts/default/index.vue');
+export const IFRAME = () => import('~/views/sys/iframe/index.vue');
 
 /**
  * @description: parent-layout

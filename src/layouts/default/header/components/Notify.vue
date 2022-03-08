@@ -1,11 +1,9 @@
 <template>
-  <div class="flex-col center align-end" @click="visible=!visible">
-    <el-popover width="500" v-model:visible="visible">
-      <template #reference>
-        <el-badge type="danger" is-dot style="height: 18px;">
-          <icon name="el-notify" size="18"/>
-        </el-badge>
-      </template>
+  <div >
+    <el-badge type="danger" is-dot ref="buttonRef" v-click-outside="onClickOutside" style="height: 18px;">
+      <icon name="el-notify" size="15"/>
+    </el-badge>
+    <el-popover width="500" ref="popoverRef" :virtual-ref="buttonRef" trigger="click" virtual-triggering>
       <el-tabs v-model="activeName">
         <el-tab-pane label="通知(3)" name="first">
           <div style="height: 300px;width: 300px;">
@@ -23,7 +21,14 @@
   </div>
 </template>
 <script lang="ts" setup>
-import {ref} from 'vue';
+import {ref, unref} from 'vue'
+import {ClickOutside as vClickOutside} from 'element-plus'
+
+const buttonRef = ref()
+const popoverRef = ref()
+const onClickOutside = () => {
+  unref(popoverRef).popperRef?.delayHide?.()
+}
 
 const visible = ref(false);
 const activeName = ref('first');

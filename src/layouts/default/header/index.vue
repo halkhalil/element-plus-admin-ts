@@ -1,10 +1,10 @@
 <template>
   <el-affix :offset="0" :position="getHeaderFixed ? 'top' : 'bottom' ">
-    <div class="header-container flex-row between">
+    <div class="header-container flex justify-between">
       <!-- left start-->
-      <div class="header-left flex-row align-center">
-        <Logo v-if="getShowHeaderLogo" class="action-item"/>
-        <HeaderTrigger v-if="getShowHeaderTrigger" class="action-item"/>
+      <div class="header-left inline-flex flex-shrink">
+        <Logo v-if="getShowHeaderLogo" class="action"/>
+        <HeaderTrigger v-if="getShowHeaderTrigger" class="action"/>
         <Breadcrumb v-if="getShowBreadcrumb"/>
       </div>
       <!-- left end-->
@@ -16,12 +16,12 @@
       <!--  menu end  -->
 
       <!--  right start  -->
-      <div class="header-right flex-row center align-center ">
-        <GitHub class="action-item"/>
-        <Notify class="action-item"/>
-        <FullScreen class="action-item"/>
-        <UserDropdown class="action-item"/>
-        <Setting class="action-item"/>
+      <div class="header-right inline-flex items-center">
+        <div class="action flex-col-center"><GitHub/></div>
+        <div class="action flex-col-center"><Notify/></div>
+        <div class="action flex-col-center"><FullScreen/></div>
+        <div class="action flex-col-center"><Setting/></div>
+        <div class="action flex-col-center"><UserDropdown/></div>
       </div>
       <!--  right end  -->
     </div>
@@ -64,7 +64,7 @@ const {getHeaderFixed} = useHeaderSetting();
   border-bottom: 1px solid #E4E7ED;
   color: #303133;
 
-  .action-item:hover {
+  .action:hover {
     background: #F2F6FC;
   }
 
@@ -72,14 +72,9 @@ const {getHeaderFixed} = useHeaderSetting();
     width: 100%;
   }
 
-  .action-item {
-    height: 49px;
+  .action {
+    height: 100%;
     padding: 0 10px;
-
-    :deep(i) {
-      //font-size: 18px;
-    }
-
     cursor: pointer;
   }
 }

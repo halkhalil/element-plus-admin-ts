@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <el-breadcrumb class="app-breadcrumb" separator="/">
+  <div class="i-flex-center">
+    <el-breadcrumb class="i-flex-center" separator="/">
       <el-breadcrumb-item v-for="(item,index) in levelList" :key="index" :to="{path:item.path}">
         {{ item.meta.title }}
       </el-breadcrumb-item>

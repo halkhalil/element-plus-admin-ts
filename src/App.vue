@@ -15,5 +15,4 @@ configItemsApi().then((response) => {
   store.commit('config/setConfig', response.data.data);
 });
 const {getRoutes} = useRouter();
-console.log('getRoutes',getRoutes());
 </script>

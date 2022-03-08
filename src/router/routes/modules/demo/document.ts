@@ -1,6 +1,7 @@
 import Layout from "~/layouts/default/index.vue";
 import LayoutContent from "~/layouts/page/index.vue"
 import {AppRouteRecordRaw} from "~/router/types";
+import {IFRAME} from "~/router/constant";
 
 const pageRoute: AppRouteRecordRaw[] = [
   {
@@ -11,15 +12,14 @@ const pageRoute: AppRouteRecordRaw[] = [
     children: [
       {
         path: 'element-plus',
-        name: 'ElementPlus',
-        component: () => import('~/views/sys/iframe/index.vue'),
-        meta: {title: '个人页'},
+        name: 'ElementPlusIframe',
+        component: IFRAME,
+        meta: {title: 'Element-Plus 内嵌',frameSrc:'https://element-plus.gitee.io/zh-CN/'},
       },
       {
-        path: 'vue',
-        name: 'Vue',
-        component: () => import('~/views/sys/iframe/index.vue'),
-        meta: {title: '个人页'},
+        path: 'element-plus-blank',
+        name: 'ElementPlusTarget',
+        meta: {title: 'Element-Plus 外链',href:'https://element-plus.gitee.io/zh-CN/'},
       },
     ]
   }

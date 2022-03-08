@@ -1,10 +1,15 @@
 <template>
-  <div class="h-full">
-    <iframe class=" w-full h-full" :src="src"></iframe>
+  <div class="h-full" v-loading="loading">
+    <iframe class="wh-full" :src="currentRoute?.meta?.frameSrc" @load="hideLoading"></iframe>
   </div>
 </template>
 
 <script setup lang="ts">
-const src = 'https://www.naiveui.com';
+import {useRouter} from "vue-router";
+import {ref} from "vue";
+
+const {currentRoute} = useRouter();
+const loading = ref(true);
+const hideLoading = () => loading.value = false;
 </script>
 <style scoped></style>

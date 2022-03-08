@@ -1,6 +1,6 @@
 <template>
-  <div class="flex-col center align-center" @click="toggle">
-    <icon :name="!isFullscreen ? 'el-expend' : 'el-compress'" size="18"/>
+  <div @click="toggle">
+    <icon :name="!isFullscreen ? 'el-expend' : 'el-compress'" size="15"/>
   </div>
 </template>
 <script lang="ts" setup>

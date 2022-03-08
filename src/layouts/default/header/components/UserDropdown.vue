@@ -1,12 +1,12 @@
 <template>
-  <div class="container">
+  <div>
     <el-dropdown size="small" trigger="click">
-      <div class="avatar flex-row align-center">
+      <div class="avatar flex-x-center">
         <el-avatar :size="30" :src="getUser['avatar']">{{ getUser['nickname'] }}</el-avatar>
-        <span class="name">
-          {{ getUser['nickname'] }}
-        </span>
-        <icon name="el-down" class="ml-1" :size="12"/>
+        <div class="flex-y-center pl-1">
+          <span class="text-sm">{{ getUser['nickname'] }}</span>
+          <icon name="el-down" class="ml-1" :size="12"/>
+        </div>
       </div>
       <template #dropdown>
         <el-dropdown-menu>
@@ -44,13 +44,13 @@ const logout = async () => {
   .avatar {
     height: 49px;
 
-    .name {
-      color: var(--el-text-color-primary);
-      padding-left: 5px;
-      width: max-content;
-      max-width: 80px;
-      @extend .text-overflow-1 !optional;
-    }
+    //.name {
+    //  color: var(--el-text-color-primary);
+    //  padding-left: 5px;
+    //  width: max-content;
+    //  max-width: 80px;
+    //  @extend .text-overflow-1 !optional;
+    //}
 
     .el-avatar {
       -webkit-transform: scale(0.85);
