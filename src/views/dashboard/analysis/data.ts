@@ -19,7 +19,7 @@ export const getFunnelData = (): ECOptions => {
       formatter: '{a} <br/>{b} : {c}%'
     },
     legend: {
-      data: ['Show', 'Click', 'Visit', 'Inquiry', 'Order', 'Order2', 'Order3', 'Order4']
+      data: ['Show', 'Click', 'Visit', 'Inquiry', 'Order', 'Order2']
     },
     series: [
       {

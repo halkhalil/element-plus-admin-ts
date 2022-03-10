@@ -1,13 +1,14 @@
 <template>
-  <el-container>
+  <el-container ref="containerElRef">
     <el-aside width='auto'>
       <LayoutSidebar/>
     </el-aside>
     <el-main class="main">
-      <el-header class="header" height="auto">
-        <LayoutHeader/>
-      </el-header>
-      <LayoutContent class="content"/>
+      <!--      <el-header class="header" ref="headerElRef">-->
+      <LayoutHeader ref="headerElRef"/>
+      <!--      </el-header>-->
+
+      <LayoutContent ref="contentElRef" :style="{height:contentHeight+'px'}"/>
     </el-main>
   </el-container>
 </template>
@@ -15,6 +16,10 @@
 import LayoutHeader from './header/index.vue';
 import LayoutContent from './content/index.vue';
 import LayoutSidebar from "~/layouts/default/sidebar/index.vue";
+import {useLayout} from "~/layouts/default/useLayout";
+
+const {headerElRef, containerElRef, contentHeight} = useLayout();
+
 </script>
 
 <style lang="scss" scoped>

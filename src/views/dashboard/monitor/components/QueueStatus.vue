@@ -1,22 +1,16 @@
 <template>
   <el-card header="Queue Status">
-    <el-row :gutter="10">
-      <el-col :span="24" class="mb-2">
-        <el-row>
-          <el-col :xs="12" :sm="12" :md="8" :lg="8" :xl="6" v-for="(item,index) in queueStatus" :key="index">
-            <el-card class="card" shadow="hover">
-              <div class="flex row-center col-center">
-                <span class="text-sm text-secondary text-overflow">{{ item.label }}</span>
-                <span class="text-xl">{{ item.value }}</span>
-              </div>
-            </el-card>
-          </el-col>
-        </el-row>
-      </el-col>
-      <el-col :span="24">
-        <BasicTable :columns="tableColumn" :data="tableData"></BasicTable>
-      </el-col>
-    </el-row>
+    <div class="grid col-auto md:grid-cols-2 lg:grid-cols-4">
+      <el-card class="card" shadow="hover" v-for="(item,index) in queueStatus" :key="index">
+        <div class="flex-col-center">
+          <span class="text-sm text-gray-500 line-clamp-1">{{ item.label }}</span>
+          <span class="text-xl mt-1">{{ item.value }}</span>
+        </div>
+      </el-card>
+    </div>
+    <div class="mt-2">
+      <BasicTable :columns="tableColumn" :data="tableData"></BasicTable>
+    </div>
   </el-card>
 </template>
 

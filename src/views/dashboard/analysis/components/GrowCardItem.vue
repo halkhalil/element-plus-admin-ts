@@ -4,7 +4,7 @@
       <el-col :span="10">
         <div class="flex-col between">
           <span class="label text-sm">{{ title }}</span>
-          <h1 class="my-2 text-xl font-bold">{{ transitionValue.toFixed() }}</h1>
+          <h1 class="my-2 text-3xl font-bold">{{ transitionValue.toFixed() }}</h1>
           <span class="label truncate text-sm">{{ description }}</span>
         </div>
       </el-col>

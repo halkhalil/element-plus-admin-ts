@@ -1,19 +1,19 @@
 <template>
   <el-card header="快捷导航" shadow="none">
-    <el-row>
-      <el-col :span="8" v-for="(item,index) in getMenus" :key="index" class="item">
+    <div class="grid grid-cols-3">
+      <div v-for="(item,index) in getMenus" :key="index" class="cursor-pointer">
         <el-card class="card" shadow="hover">
-          <div class="flex-col align-center" style="cursor: pointer">
-            <span class="text-xl"><icon :name="item.icon" :style="{color:item.color}" :size="20" /></span>
+          <div class="flex-col-center">
+            <span class="text-xl mb-2"><icon :name="item.icon" :style="{color:item.color}" :size="20" /></span>
             <span>{{ item.title }}</span>
           </div>
         </el-card>
-      </el-col>
-    </el-row>
+      </div>
+    </div>
   </el-card>
 </template>
 <script lang="ts" setup>
-import {usePermission} from "~/composables/usePermission";
+import {useLayoutMenus} from "~/layouts/default/menu/useLayoutMenus";
 
-const {getMenus} = usePermission()
+const {getMenus} = useLayoutMenus()
 </script>

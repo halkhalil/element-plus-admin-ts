@@ -1,12 +1,12 @@
 <template>
-  <div class="page-wrapper" :class="$props.class">
+  <div class="page-wrapper wh-full" :class="$props.class">
     <div class="page-header" v-if="title || subTitle || slotTitle || slotSubTitle">
-      <div class="flex-row between">
-        <div class="page-header-wrap flex-row start align-end">
+      <div class="flex-x-between">
+        <div class="page-header-wrap flex items-end">
           <div class="page-header-title text-xl">
             <slot name="title">{{ title }}</slot>
           </div>
-          <div class="page-header-sub-title text-secondary text-xs ml-2">
+          <div class="page-header-sub-title text-gray-500 text-xs ml-2 ">
             <slot name="sub-title">{{ subTitle }}</slot>
           </div>
         </div>
@@ -14,14 +14,13 @@
           <slot name="extra"></slot>
         </div>
       </div>
-      <div class="page-content">
+      <div class="page-content text-gray-500">
         <slot name="content"> {{ content }}</slot>
       </div>
     </div>
     <div class="page-wrapper-content m-2"
-         ref="contentRef"
-         :class="{'content-bg' :$props.contentBackground}"
-         :style="{minHeight:$props.contentFullHeight ? contentHeight+'px' : 'auto'}">
+         ref="contentElRef"
+         :class="{'content-bg' :$props.contentBackground}" :style="$props.contentFullHeight ?? {minHeight:getContentHeight+'px'}">
       <slot></slot>
     </div>
   </div>
@@ -29,8 +28,8 @@
 
 <script lang="ts" setup>
 
-import {onMounted, ref, computed} from "vue";
-import {useWindowSize,} from '@vueuse/core'
+import { ref, computed} from "vue";
+import {useElementBounding} from '@vueuse/core'
 import {useSlots} from "vue";
 
 defineProps({
@@ -60,19 +59,15 @@ defineProps({
   }
 })
 
-const contentRef = ref();
-const contentHeight = ref();
 const slotTitle = !!useSlots().title;
 const slotSubTitle = !!useSlots().subTitle;
 
-const resizeHeight = () => {
-  const {height} = useWindowSize();
-  contentHeight.value = height.value - contentRef.value.offsetTop - 22;
-}
-
-onMounted(() => {
-  resizeHeight();
+const contentElRef = ref();
+const {top} = useElementBounding(contentElRef);
+const getContentHeight = computed(() => {
+  return document.documentElement.clientHeight - top.value - 10;
 })
+
 </script>
 
 <style lang="scss" scoped>

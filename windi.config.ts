@@ -11,12 +11,14 @@ export default defineConfig({
     'flex-center': 'flex justify-center items-center',
     'flex-col-center': 'flex-center flex-col',
     'flex-x-center': 'flex justify-center',
+    'flex-x-between':'flex justify-between',
     'flex-y-center': 'flex items-center',
+    'flex-y-between':'flex content-center items-center',
+    'flex-col-stretch': 'b-flex-col items-stretch',
     'i-flex-center': 'inline-flex justify-center items-center',
     'i-flex-x-center': 'inline-flex justify-center',
     'i-flex-y-center': 'inline-flex items-center',
     'b-flex-col': 'flex flex-col',
-    'flex-col-stretch': 'b-flex-col items-stretch',
     'i-flex-col': 'inline-flex flex-col',
     'i-flex-col-stretch': 'i-flex-col items-stretch',
     'flex-1-hidden': 'flex-1 overflow-hidden',
@@ -83,9 +85,11 @@ export default defineConfig({
         'border-color',
         'right',
         'fill'
-      ]
+      ],
     }
   },
   variants: {},
-  plugins: []
+  plugins: [
+    require('windicss/plugin/line-clamp'),
+  ]
 });

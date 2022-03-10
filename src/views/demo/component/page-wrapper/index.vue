@@ -1,7 +1,7 @@
 <template>
   <page-wrapper
-    class="page"
     :title="$route['meta']['title']"
+    :sub-title="$route['meta']['title']"
     content-background
     content-full-height
   >
@@ -65,11 +65,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.page {
-  :deep(.wrapper) {
-    //padding-bottom: 0 !important;
-  }
-}
-</style>

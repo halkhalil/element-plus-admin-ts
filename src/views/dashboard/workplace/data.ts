@@ -5,7 +5,7 @@ export const getProjectData = (): object[] => {
   for (let i = 0; i < 6; i++) {
     result.push({
       title: Mock.Random.ctitle(),
-      time: Mock.Random.datetime('m-d H:m'),
+      time: Mock.Random.datetime('MM-dd HH:mm'),
       image: 'https://v3.cn.vuejs.org/logo.png',
       desc: Mock.Random.cparagraph(),
       name: Mock.Random.cname()
@@ -27,7 +27,7 @@ export const getDynamicData = (): DynamicDataItem[] => {
   for (let i = 0; i < 7; i++) {
     result.push({
       title: Mock.Random.ctitle(),
-      time: Mock.Random.datetime('m-d H:m'),
+      time: Mock.Random.datetime('yyyy-MM-dd HH:mm'),
       image: 'https://v3.cn.vuejs.org/logo.png',
       desc: Mock.Random.cparagraph(100, 200),
       name: Mock.Random.cname()
