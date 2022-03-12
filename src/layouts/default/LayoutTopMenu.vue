@@ -1,26 +1,20 @@
 <template>
-  <el-container class="container">
-    <el-main class="main">
-      <el-header height="auto">
-        <LayoutHeader/>
-      </el-header>
-      <LayoutContent class="content"/>
+  <el-container>
+    <el-header height="auto" v-if="getHeaderFixed">
+      <LayoutHeader/>
+    </el-header>
+    <el-main>
+      <el-scrollbar>
+        <LayoutHeader v-if="!getHeaderFixed"/>
+        <LayoutContent/>
+      </el-scrollbar>
     </el-main>
   </el-container>
 </template>
 <script lang="ts" setup>
 import LayoutHeader from './header/index.vue';
 import LayoutContent from './content/index.vue';
+import {useHeaderSetting} from "~/composables/setting/useHeaderSeeting";
+
+const {getHeaderFixed} = useHeaderSetting();
 </script>
-
-<style lang="scss" scoped>
-.el-container, .el-header, .el-main, .el-aside {
-  padding: 0;
-}
-
-.container {
-  width: 100%;
-  height: 100vh;
-  padding: 0 0;
-}
-</style>

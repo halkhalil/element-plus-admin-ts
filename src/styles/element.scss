@@ -1,3 +1,6 @@
+.el-container, .el-header, .el-main, .el-aside {
+  padding: 0;
+}
 :deep(.card) {
   width: 100%;
   border-radius: 0;

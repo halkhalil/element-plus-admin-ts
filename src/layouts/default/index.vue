@@ -1,10 +1,12 @@
 <template>
+  <LayoutFeature />
   <component :is="componentId"></component>
 </template>
 <script lang="ts" setup>
 import LayoutMix from "~/layouts/default/LayoutMix.vue";
 import LayoutAside from "~/layouts/default/LayoutAside.vue";
 import LayoutTopMenu from "~/layouts/default/LayoutTopMenu.vue";
+import LayoutFeature from './feature/index.vue';
 import {useRootSetting} from "~/composables/setting/useRootSeeting";
 import {computed} from "vue";
 

@@ -1,29 +1,27 @@
 <template>
-  <el-container ref="containerElRef">
+  <el-container>
     <el-aside width='auto'>
       <LayoutSidebar/>
     </el-aside>
-    <el-main class="main">
-      <!--      <el-header class="header" ref="headerElRef">-->
-      <LayoutHeader ref="headerElRef"/>
-      <!--      </el-header>-->
-
-      <LayoutContent ref="contentElRef" :style="{height:contentHeight+'px'}"/>
-    </el-main>
+    <el-container>
+      <el-header height="auto" v-if="getHeaderFixed">
+        <LayoutHeader/>
+      </el-header>
+      <el-main>
+        <el-scrollbar>
+          <LayoutHeader v-if="!getHeaderFixed"/>
+          <LayoutContent/>
+        </el-scrollbar>
+      </el-main>
+    </el-container>
   </el-container>
 </template>
 <script lang="ts" setup>
 import LayoutHeader from './header/index.vue';
 import LayoutContent from './content/index.vue';
 import LayoutSidebar from "~/layouts/default/sidebar/index.vue";
-import {useLayout} from "~/layouts/default/useLayout";
+import {useHeaderSetting} from "~/composables/setting/useHeaderSeeting";
 
-const {headerElRef, containerElRef, contentHeight} = useLayout();
+const {getHeaderFixed} = useHeaderSetting();
 
 </script>
-
-<style lang="scss" scoped>
-.el-container, .el-header, .el-main, .el-aside {
-  padding: 0;
-}
-</style>

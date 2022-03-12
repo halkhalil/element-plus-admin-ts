@@ -13,7 +13,7 @@
       <div class="drawer-container">
         <div class="setting-group">
           <h3 class="setting-title">导航栏模式</h3>
-          <div class="flex-row">
+          <div class="flex-x-between mt-3">
             <el-tooltip v-for="(item,index) in navbarModes"
                         :key="index"
                         effect="dark"

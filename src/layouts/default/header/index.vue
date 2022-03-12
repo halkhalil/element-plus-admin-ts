@@ -1,33 +1,37 @@
 <template>
-  <el-affix :offset="0" :position="getHeaderFixed ? 'top' : 'bottom' ">
+  <div class="z-60 w-full">
     <div class="header-container flex justify-between">
-      <!-- left start-->
       <div class="header-left inline-flex flex-shrink">
         <Logo v-if="getShowHeaderLogo" class="action"/>
         <HeaderTrigger v-if="getShowHeaderTrigger" class="action"/>
         <Breadcrumb v-if="getShowBreadcrumb"/>
       </div>
-      <!-- left end-->
 
-      <!--  menu start  -->
       <div class="header-menu" v-if="getIsTopMenuMode">
         <LayoutMenu/>
       </div>
-      <!--  menu end  -->
 
-      <!--  right start  -->
       <div class="header-right inline-flex items-center">
-        <div class="action flex-col-center"><GitHub/></div>
-        <div class="action flex-col-center"><Notify/></div>
-        <div class="action flex-col-center"><FullScreen/></div>
-        <div class="action flex-col-center"><Setting/></div>
-        <div class="action flex-col-center"><UserDropdown/></div>
+        <div class="action flex-col-center">
+          <GitHub/>
+        </div>
+        <div class="action flex-col-center">
+          <Notify/>
+        </div>
+        <div class="action flex-col-center">
+          <FullScreen/>
+        </div>
+        <div class="action flex-col-center">
+          <Setting/>
+        </div>
+        <div class="action flex-col-center">
+          <UserDropdown/>
+        </div>
       </div>
-      <!--  right end  -->
     </div>
 
-    <TagView v-if="getShowTagView"/>
-  </el-affix>
+    <TagView v-if="getShowTagView && !getIsMixMode"/>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -42,7 +46,6 @@ import LayoutMenu from '~/layouts/default/menu/index.vue';
 import HeaderTrigger from "~/layouts/default/trigger/HeaderTrigger.vue";
 import TagView from "~/layouts/default/tagview/tagView.vue";
 import {useRootSetting} from "~/composables/setting/useRootSeeting";
-import {useHeaderSetting} from "~/composables/setting/useHeaderSeeting";
 
 const {
   getShowBreadcrumb,
@@ -50,9 +53,8 @@ const {
   getShowHeaderTrigger,
   getIsTopMenuMode,
   getShowTagView,
+  getIsMixMode,
 } = useRootSetting();
-
-const {getHeaderFixed} = useHeaderSetting();
 </script>
 
 <style lang="scss" scoped>

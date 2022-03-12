@@ -36,7 +36,7 @@ export function useRootSetting() {
   const getShowSettingDrawer = computed(() => unref(getProjectConfig).showSettingDrawer);
   const getShowHeaderLogo = computed(() => !unref(getIsSidebarMode) && unref(getShowLogo) && !unref(getIsMobile));
   const getShowSidebarLogo = computed(() => getIsSidebarMode.value && getShowLogo.value);
-  const getShowTagView = computed(() => unref(getEnableTagView) && (unref(getIsTopMenuMode) || unref(getIsSidebarMode)) && !unref(getIsMobile));
+  const getShowTagView = computed(() => unref(getEnableTagView) &&  !unref(getIsMobile));
   const getShowHeaderTrigger = computed(() => !unref(getIsTopMenuMode));
   const getGlobalSize = computed(() => unref(getProjectConfig).size);
 
