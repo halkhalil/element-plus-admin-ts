@@ -13,7 +13,7 @@
   </el-card>
 </template>
 <script lang="ts" setup>
-import {useLayoutMenus} from "~/layouts/default/menu/useLayoutMenus";
+import {useLayoutMenus} from "~/layouts/common/menu/useLayoutMenus";
 
 const {getMenus} = useLayoutMenus()
 </script>

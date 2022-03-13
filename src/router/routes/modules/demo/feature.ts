@@ -1,4 +1,4 @@
-import Layout from "~/layouts/default/index.vue";
+import Layout from "~/layouts/index.vue";
 import {AppRouteRecordRaw} from "~/router/types";
 
 const featureRoute: AppRouteRecordRaw[] = [

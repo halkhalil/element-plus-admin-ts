@@ -8,7 +8,7 @@
 
 <script lang="ts" setup>
 import LayoutHeader from './index.vue'
-import TagView from "~/layouts/default/tagview/tagView.vue";
+import TagView from "~/layouts/common/tagview/index.vue";
 import {useRootSetting} from "~/composables/setting/useRootSeeting";
 
 const {

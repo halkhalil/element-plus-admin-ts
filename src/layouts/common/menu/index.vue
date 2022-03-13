@@ -7,11 +7,11 @@
 <script lang="ts" setup>
 import {computed} from "vue";
 import {useRouter} from 'vue-router';
-import SubMenu from "~/layouts/default/menu/SubMenu.vue";
-import SidebarLogo from "~/layouts/default/menu/SidebarLogo.vue";
+import SubMenu from "~/layouts/common/menu/SubMenu.vue";
+import SidebarLogo from "~/layouts/common/menu/SidebarLogo.vue";
 import {useMenuSetting} from "~/composables/setting/useMenuSeeting";
 import {useRootSetting} from "~/composables/setting/useRootSeeting";
-import {useLayoutMenus} from "~/layouts/default/menu/useLayoutMenus";
+import {useLayoutMenus} from "~/layouts/common/menu/useLayoutMenus";
 
 const {currentRoute} = useRouter();
 const {getMenus} = useLayoutMenus();

@@ -4,25 +4,13 @@ export const PARENT_LAYOUT_NAME = 'ParentLayout';
 
 export const PAGE_NOT_FOUND_NAME = 'PageNotFound';
 
-export const EXCEPTION_COMPONENT = () => import('~/views/sys/exception/404.vue');
+export const EXCEPTION_COMPONENT = () => import('~/views/core/exception/404.vue');
 
 /**
- * @description: default layout
+ * @description: common layout
  */
-export const LAYOUT = () => import('~/layouts/default/index.vue');
+export const LAYOUT = () => import('~/layouts/index.vue');
 
 export const CONTENT = () => import('~/layouts/page/index.vue');
 
-export const IFRAME = () => import('~/views/sys/iframe/index.vue');
-
-/**
- * @description: parent-layout
- */
-export const getParentLayout = (_name?: string) => {
-  return () =>
-    new Promise((resolve) => {
-      resolve({
-        name: PARENT_LAYOUT_NAME,
-      });
-    });
-};
+export const IFRAME = () => import('~/views/core/iframe/index.vue');

@@ -14,7 +14,7 @@
   <item-menu v-else :menu="menu.children && menu.children.length === 1 ? menu.children[0] : menu"/>
 </template>
 <script lang="ts" setup>
-import ItemMenu from "~/layouts/default/menu/ItemMenu.vue";
+import ItemMenu from "~/layouts/common/menu/ItemMenu.vue";
 defineProps({
   menu: {
     type: Object,

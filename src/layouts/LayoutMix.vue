@@ -9,7 +9,7 @@
       </el-aside>
       <el-container>
         <el-header height="auto" v-if="getShowTagView">
-          <TagView></TagView>
+          <LayoutTagView/>
         </el-header>
         <el-main>
           <el-scrollbar>
@@ -21,10 +21,7 @@
   </el-container>
 </template>
 <script lang="ts" setup>
-import LayoutHeader from './header/index.vue';
-import LayoutContent from './content/index.vue';
-import LayoutSidebar from "~/layouts/default/sidebar/index.vue";
-import TagView from '~/layouts/default/tagview/tagView.vue';
+import {LayoutSidebar, LayoutHeader, LayoutContent, LayoutTagView} from '~/layouts/common'
 import {useRootSetting} from "~/composables/setting/useRootSeeting";
 
 const {getShowTagView,} = useRootSetting();

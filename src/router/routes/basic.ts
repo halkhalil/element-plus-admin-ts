@@ -42,7 +42,7 @@ export const RedirectRoute: AppRouteRecordRaw = {
       path: '/redirect/:path(.*)',
       name: 'Redirect',
       meta: {title: 'redirect'},
-      component: () => import('~/views/sys/redirect/index.vue')
+      component: () => import('~/views/core/redirect/index.vue')
     }
   ]
 }

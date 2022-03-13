@@ -12,8 +12,7 @@
   </el-container>
 </template>
 <script lang="ts" setup>
-import LayoutHeader from './header/index.vue';
-import LayoutContent from './content/index.vue';
+import {LayoutHeader, LayoutContent} from '~/layouts/common'
 import {useHeaderSetting} from "~/composables/setting/useHeaderSeeting";
 
 const {getHeaderFixed} = useHeaderSetting();
