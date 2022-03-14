@@ -30,7 +30,7 @@
       </div>
     </div>
 
-    <TagView v-if="getShowTagView && !getIsMixMode"/>
+<!--    <TagView v-if="getShowTagView && !getIsMixMode"/>-->
   </div>
 </template>
 

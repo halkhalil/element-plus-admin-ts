@@ -1,11 +1,11 @@
-import Layout from "~/layouts/index.vue";
+import {LAYOUT} from "~/router/constant";
 import {AppRouteRecordRaw} from "~/router/types";
 
 const dashboardRoute: AppRouteRecordRaw[] = [
   {
     path: '/dashboard',
     name: 'Dashboard',
-    component: Layout,
+    component: LAYOUT,
     redirect: '/dashboard/workplace',
     meta: {title: '首页', icon: 'el-home', sort: 10},
     children: [

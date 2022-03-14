@@ -5,6 +5,7 @@ import {viteMockServe} from "vite-plugin-mock";
 import viteSvgIcons from 'vite-plugin-svg-icons';
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from "unplugin-vue-components/vite";
+import vueJsx from '@vitejs/plugin-vue-jsx';
 import {ElementPlusResolver} from "unplugin-vue-components/resolvers";
 import WindiCSS from 'vite-plugin-windicss'
 
@@ -36,21 +37,22 @@ export default ({command}: ConfigEnv): UserConfig => {
     },
     plugins: [
       vue(),
+      vueJsx(),
       WindiCSS(),
       viteSvgIcons({
         iconDirs: [pathResolve('src/assets/svg')],
         symbolId: 'icon-[dir]-[name]',
       }),
-      Components({
-        resolvers: [
-          AutoImport({
-            resolvers: [ElementPlusResolver()],
-          }),
-          ElementPlusResolver({
-            importStyle: "sass",
-          }),
-        ],
-      }),
+      // Components({
+      //   resolvers: [
+      //     AutoImport({
+      //       resolvers: [ElementPlusResolver()],
+      //     }),
+      //     ElementPlusResolver({
+      //       importStyle: "sass",
+      //     }),
+      //   ],
+      // }),
       viteMockServe({
         mockPath: 'mock',
         localEnabled: command === 'serve' || command === 'build',

@@ -1,5 +1,5 @@
 .el-container, .el-header, .el-main, .el-aside {
-  padding: 0;
+  padding: 0 !important;
 }
 :deep(.card) {
   width: 100%;

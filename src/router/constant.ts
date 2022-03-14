@@ -10,6 +10,7 @@ export const EXCEPTION_COMPONENT = () => import('~/views/core/exception/404.vue'
  * @description: common layout
  */
 export const LAYOUT = () => import('~/layouts/index.vue');
+// export const LAYOUT = () => import('~/layouts/content');
 
 export const CONTENT = () => import('~/layouts/page/index.vue');
 
