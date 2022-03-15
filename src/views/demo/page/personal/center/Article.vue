@@ -35,7 +35,6 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 .item {
-  @extend .py-4;
   border-bottom: solid 1px var(--el-border-color-lighter);
 
   &.item:last-child {

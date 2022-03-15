@@ -36,7 +36,7 @@ export function useRootSetting() {
   const getShowSettingDrawer = computed(() => unref(getProjectConfig).showSettingDrawer);
   const getShowHeaderLogo = computed(() => !unref(getIsSidebarMode) && unref(getShowLogo) && !unref(getIsMobile));
   const getShowSidebarLogo = computed(() => getIsSidebarMode.value && getShowLogo.value);
-  const getShowTagView = computed(() => unref(getEnableTagView) &&  !unref(getIsMobile));
+  const getShowTagView = computed(() => unref(getEnableTagView) && !unref(getIsMobile));
   const getShowHeaderTrigger = computed(() => !unref(getIsTopMenuMode));
   const getGlobalSize = computed(() => unref(getProjectConfig).size);
 
@@ -97,7 +97,7 @@ export function useRootSetting() {
   async function toggleNavbarMode(mode: NavbarModeEnum) {
     let menuSetting = setting.menuSetting;
     if (mode === NavbarModeEnum.TOP_MENU) {
-      menuSetting = {...menuSetting, mode: MenuModeEnum.HORIZONTAL, backgroundColor: 'white',textColor:'black'}
+      menuSetting = {...menuSetting, mode: MenuModeEnum.HORIZONTAL, backgroundColor: 'white', textColor: 'black'}
     }
     await setRootSetting({navbarMode: mode});
 
@@ -150,6 +150,7 @@ export function useRootSetting() {
     getShowHeaderLogo,
     getShowSidebarLogo,
     getShowTagView,
+    getShowTab: getShowTagView,
     getShowHeaderTrigger,
     getIsSidebarMode,
     getIsMixMode,

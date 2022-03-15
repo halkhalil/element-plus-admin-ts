@@ -43,16 +43,16 @@ export default ({command}: ConfigEnv): UserConfig => {
         iconDirs: [pathResolve('src/assets/svg')],
         symbolId: 'icon-[dir]-[name]',
       }),
-      // Components({
-      //   resolvers: [
-      //     AutoImport({
-      //       resolvers: [ElementPlusResolver()],
-      //     }),
-      //     ElementPlusResolver({
-      //       importStyle: "sass",
-      //     }),
-      //   ],
-      // }),
+      Components({
+        resolvers: [
+          AutoImport({
+            resolvers: [ElementPlusResolver()],
+          }),
+          ElementPlusResolver({
+            importStyle: "sass",
+          }),
+        ],
+      }),
       viteMockServe({
         mockPath: 'mock',
         localEnabled: command === 'serve' || command === 'build',

@@ -12,7 +12,7 @@
           <LayoutTagView/>
         </el-header>
         <el-main>
-          <el-scrollbar>
+          <el-scrollbar view-class="h-full">
             <LayoutContent/>
           </el-scrollbar>
         </el-main>

@@ -5,7 +5,7 @@
       <LayoutTagView v-if="getShowTagView"/>
     </el-header>
     <el-main>
-      <el-scrollbar>
+      <el-scrollbar view-class="h-full">
         <LayoutHeader v-if="!getHeaderFixed"/>
         <LayoutTagView v-if="!getHeaderFixed && getShowTagView"/>
         <LayoutContent/>

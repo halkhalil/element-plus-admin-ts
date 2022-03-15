@@ -69,11 +69,8 @@ export default {
   width: 80%;
   padding: 30px;
   .label{
-    @extend .text-df;
-    @extend .text-secondary;
   }
   .value{
-    @extend .text-xl;
     font-weight: bolder;;
   }
 }

@@ -12,4 +12,3 @@ const {currentRoute} = useRouter();
 const loading = ref(true);
 const hideLoading = () => loading.value = false;
 </script>
-<style scoped></style>

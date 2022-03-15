@@ -6,12 +6,8 @@ export const PAGE_NOT_FOUND_NAME = 'PageNotFound';
 
 export const EXCEPTION_COMPONENT = () => import('~/views/core/exception/404.vue');
 
-/**
- * @description: common layout
- */
 export const LAYOUT = () => import('~/layouts/index.vue');
-// export const LAYOUT = () => import('~/layouts/content');
+
+export const IFRAME = () => import('~/layouts/iframe/index.vue');
 
 export const CONTENT = () => import('~/layouts/page/index.vue');
-
-export const IFRAME = () => import('~/views/core/iframe/index.vue');

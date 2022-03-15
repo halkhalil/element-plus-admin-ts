@@ -5,6 +5,7 @@ import LayoutMenu from './menu/index.vue'
 import LayoutSidebar from './sidebar/index.vue'
 import LayoutSetting from './setting/index.vue'
 import LayoutTagView from './tagview/index.vue'
+import LayoutTab from './tagview/index.vue'
 
 export {
   LayoutContent,
@@ -13,5 +14,6 @@ export {
   LayoutMenu,
   LayoutSidebar,
   LayoutSetting,
-  LayoutTagView
+  LayoutTagView,
+  LayoutTab
 }

@@ -1,6 +1,6 @@
 <template>
   <el-drawer
-    custom-class="drawer-setting"
+    custom-class="drawer-setting bg-white"
     :model-value="getShowSettingDrawer"
     direction="rtl"
     :size="260"
