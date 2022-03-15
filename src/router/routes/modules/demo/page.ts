@@ -1,4 +1,4 @@
-import Layout from "~/layouts/bak/index.vue";
+import {LAYOUT} from "~/router/constant";
 import LayoutContent from "~/layouts/page/index.vue"
 import {AppRouteRecordRaw} from "~/router/types";
 
@@ -6,7 +6,7 @@ const pageRoute: AppRouteRecordRaw[] = [
   {
     path: '/page',
     name: 'Page',
-    component: Layout,
+    component: LAYOUT,
     redirect: '/error-page',
     meta: {title: '页面', icon: 'el-compass', sort:40},
     children: [

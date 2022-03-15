@@ -1,5 +1,5 @@
 import {AppRouteRecordRaw} from "~/router/types";
-import {CONTENT, LAYOUT} from "~/router/constant";
+import {LAYOUT} from "~/router/constant";
 import {RoleEnum} from "~/enums/permission";
 
 const permissionRoute: AppRouteRecordRaw[] = [

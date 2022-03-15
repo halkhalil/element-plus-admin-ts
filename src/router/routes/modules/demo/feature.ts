@@ -1,11 +1,11 @@
-import Layout from "~/layouts/bak/index.vue";
+import {LAYOUT} from "~/router/constant";
 import {AppRouteRecordRaw} from "~/router/types";
 
 const featureRoute: AppRouteRecordRaw[] = [
   {
     path: '/feature',
     name: 'Feature',
-    component: Layout,
+    component: LAYOUT,
     redirect: '/feature',
     meta: {title: '功能', icon: 'el-ungroup', sort: 30},
     children: [

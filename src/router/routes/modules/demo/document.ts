@@ -1,5 +1,4 @@
-import Layout from "~/layouts/bak/index.vue";
-import LayoutContent from "~/layouts/page/index.vue"
+import {LAYOUT} from "~/router/constant";
 import {AppRouteRecordRaw} from "~/router/types";
 import {IFRAME} from "~/router/constant";
 
@@ -7,7 +6,7 @@ const pageRoute: AppRouteRecordRaw[] = [
   {
     path: '/document',
     name: 'Document',
-    component: Layout,
+    component: LAYOUT,
     meta: {title: '文档', icon: 'el-compass', sort: 40},
     children: [
       {

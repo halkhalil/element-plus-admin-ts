@@ -1,4 +1,4 @@
-import Layout from "~/layouts/bak/index.vue";
+import {LAYOUT} from "~/router/constant";
 import LayoutContent from "~/layouts/page/index.vue"
 import {AppRouteRecordRaw} from "~/router/types";
 
@@ -6,7 +6,7 @@ const componentRoute: AppRouteRecordRaw[] = [
   {
     path: '/component',
     name: 'Component',
-    component: Layout,
+    component: LAYOUT,
     redirect: '/component/table/basicTable',
     meta: {title: '组件', icon: 'el-component', sort: 20},
     children: [

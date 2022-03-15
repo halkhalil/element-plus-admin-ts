@@ -1,4 +1,4 @@
-import Layout from "~/layouts/bak/index.vue";
+import {LAYOUT} from "~/router/constant";
 import {AppRouteRecordRaw} from "~/router/types";
 
 const systemRoute: AppRouteRecordRaw[] = [
@@ -6,7 +6,7 @@ const systemRoute: AppRouteRecordRaw[] = [
     path: '/system',
     name: 'System',
     redirect: '/system/configs',
-    component: Layout,
+    component: LAYOUT,
     meta: {title: '系统', icon: 'el-windows', sort: 60},
     children: [
       {
