@@ -9,7 +9,7 @@
     :append-to-body="true"
     @closed="closedSettingDrawer"
   >
-    <el-scrollbar height="100vh">
+    <el-scrollbar height="100vh" view-class="bg-white">
       <div class="drawer-container">
         <div class="setting-group">
           <h3 class="setting-title">导航栏模式</h3>
@@ -20,8 +20,15 @@
                         :content="item.title"
                         placement="top-start">
               <div class="setting-item" @click="toggleNavbarMode(item.type)">
-                <img :src="item.img"/>
-                <i class="el-icon-check" v-if="item.type === getNavbarMode"/>
+                <div :class="[
+                       'menu-type',
+                       `menu-type--${item.type}`,
+                       {
+                         [`menu-type--active`]:  item.type === getNavbarMode
+                       }
+                     ]"
+                ></div>
+                <i class="el-icon-check"/>
               </div>
             </el-tooltip>
           </div>
@@ -238,4 +245,6 @@ const {getEnableTagView, toggleEnableTagView} = useTagViewSetting();
     }
   }
 }
+
+@import "./layout0picker.css";
 </style>

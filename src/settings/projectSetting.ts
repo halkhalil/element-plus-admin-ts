@@ -14,7 +14,7 @@ export const setting: ProjectSetting = {
     defaultActive: '',
     defaultOpeneds: [],
     uniqueOpened: true,
-    menuTrigger: MenuTrigger.CLICK,
+    menuTrigger: MenuTrigger.HOVER,
     router: true,
     collapseTransition: true,
   },
