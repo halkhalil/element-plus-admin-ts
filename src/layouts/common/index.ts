@@ -6,6 +6,7 @@ import LayoutSidebar from './sidebar/index.vue'
 import LayoutSetting from './setting/index.vue'
 import LayoutTagView from './tagview/index.vue'
 import LayoutTab from './tagview/index.vue'
+import LayoutFooter from './footer/index.vue'
 
 export {
   LayoutContent,
@@ -15,5 +16,6 @@ export {
   LayoutSidebar,
   LayoutSetting,
   LayoutTagView,
-  LayoutTab
+  LayoutTab,
+  LayoutFooter
 }

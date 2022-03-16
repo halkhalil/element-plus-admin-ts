@@ -1,6 +1,6 @@
 <script lang="tsx">
 import {useRootSetting} from "~/composables/setting/useRootSeeting";
-import {LayoutSidebar, LayoutHeader, LayoutContent, LayoutFeature, LayoutTab} from '~/layouts/common'
+import {LayoutSidebar, LayoutHeader, LayoutContent, LayoutFeature, LayoutTab, LayoutFooter} from '~/layouts/common'
 import {useHeaderSetting} from "~/composables/setting/useHeaderSeeting";
 import {defineComponent} from "vue";
 
@@ -25,6 +25,10 @@ export default defineComponent({
       return getIsMixMode.value || getHeaderFixed.value ? headerFixed() : header()
     }
 
+    const renderFooter = () => (
+      <el-footer><LayoutFooter/></el-footer>
+    )
+
     const renderAside = () => (<el-aside width='auto'><LayoutSidebar/></el-aside>)
 
     // 左侧菜单模式
@@ -32,10 +36,10 @@ export default defineComponent({
       return (
         <el-container>
           {renderAside()}
-          <el-container>
+          <el-container direction='vertical'>
             {getHeaderFixed.value ? renderHeader() : null}
             <el-main>
-              <el-scrollbar viewClass="h-full">
+              <el-scrollbar>
                 {!getHeaderFixed.value ? renderHeader() : null}
                 <LayoutContent/>
               </el-scrollbar>
@@ -50,12 +54,12 @@ export default defineComponent({
       return (
         <el-container direction='vertical'>
           {renderHeader()}
-          <el-container>
+          <el-container direction='horizontal'>
             {renderAside()}
-            <el-container>
+            <el-container direction='vertical'>
               {getShowTab.value ? renderTabFixed() : null}
               <el-main>
-                <el-scrollbar viewClass="h-full">
+                <el-scrollbar>
                   <LayoutContent/>
                 </el-scrollbar>
               </el-main>
@@ -71,7 +75,7 @@ export default defineComponent({
         <el-container direction='vertical'>
           {getHeaderFixed.value ? renderHeader() : null}
           <el-main>
-            <el-scrollbar viewClass="h-full">
+            <el-scrollbar>
               {!getHeaderFixed.value ? renderHeader() : null}
               <LayoutContent/>
             </el-scrollbar>
