@@ -7,7 +7,6 @@ import {NavbarModeEnum, SizeEnum, ThemeEnum} from "~/enums/app";
 import {PermissionModeEnum} from "~/enums/permission";
 import {MenuModeEnum} from "~/enums/menu";
 import {setting} from '~/settings/projectSetting'
-import {ProjectSetting} from "#/config";
 
 
 export function useRootSetting() {

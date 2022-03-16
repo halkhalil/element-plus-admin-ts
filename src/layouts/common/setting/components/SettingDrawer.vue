@@ -1,117 +1,103 @@
 <template>
   <el-drawer
-    custom-class="drawer-setting bg-white"
     :model-value="getShowSettingDrawer"
     direction="rtl"
-    :size="260"
+    :size="280"
     :with-header="false"
     :show-close="false"
     :append-to-body="true"
     @closed="closedSettingDrawer"
   >
-    <el-scrollbar height="100vh" view-class="bg-white">
-      <div class="drawer-container">
-        <div class="setting-group">
-          <h3 class="setting-title">导航栏模式</h3>
-          <div class="flex-x-between mt-3">
-            <el-tooltip v-for="(item,index) in navbarModes"
-                        :key="index"
-                        effect="dark"
-                        :content="item.title"
-                        placement="top-start">
-              <div class="setting-item" @click="toggleNavbarMode(item.type)">
-                <div :class="[
+    <el-scrollbar>
+      <el-form size="small" class="drawer-container">
+        <el-divider>导航栏模式</el-divider>
+        <div class="flex-x-between">
+          <el-tooltip v-for="(item,index) in menuTypes"
+                      :key="index"
+                      effect="dark"
+                      :content="item.title"
+                      placement="top-start">
+            <div class="setting-item" @click="toggleNavbarMode(item.type)">
+              <div :class="[
                        'menu-type',
                        `menu-type--${item.type}`,
                        {
                          [`menu-type--active`]:  item.type === getNavbarMode
                        }
                      ]"
-                ></div>
-                <i class="el-icon-check"/>
-              </div>
-            </el-tooltip>
-          </div>
+              ></div>
+            </div>
+          </el-tooltip>
         </div>
-        <el-divider/>
 
-        <el-form size="small">
-          <div class="setting-group">
-            <h3 class="setting-title">内容区域</h3>
-            <div>
-              <div class="drawer-item">
-                <span>dark</span>
-                <el-switch :model-value="isDark"
-                           :active-value="true"
-                           :inactive-value="false"
-                           class="drawer-switch"
-                           @change="toggleDark"/>
-              </div>
-              <div class="drawer-item">
-                <span>Tag视图</span>
-                <el-switch :model-value="getEnableTagView" class="drawer-switch"
-                           @change="toggleEnableTagView"/>
-              </div>
+        <el-divider>内容区域</el-divider>
+        <div class="drawer-item">
+          <span>dark</span>
+          <el-switch :model-value="isDark"
+                     :active-value="true"
+                     :inactive-value="false"
+                     class="drawer-switch"
+                     @change="toggleDark"/>
+        </div>
+        <div class="drawer-item">
+          <span>Tag视图</span>
+          <el-switch :model-value="getEnableTagView" class="drawer-switch"
+                     @change="toggleEnableTagView"/>
+        </div>
 
-              <div class="drawer-item">
-                <span>固定Header</span>
-                <el-switch :model-value="getHeaderFixed" class="drawer-switch"
-                           @change="toggleHeaderFixed"/>
-              </div>
+        <div class="drawer-item">
+          <span>固定Header</span>
+          <el-switch :model-value="getHeaderFixed" class="drawer-switch"
+                     @change="toggleHeaderFixed"/>
+        </div>
 
-              <div class="drawer-item">
-                <span>侧边栏Logo</span>
-                <el-switch :model-value="getShowLogo" class="drawer-switch" @change="toggleLogo"/>
-              </div>
-              <div class="drawer-item">
-                <span>面包屑导航</span>
-                <el-switch :model-value="getShowBreadcrumb" class="drawer-switch"
-                           @change="toggleBreadcrumb"/>
-              </div>
-              <div class="drawer-item">
-                <span>布局大小</span>
-                <el-select :model-value="getGlobalSize" style="width: 120px"
-                           @change="toggleElementSize($event)">
-                  <el-option v-for="value in SizeEnum"
-                             :key="value"
-                             :label="value"
-                             :value="value"></el-option>
-                </el-select>
-              </div>
-            </div>
-          </div>
-          <div class="setting-group">
-            <h3 class="setting-title">动画</h3>
-            <div>
-              <div class="drawer-item">
-                <span>顶部进度条</span>
-                <el-switch :model-value="getOpenNProgress" class="drawer-switch"
-                           @change="toggleOpenNProgress"/>
-              </div>
-              <div class="drawer-item">
-                <span>切换Loading</span>
-                <el-switch :model-value="getOpenPageLoading" class="drawer-switch"
-                           @change="toggleOpenPageLoading"/>
-              </div>
-              <div class="drawer-item">
-                <span>切换动画</span>
-                <el-switch :model-value="getEnableTransition" class="drawer-switch"
-                           @change="toggleEnableTransition"/>
-              </div>
-              <div class="drawer-item">
-                <span>动画类型</span>
-                <el-select :model-value="getBasicTransition" style="width: 120px"
-                           @change="setBasicTransition($event)">
-                  <el-option v-for="value in TransitionEnum"
-                             :key="value"
-                             :label="value"
-                             :value="value"></el-option>
-                </el-select>
-              </div>
-            </div>
-          </div>
-        </el-form>
-      </div>
+        <div class="drawer-item">
+          <span>侧边栏Logo</span>
+          <el-switch :model-value="getShowLogo" class="drawer-switch" @change="toggleLogo"/>
+        </div>
+        <div class="drawer-item">
+          <span>面包屑导航</span>
+          <el-switch :model-value="getShowBreadcrumb" class="drawer-switch"
+                     @change="toggleBreadcrumb"/>
+        </div>
+        <div class="drawer-item">
+          <span>布局大小</span>
+          <el-select :model-value="getGlobalSize" style="width: 120px"
+                     @change="toggleElementSize($event)">
+            <el-option v-for="value in SizeEnum"
+                       :key="value"
+                       :label="value"
+                       :value="value"></el-option>
+          </el-select>
+        </div>
+
+        <el-divider>动画</el-divider>
+        <div class="drawer-item">
+          <span>顶部进度条</span>
+          <el-switch :model-value="getOpenNProgress" class="drawer-switch"
+                     @change="toggleOpenNProgress"/>
+        </div>
+        <div class="drawer-item">
+          <span>切换Loading</span>
+          <el-switch :model-value="getOpenPageLoading" class="drawer-switch"
+                     @change="toggleOpenPageLoading"/>
+        </div>
+        <div class="drawer-item">
+          <span>切换动画</span>
+          <el-switch :model-value="getEnableTransition" class="drawer-switch"
+                     @change="toggleEnableTransition"/>
+        </div>
+        <div class="drawer-item">
+          <span>动画类型</span>
+          <el-select :model-value="getBasicTransition" style="width: 120px"
+                     @change="setBasicTransition($event)">
+            <el-option v-for="value in TransitionEnum"
+                       :key="value"
+                       :label="value"
+                       :value="value"></el-option>
+          </el-select>
+        </div>
+      </el-form>
     </el-scrollbar>
   </el-drawer>
 </template>
@@ -121,29 +107,9 @@ import {useHeaderSetting} from "~/composables/setting/useHeaderSeeting";
 import {useTransitionSetting} from "~/composables/setting/useTransitionSeeting";
 import {useTagViewSetting} from "~/composables/setting/useTagViewSeeting";
 import {SizeEnum, TransitionEnum} from '~/enums/app';
+import {menuTypes} from './menu'
 import {useDark, useToggle} from '@vueuse/core'
-import {ref} from "vue";
 
-const navbarModes = ref([
-  {
-    mode: 'light',
-    type: 'sidebar',
-    title: '左侧菜单模式',
-    img: 'https://gw.alipayobjects.com/zos/rmsportal/LCkqqYNmvBEbokSDscrm.svg',
-  },
-  {
-    mode: 'dark',
-    type: 'mix',
-    title: '顶部菜单混合模式',
-    img: 'https://gw.alipayobjects.com/zos/rmsportal/jpRkZQMyYRryryPNtyIC.svg',
-  },
-  {
-    mode: 'other',
-    type: 'top-menu',
-    title: '顶部菜单模式',
-    img: 'https://gw.alipayobjects.com/zos/antfincdn/hmKaLQvmY2/LCkqqYNmvBEbokSDscrm.svg',
-  }
-]);
 const {
   getShowLogo,
   getShowBreadcrumb,
@@ -155,8 +121,6 @@ const {
   toggleBreadcrumb,
   toggleNavbarMode,
   toggleElementSize,
-  getDarkMode,
-  toggleDarkMode,
 } = useRootSetting();
 
 const isDark = useDark()
@@ -176,75 +140,20 @@ const {
 
 const {getEnableTagView, toggleEnableTagView} = useTagViewSetting();
 </script>
-<style lang="scss">
-.drawer-setting {
-  .el-drawer__body {
-    padding: 0 !important;
-  }
+<style lang="scss" scoped>
+.drawer-container {
+  font-size: 14px;
+  line-height: 1.5;
+  word-wrap: break-word;
 
-  .drawer-container {
-    padding: 20px;
+  .drawer-item {
+    color: rgba(0, 0, 0, .65);
     font-size: 14px;
-    line-height: 1.5;
-    word-wrap: break-word;
-
-    .setting-group {
-      .setting-title {
-        font-size: 14px;
-        color: rgba(0, 0, 0, .85);
-      }
-
-      .setting-item {
-        position: relative;
-        margin-right: 16px;
-        cursor: pointer;
-
-        img {
-          width: 48px;
-        }
-
-        i.el-icon-check {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          margin-left: -8px;
-          margin-top: -8px;
-          color: #1890ff;
-          font-size: 16px;
-          font-weight: bolder;
-        }
-      }
-
-      .color-block {
-        width: 20px;
-        height: 20px;
-        border-radius: 2px;
-        float: left;
-        cursor: pointer;
-        margin-right: 8px;
-        padding-left: 0px;
-        padding-right: 0px;
-        text-align: center;
-        color: #fff;
-        font-weight: 700;
-
-        i.el-icon-check {
-          font-size: 14px;
-        }
-      }
-    }
-
-    .drawer-item {
-      color: rgba(0, 0, 0, .65);
-      font-size: 14px;
-      padding: 12px 0;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-    }
+    padding: 8px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
   }
 }
-
-@import "./layout0picker.css";
 </style>
