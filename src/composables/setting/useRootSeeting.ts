@@ -2,7 +2,7 @@ import {computed, unref} from 'vue'
 import store from "~/store";
 import {useMenuSetting} from "~/composables/setting/useMenuSeeting";
 import {useWindowSize} from "@vueuse/core";
-import {useTagViewSetting} from "~/composables/setting/useTagViewSeeting.js";
+import {useTabSetting} from "~/composables/setting/useTabSeeting.js";
 import {NavbarModeEnum, SizeEnum, ThemeEnum} from "~/enums/app";
 import {PermissionModeEnum} from "~/enums/permission";
 import {MenuModeEnum} from "~/enums/menu";
@@ -13,7 +13,7 @@ export function useRootSetting() {
 
   const {dispatch, getters} = store;
   const getProjectConfig = computed(() => getters.getProjectConfig);
-  const {getEnableTagView} = useTagViewSetting();
+  const {getEnableTab} = useTabSetting();
   const {setMenuSetting} = useMenuSetting();
 
   const getIsMobile = computed(() => {
@@ -35,7 +35,7 @@ export function useRootSetting() {
   const getShowSettingDrawer = computed(() => unref(getProjectConfig).showSettingDrawer);
   const getShowHeaderLogo = computed(() => !unref(getIsSidebarMode) && unref(getShowLogo) && !unref(getIsMobile));
   const getShowSidebarLogo = computed(() => getIsSidebarMode.value && getShowLogo.value);
-  const getShowTagView = computed(() => unref(getEnableTagView) && !unref(getIsMobile));
+  const getShowTab = computed(() => unref(getEnableTab) && !unref(getIsMobile));
   const getShowHeaderTrigger = computed(() => !unref(getIsTopMenuMode));
   const getGlobalSize = computed(() => unref(getProjectConfig).size);
 
@@ -148,8 +148,7 @@ export function useRootSetting() {
     getShowSettingDrawer,
     getShowHeaderLogo,
     getShowSidebarLogo,
-    getShowTagView,
-    getShowTab: getShowTagView,
+    getShowTab,
     getShowHeaderTrigger,
     getIsSidebarMode,
     getIsMixMode,

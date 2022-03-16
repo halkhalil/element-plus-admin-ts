@@ -1,5 +1,5 @@
 import {resolve} from "path";
-import {ConfigEnv, defineConfig, UserConfig} from "vite";
+import {ConfigEnv, UserConfig} from "vite";
 import vue from "@vitejs/plugin-vue";
 import {viteMockServe} from "vite-plugin-mock";
 import viteSvgIcons from 'vite-plugin-svg-icons';
@@ -16,10 +16,9 @@ function pathResolve(dir: string) {
 
 export default ({command}: ConfigEnv): UserConfig => {
   return {
-    base: '/element-plus-admin',
+    base: '/element-plus-admin/',
     resolve: {
       alias: {
-        '@': pathResolve('src') + '/',
         "~": pathResolve('src') + '/',
       },
     },

@@ -3,7 +3,7 @@ import store from "~/store";
 import {RouteLocation, RouteRecord, useRouter} from "vue-router";
 import {computed, nextTick, onMounted, Ref, ref, unref, UnwrapRef, watch} from 'vue';
 
-export function useTagView() {
+export function useTab() {
 
   const {getters, dispatch} = store;
   const {push, replace, currentRoute, getRoutes} = useRouter();
@@ -21,7 +21,7 @@ export function useTagView() {
     const affixViews = filterAffixViews(getRoutes());
     for (const view of affixViews) {
       const {name, path, fullPath, meta} = view as RouteLocation;
-      name && await dispatch('tagView/addVisitedView', {name, path, fullPath, meta});
+      name && await dispatch('tab/addVisitedView', {name, path, fullPath, meta});
     }
   }
 
@@ -42,7 +42,7 @@ export function useTagView() {
    */
   async function addView() {
     const {name, path, fullPath, meta} = currentRoute.value
-    name && await dispatch('tagView/addView', {name, path, fullPath, meta});
+    name && await dispatch('tab/addView', {name, path, fullPath, meta});
   }
 
   /**
@@ -51,7 +51,7 @@ export function useTagView() {
    * @returns {Promise<void>}
    */
   async function closeView({name, path, fullPath, meta}: RouteLocation) {
-    const {visitedViews} = await dispatch('tagView/delView', {name, path, fullPath, meta});
+    const {visitedViews} = await dispatch('tab/delView', {name, path, fullPath, meta});
     if (viewIsActive({name, path, fullPath, meta} as RouteLocation)) {
       await toLastView(visitedViews, {name, path, fullPath, meta} as RouteLocation);
     }
@@ -63,7 +63,7 @@ export function useTagView() {
    * @returns {Promise<void>}
    */
   async function refreshView({name, path, fullPath, meta}: RouteLocation) {
-    await dispatch('tagView/delCachedView', {name, path, fullPath, meta});
+    await dispatch('tab/delCachedView', {name, path, fullPath, meta});
     await nextTick(() => {
       replace({path: '/redirect' + fullPath});
     })
@@ -78,8 +78,8 @@ export function useTagView() {
     if (fullPath !== currentRoute.value.fullPath) {
       await push({name, path, fullPath, meta} as RouteLocation);
     }
-    await dispatch('tagView/delOtherViews', currentRoute);
-    await moveToCurrentTagView();
+    await dispatch('tab/delOtherViews', currentRoute);
+    await moveToCurrentTab();
   }
 
   /**
@@ -87,7 +87,7 @@ export function useTagView() {
    * @param view
    */
   async function closeAllView(view: RouteLocation) {
-    const {visitedViews} = await dispatch('tagView/delAllViews');
+    const {visitedViews} = await dispatch('tab/delAllViews');
     await toLastView(visitedViews, view);
   }
 
@@ -118,13 +118,13 @@ export function useTagView() {
    * 移动到当前路由所在标签
    * @returns {Promise<void>}
    */
-  async function moveToCurrentTagView() {
+  async function moveToCurrentTab() {
     await nextTick(async () => {
       for (const tag of getViewRefs.value) {
         if (tag.$attrs.route.path === unref(currentRoute).path) {
           moveToTarget(tag)
           if (tag.$attrs.route.fullPath !== unref(currentRoute).fullPath) {
-            await dispatch('tagView/updateVisitedView', unref(currentRoute))
+            await dispatch('tab/updateVisitedView', unref(currentRoute))
           }
           break
         }
@@ -210,12 +210,12 @@ export function useTagView() {
   onMounted(async () => {
     await initViews();
     await addView();
-    await moveToCurrentTagView();
+    await moveToCurrentTab();
   })
 
   watch(currentRoute, async () => {
     await addView();
-    await moveToCurrentTagView()
+    await moveToCurrentTab()
   });
 
   return {

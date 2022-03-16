@@ -1,4 +1,4 @@
-const tagView = {
+const tab = {
   namespaced: true,
   state: {
     visitedViews: [],
@@ -136,4 +136,4 @@ const tagView = {
     }
   }
 };
-export default tagView;
+export default tab;

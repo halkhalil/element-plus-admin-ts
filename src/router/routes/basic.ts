@@ -1,31 +1,29 @@
-import {LAYOUT,CONTENT} from "~/router/constant";
+import {LAYOUT, CONTENT, ROOT_NAME, LOGIN_NAME, REDIRECT_NAME, NOT_FOUND_NAME} from "~/router/constant";
 import {AppRouteRecordRaw} from "~/router/types";
 import {PageEnum} from "~/enums/page";
 
 export const LoginRoute: AppRouteRecordRaw = {
   path: '/login',
-  name: 'login',
+  name: LOGIN_NAME,
   meta: {title: 'login'},
   component: () => import('~/views/login/index.vue'),
 }
 
 export const RootRoute: AppRouteRecordRaw = {
   path: '/',
-  name: 'Root',
+  name: ROOT_NAME,
   redirect: PageEnum.HOME,
   meta: {title: 'Root'},
 }
 
-
 export const NotFoundRoute: AppRouteRecordRaw = {
   path: '/:path(.*)*',
-  name: 'PageNotFound',
   component: LAYOUT,
   meta: {title: 'ErrorPage'},
   children: [
     {
       path: '/:path(.*)*',
-      name: 'NotFound',
+      name: NOT_FOUND_NAME,
       component: () => import('~/views/demo/page/error/404.vue'),
       meta: {title: 'ErrorPage'},
     },
@@ -34,13 +32,12 @@ export const NotFoundRoute: AppRouteRecordRaw = {
 
 export const RedirectRoute: AppRouteRecordRaw = {
   path: '/redirect',
-  name: 'RedirectTo',
   component: CONTENT,
   meta: {title: 'redirect'},
   children: [
     {
       path: '/redirect/:path(.*)',
-      name: 'Redirect',
+      name: REDIRECT_NAME,
       meta: {title: 'redirect'},
       component: () => import('~/views/core/redirect/index.vue')
     }

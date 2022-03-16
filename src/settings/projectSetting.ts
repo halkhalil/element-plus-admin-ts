@@ -34,7 +34,7 @@ export const setting: ProjectSetting = {
     openPageLoading: true,
     openNProgress: true,
   },
-  tagViewSetting: {
+  tabSetting: {
     enable: true,
   },
   theme: ThemeEnum.LIGHT,

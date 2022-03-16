@@ -6,12 +6,12 @@
     <el-container>
       <el-header height="auto" v-if="getHeaderFixed">
         <LayoutHeader/>
-        <LayoutTagView v-if="getShowTagView"/>
+        <LayoutTab v-if="getShowTab"/>
       </el-header>
       <el-main>
         <el-scrollbar view-class="h-full">
           <LayoutHeader v-if="!getHeaderFixed"/>
-          <LayoutTagView v-if="!getHeaderFixed && getShowTagView"/>
+          <LayoutTab v-if="!getHeaderFixed && getShowTab"/>
           <LayoutContent/>
         </el-scrollbar>
       </el-main>
@@ -19,10 +19,10 @@
   </el-container>
 </template>
 <script lang="ts" setup>
-import {LayoutSidebar, LayoutHeader, LayoutContent, LayoutTagView} from '~/layouts/common'
+import {LayoutSidebar, LayoutHeader, LayoutContent, LayoutTab} from '~/layouts/common'
 import {useHeaderSetting} from "~/composables/setting/useHeaderSeeting";
 import {useRootSetting} from "~/composables/setting/useRootSeeting";
 
 const {getHeaderFixed} = useHeaderSetting();
-const {getShowTagView} = useRootSetting()
+const {getShowTab} = useRootSetting()
 </script>

@@ -29,8 +29,6 @@
         </div>
       </div>
     </div>
-
-<!--    <TagView v-if="getShowTagView && !getIsMixMode"/>-->
   </div>
 </template>
 
@@ -44,7 +42,6 @@ import GitHub from "~/layouts/common/header/components/GitHub.vue";
 import Setting from "~/layouts/common/setting/index.vue";
 import LayoutMenu from '~/layouts/common/menu/index.vue';
 import HeaderTrigger from "~/layouts/common/trigger/HeaderTrigger.vue";
-import TagView from "~/layouts/common/tagview/index.vue";
 import {useRootSetting} from "~/composables/setting/useRootSeeting";
 
 const {
@@ -52,8 +49,6 @@ const {
   getShowHeaderLogo,
   getShowHeaderTrigger,
   getIsTopMenuMode,
-  getShowTagView,
-  getIsMixMode,
 } = useRootSetting();
 </script>
 

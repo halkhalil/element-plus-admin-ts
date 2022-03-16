@@ -20,10 +20,14 @@
             {{ RoleEnum.TEST }}
           </el-button>
         </el-button-group>
-        <el-alert class="mt-2" title="切换用户后，查看左侧菜单和按钮变化" type="info" :closable="false"/>
+        <div class="mt-2">
+          <el-alert class="mt-2" title="切换用户后，查看左侧菜单和按钮变化" type="info" :closable="false"/>
+        </div>
       </div>
       <div v-else>
-        <el-alert class="mt-2" title="请切换权限模式后预览" type="error" :closable="false"/>
+        <div class="mt-2">
+          <el-alert title="请切换权限模式后预览" type="error" :closable="false"/>
+        </div>
       </div>
     </el-card>
 
@@ -40,7 +44,10 @@
           拥有（Administrator || Test）任一角色可见
         </el-button>
       </el-space>
-      <el-alert class="mt-2" title="指令方式不能动态修改权限,切换路由后会预览效果" type="info" :closable="false"/>
+
+      <div class="mt-2">
+        <el-alert title="指令方式不能动态修改权限,切换路由后会预览效果" type="info" :closable="false"/>
+      </div>
 
       <el-divider content-position="left">函数方式判断权限 hasPermission</el-divider>
       <el-space wrap>
@@ -60,7 +67,7 @@
 
 <script lang="ts" setup>
 import {PageWrapper} from "~/components/Page";
-import {PermissionModeEnum, PermissionEnum} from '~/enums/permission';
+import {PermissionModeEnum} from '~/enums/permission';
 import PermissionMode from './PermissionMode.vue'
 import {RoleEnum} from "~/enums/permission";
 import {useStore} from "vuex";

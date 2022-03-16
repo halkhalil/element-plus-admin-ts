@@ -8,25 +8,14 @@
   </el-row>
 </template>
 
-<script>
-import {BasicCard} from '~/components/Card'
+<script lang="ts" setup>
 import {useECharts} from "~/composables/useECharts";
 import {getFunnelData} from '../data.ts'
 import {onMounted} from "vue";
 
-export default {
-  name: "BarPolarStack",
-  components: {BasicCard},
-  setup() {
-    const {elRef, setOptions} = useECharts();
+const {elRef, setOptions} = useECharts();
 
-    onMounted(() => {
-      setOptions(getFunnelData())
-    })
-
-    return {
-      elRef,
-    }
-  }
-}
+onMounted(() => {
+  setOptions(getFunnelData())
+})
 </script>

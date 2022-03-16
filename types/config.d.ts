@@ -31,7 +31,7 @@ export interface HeaderSetting {
 }
 
 // 标签视图
-export interface TagViewSetting {
+export interface TabSetting {
   enable: boolean,
 }
 
@@ -48,7 +48,7 @@ export interface ProjectSetting {
   menuSetting: MenuSetting,
   headerSetting: HeaderSetting,
   transitionSetting: TransitionSetting,
-  tagViewSetting: TagViewSetting,
+  tabSetting: TabSetting,
   theme: ThemeEnum,
   navbarMode: NavbarModeEnum,
   showLogo: boolean,

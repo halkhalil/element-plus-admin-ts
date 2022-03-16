@@ -42,9 +42,9 @@
                        @change="toggleDark"/>
           </div>
           <div class="drawer-item">
-            <span>Tag视图</span>
-            <el-switch :model-value="getEnableTagView" class="drawer-switch"
-                       @change="toggleEnableTagView"/>
+            <span>标签页</span>
+            <el-switch :model-value="getEnableTab" class="drawer-switch"
+                       @change="toggleEnableTab"/>
           </div>
 
           <div class="drawer-item">
@@ -108,7 +108,7 @@
 import {useRootSetting} from "~/composables/setting/useRootSeeting";
 import {useHeaderSetting} from "~/composables/setting/useHeaderSeeting";
 import {useTransitionSetting} from "~/composables/setting/useTransitionSeeting";
-import {useTagViewSetting} from "~/composables/setting/useTagViewSeeting";
+import {useTabSetting} from "~/composables/setting/useTabSeeting";
 import {SizeEnum, TransitionEnum} from '~/enums/app';
 import {menuTypes} from './menu'
 import {useDark, useToggle} from '@vueuse/core'
@@ -141,7 +141,7 @@ const {
   getBasicTransition,
 } = useTransitionSetting();
 
-const {getEnableTagView, toggleEnableTagView} = useTagViewSetting();
+const {getEnableTab, toggleEnableTab} = useTabSetting();
 </script>
 <style lang="scss">
 .drawer-container {

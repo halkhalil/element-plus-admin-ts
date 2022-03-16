@@ -15,7 +15,7 @@ Object.keys(moduleFiles).forEach((key) => {
 // vuex plugin
 const localStoragePlugin = createPersistedState({
   storage: localStorage,
-  paths: ['setting', 'config', 'app', 'tagView','user.roles']
+  paths: ['setting', 'config', 'app', 'tab','user.roles']
 });
 
 // vuex plugin

@@ -29,7 +29,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import {useTagView} from "~/layouts/common/tagview/useTagView";
+import {useTab} from "~/layouts/common/tab/useTab";
 
 
 const {
@@ -44,7 +44,7 @@ const {
   closeAllView,
   viewIsActive,
   viewIsAffix
-} = useTagView();
+} = useTab();
 </script>
 <style lang="scss" scoped>
 .tag-view {

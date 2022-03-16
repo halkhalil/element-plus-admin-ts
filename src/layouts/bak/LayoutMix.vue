@@ -8,8 +8,8 @@
         <LayoutSidebar/>
       </el-aside>
       <el-container>
-        <el-header height="auto" v-if="getShowTagView">
-          <LayoutTagView/>
+        <el-header height="auto" v-if="getShowTab">
+          <LayoutTab/>
         </el-header>
         <el-main>
           <el-scrollbar view-class="h-full">
@@ -21,8 +21,8 @@
   </el-container>
 </template>
 <script lang="ts" setup>
-import {LayoutSidebar, LayoutHeader, LayoutContent, LayoutTagView} from '~/layouts/common'
+import {LayoutSidebar, LayoutHeader, LayoutContent, LayoutTab} from '~/layouts/common'
 import {useRootSetting} from "~/composables/setting/useRootSeeting";
 
-const {getShowTagView,} = useRootSetting();
+const {getShowTab,} = useRootSetting();
 </script>
