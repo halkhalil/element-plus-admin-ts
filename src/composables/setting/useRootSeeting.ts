@@ -25,9 +25,9 @@ export function useRootSetting() {
   const getDarkMode = computed(() => unref(getProjectConfig).darkMode);
 
   // 导航模式
-  const getIsMixMode = computed(() => getNavbarMode.value === 'mix');
-  const getIsSidebarMode = computed(() => getNavbarMode.value === 'sidebar');
-  const getIsTopMenuMode = computed(() => getNavbarMode.value === 'top-menu');
+  const getIsMixMode = computed(() => getNavbarMode.value === NavbarModeEnum.TOP_MIX);
+  const getIsSidebarMode = computed(() => getNavbarMode.value === NavbarModeEnum.SIDEBAR);
+  const getIsTopMenuMode = computed(() => getNavbarMode.value === NavbarModeEnum.TOP_MENU);
 
   // 内容显示
   const getShowLogo = computed(() => unref(getProjectConfig).showLogo);
