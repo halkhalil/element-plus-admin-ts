@@ -100,8 +100,11 @@ export const getBarAnimationDelayOption = () => {
   let data1 = [];
   let data2 = [];
   for (let i = 0; i < 100; i++) {
+    // @ts-ignore
     xAxisData.push('A' + i);
+    // @ts-ignore
     data1.push((Math.sin(i / 5) * (i / 5 - 10) + i / 6) * 5);
+    // @ts-ignore
     data2.push((Math.cos(i / 5) * (i / 5 - 10) + i / 6) * 5);
   }
   let option = {

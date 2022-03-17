@@ -1,19 +1,19 @@
 <template>
-  <div class="tag-view">
+  <div class="tag-tab">
     <el-scrollbar ref="scrollbarRef">
-      <div class="scroll-container flex-row align-center">
+      <div class="scroll-container">
         <el-tag
           class="tag-item"
-          :ref="(el) => el && getViewRefs.push(el)"
-          v-for="item in getVisitedViews"
+          :ref="(el) => el && getTabRefs.push(el)"
+          v-for="item in getVisitedTabs"
           :key="item.path"
           :route="item"
-          :type="viewIsActive(item) ? '' : 'info'"
+          :type="tabIsActive(item) ? '' : 'info'"
           :closable="!(item.meta && item.meta.affix)"
-          :effect="viewIsActive(item) ? 'dark' : 'light'"
-          @close="closeView(item)"
-          @click="goView(item)"
-          @contextmenu.prevent="getSelectView = item"
+          :effect="tabIsActive(item) ? 'dark' : 'light'"
+          @close="closeTab(item)"
+          @click="goTab(item)"
+          @contextmenu.prevent="getSelectTab = item"
           v-contextmenu:contextmenu
         >
           {{ item.title }}
@@ -21,43 +21,40 @@
       </div>
     </el-scrollbar>
     <v-contextmenu ref="contextmenu">
-      <v-contextmenu-item @click="refreshView(getSelectView)">刷新</v-contextmenu-item>
-      <v-contextmenu-item v-if="!viewIsAffix(getSelectView)" @click="closeView(getSelectView)">关闭</v-contextmenu-item>
-      <v-contextmenu-item @click="closeOtherView(getSelectView)">关闭其他</v-contextmenu-item>
-      <v-contextmenu-item @click="closeAllView(getSelectView)">关闭所有</v-contextmenu-item>
+      <v-contextmenu-item @click="refreshTab(getSelectTab)">刷新</v-contextmenu-item>
+      <v-contextmenu-item v-if="!tabIsAffix(getSelectTab)" @click="closeTab(getSelectTab)">关闭</v-contextmenu-item>
+      <v-contextmenu-item @click="closeOtherTab(getSelectTab)">关闭其他</v-contextmenu-item>
+      <v-contextmenu-item @click="closeAllTab(getSelectTab)">关闭所有</v-contextmenu-item>
     </v-contextmenu>
   </div>
 </template>
 <script lang="ts" setup>
 import {useTab} from "~/layouts/common/tab/useTab";
 
-
 const {
   scrollbarRef,
-  getViewRefs,
-  getSelectView,
-  getVisitedViews,
-  goView,
-  closeView,
-  refreshView,
-  closeOtherView,
-  closeAllView,
-  viewIsActive,
-  viewIsAffix
+  getTabRefs,
+  getSelectTab,
+  getVisitedTabs,
+  goTab,
+  closeTab,
+  refreshTab,
+  closeOtherTab,
+  closeAllTab,
+  tabIsActive,
+  tabIsAffix
 } = useTab();
 </script>
 <style lang="scss" scoped>
-.tag-view {
+.tag-tab {
   background: white;
   border-bottom: 1px solid var(--el-border-color-light);
-  //height: 30px;
   text-align: left;
   padding: 2px 10px;
 
   .scroll-container {
-    //height: 30px;
     background: white;
-    line-height: 27px;
+    line-height: normal;
 
     .tag-item {
       margin: 0 2px;

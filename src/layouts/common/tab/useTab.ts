@@ -9,29 +9,29 @@ export function useTab() {
   const {push, replace, currentRoute, getRoutes} = useRouter();
 
   const scrollbarRef: UnwrapRef<any> = ref();
-  const getViewRefs: Ref<UnwrapRef<any[]>> = ref([]);
-  const getSelectView = ref();
-  const getVisitedViews = computed(() => getters.getVisitedViews);
+  const getTabRefs: Ref<UnwrapRef<any[]>> = ref([]);
+  const getSelectTab = ref();
+  const getVisitedTabs = computed(() => getters.getVisitedTabs);
 
   /**
    * 初始化视图
    * @returns {Promise<void>}
    */
-  async function initViews() {
-    const affixViews = filterAffixViews(getRoutes());
-    for (const view of affixViews) {
-      const {name, path, fullPath, meta} = view as RouteLocation;
-      name && await dispatch('tab/addVisitedView', {name, path, fullPath, meta});
+  async function initTabs() {
+    const affixTabs = filterAffixTabs(getRoutes());
+    for (const tab of affixTabs) {
+      const {name, path, fullPath, meta} = tab as RouteLocation;
+      name && await dispatch('tab/addVisitedTab', {name, path, fullPath, meta});
     }
   }
 
   /**
    * 跳转视图
-   * @param view
+   * @param tab
    * @returns {Promise<void>}
    */
-  async function goView(view: RouteLocation) {
-    const {path, fullPath} = view;
+  async function goTab(tab: RouteLocation) {
+    const {path, fullPath} = tab;
     if (path === unref(currentRoute).path) return;
     await replace({path: fullPath})
   }
@@ -40,30 +40,30 @@ export function useTab() {
    * 添加视图
    * @returns {Promise<void>}
    */
-  async function addView() {
+  async function addTab() {
     const {name, path, fullPath, meta} = currentRoute.value
-    name && await dispatch('tab/addView', {name, path, fullPath, meta});
+    name && await dispatch('tab/addTab', {name, path, fullPath, meta});
   }
 
   /**
    * 关闭视图
-   * @param view
+   * @param tab
    * @returns {Promise<void>}
    */
-  async function closeView({name, path, fullPath, meta}: RouteLocation) {
-    const {visitedViews} = await dispatch('tab/delView', {name, path, fullPath, meta});
-    if (viewIsActive({name, path, fullPath, meta} as RouteLocation)) {
-      await toLastView(visitedViews, {name, path, fullPath, meta} as RouteLocation);
+  async function closeTab({name, path, fullPath, meta}: RouteLocation) {
+    const {visitedTabs} = await dispatch('tab/delTab', {name, path, fullPath, meta});
+    if (tabIsActive({name, path, fullPath, meta} as RouteLocation)) {
+      await toLastTab(visitedTabs, {name, path, fullPath, meta} as RouteLocation);
     }
   }
 
   /**
    * 刷新视图
-   * @param view
+   * @param tab
    * @returns {Promise<void>}
    */
-  async function refreshView({name, path, fullPath, meta}: RouteLocation) {
-    await dispatch('tab/delCachedView', {name, path, fullPath, meta});
+  async function refreshTab({name, path, fullPath, meta}: RouteLocation) {
+    await dispatch('tab/delCachedTab', {name, path, fullPath, meta});
     await nextTick(() => {
       replace({path: '/redirect' + fullPath});
     })
@@ -71,24 +71,24 @@ export function useTab() {
 
   /**
    * 关闭其他视图
-   * @param view
+   * @param tab
    * @returns {Promise<void>}
    */
-  async function closeOtherView({name, path, fullPath, meta}: RouteLocation) {
+  async function closeOtherTab({name, path, fullPath, meta}: RouteLocation) {
     if (fullPath !== currentRoute.value.fullPath) {
       await push({name, path, fullPath, meta} as RouteLocation);
     }
-    await dispatch('tab/delOtherViews', currentRoute);
+    await dispatch('tab/delOtherTabs', currentRoute);
     await moveToCurrentTab();
   }
 
   /**
    * 关闭所有视图
-   * @param view
+   * @param tab
    */
-  async function closeAllView(view: RouteLocation) {
-    const {visitedViews} = await dispatch('tab/delAllViews');
-    await toLastView(visitedViews, view);
+  async function closeAllTab(tab: RouteLocation) {
+    const {visitedTabs} = await dispatch('tab/delAllTabs');
+    await toLastTab(visitedTabs, tab);
   }
 
   /**
@@ -97,21 +97,21 @@ export function useTab() {
    * @param basePath
    * @returns {[]}
    */
-  function filterAffixViews(routes: RouteRecord[], basePath = '/') {
-    let views: object[] = [];
+  function filterAffixTabs(routes: RouteRecord[], basePath = '/') {
+    let tabs: object[] = [];
     routes.forEach(route => {
       if (route.meta && route.meta.affix) {
-        const viewPath = path.resolve(basePath, route.path)
-        views.push({fullPath: viewPath, path: viewPath, name: route.name, meta: {...route.meta}})
+        const tabPath = path.resolve(basePath, route.path)
+        tabs.push({fullPath: tabPath, path: tabPath, name: route.name, meta: {...route.meta}})
       }
       if (route.children) {
-        const childViews = filterAffixViews(route.children as RouteRecord[], route.path)
-        if (childViews.length >= 1) {
-          views = [...views, ...childViews]
+        const childTabs = filterAffixTabs(route.children as RouteRecord[], route.path)
+        if (childTabs.length >= 1) {
+          tabs = [...tabs, ...childTabs]
         }
       }
     });
-    return views
+    return tabs
   }
 
   /**
@@ -120,11 +120,11 @@ export function useTab() {
    */
   async function moveToCurrentTab() {
     await nextTick(async () => {
-      for (const tag of getViewRefs.value) {
+      for (const tag of getTabRefs.value) {
         if (tag.$attrs.route.path === unref(currentRoute).path) {
           moveToTarget(tag)
           if (tag.$attrs.route.fullPath !== unref(currentRoute).fullPath) {
-            await dispatch('tab/updateVisitedView', unref(currentRoute))
+            await dispatch('tab/updateVisitedTab', unref(currentRoute))
           }
           break
         }
@@ -138,7 +138,7 @@ export function useTab() {
    */
   function moveToTarget(currentTag: UnwrapRef<any>) {
     let offsetLeft = 0;
-    const tagList = getViewRefs.value;
+    const tagList = getTabRefs.value;
 
     if (tagList.length > 0) {
       const firstTag = tagList[0];
@@ -171,14 +171,14 @@ export function useTab() {
 
   /**
    * 跳转到最后一个标签视图
-   * @param visitedViews
-   * @param view
+   * @param visitedTabs
+   * @param tab
    * @returns {Promise<void>}
    */
-  async function toLastView(visitedViews: RouteLocation[], {name, fullPath}: RouteLocation) {
-    const latestView: RouteLocation = visitedViews.slice(-1)[0];
-    if (latestView) {
-      await push({path: latestView.fullPath})
+  async function toLastTab(visitedTabs: RouteLocation[], {name, fullPath}: RouteLocation) {
+    const latestTab: RouteLocation = visitedTabs.slice(-1)[0];
+    if (latestTab) {
+      await push({path: latestTab.fullPath})
     } else {
       if (name === 'Dashboard') {
         await replace({path: '/redirect' + fullPath})
@@ -190,46 +190,46 @@ export function useTab() {
 
   /**
    * 是否活跃视图
-   * @param view
+   * @param tab
    * @returns {boolean}
    */
-  function viewIsActive({path}: RouteLocation) {
+  function tabIsActive({path}: RouteLocation) {
     return path === currentRoute.value.path;
   }
 
   /**
    * 是否固定视图
-   * @param view
+   * @param tab
    * @returns {boolean|*}
    */
-  function viewIsAffix({meta}: RouteLocation) {
+  function tabIsAffix({meta}: RouteLocation) {
     return meta && meta.affix;
   }
 
   // 初始化
   onMounted(async () => {
-    await initViews();
-    await addView();
+    await initTabs();
+    await addTab();
     await moveToCurrentTab();
   })
 
   watch(currentRoute, async () => {
-    await addView();
+    await addTab();
     await moveToCurrentTab()
   });
 
   return {
     scrollbarRef,
-    getViewRefs,
-    getSelectView,
-    getVisitedViews,
-    goView,
-    addView,
-    closeView,
-    refreshView,
-    closeOtherView,
-    closeAllView,
-    viewIsActive,
-    viewIsAffix,
+    getTabRefs,
+    getSelectTab,
+    getVisitedTabs,
+    goTab,
+    addTab,
+    closeTab,
+    refreshTab,
+    closeOtherTab,
+    closeAllTab,
+    tabIsActive,
+    tabIsAffix,
   };
 }

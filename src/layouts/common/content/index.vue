@@ -1,5 +1,5 @@
 <template>
-  <div v-loading="getOpenPageLoading && getPageLoading" class="h-full abc">
+  <div v-loading="getOpenPageLoading && getPageLoading" class="h-full">
     <PageLayout/>
   </div>
 </template>

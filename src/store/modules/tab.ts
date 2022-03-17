@@ -1,136 +1,136 @@
 const tab = {
   namespaced: true,
   state: {
-    visitedViews: [],
-    cachedViews: [],
+    visitedTabs: [],
+    cachedTabs: [],
   },
   mutations: {
     // 添加已访问视图
-    ADD_VISITED_VIEW: (state, view) => {
-      if (state.visitedViews.some(item => item.path === view.path)) return;
-      state.visitedViews.push({title: view.meta.title || 'no-name', ...view});
+    ADD_VISITED_TAB: (state, view) => {
+      if (state.visitedTabs.some(item => item.path === view.path)) return;
+      state.visitedTabs.push({title: view.meta.title || 'no-name', ...view});
     },
     // 删除已访问视图
-    DEL_VISITED_VIEW: (state, view) => {
-      const index = state.visitedViews.findIndex(item => item.path === view.path);
-      index > -1 && state.visitedViews.splice(index, 1);
+    DEL_VISITED_TAB: (state, view) => {
+      const index = state.visitedTabs.findIndex(item => item.path === view.path);
+      index > -1 && state.visitedTabs.splice(index, 1);
     },
     // 删除其他已访问视图
-    DEL_OTHER_VISITED_VIEWS: (state, view) => {
-      state.visitedViews = state.visitedViews.filter(item => item.meta.affix || item.path === view.path);
+    DEL_OTHER_VISITED_TABS: (state, view) => {
+      state.visitedTabs = state.visitedTabs.filter(item => item.meta.affix || item.path === view.path);
     },
     // 删除所有已访问视图
-    DEL_ALL_VISITED_VIEWS: (state) => {
-      state.visitedViews = state.visitedViews.filter(item => item.meta.affix);
+    DEL_ALL_VISITED_TABS: (state) => {
+      state.visitedTabs = state.visitedTabs.filter(item => item.meta.affix);
     },
     // 更新已访问视图
-    UPDATE_VISITED_VIEWS: (state, view) => {
-      const index = state.visitedViews.findIndex(item => item.path === view.path);
-      index > -1 && (state.visitedViews[index] = view);
+    UPDATE_VISITED_TABS: (state, view) => {
+      const index = state.visitedTabs.findIndex(item => item.path === view.path);
+      index > -1 && (state.visitedTabs[index] = view);
     },
     // 添加缓存视图
-    ADD_CACHED_VIEW: (state, view) => {
-      if (view.name && !state.cachedViews.includes(view.name) && view.meta.cache !== false) {
-        state.cachedViews.push(view.name);
+    ADD_CACHED_TAB: (state, view) => {
+      if (view.name && !state.cachedTabs.includes(view.name) && view.meta.cache !== false) {
+        state.cachedTabs.push(view.name);
       }
     },
     // 删除缓存视图
-    DEL_CACHED_VIEW: (state, view) => {
+    DEL_CACHED_TAB: (state, view) => {
       if (!view.name) return;
-      const index = state.cachedViews.findIndex(item => item === view.name);
-      index > -1 && state.cachedViews.splice(index, 1);
+      const index = state.cachedTabs.findIndex(item => item === view.name);
+      index > -1 && state.cachedTabs.splice(index, 1);
     },
     // 删除其他缓存视图
-    DEL_OTHER_CACHED_VIEWS: (state, view) => {
+    DEL_OTHER_CACHED_TABS: (state, view) => {
       if (!view.name) return;
-      state.cachedViews = state.cachedViews.filter(item => item === view.name);
+      state.cachedTabs = state.cachedTabs.filter(item => item === view.name);
     },
     // 删除其他缓存视图
-    DEL_ALL_CACHED_VIEWS: (state) => {
-      state.cachedViews = [];
+    DEL_ALL_CACHED_TABS: (state) => {
+      state.cachedTabs = [];
     }
   },
   actions: {
     // 添加已访问视图
-    addVisitedView({commit}, view) {
-      commit('ADD_VISITED_VIEW', view);
+    addVisitedTab({commit}, view) {
+      commit('ADD_VISITED_TAB', view);
     },
     // 删除已访问视图
-    delVisitedView({commit, state}, view) {
+    delVisitedTab({commit, state}, view) {
       return new Promise(resolve => {
-        commit('DEL_VISITED_VIEW', view);
-        resolve([...state.cachedViews]);
+        commit('DEL_VISITED_TAB', view);
+        resolve([...state.cachedTabs]);
       })
     },
     // 删除其他访问视图
-    delOtherVisitedViews({commit, state}, view) {
+    delOtherVisitedTabs({commit, state}, view) {
       return new Promise(resolve => {
-        commit('DEL_OTHER_VISITED_VIEWS', view);
-        resolve([...state.visitedViews]);
+        commit('DEL_OTHER_VISITED_TABS', view);
+        resolve([...state.visitedTabs]);
       })
     },
     // 删除所有访问视图
-    delAllVisitedViews({commit, state}) {
+    delAllVisitedTabs({commit, state}) {
       return new Promise(resolve => {
-        commit('DEL_ALL_VISITED_VIEWS');
-        resolve([...state.visitedViews]);
+        commit('DEL_ALL_VISITED_TABS');
+        resolve([...state.visitedTabs]);
       })
     },
     // 更新访问视图
-    updateVisitedView({commit}, view) {
-      commit('UPDATE_VISITED_VIEWS', view);
+    updateVisitedTab({commit}, view) {
+      commit('UPDATE_VISITED_TABS', view);
     },
     // 添加缓存视图
-    addCachedView({commit}, view) {
-      commit('ADD_CACHED_VIEW', view);
+    addCachedTab({commit}, view) {
+      commit('ADD_CACHED_TAB', view);
     },
     // 删除缓存视图
-    delCachedView({commit, state}, view) {
+    delCachedTab({commit, state}, view) {
       return new Promise(resolve => {
-        commit('DEL_CACHED_VIEW', view);
-        resolve([...state.cachedViews]);
+        commit('DEL_CACHED_TAB', view);
+        resolve([...state.cachedTabs]);
       });
     },
     // 删除其他缓存视图
-    delOtherCachedViews({commit, state}, view) {
+    delOtherCachedTabs({commit, state}, view) {
       return new Promise(resolve => {
-        commit('DEL_OTHER_CACHED_VIEWS', view);
-        resolve([...state.cachedViews]);
+        commit('DEL_OTHER_CACHED_TABS', view);
+        resolve([...state.cachedTabs]);
       });
     },
     // 删除所有缓存视图
-    delAllCachedViews({commit, state}) {
+    delAllCachedTabs({commit, state}) {
       return new Promise(resolve => {
-        commit('DEL_ALL_CACHED_VIEWS');
-        resolve([...state.cachedViews]);
+        commit('DEL_ALL_CACHED_TABS');
+        resolve([...state.cachedTabs]);
       });
     },
     // 添加视图
-    addView({dispatch}, view) {
-      dispatch('addVisitedView', view);
-      dispatch('addCachedView', view);
+    addTab({dispatch}, view) {
+      dispatch('addVisitedTab', view);
+      dispatch('addCachedTab', view);
     },
     // 删除视图
-    delView({dispatch, state}, view) {
+    delTab({dispatch, state}, view) {
       return new Promise(resolve => {
-        dispatch('delVisitedView', view);
-        dispatch('delCachedView', view);
+        dispatch('delVisitedTab', view);
+        dispatch('delCachedTab', view);
         resolve({...state});
       });
     },
     // 删除其他视图
-    delOtherViews({dispatch, state}, view) {
+    delOtherTabs({dispatch, state}, view) {
       return new Promise(resolve => {
-        dispatch('delOtherVisitedViews', view);
-        dispatch('delOtherCachedViews', view);
+        dispatch('delOtherVisitedTabs', view);
+        dispatch('delOtherCachedTabs', view);
         resolve({...state});
       });
     },
     // 删除所有视图
-    delAllViews({dispatch, state}) {
+    delAllTabs({dispatch, state}) {
       return new Promise(resolve => {
-        dispatch('delAllVisitedViews');
-        dispatch('delAllCachedViews');
+        dispatch('delAllVisitedTabs');
+        dispatch('delAllCachedTabs');
         resolve({...state});
       });
     }
