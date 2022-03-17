@@ -2,451 +2,15 @@
   <PageWrapper :title="$route['meta']['title']">
     <template #content>
       flex布局常用类
-      <div><code>.flex-row</code>水平方向，起点在左端</div>
-      <div><code>.flex-row-re</code>水平方向，起点在右端</div>
-      <div><code>.flex-col</code>垂直方向，起点在顶端</div>
-      <div><code>.flex-col-re</code>垂直方向，起点在底端</div>
-      <div>使用： <code>.flex-xx [主轴对齐方式=.start] [交叉轴对齐方式=.align-start]</code></div>
-      <div>示例：<code v-text='text'></code></div>
     </template>
-    <el-card shadow="none" header="主轴为水平方向 flex-row " class="mb-2">
+    <el-card shadow="none" class="mb-2">
       <el-row :gutter="10">
-        <!--    left    -->
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
+        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="4" v-for="item in classs" :key="key">
           <div class="wrap">
             <div class="desc">
-              <div>class：<code>.flex-row [.start] [.align-start]</code></div>
-              <div>主轴：左对齐</div>
-              <div>交叉轴：上对齐</div>
+              <div>class：<code>.{{ item }}</code></div>
             </div>
-            <div class="box flex-row">
-              <div class="item">1</div>
-              <div class="item">2</div>
-              <div class="item">3</div>
-            </div>
-          </div>
-        </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
-          <div class="wrap">
-            <div class="desc">
-              <div>class：<code>.flex-row [.start] .align-center</code></div>
-              <div>主轴：左对齐</div>
-              <div>交叉轴：居中对齐</div>
-            </div>
-            <div class="box flex-row align-center">
-              <div class="item">1</div>
-              <div class="item">2</div>
-              <div class="item">3</div>
-            </div>
-          </div>
-        </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
-          <div class="wrap">
-            <div class="desc">
-              <div>class：<code>.flex-row [.start] .align-end</code></div>
-              <div>主轴：左对齐</div>
-              <div>交叉轴：下对齐</div>
-            </div>
-            <div class="box flex-row align-end">
-              <div class="item">1</div>
-              <div class="item">2</div>
-              <div class="item">3</div>
-            </div>
-          </div>
-        </el-col>
-
-        <!--    center    -->
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
-          <div class="wrap">
-            <div class="desc">
-              <div>class：<code>.flex-row .center [.align-start]</code></div>
-              <div>主轴：居中对齐</div>
-              <div>交叉轴：上对齐</div>
-            </div>
-            <div class="box flex-row center">
-              <div class="item">1</div>
-              <div class="item">2</div>
-              <div class="item">3</div>
-            </div>
-          </div>
-        </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
-          <div class="wrap">
-            <div class="desc">
-              <div>class：<code>.flex-row .center .align-center</code></div>
-              <div>主轴：居中对齐</div>
-              <div>交叉轴：居中对齐</div>
-            </div>
-            <div class="box flex-row center align-center">
-              <div class="item">1</div>
-              <div class="item">2</div>
-              <div class="item">3</div>
-            </div>
-          </div>
-        </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
-          <div class="wrap">
-            <div class="desc">
-              <div>class：<code>.flex-row .center .align-end</code></div>
-              <div>主轴：居中对齐</div>
-              <div>交叉轴：下对齐</div>
-            </div>
-            <div class="box flex-row center align-end">
-              <div class="item">1</div>
-              <div class="item">2</div>
-              <div class="item">3</div>
-            </div>
-          </div>
-        </el-col>
-
-        <!--    right    -->
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
-          <div class="wrap">
-            <div class="desc">
-              <div>class：<code>.flex-row .end [.align-start]</code></div>
-              <div>主轴：右对齐</div>
-              <div>交叉轴：上对齐</div>
-            </div>
-            <div class="box flex-row end align-start">
-              <div class="item">1</div>
-              <div class="item">2</div>
-              <div class="item">3</div>
-            </div>
-          </div>
-        </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
-          <div class="wrap">
-            <div class="desc">
-              <div>class：<code>.flex-row .end .align-center</code></div>
-              <div>主轴：右对齐</div>
-              <div>交叉轴：居中对齐</div>
-            </div>
-            <div class="box flex-row end align-center">
-              <div class="item">1</div>
-              <div class="item">2</div>
-              <div class="item">3</div>
-            </div>
-          </div>
-        </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
-          <div class="wrap">
-            <div class="desc">
-              <div>class：<code>.flex-row .end .align-end</code></div>
-              <div>主轴：右对齐</div>
-              <div>交叉轴：下对齐</div>
-            </div>
-            <div class="box flex-row end align-end">
-              <div class="item">1</div>
-              <div class="item">2</div>
-              <div class="item">3</div>
-            </div>
-          </div>
-        </el-col>
-
-        <!--    between    -->
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
-          <div class="wrap">
-            <div class="desc">
-              <div>class：<code>.flex-row .between [.align-start]</code></div>
-              <div>主轴：两端对齐</div>
-              <div>交叉轴：上对齐</div>
-            </div>
-            <div class="box flex-row between">
-              <div class="item">1</div>
-              <div class="item">2</div>
-              <div class="item">3</div>
-            </div>
-          </div>
-        </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
-          <div class="wrap">
-            <div class="desc">
-              <div>class：<code>.flex-row .between .align-center</code></div>
-              <div>主轴：两端对齐</div>
-              <div>交叉轴：居中对齐</div>
-            </div>
-            <div class="box flex-row between align-center">
-              <div class="item">1</div>
-              <div class="item">2</div>
-              <div class="item">3</div>
-            </div>
-          </div>
-        </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
-          <div class="wrap">
-            <div class="desc">
-              <div>class：<code>.flex-row .between .align-end</code></div>
-              <div>主轴：两端对齐</div>
-              <div>交叉轴：下对齐</div>
-            </div>
-            <div class="box flex-row between align-end">
-              <div class="item">1</div>
-              <div class="item">2</div>
-              <div class="item">3</div>
-            </div>
-          </div>
-        </el-col>
-
-        <!--    around    -->
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
-          <div class="wrap">
-            <div class="desc">
-              <div>class：<code>.flex-row .around [.align-start]</code></div>
-              <div>主轴：两侧间隔相等</div>
-              <div>交叉轴：上对齐</div>
-            </div>
-            <div class="box flex-row around">
-              <div class="item">1</div>
-              <div class="item">2</div>
-              <div class="item">3</div>
-            </div>
-          </div>
-        </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
-          <div class="wrap">
-            <div class="desc">
-              <div>class：<code>.flex-row .around .align-center</code></div>
-              <div>主轴：两侧间隔相等</div>
-              <div>交叉轴：居中对齐</div>
-            </div>
-            <div class="box flex-row around align-center">
-              <div class="item">1</div>
-              <div class="item">2</div>
-              <div class="item">3</div>
-            </div>
-          </div>
-        </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
-          <div class="wrap">
-            <div class="desc">
-              <div>class：<code>.flex-row .around .align-end</code></div>
-              <div>主轴：两侧间隔相等</div>
-              <div>交叉轴：下对齐</div>
-            </div>
-            <div class="box flex-row around align-end">
-              <div class="item">1</div>
-              <div class="item">2</div>
-              <div class="item">3</div>
-            </div>
-          </div>
-        </el-col>
-      </el-row>
-    </el-card>
-    <el-card shadow="none" header="主轴为垂直方向 - flex-col" class="mb-2">
-      <el-row :gutter="10">
-        <!--    left    -->
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
-          <div class="wrap">
-            <div class="desc">
-              <div>class：<code>.flex-col [.start] [.align-start] </code></div>
-              <div>主轴：上对齐</div>
-              <div>交叉轴：左对齐</div>
-            </div>
-            <div class="box flex-col">
-              <div class="item">1</div>
-              <div class="item">2</div>
-              <div class="item">3</div>
-            </div>
-          </div>
-        </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
-          <div class="wrap">
-            <div class="desc">
-              <div>class：<code>.flex-col .center [.align-start]</code></div>
-              <div>主轴：居中对齐</div>
-              <div>交叉轴：左对齐</div>
-            </div>
-            <div class="box flex-col center">
-              <div class="item">1</div>
-              <div class="item">2</div>
-              <div class="item">3</div>
-            </div>
-          </div>
-        </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
-          <div class="wrap">
-            <div class="desc">
-              <div>class：<code>.flex-col .end [.align-start]</code></div>
-              <div>主轴：下对齐</div>
-              <div>交叉轴：左对齐</div>
-            </div>
-            <div class="box flex-col end">
-              <div class="item">1</div>
-              <div class="item">2</div>
-              <div class="item">3</div>
-            </div>
-          </div>
-        </el-col>
-
-        <!--    center    -->
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
-          <div class="wrap">
-            <div class="desc">
-              <div>class：<code>.flex-col [.start] .align-center</code></div>
-              <div>主轴：上对齐</div>
-              <div>交叉轴：中对齐</div>
-            </div>
-            <div class="box flex-col align-center">
-              <div class="item">1</div>
-              <div class="item">2</div>
-              <div class="item">3</div>
-            </div>
-          </div>
-        </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
-          <div class="wrap">
-            <div class="desc">
-              <div>class：<code>.flex-col .center .align-center</code></div>
-              <div>主轴：居中对齐</div>
-              <div>交叉轴：居中对齐</div>
-            </div>
-            <div class="box flex-col center align-center">
-              <div class="item">1</div>
-              <div class="item">2</div>
-              <div class="item">3</div>
-            </div>
-          </div>
-        </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
-          <div class="wrap">
-            <div class="desc">
-              <div>class：<code>.flex-col .end .align-center </code></div>
-              <div>主轴：下对齐</div>
-              <div>交叉轴：中对齐</div>
-            </div>
-            <div class="box flex-col end align-center">
-              <div class="item">1</div>
-              <div class="item">2</div>
-              <div class="item">3</div>
-            </div>
-          </div>
-        </el-col>
-
-        <!--    right    -->
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
-          <div class="wrap">
-            <div class="desc">
-              <div>class：<code>.flex-col [.start] .align-end</code></div>
-              <div>主轴：上对齐</div>
-              <div>交叉轴：右对齐</div>
-            </div>
-            <div class="box flex-col align-end">
-              <div class="item">1</div>
-              <div class="item">2</div>
-              <div class="item">3</div>
-            </div>
-          </div>
-        </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
-          <div class="wrap">
-            <div class="desc">
-              <div>class：<code>.flex-col .center .align-end</code></div>
-              <div>主轴：中对齐</div>
-              <div>交叉轴：右对齐</div>
-            </div>
-            <div class="box flex-col center align-end">
-              <div class="item">1</div>
-              <div class="item">2</div>
-              <div class="item">3</div>
-            </div>
-          </div>
-        </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
-          <div class="wrap">
-            <div class="desc">
-              <div>class：<code>.flex-col .end .align-end</code></div>
-              <div>主轴：下对齐</div>
-              <div>交叉轴：右对齐</div>
-            </div>
-            <div class="box flex-col end align-end">
-              <div class="item">1</div>
-              <div class="item">2</div>
-              <div class="item">3</div>
-            </div>
-          </div>
-        </el-col>
-
-        <!--    between    -->
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
-          <div class="wrap">
-            <div class="desc">
-              <div>class：<code>.flex-col .between [.align-start]</code></div>
-              <div>主轴：上下两端对齐</div>
-              <div>交叉轴：左对齐</div>
-            </div>
-            <div class="box flex-col between">
-              <div class="item">1</div>
-              <div class="item">2</div>
-              <div class="item">3</div>
-            </div>
-          </div>
-        </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
-          <div class="wrap">
-            <div class="desc">
-              <div>class：<code>.flex-col .between [.align-center]</code></div>
-              <div>主轴：上下两端对齐</div>
-              <div>交叉轴：居中对齐</div>
-            </div>
-            <div class="box flex-col between align-center">
-              <div class="item">1</div>
-              <div class="item">2</div>
-              <div class="item">3</div>
-            </div>
-          </div>
-        </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
-          <div class="wrap">
-            <div class="desc">
-              <div>class：<code>.flex-col .between .align-end</code></div>
-              <div>主轴：上下两端对齐</div>
-              <div>交叉轴：右对齐</div>
-            </div>
-            <div class="box flex-col between align-end">
-              <div class="item">1</div>
-              <div class="item">2</div>
-              <div class="item">3</div>
-            </div>
-          </div>
-        </el-col>
-
-        <!--    around    -->
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
-          <div class="wrap">
-            <div class="desc">
-              <div>class：<code>.flex-col .around [.align-start]</code></div>
-              <div>主轴：上下两侧间隔相等</div>
-              <div>交叉轴：左对齐</div>
-            </div>
-            <div class="box flex-col around">
-              <div class="item">1</div>
-              <div class="item">2</div>
-              <div class="item">3</div>
-            </div>
-          </div>
-        </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
-          <div class="wrap">
-            <div class="desc">
-              <div>class：<code>.flex-col .around .align-center</code></div>
-              <div>主轴：上下两侧间隔相等</div>
-              <div>交叉轴：居中对齐</div>
-            </div>
-            <div class="box flex-col around align-center">
-              <div class="item">1</div>
-              <div class="item">2</div>
-              <div class="item">3</div>
-            </div>
-          </div>
-        </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
-          <div class="wrap">
-            <div class="desc">
-              <div>class：<code>.flex-col .around .align-end</code></div>
-              <div>主轴：上下两侧间隔相等</div>
-              <div>交叉轴：居右对齐</div>
-            </div>
-            <div class="box flex-col around align-end">
+            <div class="box" :class="item">
               <div class="item">1</div>
               <div class="item">2</div>
               <div class="item">3</div>
@@ -458,23 +22,30 @@
   </PageWrapper>
 </template>
 
-<script>
-import {PageWrapper} from '~/components/Page/index.ts'
+<script lang="ts" setup>
+import {PageWrapper} from '~/components/Page/index'
 import {reactive, toRefs} from "vue";
 
-export default {
-  name: "text",
-  components: {PageWrapper},
-  setup() {
-    const state = reactive({
-      text: '<div class="flex-row center align-center"></div>',
-    })
-
-    return {
-      ...toRefs(state)
-    }
-  }
+const config = {
+  'flex-center': 'flex justify-center items-center',
+  'flex-between': 'flex justify-between items-center',
+  'flex-col-center': 'flex-center flex-col',
+  'flex-col-between': 'flex-center flex-between',
+  'flex-x-center': 'flex justify-center',
+  'flex-x-between': 'flex justify-between',
+  'flex-y-center': 'flex items-center',
+  'flex-y-between': 'flex content-center items-center',
+  'flex-col-stretch': 'b-flex-col items-stretch',
+  'i-flex-center': 'inline-flex justify-center items-center',
+  'i-flex-x-center': 'inline-flex justify-center',
+  'i-flex-y-center': 'inline-flex items-center',
+  'b-flex-col': 'flex flex-col',
+  'i-flex-col': 'inline-flex flex-col',
+  'i-flex-col-stretch': 'i-flex-col items-stretch',
+  'flex-1-hidden': 'flex-1 overflow-hidden',
 }
+
+const classs = reactive(Object.keys(config));
 </script>
 
 <style lang="scss" scoped>
@@ -487,18 +58,14 @@ code {
 .wrap {
   padding: 10px 0;
 
-  .desc {
-    @extend .text-overflow-3;
-  }
-
   .box {
     background: #F2F6FC;
-    height: 150px;
+    height: 100px;
 
     .item {
       text-align: center;
-      width: 50px;
-      height: 20px;
+      width: 25px;
+      height: 25px;
       background: #C0C4CC;
       margin: 5px;
     }
