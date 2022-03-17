@@ -1,5 +1,5 @@
 <template>
-  <div class="tag-tab">
+  <div class="tag-tab bg-white">
     <el-scrollbar ref="scrollbarRef">
       <div class="scroll-container">
         <el-tag
@@ -47,7 +47,6 @@ const {
 </script>
 <style lang="scss" scoped>
 .tag-tab {
-  background: white;
   border-bottom: 1px solid var(--el-border-color-light);
   text-align: left;
   padding: 2px 10px;
