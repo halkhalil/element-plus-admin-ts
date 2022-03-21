@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-y-center" @click="toggleCollapsed">
+  <div class="flex-center" @click="toggleCollapsed">
     <icon :name="getCollapsed ? 'el-zhankai' : 'el-shouqi'" size="20"/>
   </div>
 </template>
