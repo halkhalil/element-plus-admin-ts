@@ -31,21 +31,6 @@ export const getTeamData = () => {
       title: '高逼格设计',
       color: '#00adf7',
     },
-    {
-      icon: 'el-icon-share',
-      title: '程序员日常',
-      color: '#00adf7',
-    },
-    {
-      icon: 'el-icon-edit',
-      title: '科学搬砖组',
-      color: '#7c51b8',
-    },
-    {
-      icon: 'el-icon-edit',
-      title: '程序员日常',
-      color: '#ff4000',
-    },
   ];
 }
 

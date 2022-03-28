@@ -3,9 +3,9 @@
     <div class="page-header" v-if="title || subTitle || slotTitle || slotSubTitle">
       <div class="flex-x-between">
         <div class="page-header-wrap flex items-end">
-          <div class="page-header-title text-xl">
-            <slot name="title">{{ title }}</slot>
-          </div>
+          <slot name="title">
+            <div class="page-header-title text-xl">{{ title }}</div>
+          </slot>
           <div class="page-header-sub-title text-gray-500 text-xs ml-2 ">
             <slot name="sub-title">{{ subTitle }}</slot>
           </div>
@@ -20,7 +20,8 @@
     </div>
     <div class="page-wrapper-content m-2"
          ref="contentElRef"
-         :class="{'content-bg' :$props.contentBackground}" :style="$props.contentFullHeight ?? {minHeight:getContentHeight+'px'}">
+         :class="{'content-bg' :$props.contentBackground}"
+         :style="$props.contentFullHeight ?? {minHeight:getContentHeight+'px'}">
       <slot></slot>
     </div>
   </div>
@@ -28,7 +29,7 @@
 
 <script lang="ts" setup>
 
-import { ref, computed} from "vue";
+import {ref, computed} from "vue";
 import {useElementBounding} from '@vueuse/core'
 import {useSlots} from "vue";
 

@@ -1,46 +1,22 @@
 <template>
-  <el-row>
-    <el-col :span="24" v-for="(item,index) in lists" :key="index" class="item flex-row between">
-      <div class="flex-row mr-2 w-full">
-        <div>
-          <el-avatar :size="45" :src="item.image"></el-avatar>
-        </div>
+  <el-row class="divide-y">
+    <el-col :span="24" v-for="(item,index) in lists" :key="index">
+      <div class="flex-x-center mr-2 w-full p-2">
+        <el-image class="w-80px" :src="item.image"></el-image>
         <div class="ml-2 w-full">
-          <div class="flex-row between">
-            <h4 class="m-0">{{ item.title }}</h4>
-            <div class="text-sm text-secondary">{{ item.time }}</div>
+          <div class="flex-between">
+            <h4 class="text-base">{{ item.title }}</h4>
+            <div class="text-sm text-gray-500">{{ item.time }}</div>
           </div>
-          <div class="text-df text-secondary text-overflow-2">{{ item.desc }}</div>
+          <div class="text-sm text-gray-500 py-1">{{ item.desc }}</div>
         </div>
       </div>
     </el-col>
   </el-row>
 </template>
 
-<script>
-import {defineComponent, shallowReactive, toRefs} from 'vue';
-import {getProjectData} from "./data.ts";
+<script lang="ts" setup>
+import {getProjectData} from "./data";
 
-export default defineComponent({
-  setup() {
-    const state = shallowReactive({
-      lists: getProjectData(15),
-    })
-
-    return {
-      ...toRefs(state),
-    }
-  },
-})
+const lists = getProjectData(15);
 </script>
-<style lang="scss" scoped>
-.item {
-  border-bottom: solid 1px var(--el-border-color-lighter);
-
-  &.item:last-child {
-    border-bottom: 0;
-  }
-}
-
-
-</style>

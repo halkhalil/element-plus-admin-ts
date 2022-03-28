@@ -1,76 +1,63 @@
 <template>
-  <el-card shadow="none">
-    <div class="info flex-col center align-center">
-      <div>
-        <el-avatar :src="getUser.avatar" :size="100"></el-avatar>
-      </div>
-      <div class="text-xl text-primary text-bo">{{ getUser.nickname }}</div>
-      <div class="text-sm text-secondary">海纳百川，有容乃大</div>
-      <div class="task-wrap flex-row between align-center">
-        <div class="task-item flex-col">
-          <span class="label">待办</span>
-          <span class="value">90</span>
+  <div class="flex-between">
+    <div class="info  w-1/3 flex-between">
+      <div class="flex-between">
+        <div class="flex-col-center">
+          <el-avatar :src="getUser.avatar" :size="70"></el-avatar>
+          <div class="text-lg font-bold">{{ getUser.nickname }}</div>
+          <div class="text-xs w-max">海纳百川，有容乃大</div>
         </div>
-        <el-divider direction="vertical"></el-divider>
-        <div class="task-item flex-col">
-          <span class="label">待办</span>
-          <span class="value">66</span>
-        </div>
-        <el-divider direction="vertical"></el-divider>
-        <div class="task-item flex-col">
-          <span class="label">待办</span>
-          <span class="value">80</span>
+        <div class="list-none ml-5">
+          <div v-for="(team, index) in teams" :key="index">
+            <icon :name="team.icon" :style="{color:team.color}" class="text-xl"></icon>
+            <span class="text-df ml-1">{{ team.title }}</span>
+          </div>
         </div>
       </div>
     </div>
-    <el-divider content-position="left">标签</el-divider>
-    <div class="tag">
+    <div class="tag  w-1/3">
       <el-space wrap>
         <el-tag v-for="tag in tags" :key="tag.name" :type="tag.type">
           {{ tag.name }}
         </el-tag>
       </el-space>
     </div>
-    <el-divider content-position="left">团队</el-divider>
-    <div class="team">
-      <el-row :gutter="10">
-        <el-col :span="12" v-for="(team, index) in teams" :key="index" style="padding-bottom: 5px;padding-top: 5px;">
-          <i :class="team.icon" :style="{color:team.color}" class="text-xl"></i>
-          <span class="text-df ml-1">{{ team.title }}</span>
-        </el-col>
-      </el-row>
+    <div class="task-wrap  w-1/3 flex-between">
+      <div class="task-item flex-col-center">
+        <span class="label">待办</span>
+        <span class="value">90</span>
+      </div>
+      <el-divider direction="vertical"></el-divider>
+      <div class="task-item flex-col-center">
+        <span class="label">待办</span>
+        <span class="value">66</span>
+      </div>
+      <el-divider direction="vertical"></el-divider>
+      <div class="task-item flex-col-center">
+        <span class="label">待办</span>
+        <span class="value">80</span>
+      </div>
     </div>
-  </el-card>
+  </div>
 </template>
 
-<script>
-import {useUser} from "~/composables/useUser.ts";
-import {shallowReactive, toRefs} from "vue";
-import {getTeamData, getTagData} from "~/views/demo/page/personal/center/data.ts";
+<script lang="ts" setup>
+import {useUser} from "~/composables/useUser";
+import {getTeamData, getTagData} from "~/views/demo/page/personal/center/data";
 
-export default {
-  name: "UserInfo",
-  setup() {
-    const {getUser} = useUser();
-    const state = shallowReactive({
-      tags: getTagData(),
-      teams: getTeamData(),
-    })
-
-    return {
-      ...toRefs(state),
-      getUser
-    }
-  },
-}
+const {getUser} = useUser();
+const tags = getTagData();
+const teams = getTeamData();
 </script>
 <style lang="scss" scoped>
 .task-wrap {
   width: 80%;
   padding: 30px;
-  .label{
+
+  .label {
   }
-  .value{
+
+  .value {
     font-weight: bolder;;
   }
 }
