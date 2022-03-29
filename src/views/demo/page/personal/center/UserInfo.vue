@@ -1,6 +1,6 @@
 <template>
-  <div class="flex-between">
-    <div class="info  w-1/3 flex-between">
+  <div class="flex flex-row">
+    <div class="w-1/3 flex-between">
       <div class="flex-between">
         <div class="flex-col-center">
           <el-avatar :src="getUser.avatar" :size="70"></el-avatar>
@@ -15,14 +15,14 @@
         </div>
       </div>
     </div>
-    <div class="tag  w-1/3">
+    <div class="w-1/3">
       <el-space wrap>
         <el-tag v-for="tag in tags" :key="tag.name" :type="tag.type">
           {{ tag.name }}
         </el-tag>
       </el-space>
     </div>
-    <div class="task-wrap  w-1/3 flex-between">
+    <div class="w-1/3 flex-between">
       <div class="task-item flex-col-center">
         <span class="label">待办</span>
         <span class="value">90</span>
@@ -49,16 +49,3 @@ const {getUser} = useUser();
 const tags = getTagData();
 const teams = getTeamData();
 </script>
-<style lang="scss" scoped>
-.task-wrap {
-  width: 80%;
-  padding: 30px;
-
-  .label {
-  }
-
-  .value {
-    font-weight: bolder;;
-  }
-}
-</style>
