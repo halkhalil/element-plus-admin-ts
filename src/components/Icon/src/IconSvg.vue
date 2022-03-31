@@ -41,6 +41,7 @@ const getWrapStyle = computed(() => {
   vertical-align: -0.15em;
   fill: currentColor;
   overflow: hidden;
+  display: inline-block;
 }
 
 .svg-icon-spin {

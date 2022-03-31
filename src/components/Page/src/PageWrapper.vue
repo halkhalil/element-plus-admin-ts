@@ -1,22 +1,24 @@
 <template>
   <div class="page-wrapper wh-full" :class="$props.class">
-    <div class="page-header" v-if="title || subTitle || slotTitle || slotSubTitle">
-      <div class="flex-x-between">
-        <div class="page-header-wrap flex items-end">
-          <slot name="title">
-            <div class="page-header-title text-xl">{{ title }}</div>
-          </slot>
-          <div class="page-header-sub-title text-gray-500 text-xs ml-2 ">
-            <slot name="sub-title">{{ subTitle }}</slot>
+    <div class="page-header">
+      <slot name="header">
+        <div class="flex-x-between">
+          <div class="page-header-wrap flex items-end">
+            <slot name="title">
+              <div class="page-header-title text-xl">{{ title }}</div>
+            </slot>
+            <div class="page-header-sub-title text-gray-500 text-xs ml-2 ">
+              <slot name="sub-title">{{ subTitle }}</slot>
+            </div>
+          </div>
+          <div>
+            <slot name="extra"></slot>
           </div>
         </div>
-        <div>
-          <slot name="extra"></slot>
+        <div class="page-content text-gray-500">
+          <slot name="content"> {{ content }}</slot>
         </div>
-      </div>
-      <div class="page-content text-gray-500">
-        <slot name="content"> {{ content }}</slot>
-      </div>
+      </slot>
     </div>
     <div class="page-wrapper-content m-2"
          ref="contentElRef"

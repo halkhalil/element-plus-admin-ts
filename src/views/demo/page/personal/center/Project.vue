@@ -1,35 +1,20 @@
 <template>
-  <el-row>
-    <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8" v-for="(item,index) in projects" :key="index">
-      <el-card class="card" shadow="hover">
+  <el-row :gutter="10">
+    <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8" v-for="(item,index) in projects" :key="index" class="mt-2">
+      <el-card class="" shadow="hover">
         <div class="flex-row mb-1">
-          <el-avatar :src="item.image" :size="24"></el-avatar>
-          <span class="ml-2">{{ item.title }}</span>
+          <el-image :src="item.image" class="w-full h-50"></el-image>
+          <div class="font-bold">{{ item.title }}</div>
         </div>
-        <div class="text-df h-3 text-secondary text-overflow-3 my-1">
+        <div class="text-gray-500 line-clamp-2 h-10">
           {{ item.desc }}
-        </div>
-        <div class="flex-row between text-secondary">
-          <span>{{ item.name }}</span>
-          <span>{{ item.time }}</span>
         </div>
       </el-card>
     </el-col>
   </el-row>
 </template>
-<script>
-import {defineComponent, shallowReactive, toRefs} from 'vue';
-import {getProjectData} from "./data.ts";
+<script lang="ts" setup>
+import {getProjectData} from "./data";
 
-export default defineComponent({
-  setup() {
-    const state = shallowReactive({
-      projects: getProjectData(21),
-    })
-
-    return {
-      ...toRefs(state),
-    }
-  }
-})
+const projects = getProjectData(21);
 </script>

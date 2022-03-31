@@ -1,55 +1,37 @@
 import Mock from "mockjs";
 
-export const getProjectData = (count = 27) => {
-  const result = [];
-  for (let i = 0; i < count; i++) {
-    result.push({
-      title: Mock.Random.ctitle(),
-      time: '2021/12/12 12:12',
-      image: 'https://v3.cn.vuejs.org/logo.png',
-      desc: Mock.Random.cparagraph(1,10),
-      name: Mock.Random.cname()
-    });
-  }
-  return result;
-};
-
-export const getTeamData = () => {
-  return [
-    {
-      icon: 'el-icon-edit',
-      title: '科学搬砖组',
-      color: '#ff4000',
-    },
-    {
-      icon: 'el-icon-share',
-      title: '中二少年团',
-      color: '#7c51b8',
-    },
-    {
-      icon: 'el-icon-share',
-      title: '高逼格设计',
-      color: '#00adf7',
-    },
-  ];
+interface project {
+    title: string,
+    time: string,
+    image: string,
+    desc: string,
+    name: string
 }
 
+export const getProjectData = (count = 27) => {
+    const result: project[] = [];
+    for (let i = 0; i < count; i++) {
+        result.push({
+            title: Mock.Random.ctitle(),
+            time: Mock.Random.time('mm-dd HH:mm'),
+            image: Mock.Random.image('200'),
+            desc: Mock.Random.cparagraph(1, 10),
+            name: Mock.Random.cname()
+        } as project);
+    }
+    return result;
+};
+
 export const getTagData = () => {
-  return [
-    {name: 'Tag 1', type: ''},
-    {name: 'Tag 2', type: 'success'},
-    {name: 'Tag 3', type: 'info'},
-    {name: 'Tag 4', type: 'warning'},
-    {name: 'Tag 5', type: 'danger'},
-    {name: 'Tag 6', type: 'danger'},
-    {name: 'Tag 7', type: 'danger'},
-    {name: 'Tag 8', type: 'danger'},
-    {name: 'Tag 9', type: 'danger'},
-    {name: 'Tag 10', type: 'danger'},
-    {name: 'Tag 11', type: 'danger'},
-    {name: 'Tag 3', type: 'info'},
-    {name: 'Tag 2', type: 'success'},
-    {name: 'Tag 3', type: 'info'},
-    {name: 'Tag 2', type: 'success'},
-  ]
+    return [
+        {name: '能量满满', type: ''},
+        {name: '专注设计', type: 'success'},
+        {name: '海纳百川', type: 'info'},
+        {name: '程序员', type: 'warning'},
+        {name: 'HTML', type: 'danger'},
+        {name: 'Javascript', type: 'success'},
+        {name: 'VUE3', type: 'info'},
+        {name: 'Go', type: 'danger'},
+        {name: 'WindCss', type: ''},
+    ]
 }
