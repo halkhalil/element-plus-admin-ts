@@ -3,18 +3,22 @@
     <el-row justify="center">
       <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
         <el-input v-model="query" @input="handleSearch" placeholder="输入图标名称进行搜索">
-          <template #prefix>
-            <icon name="el-search" :size="18"/>
+          <template #prepend>
+            <el-icon :size="20">
+              <icon name="el-search"/>
+            </el-icon>
           </template>
         </el-input>
       </el-col>
     </el-row>
-    <el-row :gutter="10" class="mt-2" v-if="icons.length>0">
-      <el-col v-for="(item,index) in iconList" :key="index" :xs="12" :sm="4" :md="3" :lg="2" :xl="2" class="mt-2">
-        <div class="icon-wrap flex-row center p-2" @click="handleCopy(item)">
-          <div class="flex-col center align-center">
-            <icon :name="item" :size="32"/>
-            <span class="text-sm text-secondary text-overflow-1">{{ item }}</span>
+    <el-row :gutter="5" class="mt-1" v-if="icons.length>0">
+      <el-col v-for="(item,index) in iconList" :key="index" :xs="12" :sm="4" :md="3" :lg="2" :xl="2" class="mt-1">
+        <div class="flex-center w-full border cursor-pointer" @click="handleCopy(item)">
+          <div class="flex-row-center p-1 ">
+            <div class="flex-center">
+              <icon :name="item" :size="32"/>
+            </div>
+            <div class="text-xs text-gray-500 w-max">{{ item }}</div>
           </div>
         </div>
       </el-col>
@@ -23,47 +27,28 @@
   </el-card>
 </template>
 
-<script>
-import {PageWrapper} from '~/components/Page/index.ts'
+<script lang="ts" setup>
+import {PageWrapper} from '~/components/Page'
 import {useDebounceFn, useClipboard} from "@vueuse/core";
-import {reactive, ref, toRefs} from "vue";
+import {ref} from "vue";
 import {ElMessage} from 'element-plus'
 
-export default {
-  name: "icon-picker",
-  components: {PageWrapper},
-  props: {
-    icons: Array,
-  },
-  setup(props) {
-    const allIcons = props.icons;
-    const state = reactive({
-      iconList: allIcons,
-      query: '',
-    })
+const props = defineProps({
+  icons: Array
+})
 
-    const handleSearch = useDebounceFn((value) => {
-      state.iconList = value ? allIcons.filter(item => item.includes(value)) : allIcons;
-    }, 200)
+const allIcons = props.icons as Array<string>;
+const iconList = ref(allIcons);
+const query = ref('')
 
-    const handleCopy = (iconName) => {
-      const source = ref(`<icon name="${iconName}"/>`)
-      const {copy} = useClipboard({source});
-      copy();
-      ElMessage.success('复制成功 ' + source.value);
-    }
+const handleSearch = useDebounceFn((value) => {
+  iconList.value = value ? allIcons.filter(item => item.includes(value)) : allIcons;
+}, 200)
 
-    return {
-      ...toRefs(state),
-      handleSearch,
-      handleCopy,
-    }
-  }
+const handleCopy = (iconName) => {
+  const source = ref(`<icon name="${iconName}"/>`)
+  const {copy} = useClipboard({source});
+  copy();
+  ElMessage.success('复制成功 ' + source.value);
 }
 </script>
-<style lang="scss" scoped>
-.icon-wrap {
-  border: var(--el-border-base);
-  cursor: pointer;
-}
-</style>
