@@ -1,34 +1,34 @@
 <template>
-  <page-wrapper :title="$route.meta['title']">
+  <PageWrapper :title="$route.meta['title']">
     <el-card shadow="none" header="Element-Plus Icon使用">
       <el-row>
         <el-col v-bind="colProps">
-          <el-icon size="30">
+          <el-icon size="30px">
             <help-filled/>
           </el-icon>
         </el-col>
         <el-col v-bind="colProps">
-          <el-icon size="30">
+          <el-icon size="30px">
             <loading/>
           </el-icon>
         </el-col>
         <el-col v-bind="colProps">
-          <el-icon size="30">
+          <el-icon size="30px">
             <pie-chart/>
           </el-icon>
         </el-col>
         <el-col v-bind="colProps">
-          <el-icon size="30">
+          <el-icon size="30px">
             <takeaway-box/>
           </el-icon>
         </el-col>
         <el-col v-bind="colProps">
-          <el-icon size="30">
+          <el-icon size="30px">
             <sunrise/>
           </el-icon>
         </el-col>
         <el-col v-bind="colProps">
-          <el-icon size="30">
+          <el-icon size="30px">
             <video-pause/>
           </el-icon>
         </el-col>
@@ -82,44 +82,26 @@
           <icon name="icon-qq" :size="30"/>
         </el-col>
         <el-col v-bind="colProps">
-          <icon name="icon-twitter" :size="30"/>
+          <IconSvg name="icon-twitter" :size="30"/>
         </el-col>
       </el-row>
     </el-card>
     <el-card shadow="none" header="图标选择器" class="mt-2">
       <el-row>
         <el-col>
-          <icon-picker v-model="iconPicker" placement="top"/>
+          <IconPicker v-model="iconPicker" placement="top"/>
         </el-col>
       </el-row>
     </el-card>
-  </page-wrapper>
+  </PageWrapper>
 </template>
 
-<script>
-import {PageWrapper} from '~/components/Page/index.ts'
-import {reactive, toRefs} from "vue";
+<script lang="ts" setup>
+import {PageWrapper} from '~/components/Page'
+import {IconPicker,IconSvg} from '~/components/Icon'
+import {ref} from "vue";
 import {HelpFilled, Loading, PieChart, TakeawayBox, Sunrise, VideoPause} from '@element-plus/icons'
-import {IconPicker} from '~/components/Icon/index.ts'
 
-export default {
-  name: "index",
-  components: {PageWrapper, IconPicker, HelpFilled, Loading, PieChart, TakeawayBox, Sunrise, VideoPause},
-  setup() {
-    const state = reactive({
-      colProps: {sm: 8, xs: 8, md: 4, lg: 4, xl: 4},
-      iconPicker: '',
-    })
-
-    return {
-      ...toRefs(state),
-    }
-  }
-}
+const colProps = {sm: 8, xs: 8, md: 4, lg: 4, xl: 4};
+const iconPicker = ref('');
 </script>
-<style lang="scss" scoped>
-.icon-wrap {
-  border: var(--el-border-base);
-  cursor: pointer;
-}
-</style>
