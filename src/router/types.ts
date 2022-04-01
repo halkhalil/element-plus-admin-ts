@@ -25,6 +25,8 @@ export interface RouteMeta {
   ignoreKeepAlive?: boolean;
   //
   ignoreRoute?: boolean,
+  // 隐藏tab
+  hideTab?: boolean,
   // 单个菜单，当需要将子集菜单第一个路由作为一级菜单时，需要配置该项
   single?: boolean;
   // 内嵌iframe的地址

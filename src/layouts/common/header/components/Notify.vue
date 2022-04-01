@@ -1,6 +1,6 @@
 <template>
   <div >
-    <el-badge type="danger" is-dot ref="buttonRef" v-click-outside="onClickOutside" style="height: 18px;">
+    <el-badge type="danger" is-dot ref="buttonRef" v-click-outside="onClickOutside">
       <icon name="el-notify" size="15"/>
     </el-badge>
     <el-popover width="500" ref="popoverRef" :virtual-ref="buttonRef" trigger="click" virtual-triggering>

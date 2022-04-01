@@ -20,6 +20,7 @@ export const NotFoundRoute: AppRouteRecordRaw = {
   path: '/:path(.*)*',
   component: LAYOUT,
   meta: {title: 'ErrorPage'},
+  name: 'NotFoundRoute',
   children: [
     {
       path: '/:path(.*)*',
@@ -33,7 +34,8 @@ export const NotFoundRoute: AppRouteRecordRaw = {
 export const RedirectRoute: AppRouteRecordRaw = {
   path: '/redirect',
   component: CONTENT,
-  meta: {title: 'redirect'},
+  meta: {title: 'redirect', hideTab: true},
+  name: 'RedirectTo',
   children: [
     {
       path: '/redirect/:path(.*)',

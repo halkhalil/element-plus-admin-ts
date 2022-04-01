@@ -39,7 +39,7 @@ export default defineComponent({
           <el-container direction='vertical'>
             {getHeaderFixed.value ? renderHeader() : null}
             <el-main>
-              <el-scrollbar view-class="min-h-full">
+              <el-scrollbar wrap-class="iframe-scroll">
                 {!getHeaderFixed.value ? renderHeader() : null}
                 <LayoutContent/>
               </el-scrollbar>

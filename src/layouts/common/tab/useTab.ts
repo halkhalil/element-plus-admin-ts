@@ -42,7 +42,7 @@ export function useTab() {
    */
   async function addTab() {
     const {name, path, fullPath, meta} = currentRoute.value
-    name && await dispatch('tab/addTab', {name, path, fullPath, meta});
+    !meta?.hideTab && name && await dispatch('tab/addTab', {name, path, fullPath, meta});
   }
 
   /**
