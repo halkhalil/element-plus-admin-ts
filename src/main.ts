@@ -3,6 +3,7 @@ import App from "./App.vue";
 import {router, setupRouter} from '~/router'
 import 'element-plus/dist/index.css'
 import 'virtual:windi.css'
+import 'virtual:svg-icons-register';
 import {setupStore} from '~/store'
 import {setupRouterGuard} from "~/router/guard";
 import {setupGlobalDirectives} from "~/directives";
