@@ -13,7 +13,7 @@
     </el-card>
   </page-wrapper>
 </template>
-<script>
+<script lang="ts">
 import {PageWrapper} from '~/components/Page/index.ts'
 import {useQRCode} from '@vueuse/integrations/useQRCode'
 import {ref} from "vue";

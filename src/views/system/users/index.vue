@@ -6,7 +6,6 @@
     <el-card shadow="none">
       <basic-query v-model="query" :schemas="schemas" @submit="getQuery"></basic-query>
     </el-card>
-    {{ data }}
     <el-card shadow="none" class="mt-2">
       <basic-table :columns="columns"
                    :data="data?.data"
@@ -33,14 +32,14 @@
   </page-wrapper>
 </template>
 
-<script>
+<script lang="ts">
 import {PageWrapper} from "~/components/Page/index.ts"
 import {BasicTable, BasicQuery} from "~/components/Table/index.ts"
 import EditTemplate from "./EditTemplate.vue";
 import {defineComponent, toRefs, provide, shallowReactive, computed, onMounted, reactive} from "vue";
 import {useFetchItem, useFetchList} from "~/api/useUsers.ts";
-import { useFetch } from '@vueuse/core'
-import {useAxios} from '@vueuse/integrations'
+import {useFetch} from '@vueuse/core'
+import {useAxios} from '@vueuse/integrations/useAxios'
 
 export default defineComponent({
   name: "index",
@@ -62,14 +61,17 @@ export default defineComponent({
       ],
     })
 
-    const url = 'http://element-plus-admin.local/backend/users';
-    const headers = {Authorization: 'Bearer 3|cxtQL5IoHano3ItEKBF2TnPIoNo01mw7OKKIkBHb'};
-    const body = new URLSearchParams('aa=bb');
+    // const url = 'http://element-plus-admin.local/backend/users';
+    // const headers = {Authorization: 'Bearer 3|cxtQL5IoHano3ItEKBF2TnPIoNo01mw7OKKIkBHb'};
+    // const body = new URLSearchParams('aa=bb');
+    //
+    // const payload = reactive({aa:11})
+    // const {data} = useFetch(url,{headers}).get().json();
 
-    const payload = reactive({aa:11})
-    const {data} = useFetch(url,{headers}).get().json();
+    const {data, isFinished, execute} = useAxios('/backend/users', {}, {immediate: false})
 
-    useAxios()
+    execute()
+
     return {
       ...toRefs(state),
       data,
