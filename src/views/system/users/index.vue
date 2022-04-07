@@ -37,10 +37,9 @@
 import {PageWrapper} from "~/components/Page/index"
 import {BasicTable, BasicQuery} from "~/components/Table"
 import EditTemplate from "./EditTemplate.vue";
-import {defineComponent, toRefs, provide, shallowReactive, computed, onMounted, reactive} from "vue";
-import {useFetchItem, useFetchList} from "~/api/useFetchUsers";
-import {useFetch} from '@vueuse/core'
-import {useAxios} from '@vueuse/integrations/useAxios'
+import {reactive, ref} from "vue";
+import {useFetchList, useFetchStore, useFetchUpdate, useFetchItem, useFetchDelete} from "~/api/useFetchUsers";
+import {useFetchResources} from "~/composables/useFetchResources";
 
 const columns = [
   {prop: 'id', label: 'ID', width: 100},
@@ -57,10 +56,20 @@ const schemas = [
 ];
 
 const params = reactive({aa: 'aa'})
+const userData = reactive({});
+const id = ref(null);
 
-const {data, loading, execute} = useFetchList({params, immediate: false})
+// const {data, loading, execute} = useFetchList({params, immediate: false})
 
-execute()
+const axiosOptions = {immediate: false}
+
+const {data, addItem, editItem,} = useFetchResources(
+  useFetchList(params, axiosOptions),
+  useFetchStore(userData, axiosOptions),
+  useFetchUpdate(id, userData, axiosOptions),
+  useFetchItem(id, axiosOptions),
+  useFetchDelete(id, axiosOptions),
+)
 
 </script>
 

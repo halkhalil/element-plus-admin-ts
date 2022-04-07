@@ -1,35 +1,5 @@
-// import {useAxios, AxiosOptions} from "~/api/useAxios";
-import useFetch from "~/composables/useFetch.js";
-import {reactive} from "vue";
-import {AxiosRequestConfig} from "axios";
-import {EasyUseAxiosReturn, StrictUseAxiosReturn, UseAxiosOptions,useAxios} from "@vueuse/integrations/useAxios";
-
-const listApi = (query = {}) => axios.get('/users', {params: query});
-const itemApi = (item = {}) => axios.get(`/users/${item.id}`);
-const updateApi = (item = {}) => axios.put(`/users/${item.id}`, {
-    id: item.id,
-    username: item.username,
-    nickname: item.nickname,
-    password: item.password,
-    status: item.status,
-    role_ids: item.role_ids,
-});
-const storeApi = (item = {}) => axios.post(`/users`, {
-    username: item.username,
-    nickname: item.nickname,
-    password: item.password,
-    status: item.status,
-    role_ids: item.role_ids,
-});
-const deleteApi = (item = {}) => axios.delete(`/users/${item.id}`);
-
-export {
-    listApi,
-    itemApi,
-    updateApi,
-    storeApi,
-    deleteApi,
-}
+import {useAxios, UseAxiosOptions} from "~/api/useAxios";
+import {Ref} from "vue";
 
 interface userData {
     id?: string | number | null,
@@ -40,21 +10,56 @@ interface userData {
     role_ids: string[] | number[],
 }
 
-const Api = {
-    list: {url: '/users', method: 'get'},
-    store: {url: '/users', method: 'post'},
-    item: {url: '/users/:id', method: 'get'},
-    update: {url: '/users/:id', method: 'put'},
-    delete: {url: '/users/:id', method: 'delete'},
+
+enum Api {
+    list = '/users',
 }
 
-export const useFetchList2 = ({params}) => useAxios(Api.list.url,{params});
+/**
+ * 新增数据
+ * @param data
+ * @param options
+ */
+export const useFetchStore = (data?: object, options?: UseAxiosOptions) => {
+    return useAxios(Api.list, {method: 'post', data}, options);
+}
 
-export const useFetchList = (options) => useAxios({...options, ...Api.list} as AxiosOptions);
-export const useFetchItem = (options) => useAxios({...options, ...Api.item} as AxiosOptions);
-export const useFetchStore = (options) => useAxios({...options, ...Api.store} as AxiosOptions);
-export const useFetchUpdate = (options) => useAxios({...options, ...Api.update} as AxiosOptions);
-export const useFetchDelete = (options) => useAxios({...options, ...Api.delete} as AxiosOptions);
+/**
+ * 获取列表
+ * @param params
+ * @param options
+ */
+export const useFetchList = (params?: object, options?: UseAxiosOptions) => {
+    return useAxios(Api.list, {method: 'get', params}, options);
+}
+
+/**
+ * 获取详情
+ * @param id
+ * @param options
+ */
+export const useFetchItem = (id: Ref<number|null>, options?: UseAxiosOptions) => {
+    return useAxios([Api.list, id].join('/'), {method: 'get'}, options);
+}
+
+/**
+ * 更新数据
+ * @param id
+ * @param data
+ * @param options
+ */
+export const useFetchUpdate = (id: Ref<number|null>, data: object, options?: UseAxiosOptions) => {
+    return useAxios([Api.list, id].join('/'), {method: 'put', data}, options);
+}
+
+/**
+ * 删除数据
+ * @param id
+ * @param options
+ */
+export const useFetchDelete = (id: Ref<number|null>, options?: UseAxiosOptions) => {
+    return useAxios([Api.list, id].join('/'), {method: 'delete'}, options);
+}
 
 export const useFetchResource = (
     useFetchList,

@@ -1,15 +1,26 @@
-import {StrictUseAxiosReturn, useAxios as VueUseAxios, UseAxiosOptions} from '@vueuse/integrations/useAxios'
+import {
+  EasyUseAxiosReturn,
+  StrictUseAxiosReturn,
+  UseAxiosOptions,
+  UseAxiosReturn,
+  useAxios as VueUseAxios
+} from '@vueuse/integrations/useAxios'
 import axios from "~/utils/axios";
 import {AxiosInstance, AxiosRequestConfig} from "axios";
-import exp from "constants";
 
 export interface AxiosOptions extends AxiosRequestConfig, UseAxiosOptions {
   url: string;
 }
 
-export function useAxios<T = any>(options: AxiosOptions): StrictUseAxiosReturn<T> & PromiseLike<StrictUseAxiosReturn<T>> {
+function useAxios<T = any>(url: string, config?: AxiosRequestConfig, options?: UseAxiosOptions): StrictUseAxiosReturn<T> & PromiseLike<StrictUseAxiosReturn<T>> {
+  return VueUseAxios(url, <AxiosRequestConfig>config, axios, options)
+}
 
-  const {url, immediate, ...config} = options
-
-  return VueUseAxios(url as string, config as AxiosRequestConfig, axios as AxiosInstance, {immediate} as UseAxiosOptions)
+export {
+  AxiosRequestConfig,
+  UseAxiosOptions,
+  AxiosInstance,
+  UseAxiosReturn,
+  EasyUseAxiosReturn,
+  useAxios
 }
