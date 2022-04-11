@@ -1,7 +1,7 @@
-import {reactive, ref, toRefs, onMounted, nextTick} from 'vue';
+import {reactive, ref, toRefs, onMounted, nextTick, Ref} from 'vue';
 import {useDebounceFn} from '@vueuse/core';
 import {AxiosPromise} from "axios";
-import {StrictUseAxiosReturn} from "@vueuse/integrations/useAxios";
+import {StrictUseAxiosReturn, UseAxiosOptions} from "@vueuse/integrations/useAxios";
 
 interface ResourceApi {
   useFetchList: () => AxiosPromise,
@@ -18,114 +18,94 @@ interface ResourceApi {
 }
 
 export function useFetchResources(
-  useFetchList:StrictUseAxiosReturn<T>,
-  useFetchItem:StrictUseAxiosReturn<T>,
-  useFetchUpdate:StrictUseAxiosReturn<T>,
-  useFetchStore:StrictUseAxiosReturn<T>,
-  useFetchDelete:StrictUseAxiosReturn<T>,
+  useFetchList: StrictUseAxiosReturn<any>,
+  useFetchItem: StrictUseAxiosReturn<any>,
+  useFetchUpdate: StrictUseAxiosReturn<any>,
+  useFetchStore: StrictUseAxiosReturn<any>,
+  useFetchDelete: StrictUseAxiosReturn<any>,
+  options
 ) {
-  const formRef = ref(null);
-  const queryRef = ref(null);
-  const tableRef = ref(null);
-  const defaultItem = JSON.parse(JSON.stringify(item));
+  const formElRef: ElRef = ref(HTMLElement);
+  const queryElRef = ref(HTMLElement);
+  const tableElRef = ref(HTMLElement);
+  // const defaultItem = JSON.parse(JSON.stringify(item));
+
+  const query = reactive({page: 1});
+  const item = reactive({});
+  const lists = reactive([]);
+  const id = ref(null)
+
   const state = reactive({
-    item: item,
-    query: query,
+    item: {},
+    query: {},
     lists: [],
     dialog: false,
     paginate: {
       layout: 'prev, pager, next, ->, total',
-      ...paginate
+      // ...paginate
     },
     listLoading: false,
     itemLoading: false,
     confirmLoading: false,
-    autoloadListApi: autoloadListApi,
-    refreshAfterConfirm: refreshAfterConfirm,
   });
+
+  const {uniqueId = 'id'} = options;
+
+  // 获取列表
+  const {data: listResponse, loading: listLoading, execute: fetchList} = useFetchList;
+  const {data: itemResponse, loading: itemLoading, execute: fetchItem} = useFetchItem;
+  const {loading: storeLoading, isFinished: isStoreFinished, execute: fetchStore} = useFetchStore;
+  const {loading: updateLoading, isFinished: isUpdateFinished, execute: fetchUpdate} = useFetchUpdate;
+  const {loading: deleteLoading, execute: fetchDelete} = useFetchDelete;
 
   // 节流
   const _throttledQuery = useDebounceFn(async () => {
-    await getList();
+    await fetchList();
   }, 300);
 
   const getQuery = async () => {
     await _throttledQuery();
   }
 
-  // 获取列表
-  const {data: listResponse, loading: listLoading, execute: fetchList} = useFetchList;
-  const {data:itemResponse,loading: itemLoading, execute: fetchItem} = useFetchItem;
-  const {loading: storeLoading, execute: fetchStore} = useFetchStore;
-  const {loading: updateLoading, execute: fetchUpdate} = useFetchUpdate;
-  const {loading: deleteLoading, execute: fetchDelete} = useFetchDelete;
-
-  const getList = async () => {
-    state.listLoading = true;
-    const {data: {data, meta}} = await listApi(state.query).then(r => r);
-    state.lists = data;
-    if (meta) {
-      state.paginate.pageSize = meta.per_page;
-      state.paginate.total = meta.total;
-      state.paginate.pageCount = meta.last_page;
-    }
-    state.listLoading = false;
-  }
-
-  // 获取项
-  const getItem = async (item) => {
-    state.itemLoading = true;
-    const {data: {data}} = await itemApi(item).then(r => r);
-    state.item = data;
-    state.itemLoading = false;
-  }
-
   // 添加项
   const addItem = () => {
-    state.item = defaultItem;
+    // state.item = defaultItem;
     state.dialog = true;
   }
 
   // 修改项
-  const editItem = async (item) => {
+  const editItem = (item) => {
+    state.item = item;
     state.dialog = true;
-    await getItem(item);
+    fetchItem();
   }
 
   // 删除项
-  const deleteItem = async (item) => {
-    await deleteApi(item).then(r => r);
-    state.refreshAfterConfirm && await getList();
-    return Promise.resolve();
+  const deleteItem = (item) => {
+    state.item = item;
+    fetchDelete();
   }
 
   // 更新项
-  const updateItem = async () => {
-    await updateApi(state.item).then(r => r);
-    state.refreshAfterConfirm && await getList();
+  const updateItem = () => {
+    fetchUpdate()
+    isUpdateFinished.value && fetchList();
   }
 
   // 保存项
   const storeItem = async () => {
-    await storeApi(state.item).then(r => r);
-    state.refreshAfterConfirm && await getList();
+    fetchStore();
+    isStoreFinished.value && fetchList();
   }
 
   // 确认提交
   const confirmItem = () => {
     return new Promise(resolve => {
-      formRef.value.validate(async (valid) => {
+      formElRef.value.validate((valid) => {
         if (valid) {
-          try {
-            state.confirmLoading = true;
-            const {[uniqueId]: id} = state.item;
-            id ? await updateItem() : await storeItem();
-            cancelItem();
-            state.confirmLoading = false;
-          } catch (e) {
-            state.confirmLoading = false;
-          }
-          resolve();
+          const {[uniqueId]: id} = state.item;
+          id ? updateItem() : storeItem();
+          cancelItem();
         }
       })
     })
@@ -135,27 +115,21 @@ export function useFetchResources(
   const cancelItem = () => {
     state.item = defaultItem;
     state.dialog = false;
-    nextTick(() => formRef.value.clearValidate()).then(r => r);
+    nextTick(() => formElRef.value.clearValidate()).then(r => r);
   }
 
-  // 分页
-  const changePage = async (page) => {
-    state.query.page = page;
-    await getList();
-  }
-
-  onMounted(async () => {
-    state.autoloadListApi && await getList();
+  onMounted( () => {
+    fetchList()
   })
 
   return {
     ...toRefs(state),
-    formRef,
-    queryRef,
-    tableRef,
-    getList,
-    getQuery,
-    getItem,
+    formElRef,
+    queryElRef,
+    tableElRef,
+    fetchList,
+    fetchItem,
+    listResponse,
     addItem,
     editItem,
     updateItem,
@@ -163,6 +137,5 @@ export function useFetchResources(
     deleteItem,
     confirmItem,
     cancelItem,
-    changePage,
   };
 }

@@ -4,13 +4,12 @@
       <el-button type="primary" @click="addItem">新增</el-button>
     </template>
     <el-card shadow="none">
-      {{ loading }}
       <basic-query v-model="query" :schemas="schemas" @submit="execute"></basic-query>
     </el-card>
     <el-card shadow="none" class="mt-2">
       <basic-table :columns="columns"
-                   :data="data?.data"
-                   :paginate="data?.meta"
+                   :data="listResponse?.data"
+                   :paginate="listResponse?.meta"
                    :loading="listLoading"
                    @change-page="changePage">
 
@@ -37,9 +36,9 @@
 import {PageWrapper} from "~/components/Page/index"
 import {BasicTable, BasicQuery} from "~/components/Table"
 import EditTemplate from "./EditTemplate.vue";
-import {reactive, ref} from "vue";
-import {useFetchList, useFetchStore, useFetchUpdate, useFetchItem, useFetchDelete} from "~/api/useFetchUsers";
-import {useFetchResources} from "~/composables/useFetchResources";
+import {onMounted, reactive, ref} from "vue";
+import {useFetchUsers} from "~/api/useFetchUsers";
+
 
 const columns = [
   {prop: 'id', label: 'ID', width: 100},
@@ -63,13 +62,12 @@ const id = ref(null);
 
 const axiosOptions = {immediate: false}
 
-const {data, addItem, editItem,} = useFetchResources(
-  useFetchList(params, axiosOptions),
-  useFetchStore(userData, axiosOptions),
-  useFetchUpdate(id, userData, axiosOptions),
-  useFetchItem(id, axiosOptions),
-  useFetchDelete(id, axiosOptions),
-)
+const {query,useResource} = useFetchUsers({immediate: false})
+const {listResponse} = useResource();
+
+onMounted(()=>{
+
+})
 
 </script>
 
