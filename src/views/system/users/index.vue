@@ -1,17 +1,17 @@
 <template>
-  <page-wrapper :title="$route.meta['title']">
+  <PageWrapper :title="$route.meta['title']">
     <template #extra>
       <el-button type="primary" @click="addItem">新增</el-button>
     </template>
     <el-card shadow="none">
-      <basic-query v-model="query" :schemas="schemas" @submit="execute"></basic-query>
+      <BasicQuery v-model="query" :schemas="schemas" @submit="getQuery"></BasicQuery>
     </el-card>
     <el-card shadow="none" class="mt-2">
-      <basic-table :columns="columns"
-                   :data="listResponse?.data"
-                   :paginate="listResponse?.meta"
-                   :loading="listLoading"
-                   @change-page="changePage">
+      <BasicTable :columns="columns"
+                  :data="data?.data"
+                  :paginate="data?.meta"
+                  :loading="loading"
+                  @change-page="changePage">
 
         <template #roles="{row:{roles}}">
           <el-tag class="mr-2" v-for="(item,index) in roles" :key="index">{{ item.label }}</el-tag>
@@ -26,19 +26,18 @@
             </el-popconfirm>
           </template>
         </el-table-column>
-      </basic-table>
-      <!--      <edit-template ref="editTemplateRef" v-model="dialog"/>-->
+      </BasicTable>
+      <EditTemplate ref="editTemplateRef" v-model="dialog"/>
     </el-card>
-  </page-wrapper>
+  </PageWrapper>
 </template>
 
 <script lang="ts" setup>
-import {PageWrapper} from "~/components/Page/index"
+import {PageWrapper} from "~/components/Page"
 import {BasicTable, BasicQuery} from "~/components/Table"
 import EditTemplate from "./EditTemplate.vue";
-import {onMounted, reactive, ref} from "vue";
-import {useFetchUsers} from "~/api/useFetchUsers";
-
+import {onMounted, provide} from "vue";
+import {useFetchList, useFetchResource} from "~/api/useFetchUsers";
 
 const columns = [
   {prop: 'id', label: 'ID', width: 100},
@@ -54,20 +53,15 @@ const schemas = [
   {field: 'nickname', placeholder: '昵称', component: 'Input'},
 ];
 
-const params = reactive({aa: 'aa'})
-const userData = reactive({});
-const id = ref(null);
+const useResource = useFetchResource({immediate: false})
+const {useListReturn, editItem, addItem, deleteItem, getQuery, query, dialog} = useResource;
+const {data, loading} = useListReturn
 
-// const {data, loading, execute} = useFetchList({params, immediate: false})
+const changePage = (page) => {
+  query.page = page;
+  useListReturn.execute();
+}
 
-const axiosOptions = {immediate: false}
-
-const {query,useResource} = useFetchUsers({immediate: false})
-const {listResponse} = useResource();
-
-onMounted(()=>{
-
-})
-
+provide('useResource', useResource);
 </script>
 

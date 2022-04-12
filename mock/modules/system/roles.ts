@@ -6,7 +6,7 @@ export const lists = (() => {
     result.push({
       id: `${index + 1}`,
       name: ['SuperAdministrator', 'Admin', 'Telemarketer', 'TelemarketerManager'][index],
-      title: ['超级管理员', '管理员', '电销人员', '电销管理'][index],
+      label: ['超级管理员', '管理员', '电销人员', '电销管理'][index],
       remark: '',
       status: 1,
       status_label: "开启",

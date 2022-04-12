@@ -1,66 +1,25 @@
-import {reactive, ref, toRefs, onMounted, nextTick, Ref} from 'vue';
+import {ref, onMounted, nextTick, unref, computed} from 'vue';
 import {useDebounceFn} from '@vueuse/core';
-import {AxiosPromise} from "axios";
-import {StrictUseAxiosReturn, UseAxiosOptions} from "@vueuse/integrations/useAxios";
-
-interface ResourceApi {
-  useFetchList: () => AxiosPromise,
-  useFetchItem: () => AxiosPromise,
-  useFetchUpdate: () => AxiosPromise,
-  useFetchStore: () => AxiosPromise,
-  useFetchDelete: () => AxiosPromise,
-  query: object,
-  item: object,
-  paginate: object,
-  uniqueId: string,
-  autoloadListApi: boolean,// 自动加载列表api
-  refreshAfterConfirm: boolean,// 确认提交后刷新
-}
+import {StrictUseAxiosReturn} from "@vueuse/integrations/useAxios";
 
 export function useFetchResources(
-  useFetchList: StrictUseAxiosReturn<any>,
-  useFetchItem: StrictUseAxiosReturn<any>,
-  useFetchUpdate: StrictUseAxiosReturn<any>,
-  useFetchStore: StrictUseAxiosReturn<any>,
-  useFetchDelete: StrictUseAxiosReturn<any>,
-  options
+  useListReturn: StrictUseAxiosReturn<any>,
+  useItemReturn: StrictUseAxiosReturn<any>,
+  useUpdateReturn: StrictUseAxiosReturn<any>,
+  useStoreReturn: StrictUseAxiosReturn<any>,
+  useDeleteReturn: StrictUseAxiosReturn<any>,
+  item
 ) {
-  const formElRef: ElRef = ref(HTMLElement);
-  const queryElRef = ref(HTMLElement);
-  const tableElRef = ref(HTMLElement);
-  // const defaultItem = JSON.parse(JSON.stringify(item));
+  const formElRef = ref(HTMLElement);
+  const dialog = ref(false);
+  const _item = JSON.parse(JSON.stringify(item));
 
-  const query = reactive({page: 1});
-  const item = reactive({});
-  const lists = reactive([]);
-  const id = ref(null)
-
-  const state = reactive({
-    item: {},
-    query: {},
-    lists: [],
-    dialog: false,
-    paginate: {
-      layout: 'prev, pager, next, ->, total',
-      // ...paginate
-    },
-    listLoading: false,
-    itemLoading: false,
-    confirmLoading: false,
-  });
-
-  const {uniqueId = 'id'} = options;
-
-  // 获取列表
-  const {data: listResponse, loading: listLoading, execute: fetchList} = useFetchList;
-  const {data: itemResponse, loading: itemLoading, execute: fetchItem} = useFetchItem;
-  const {loading: storeLoading, isFinished: isStoreFinished, execute: fetchStore} = useFetchStore;
-  const {loading: updateLoading, isFinished: isUpdateFinished, execute: fetchUpdate} = useFetchUpdate;
-  const {loading: deleteLoading, execute: fetchDelete} = useFetchDelete;
+  // const {uniqueId = 'id'} = options;
+  const uniqueId = 'id'
 
   // 节流
   const _throttledQuery = useDebounceFn(async () => {
-    await fetchList();
+    await useListReturn.execute();
   }, 300);
 
   const getQuery = async () => {
@@ -69,33 +28,33 @@ export function useFetchResources(
 
   // 添加项
   const addItem = () => {
-    // state.item = defaultItem;
-    state.dialog = true;
+    _resetItem();
+    dialog.value = true;
   }
 
   // 修改项
   const editItem = (item) => {
-    state.item = item;
-    state.dialog = true;
-    fetchItem();
+    item.value = item;
+    dialog.value = true;
+    useItemReturn.execute();
   }
 
   // 删除项
   const deleteItem = (item) => {
-    state.item = item;
-    fetchDelete();
+    item.value = item;
+    useDeleteReturn.execute();
   }
 
   // 更新项
   const updateItem = () => {
-    fetchUpdate()
-    isUpdateFinished.value && fetchList();
+    useUpdateReturn.execute()
+    useUpdateReturn.isFinished.value && useListReturn.execute();
   }
 
   // 保存项
   const storeItem = async () => {
-    fetchStore();
-    isStoreFinished.value && fetchList();
+    useStoreReturn.execute();
+    useStoreReturn.isFinished.value && useListReturn.execute();
   }
 
   // 确认提交
@@ -103,7 +62,7 @@ export function useFetchResources(
     return new Promise(resolve => {
       formElRef.value.validate((valid) => {
         if (valid) {
-          const {[uniqueId]: id} = state.item;
+          const {[uniqueId]: id} = unref(item);
           id ? updateItem() : storeItem();
           cancelItem();
         }
@@ -113,23 +72,27 @@ export function useFetchResources(
 
   // 取消提交
   const cancelItem = () => {
-    state.item = defaultItem;
-    state.dialog = false;
+    _resetItem();
+    dialog.value = false;
     nextTick(() => formElRef.value.clearValidate()).then(r => r);
   }
 
-  onMounted( () => {
-    fetchList()
+  // 重置
+  const _resetItem = () => {
+    item.value = _item;
+  }
+
+  onMounted(() => {
+    useListReturn.execute()
   })
 
+  const confirmLoading = computed(() => useUpdateReturn.loading.value || useStoreReturn.loading.value)
+
   return {
-    ...toRefs(state),
     formElRef,
-    queryElRef,
-    tableElRef,
-    fetchList,
-    fetchItem,
-    listResponse,
+    dialog,
+
+    //
     addItem,
     editItem,
     updateItem,
@@ -137,5 +100,14 @@ export function useFetchResources(
     deleteItem,
     confirmItem,
     cancelItem,
+    getQuery,
+
+    confirmLoading,
+
+    useListReturn,
+    useItemReturn,
+    useUpdateReturn,
+    useStoreReturn,
+    useDeleteReturn,
   };
 }

@@ -12,7 +12,8 @@
       <slot></slot>
     </el-table>
     <div class="mt-2" v-if="paginate.total >0">
-      <el-pagination v-bind="paginate" @current-change="changePage" hide-on-single-page></el-pagination>
+      <el-pagination v-bind="{background:true,small:true,...paginate}" @current-change="changePage"
+                     hide-on-single-page></el-pagination>
     </div>
   </div>
 </template>
@@ -32,4 +33,5 @@ const emit = defineEmits(['change-page'])
 const changePage = (currentPage) => {
   emit('change-page', currentPage);
 }
+
 </script>

@@ -1,11 +1,10 @@
 <template>
-  <BasicDrawer
+  <el-drawer
     :title="!item.id ? '新增配置' : '编辑配置'"
     v-model="dialog"
     @close="cancelItem">
     <template #default>
-      <el-form ref="formRef" :model="item" :rules="rules" v-loading="itemLoading" label-width="80px"
-               autocomplete="off">
+      <el-form ref="formElRef" :model="item" :rules="rules" label-width="80px" autocomplete="off">
         <el-form-item label="用户标识" prop="username">
           <el-input v-model="item.username" placeholder="用户名、手机号、邮箱等唯一标识"></el-input>
         </el-form-item>
@@ -18,7 +17,7 @@
         </el-form-item>
         <el-form-item label="用户角色">
           <el-select v-model="item.role_ids" multiple placeholder="请选择用户角色" style="width: 100%;">
-            <el-option v-for="item in roles" :key="item.id" :label="item.label" :value="item.id">
+            <el-option v-for="item in roles?.data" :key="item.id" :label="item.label" :value="item.id">
             </el-option>
           </el-select>
         </el-form-item>
@@ -36,46 +35,24 @@
         </el-form-item>
       </el-form>
     </template>
-  </BasicDrawer>
+  </el-drawer>
 </template>
 
-<script>
-import {BasicDrawer} from "~/components/Drawer/index.ts";
-import {toRefs, shallowReactive, inject, ref, watch} from "vue";
-import {useFetchAllRoles} from "~/api/all.ts";
+<script lang="ts" setup>
+import {BasicDrawer} from "~/components/Drawer";
+import {toRefs, shallowReactive, inject, ref, watch, computed, reactive} from "vue";
+import {useFetchRoles} from "~/api/useFetchAll";
 
-export default {
-  name: "editTemplate",
-  components: {BasicDrawer},
-  setup() {
-    const state = shallowReactive({
-      rules: {
-        username: [{required: true, message: '请选择配置分组', trigger: 'change'}],
-        nickname: [{required: true, message: '请选择配置类型', trigger: 'change'}],
-        password: [{required: true, pattern: /^(\w|:|.){3,50}$/, message: '请选择渲染组件', trigger: 'change'}],
-        status: [{required: true}],
-      },
-    })
+const rules = reactive({
+  username: [{required: true, message: '请选择配置分组', trigger: 'change'}],
+  nickname: [{required: true, message: '请选择配置类型', trigger: 'change'}],
+  password: [{required: true, pattern: /^(\w|:|.){3,50}$/, message: '请选择渲染组件', trigger: 'change'}],
+  status: [{required: true}],
+})
 
-    const {formRef, item, dialog, itemLoading, confirmLoading, cancelItem, confirmItem} = inject('fetchResource');
-    const loading = ref(true)
+const {useItemReturn, formElRef, item, dialog, cancelItem, confirmItem, confirmLoading} = inject('useResource');
 
-    const {lists: roles, fetch: fetchAllRoles} = useFetchAllRoles();
+const {data: roles, execute: fetchRoles} = useFetchRoles({}, {immediate: false});
 
-    watch(dialog, async () => dialog.value && fetchAllRoles());
-
-    return {
-      ...toRefs(state),
-      roles,
-      formRef,
-      item,
-      dialog,
-      itemLoading,
-      confirmLoading,
-      cancelItem,
-      confirmItem,
-      loading
-    }
-  }
-}
+watch(dialog, async () => dialog.value && fetchRoles());
 </script>

@@ -2,10 +2,10 @@ import {AxiosRequestConfig} from "axios";
 import {EasyUseAxiosReturn, StrictUseAxiosReturn, UseAxiosOptions, useAxios} from "@vueuse/integrations/useAxios";
 
 enum Api {
-  users = '/all/users',
-  menus = '/all/menus',
-  roles = '/all/roles',
-  permissions = '/all/permissions'
+  users = '/backend/all/users',
+  menus = '/backend/all/menus',
+  roles = '/backend/all/roles',
+  permissions = '/backend/all/permissions'
 }
 
 /**

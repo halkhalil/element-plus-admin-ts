@@ -1,17 +1,17 @@
 import {useAxios} from "~/api/useAxios";
-import {reactive, Ref, unref} from "vue";
-import {useFetchResources} from "~/composables/useFetchResources";
+import {reactive, Ref, toRefs, unref} from "vue";
+import {useFetchResources as usfFetchResource2} from "~/composables/useFetchResources";
 
 export interface ItemType {
   id?: string | number | null,
-  username: string,
-  nickname: string,
+  username?: string,
+  nickname?: string,
   password?: string,
-  status: boolean,
-  role_ids: string[] | number[],
+  status?: boolean,
+  role_ids?: string[] | number[],
 }
 
-export type EasyItemType = { id: string | number }
+export type EasyItemType = { id?: string | number }
 
 interface UseAxiosOptions {
   immediate?: boolean;
@@ -22,81 +22,80 @@ export enum Api {
   list = '/users',
 }
 
-export const useFetchUsers = (options) => {
+/**
+ * 获取列表
+ * @param params
+ * @param options
+ */
+export const useFetchList = (params?: object, options?: UseAxiosOptions) => {
+  return useAxios(Api.list, {method: 'get', params}, options);
+}
 
-  let {query = {page: 1}, itemData = {}, immediate = true} = options;
+/**
+ * 获取详情
+ * @param item
+ * @param options
+ */
+export const useFetchItem = (item: EasyItemType, options?: UseAxiosOptions) => {
+  return useAxios([Api.list, unref(item).id].join('/'), {method: 'get'}, options);
+}
+
+/**
+ * 新增数据
+ * @param item
+ * @param options
+ */
+export const useFetchStore = (item: ItemType, options?: UseAxiosOptions) => {
+  return useAxios(Api.list, {method: 'post', data: item}, options);
+}
+
+/**
+ * 更新数据
+ * @param item
+ * @param options
+ */
+export const useFetchUpdate = (item: ItemType, options?: UseAxiosOptions) => {
+  return useAxios([Api.list, unref(item).id].join('/'), {method: 'put', data: item}, options);
+}
+
+/**
+ * 删除数据
+ * @param item
+ * @param options
+ */
+export const useFetchDelete = (item: EasyItemType, options?: UseAxiosOptions) => {
+  return useAxios([Api.list, unref(item).id].join('/'), {method: 'delete'}, options);
+}
+
+interface FetchResourceOption {
+  query?: object,
+  itemData?: object,
+  immediate?: boolean
+}
+
+/**
+ * 资源操作 实现增删改查
+ * @param options
+ */
+export const useFetchResource = (options ?: FetchResourceOption) => {
+
+  let {query = {page: 1}, item = {}, immediate = false} = {...options};
 
   query = reactive(query);
-  itemData = reactive(itemData);
-  const axiosOptions = {immediate} as UseAxiosOptions;
+  item = reactive(item) as ItemType;
 
-  /**
-   * 获取列表
-   * @param params
-   * @param options
-   */
-  const useList = (params?: object, options?: UseAxiosOptions) => {
-    return useAxios(Api.list, {method: 'get', params}, options);
-  }
-
-  /**
-   * 获取详情
-   * @param item
-   * @param options
-   */
-  const useItem = (item: EasyItemType, options?: UseAxiosOptions) => {
-    return useAxios([Api.list, unref(item).id].join('/'), {method: 'get'}, options);
-  }
-
-  /**
-   * 新增数据
-   * @param item
-   * @param options
-   */
-  const useStore = (item: ItemType, options?: UseAxiosOptions) => {
-    return useAxios(Api.list, {method: 'post', data: item}, options);
-  }
-
-  /**
-   * 更新数据
-   * @param item
-   * @param options
-   */
-  const useUpdate = (item: ItemType, options?: UseAxiosOptions) => {
-    return useAxios([Api.list, unref(item).id].join('/'), {method: 'put', data: item}, options);
-  }
-
-  /**
-   * 删除数据
-   * @param item
-   * @param options
-   */
-  const useDelete = (item: EasyItemType, options?: UseAxiosOptions) => {
-    return useAxios([Api.list, unref(item).id].join('/'), {method: 'delete'}, options);
-  }
-
-  /**
-   * 资源请求 实现增删改查
-   */
-  const useResource = () => {
-    return useFetchResources(
-      useList(query, axiosOptions),
-      useItem(itemData, axiosOptions),
-      useUpdate(itemData, axiosOptions),
-      useStore(itemData, axiosOptions),
-      useDelete(itemData, axiosOptions),
-      options
-    )
-  }
+  const useResource = usfFetchResource2(
+    useFetchList(query, {immediate}),
+    useFetchItem(item, {immediate: false}),
+    useFetchUpdate(item, {immediate: false}),
+    useFetchStore(item, {immediate: false}),
+    useFetchDelete(item, {immediate: false}),
+    item
+  )
 
   return {
-    useStore,
-    useList,
-    useItem,
-    useUpdate,
-    useDelete,
-    useResource,
     query,
-    itemData,
+    item,
+    ...useResource
   }
 }
