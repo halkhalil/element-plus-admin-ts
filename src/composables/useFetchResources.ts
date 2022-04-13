@@ -1,6 +1,60 @@
-import {ref, onMounted, nextTick, unref, computed} from 'vue';
+import {ref, onMounted, nextTick, unref, computed, Ref} from 'vue';
 import {useDebounceFn} from '@vueuse/core';
 import {StrictUseAxiosReturn} from "@vueuse/integrations/useAxios";
+
+export interface UseFetchResourcesReturn {
+  readonly formElRef: Ref<HTMLElement | null>,
+  readonly confirmLoading: Ref<boolean>,
+  readonly dialog: Ref<boolean>,
+  useListReturn: StrictUseAxiosReturn<any>,
+  useItemReturn: StrictUseAxiosReturn<any>,
+  useUpdateReturn: StrictUseAxiosReturn<any>,
+  useStoreReturn: StrictUseAxiosReturn<any>,
+  useDeleteReturn: StrictUseAxiosReturn<any>,
+
+  /**
+   * 添加项
+   */
+  addItem(): void,
+
+  /**
+   * 修改项
+   * @param item
+   */
+  editItem(item: object): void,
+
+  /**
+   * 更新项
+   * @param item
+   */
+  updateItem(item: object): void,
+
+  /**
+   * 新增项
+   */
+  storeItem(): void,
+
+  /**
+   * 删除项
+   * @param item
+   */
+  deleteItem(item: object): void,
+
+  /**
+   * 确认操作
+   */
+  confirmItem(): void,
+
+  /**
+   * 取消操作
+   */
+  cancelItem(): void,
+
+  /**
+   * 搜索查询
+   */
+  getQuery(): void,
+}
 
 export function useFetchResources(
   useListReturn: StrictUseAxiosReturn<any>,
@@ -9,13 +63,11 @@ export function useFetchResources(
   useStoreReturn: StrictUseAxiosReturn<any>,
   useDeleteReturn: StrictUseAxiosReturn<any>,
   item
-) {
-  const formElRef = ref(HTMLElement);
-  const dialog = ref(false);
+): UseFetchResourcesReturn {
+  const formElRef = ref<HTMLElement | null>(null);
+  const dialog = ref<boolean>(false);
+  const isEdit = unref(item)?.id;
   const _item = JSON.parse(JSON.stringify(item));
-
-  // const {uniqueId = 'id'} = options;
-  const uniqueId = 'id'
 
   // 节流
   const _throttledQuery = useDebounceFn(async () => {
@@ -62,8 +114,7 @@ export function useFetchResources(
     return new Promise(resolve => {
       formElRef.value.validate((valid) => {
         if (valid) {
-          const {[uniqueId]: id} = unref(item);
-          id ? updateItem() : storeItem();
+          isEdit ? updateItem() : storeItem();
           cancelItem();
         }
       })
@@ -82,17 +133,17 @@ export function useFetchResources(
     item.value = _item;
   }
 
-  onMounted(() => {
-    useListReturn.execute()
-  })
-
   const confirmLoading = computed(() => useUpdateReturn.loading.value || useStoreReturn.loading.value)
 
   return {
     formElRef,
     dialog,
-
-    //
+    confirmLoading,
+    useListReturn,
+    useItemReturn,
+    useUpdateReturn,
+    useStoreReturn,
+    useDeleteReturn,
     addItem,
     editItem,
     updateItem,
@@ -101,13 +152,5 @@ export function useFetchResources(
     confirmItem,
     cancelItem,
     getQuery,
-
-    confirmLoading,
-
-    useListReturn,
-    useItemReturn,
-    useUpdateReturn,
-    useStoreReturn,
-    useDeleteReturn,
   };
 }

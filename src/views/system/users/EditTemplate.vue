@@ -40,8 +40,9 @@
 
 <script lang="ts" setup>
 import {BasicDrawer} from "~/components/Drawer";
-import {toRefs, shallowReactive, inject, ref, watch, computed, reactive} from "vue";
+import {inject, watch, reactive} from "vue";
 import {useFetchRoles} from "~/api/useFetchAll";
+import {UserUseFetchResourcesReturn} from "~/api/useFetchUsers";
 
 const rules = reactive({
   username: [{required: true, message: '请选择配置分组', trigger: 'change'}],
@@ -50,7 +51,14 @@ const rules = reactive({
   status: [{required: true}],
 })
 
-const {useItemReturn, formElRef, item, dialog, cancelItem, confirmItem, confirmLoading} = inject('useResource');
+const {
+  formElRef,
+  item,
+  dialog,
+  cancelItem,
+  confirmItem,
+  confirmLoading
+} = inject('useResource') as UserUseFetchResourcesReturn;
 
 const {data: roles, execute: fetchRoles} = useFetchRoles({}, {immediate: false});
 

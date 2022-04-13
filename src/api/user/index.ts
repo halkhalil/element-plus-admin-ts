@@ -1,21 +1,7 @@
-import {useAxios} from "~/api/useAxios";
-import {reactive, Ref, toRefs, unref} from "vue";
-import {useFetchResources as usfFetchResource2, UseFetchResourcesReturn} from "~/composables/useFetchResources";
-
-export interface ItemType {
-  id?: string | number | null,
-  username?: string,
-  nickname?: string,
-  password?: string,
-  status?: boolean,
-  role_ids?: string[] | number[],
-}
-
-export type EasyItemType = { id?: string | number }
-
-interface UseAxiosOptions {
-  immediate?: boolean;
-}
+import {useAxios, UseAxiosOptions} from "~/api/useAxios";
+import {reactive, unref} from "vue";
+import {useFetchResources as usfFetchResource2} from "~/composables/useFetchResources";
+import {FetchUserResourceOptions, UseFetchUserResourcesReturn, UserItem, UserQuery} from "~/api/user/UserModel";
 
 
 export enum Api {
@@ -36,7 +22,7 @@ export const useFetchList = (params?: object, options?: UseAxiosOptions) => {
  * @param item
  * @param options
  */
-export const useFetchItem = (item: EasyItemType, options?: UseAxiosOptions) => {
+export const useFetchItem = (item: UserItem, options?: UseAxiosOptions) => {
   return useAxios([Api.list, unref(item).id].join('/'), {method: 'get'}, options);
 }
 
@@ -45,7 +31,7 @@ export const useFetchItem = (item: EasyItemType, options?: UseAxiosOptions) => {
  * @param item
  * @param options
  */
-export const useFetchStore = (item: ItemType, options?: UseAxiosOptions) => {
+export const useFetchStore = (item: UserItem, options?: UseAxiosOptions) => {
   return useAxios(Api.list, {method: 'post', data: item}, options);
 }
 
@@ -54,7 +40,7 @@ export const useFetchStore = (item: ItemType, options?: UseAxiosOptions) => {
  * @param item
  * @param options
  */
-export const useFetchUpdate = (item: ItemType, options?: UseAxiosOptions) => {
+export const useFetchUpdate = (item: UserItem, options?: UseAxiosOptions) => {
   return useAxios([Api.list, unref(item).id].join('/'), {method: 'put', data: item}, options);
 }
 
@@ -63,34 +49,23 @@ export const useFetchUpdate = (item: ItemType, options?: UseAxiosOptions) => {
  * @param item
  * @param options
  */
-export const useFetchDelete = (item: EasyItemType, options?: UseAxiosOptions) => {
+export const useFetchDelete = (item: UserItem, options?: UseAxiosOptions) => {
   return useAxios([Api.list, unref(item).id].join('/'), {method: 'delete'}, options);
 }
 
-interface FetchResourceOption {
-  query?: object,
-  itemData?: object,
-  immediate?: boolean
-}
-
-export interface UserUseFetchResourcesReturn extends UseFetchResourcesReturn {
-  query: object,
-  item: ItemType,
-
-  changePage(page): void,
-}
 
 /**
  * 资源操作 实现增删改查
  * @param options
  */
-export const useFetchResource = (options ?: FetchResourceOption): UserUseFetchResourcesReturn => {
+export const useFetchResource = (options ?: FetchUserResourceOptions): UseFetchUserResourcesReturn => {
 
-  let {query = {}, item = {}, immediate = false} = {...options};
+  let {query = {}, item = {}, immediate = true} = {...options};
 
-  query = reactive(query);
-  item = reactive(item) as ItemType;
+  query = reactive(query) as UserQuery;
+  item = reactive(item) as UserItem;
   const useFetchListReturn = useFetchList(query, {immediate})
+
   const useResource = usfFetchResource2(
     useFetchListReturn,
     useFetchItem(item, {immediate: false}),

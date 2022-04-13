@@ -8,8 +8,8 @@
     </el-card>
     <el-card shadow="none" class="mt-2">
       <BasicTable :columns="columns"
-                  :data="data?.data"
-                  :paginate="data?.meta"
+                  :data="lists?.data"
+                  :paginate="lists?.meta"
                   :loading="loading"
                   @change-page="changePage">
 
@@ -37,7 +37,7 @@ import {PageWrapper} from "~/components/Page"
 import {BasicTable, BasicQuery} from "~/components/Table"
 import EditTemplate from "./EditTemplate.vue";
 import {onMounted, provide} from "vue";
-import {useFetchList, useFetchResource} from "~/api/useFetchUsers";
+import {useFetchResource} from "~/api/user";
 
 const columns = [
   {prop: 'id', label: 'ID', width: 100},
@@ -53,14 +53,9 @@ const schemas = [
   {field: 'nickname', placeholder: '昵称', component: 'Input'},
 ];
 
-const useResource = useFetchResource({immediate: false})
-const {useListReturn, editItem, addItem, deleteItem, getQuery, query, dialog} = useResource;
-const {data, loading} = useListReturn
-
-const changePage = (page) => {
-  query.page = page;
-  useListReturn.execute();
-}
+const useResource = useFetchResource()
+const {useListReturn, changePage, editItem, addItem, deleteItem, getQuery, query, dialog} = useResource;
+const {data: lists, loading} = useListReturn;
 
 provide('useResource', useResource);
 </script>
