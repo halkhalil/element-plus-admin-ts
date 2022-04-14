@@ -6,6 +6,7 @@
     <el-card shadow="none">
       <BasicQuery v-model="query" :schemas="schemas" @submit="getQuery"></BasicQuery>
     </el-card>
+    {{item}}
     <el-card shadow="none" class="mt-2">
       <BasicTable :columns="columns"
                   :data="lists?.data"
@@ -54,7 +55,7 @@ const schemas = [
 ];
 
 const useResource = useFetchResource()
-const {useListReturn, changePage, editItem, addItem, deleteItem, getQuery, query, dialog} = useResource;
+const {useListReturn, changePage, editItem, addItem, deleteItem, getQuery, query, dialog,item} = useResource;
 const {data: lists, loading} = useListReturn;
 
 provide('useResource', useResource);

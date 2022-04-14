@@ -1,7 +1,10 @@
 import {UseFetchResourcesReturn} from "~/composables/useFetchResources";
 
-export interface UserItem {
-  id?: string | number | null,
+export interface BaseItem {
+  id?: string | number | null
+}
+
+export interface UserItem extends BaseItem {
   username: string,
   nickname: string,
   password?: string,
@@ -26,10 +29,3 @@ export interface FetchUserResourceOptions {
   immediate?: boolean
 }
 
-
-export interface UseFetchUserResourcesReturn extends UseFetchResourcesReturn {
-  query: object,
-  item: UserItem,
-
-  changePage(page): void,
-}

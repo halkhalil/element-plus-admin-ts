@@ -42,7 +42,7 @@
 import {BasicDrawer} from "~/components/Drawer";
 import {inject, watch, reactive} from "vue";
 import {useFetchRoles} from "~/api/useFetchAll";
-import {UserUseFetchResourcesReturn} from "~/api/useFetchUsers";
+import {UseFetchResourcesReturn} from "~/composables/useFetchResources";
 
 const rules = reactive({
   username: [{required: true, message: '请选择配置分组', trigger: 'change'}],
@@ -58,7 +58,7 @@ const {
   cancelItem,
   confirmItem,
   confirmLoading
-} = inject('useResource') as UserUseFetchResourcesReturn;
+} = inject('useResource') as UseFetchResourcesReturn;
 
 const {data: roles, execute: fetchRoles} = useFetchRoles({}, {immediate: false});
 

@@ -1,11 +1,13 @@
-import {ref, onMounted, nextTick, unref, computed, Ref} from 'vue';
+import {ref, onMounted, nextTick, unref, computed, Ref, reactive} from 'vue';
 import {useDebounceFn} from '@vueuse/core';
 import {StrictUseAxiosReturn} from "@vueuse/integrations/useAxios";
+import {UnwrapNestedRefs} from "@vue/reactivity";
 
 export interface UseFetchResourcesReturn {
   readonly formElRef: Ref<HTMLElement | null>,
   readonly confirmLoading: Ref<boolean>,
   readonly dialog: Ref<boolean>,
+  item: Ref<object>
   useListReturn: StrictUseAxiosReturn<any>,
   useItemReturn: StrictUseAxiosReturn<any>,
   useUpdateReturn: StrictUseAxiosReturn<any>,
@@ -54,20 +56,32 @@ export interface UseFetchResourcesReturn {
    * 搜索查询
    */
   getQuery(): void,
+
+  /**
+   * 分页
+   */
+  changePage(page: number): void,
 }
 
 export function useFetchResources(
-  useListReturn: StrictUseAxiosReturn<any>,
-  useItemReturn: StrictUseAxiosReturn<any>,
-  useUpdateReturn: StrictUseAxiosReturn<any>,
-  useStoreReturn: StrictUseAxiosReturn<any>,
-  useDeleteReturn: StrictUseAxiosReturn<any>,
-  item
+  useFetchList: (query: UnwrapNestedRefs<any>, options?: object) => StrictUseAxiosReturn<any>,
+  useFetchItem: (item: UnwrapNestedRefs<any>, options?: object) => StrictUseAxiosReturn<any>,
+  useFetchStore: (item: UnwrapNestedRefs<any>, options?: object) => StrictUseAxiosReturn<any>,
+  useFetchUpdate: (item: UnwrapNestedRefs<any>, options?: object) => StrictUseAxiosReturn<any>,
+  useFetchDelete: (item: UnwrapNestedRefs<any>, options?: object) => StrictUseAxiosReturn<any>,
+  defaultItem?: object,
 ): UseFetchResourcesReturn {
+  const item = ref(defaultItem || {});
   const formElRef = ref<HTMLElement | null>(null);
   const dialog = ref<boolean>(false);
-  const isEdit = unref(item)?.id;
-  const _item = JSON.parse(JSON.stringify(item));
+  const isEdit = item['id'];
+  const query = reactive({});
+
+  const useListReturn = useFetchList(query, {immediate: true});
+  const useItemReturn = useFetchItem(item, {immediate: false});
+  const useUpdateReturn = useFetchStore(item, {immediate: false});
+  const useStoreReturn = useFetchUpdate(item, {immediate: false});
+  const useDeleteReturn = useFetchDelete(item, {immediate: false});
 
   // 节流
   const _throttledQuery = useDebounceFn(async () => {
@@ -85,15 +99,16 @@ export function useFetchResources(
   }
 
   // 修改项
-  const editItem = (item) => {
-    item.value = item;
+  const editItem = (_item) => {
+    item.value = _item;
+    console.log('editItem', item)
     dialog.value = true;
     useItemReturn.execute();
   }
 
   // 删除项
-  const deleteItem = (item) => {
-    item.value = item;
+  const deleteItem = (_item) => {
+    item.value = _item;
     useDeleteReturn.execute();
   }
 
@@ -130,13 +145,19 @@ export function useFetchResources(
 
   // 重置
   const _resetItem = () => {
-    item.value = _item;
+    item.value = ref(defaultItem || {});
+  }
+
+  const changePage = (page: number) => {
+    query.page = page;
+    useListReturn.execute();
   }
 
   const confirmLoading = computed(() => useUpdateReturn.loading.value || useStoreReturn.loading.value)
 
   return {
     formElRef,
+    item,
     dialog,
     confirmLoading,
     useListReturn,
@@ -152,5 +173,6 @@ export function useFetchResources(
     confirmItem,
     cancelItem,
     getQuery,
+    changePage,
   };
 }
