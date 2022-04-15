@@ -37,20 +37,25 @@ export interface UseFetchResourcesReturn {
   storeItem(): void,
 
   /**
-   * 删除项
+   * 删除
    * @param item
    */
   deleteItem(item: object): void,
 
   /**
-   * 确认操作
+   * 确认
    */
   confirmItem(): void,
 
   /**
-   * 取消操作
+   * 取消
    */
   cancelItem(): void,
+
+  /**
+   * 重置
+   */
+  resetItem():void,
 
   /**
    * 搜索查询
@@ -94,7 +99,7 @@ export function useFetchResources(
 
   // 添加项
   const addItem = () => {
-    _resetItem();
+    resetItem();
     dialog.value = true;
   }
 
@@ -138,13 +143,13 @@ export function useFetchResources(
 
   // 取消提交
   const cancelItem = () => {
-    _resetItem();
+    resetItem();
     dialog.value = false;
     nextTick(() => formElRef.value.clearValidate()).then(r => r);
   }
 
   // 重置
-  const _resetItem = () => {
+  const resetItem = () => {
     item.value = ref(defaultItem || {});
   }
 
@@ -172,6 +177,7 @@ export function useFetchResources(
     deleteItem,
     confirmItem,
     cancelItem,
+    resetItem,
     getQuery,
     changePage,
   };
