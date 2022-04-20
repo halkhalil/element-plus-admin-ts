@@ -1,18 +1,26 @@
-import {ref, onMounted, nextTick, unref, computed, Ref, reactive} from 'vue';
-import {useDebounceFn} from '@vueuse/core';
-import {StrictUseAxiosReturn} from "@vueuse/integrations/useAxios";
+import {ref, onMounted, nextTick, unref, computed, Ref, reactive, toRefs} from 'vue';
+import {useDebounceFn, useUrlSearchParams} from '@vueuse/core';
+import {EasyUseAxiosReturn, StrictUseAxiosReturn} from "@vueuse/integrations/useAxios";
 import {UnwrapNestedRefs} from "@vue/reactivity";
+import {useAxios} from "@vueuse/integrations/useAxios";
+import axios from "~/utils/axios";
+import {callbackFn} from "#/index";
+import {FormInstance} from "element-plus";
 
 export interface UseFetchResourcesReturn {
   readonly formElRef: Ref<HTMLElement | null>,
-  readonly confirmLoading: Ref<boolean>,
   readonly dialog: Ref<boolean>,
   item: Ref<object>
-  useListReturn: StrictUseAxiosReturn<any>,
-  useItemReturn: StrictUseAxiosReturn<any>,
-  useUpdateReturn: StrictUseAxiosReturn<any>,
-  useStoreReturn: StrictUseAxiosReturn<any>,
-  useDeleteReturn: StrictUseAxiosReturn<any>,
+  loading: {
+    list: boolean,
+    item: boolean,
+    confirm: boolean,
+  },
+  useListReturn: EasyUseAxiosReturn<any>,
+  useItemReturn: EasyUseAxiosReturn<any>,
+  useUpdateReturn: EasyUseAxiosReturn<any>,
+  useStoreReturn: EasyUseAxiosReturn<any>,
+  useDeleteReturn: EasyUseAxiosReturn<any>,
 
   /**
    * 添加项
@@ -45,17 +53,17 @@ export interface UseFetchResourcesReturn {
   /**
    * 确认
    */
-  confirmItem(): void,
+  confirmItem(item: object, formEl?: FormInstance): void,
 
   /**
    * 取消
    */
-  cancelItem(): void,
+  cancelItem(clearValidate?: callbackFn): void,
 
   /**
    * 重置
    */
-  resetItem():void,
+  resetForm(): void,
 
   /**
    * 搜索查询
@@ -68,33 +76,38 @@ export interface UseFetchResourcesReturn {
   changePage(page: number): void,
 }
 
+export interface UseFetchResourceOptions {
+  item?: object | undefined,
+  query?: object | undefined,
+  immediate?: boolean | undefined,
+}
+
 export function useFetchResources(
-  useFetchList: (query: UnwrapNestedRefs<any>, options?: object) => StrictUseAxiosReturn<any>,
-  useFetchItem: (item: UnwrapNestedRefs<any>, options?: object) => StrictUseAxiosReturn<any>,
-  useFetchStore: (item: UnwrapNestedRefs<any>, options?: object) => StrictUseAxiosReturn<any>,
-  useFetchUpdate: (item: UnwrapNestedRefs<any>, options?: object) => StrictUseAxiosReturn<any>,
-  useFetchDelete: (item: UnwrapNestedRefs<any>, options?: object) => StrictUseAxiosReturn<any>,
-  defaultItem?: object,
+  resourceUrl: string,
+  options?: UseFetchResourceOptions,
 ): UseFetchResourcesReturn {
-  const item = ref(defaultItem || {});
+
   const formElRef = ref<HTMLElement | null>(null);
-  const dialog = ref<boolean>(false);
+
+  const {item: defaultItem = {}, query: defaultQuery = {}, immediate = true} = options || {};
+  const query = useUrlSearchParams('history', {initialValue: defaultQuery})
+  let item = reactive(defaultItem);
   const isEdit = item['id'];
-  const query = reactive({});
+  const dialog = ref(false)
 
-  const useListReturn = useFetchList(query, {immediate: true});
-  const useItemReturn = useFetchItem(item, {immediate: false});
-  const useUpdateReturn = useFetchStore(item, {immediate: false});
-  const useStoreReturn = useFetchUpdate(item, {immediate: false});
-  const useDeleteReturn = useFetchDelete(item, {immediate: false});
+  const useListReturn = useAxios({method: 'get'}, axios);
+  const useItemReturn = useAxios({method: 'get'}, axios);
+  const useUpdateReturn = useAxios({method: 'put', data: item}, axios);
+  const useStoreReturn = useAxios({method: 'post', data: item}, axios);
+  const useDeleteReturn = useAxios({method: 'delete', data: item}, axios);
 
-  // 节流
-  const _throttledQuery = useDebounceFn(async () => {
-    await useListReturn.execute();
-  }, 300);
+  const itemUrl = computed(() => [resourceUrl, unref(item)?.id].join('/'));
 
+  // 筛选
   const getQuery = async () => {
-    await _throttledQuery();
+    await useDebounceFn(async () => {
+      await useListReturn.execute(resourceUrl);
+    }, 300);
   }
 
   // 添加项
@@ -105,28 +118,27 @@ export function useFetchResources(
 
   // 修改项
   const editItem = (_item) => {
-    item.value = _item;
-    console.log('editItem', item)
+    item = reactive(_item);
     dialog.value = true;
-    useItemReturn.execute();
+    useItemReturn.execute(unref(itemUrl));
   }
 
   // 删除项
   const deleteItem = (_item) => {
-    item.value = _item;
-    useDeleteReturn.execute();
+    item = reactive(_item);
+    useDeleteReturn.execute(unref(itemUrl));
   }
 
   // 更新项
   const updateItem = () => {
-    useUpdateReturn.execute()
-    useUpdateReturn.isFinished.value && useListReturn.execute();
+    useUpdateReturn.execute(unref(itemUrl))
+    useUpdateReturn.isFinished.value && useListReturn.execute(unref(itemUrl));
   }
 
   // 保存项
   const storeItem = async () => {
-    useStoreReturn.execute();
-    useStoreReturn.isFinished.value && useListReturn.execute();
+    useStoreReturn.execute(resourceUrl);
+    useStoreReturn.isFinished.value && useListReturn.execute(resourceUrl);
   }
 
   // 确认提交
@@ -150,20 +162,19 @@ export function useFetchResources(
 
   // 重置
   const resetItem = () => {
-    item.value = ref(defaultItem || {});
+    item = reactive(defaultItem || {});
   }
 
   const changePage = (page: number) => {
     query.page = page;
-    useListReturn.execute();
+    useListReturn.execute(resourceUrl);
   }
 
   const confirmLoading = computed(() => useUpdateReturn.loading.value || useStoreReturn.loading.value)
 
   return {
+
     formElRef,
-    item,
-    dialog,
     confirmLoading,
     useListReturn,
     useItemReturn,

@@ -14,6 +14,7 @@ const lists = (() => {
       status: 1,
       status_label: "\u6b63\u5e38",
       roles: [roles[Math.floor((Math.random() * roles.length))]],
+      role_ids: [1, 2],
       created_at: "2021-09-24 07:32:54",
     });
   }

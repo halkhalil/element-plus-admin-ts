@@ -11,21 +11,3 @@ export interface UserItem extends BaseItem {
   status?: boolean,
   role_ids?: string[] | number[],
 }
-
-export interface UserQuery extends Partial<UserItem> {
-  page?: number,
-}
-
-export interface UserResponseModel {
-  data: UserItem[],
-  meta: object
-}
-
-export type EasyItemType = { id?: string | number }
-
-export interface FetchUserResourceOptions {
-  query?: object,
-  item?: UserItem,
-  immediate?: boolean
-}
-

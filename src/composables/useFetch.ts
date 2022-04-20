@@ -37,20 +37,20 @@ const buildUrl = ({url, method, payload}) => {
 
 const useFetch = createFetch({
   baseUrl: import.meta.env.VITE_API_URL,
-  options: {
-    async beforeFetch(e) {
-      console.log(e);
-      let {url, options} = e;
-      let {method, payload, headers} = options;
-      // url = buildUrl({url, method, payload});
-      headers = buildHeaders(headers);
-      return {url, options: {headers, payload, method}}
-    },
-    // async afterFetch(e) {
-    //   console.log('after',e)
-    //   return e;
-    // }
-  },
+  // options: {
+  //   async beforeFetch(e) {
+  //     console.log(e);
+  //     let {url, options} = e;
+  //     let {method, payload, headers} = options;
+  //     // url = buildUrl({url, method, payload});
+  //     headers = buildHeaders(headers);
+  //     return {url, options: {headers, payload, method}}
+  //   },
+  //   // async afterFetch(e) {
+  //   //   console.log('after',e)
+  //   //   return e;
+  //   // }
+  // },
   fetchOptions: {
     mode: 'cors',
   },

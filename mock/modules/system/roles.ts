@@ -4,7 +4,7 @@ export const lists = (() => {
   const result = [];
   for (let index = 0; index < 4; index++) {
     result.push({
-      id: `${index + 1}`,
+      id: `${index + 1}` | 0,
       name: ['SuperAdministrator', 'Admin', 'Telemarketer', 'TelemarketerManager'][index],
       label: ['超级管理员', '管理员', '电销人员', '电销管理'][index],
       remark: '',

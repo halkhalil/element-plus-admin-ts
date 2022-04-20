@@ -23,5 +23,3 @@ declare interface ComponentElRef<T extends HTMLElement = HTMLDivElement> {
 }
 
 declare type ComponentRef<T extends HTMLElement = HTMLDivElement> = ComponentElRef<T> | null;
-
-
