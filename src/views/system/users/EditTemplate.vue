@@ -1,6 +1,7 @@
 <template>
   <el-drawer :title="!form?.id ? '新增用户' : '编辑用户'" v-model="dialog">
     <template #default>
+      <BasicForm :schemas="formSchemas" :rules="rules"></BasicForm>
       <el-form ref="formElRef" :model="form" :rules="rules" label-width="80px" autocomplete="off">
         <el-form-item label="自增标识" v-if="form?.id" required>
           <el-input v-model="form.id" disabled></el-input>
@@ -38,9 +39,13 @@
 import {inject, watch, reactive, ref} from "vue";
 import {useFetchRoles} from "~/api/useFetchAll";
 import {UseApiResourceReturn} from "~/composables/useApiResources";
+import {BasicForm} from '~/components/Form';
 import type {FormInstance, FormRules} from 'element-plus';
 import {UserItem} from "~/api/user/UserModel";
 
+const formSchemas = reactive([
+  {filed: 'username', component: 'Input', label: '用户标识', placeholder: '用户标识'}
+]);
 
 const rules = reactive<FormRules>({
   username: [{required: true, message: '用户标识为必选项', trigger: 'change'}],
