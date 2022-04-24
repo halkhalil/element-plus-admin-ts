@@ -17,9 +17,9 @@
 
 <script>
 import {getRuleFormData} from "~/views/demo/component/form/formData";
-import {useRootSetting} from "~/composables/setting/useRootSeeting.ts";
-import {BasicForm} from "~/components/Form/index.ts";
-import {PageWrapper} from '~/components/Page/index.ts';
+import {useRootSetting} from "~/composables/setting/useRootSeeting";
+import {BasicForm} from "~/components/Form";
+import {PageWrapper} from '~/components/Page';
 import {reactive, toRefs} from "vue";
 
 export default {
