@@ -1,7 +1,7 @@
 <template>
-  <el-form ref="formElRef" :model="formModel" v-bind="{...$props,...$attrs}">
-    <el-row :gutter="30" v-if="getSchema.length > 0">
-      <FormItem v-for="(schema,index) in getSchema"
+  <el-form ref="formElRef" :model="formModel" v-bind="props">
+    <el-row :gutter="30" v-if="schemas.length > 0">
+      <FormItem v-for="(schema,index) in schemas"
                 :key="index"
                 :schema="schema"
                 v-model="formModel[schema['field']]"
@@ -23,79 +23,17 @@
 <script lang="ts" setup>
 import FormItem from "./components/FormItem.vue";
 import FormAction from "./components/FormAction.vue";
-import {defineComponent, toRefs, unref, watch, provide, ref, computed} from "vue";
+import {toRefs, unref, provide, ref, computed} from "vue";
 import {useVModel} from "@vueuse/core";
-import {FormInstance, FormProps, formProps} from "element-plus";
+import {FormInstance} from "element-plus";
+import {basicFormProps} from "~/components/Form/src/props";
 
-const props = defineProps({
-  modelValue: {
-    type: Object,
-    default: () => ({})
-  },
-  schemas: {
-    type: Array,
-    default: () => ([]),
-  },
-  rules: {
-    type: Object,
-    default: () => ({})
-  },
-  inline: {
-    type: Boolean,
-    default: false,
-  },
-  labelPosition: {
-    type: String,
-    default: 'right',
-  },
-  labelWidth: {
-    type: String,
-    default: '',
-  },
-  labelSuffix: {
-    type: String,
-    default: '',
-  },
-  hideRequiredAsterisk: {
-    type: Boolean,
-    default: false,
-  },
-  showMessage: {
-    type: Boolean,
-    default: true,
-  },
-  inlineMessage: {
-    type: Boolean,
-    default: false,
-  },
-  statusIcon: {
-    type: Boolean,
-    default: false,
-  },
-  validateOnRuleChange: {
-    type: Boolean,
-    default: true
-  },
-  size: {
-    type: String,
-    default: '',
-  },
-  disabled: {
-    type: Boolean,
-    default: false
-  },
-  actionProps: {
-    type: Object,
-    default: () => ({})
-  }
-})
+const props = defineProps(basicFormProps);
+const emits = defineEmits(['update:modelValue', 'reset', 'submit', 'toggle-advanced']);
 
-const emit = defineEmits(['update:modelValue', 'reset', 'submit', 'toggle-advanced']);
+const {schemas = [], actionProps = {}} = toRefs(props);
 
-const {modelValue, schemas = [], actionProps = {}} = toRefs(props);
-const getSchema = schemas;
-
-const formModel = useVModel(props, 'modelValue', emit);
+const formModel = useVModel(props, 'modelValue', emits);
 const {showAdvancedButton = false, showAdvancedLength = 3} = unref(actionProps);
 const formElRef = ref<FormInstance>();
 
@@ -105,45 +43,28 @@ const getActionProps = computed(() => {
 });
 
 
-// watch(() => modelValue.value, (newVal) => {
-//   formModel.value = Object.assign(newVal);
-// }, {deep: true})
-//
-// watch(() => formModel.value, (newVal) => {
-//   emit('update:modelValue', newVal);
-// }, {deep: true})
-
+// 高级搜索
 const toggleAdvanced = () => {
   getIsAdvanced.value = !getIsAdvanced.value;
-  emit('toggle-advanced', getIsAdvanced.value);
+  emits('toggle-advanced', getIsAdvanced.value);
 }
-const validate = (fn) => elForm.value.validate(fn);
-const validateField = (fn) => elForm.value.validateField(fn);
-const resetFields = () => elForm.value.resetFields();
-const scrollToField = (fn) => elForm.value.scrollToField(fn);
-const clearValidate = (fn) => elForm.value.clearValidate(fn);
 
-const handleSubmit = (formEl: FormInstance | undefined) => {
+const handleSubmit = async (formEl: FormInstance | undefined) => {
+  console.log(formEl)
   if (!formEl) return;
-  formEl.validate(valid => {
-    emit('submit', valid);
+  console.log(111)
+  await formEl.validate((valid, fields) => {
+    console.log(222)
+    emits('submit', valid);
   })
 }
 const handleReset = (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   formEl.resetFields();
-  emit('reset');
+  emits('reset');
 }
 
+provide('formElRef', formElRef);
 provide('handleReset', handleReset);
 provide('handleSubmit', handleSubmit)
-
-defineExpose({
-  toggleAdvanced,
-  validate,
-  validateField,
-  resetFields,
-  clearValidate,
-  scrollToField
-})
 </script>

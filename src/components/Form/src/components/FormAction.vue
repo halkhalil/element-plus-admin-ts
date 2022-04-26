@@ -82,7 +82,7 @@ const props = defineProps({
 const emit = defineEmits(['toggle-advanced'])
 
 const formElRef = inject<FormInstance>('formElRef');
-const toggleAdvanced = () => emit('toggle-advanced');
-const handleSubmit = inject('handleSubmit')
-const handleReset = inject('handleReset')
+const toggleAdvanced = inject('toggleAdvanced');
+const handleSubmit = inject('handleSubmit');
+const handleReset = inject('handleReset');
 </script>

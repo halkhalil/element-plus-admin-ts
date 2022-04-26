@@ -193,9 +193,6 @@ export function getRuleFormData() {
         placeholder: '这是一个Input表单',
       },
       colProps: {xs: 24, sm: 24, md: 12, lg: 12, xl: 12},
-      formProps: {
-        rules: [{required: true, message: '这是个必填项', trigger: 'blur'}],
-      },
     },
     {
       field: 'input_number',

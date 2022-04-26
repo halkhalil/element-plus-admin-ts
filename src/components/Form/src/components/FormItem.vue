@@ -14,81 +14,63 @@
   </el-col>
 </template>
 
-<script>
-import {computed, toRefs, unref, ref, watch, inject, h} from 'vue'
-import {isFunction, isBoolean} from "~/utils/is.ts";
-import {componentMap} from '../componentMap.ts'
+<script lang="ts" setup>
+import {computed, toRefs, unref, h} from 'vue'
+import {isFunction, isBoolean} from "~/utils/is";
+import {componentMap} from '../componentMap'
 import {useVModel} from "@vueuse/core";
 
-export default {
-  name: "BasicFormItem",
-  props: {
-    modelValue: {
-      type: [String, Array, Number, Object, Boolean],
-      default: '',
-    },
-    schema: {
-      type: Object,
-      default: () => ({})
-    },
-    formProps: {
-      type: Object,
-      default: () => ({})
-    }
+const props = defineProps({
+  modelValue: {
+    type: [String, Array, Number, Object, Boolean],
+    default: '',
   },
-  emits: ['update:modelValue'],
-  setup(props, {emit}) {
-    const {schema, modelValue} = toRefs(props);
-    const defaultColProps = {xs: 24, sm: 24, md: 12, lg: 12, xl: 12};
-    const {component, colProps = defaultColProps, slot, render} = unref(schema);
-
-    const getComponentProps = computed(() => {
-      const {componentProps = {}, placeholder} = unref(schema);
-      if (!isFunction(componentProps)) {
-        const {style = {}} = componentProps;
-        return {placeholder, ...componentProps, style: style};
-      }
-      return componentProps({schema}) ?? {};
-    })
-
-    const getFormProps = computed(() => {
-      const {label, field, formProps = {}} = unref(schema);
-      return {...{label: label, prop: field}, ...formProps}
-    });
-
-    const getComponent = isFunction(render) ? render(h, modelValue, schema) : componentMap.get(component);
-
-    const VModel = useVModel(props, 'modelValue', emit);
-
-    const getIsShow = computed(() => {
-      const {show, isAdvanced} = unref(schema);
-      let isShow = true;
-      const {showAdvancedButton} = props.formProps;
-      const schemaIsAdvanced = showAdvancedButton ? !!isAdvanced : true;
-      if (isBoolean(show)) {
-        isShow = show;
-      }
-      if (isFunction(show)) {
-        isShow = show(schema, VModel);
-      }
-
-      return isShow && schemaIsAdvanced;
-    });
-
-    return {
-      VModel,
-      component,
-      getComponent,
-      getComponentProps,
-      getFormProps,
-      getIsShow,
-      colProps,
-      slot,
-    }
+  schema: {
+    type: Object,
+    default: () => ({})
   },
-}
+  formProps: {
+    type: Object,
+    default: () => ({})
+  }
+})
+
+const emits = defineEmits(['update:modelValue'])
+
+const {schema, modelValue} = toRefs(props);
+const defaultColProps = {xs: 24, sm: 24, md: 12, lg: 12, xl: 12};
+const {component, colProps = defaultColProps, slot, render} = unref(schema);
+
+const getComponentProps = computed(() => {
+  const {componentProps = {}, placeholder} = unref(schema);
+  if (!isFunction(componentProps)) {
+    const {style = {}} = componentProps;
+    return {placeholder, ...componentProps, style: style};
+  }
+  return componentProps({schema}) ?? {};
+})
+
+const getFormProps = computed(() => {
+  const {label, field, formProps = {}} = unref(schema);
+  return {...{label: label, prop: field}, ...formProps}
+});
+
+const getComponent = isFunction(render) ? render(h, modelValue, schema) : componentMap.get(component);
+
+const VModel = useVModel(props, 'modelValue', emits);
+
+const getIsShow = computed(() => {
+  const {show, isAdvanced} = unref(schema);
+  let isShow = true;
+  const {showAdvancedButton} = props.formProps;
+  const schemaIsAdvanced = showAdvancedButton ? !!isAdvanced : true;
+  if (isBoolean(show)) {
+    isShow = show;
+  }
+  if (isFunction(show)) {
+    isShow = show(schema, VModel);
+  }
+
+  return isShow && schemaIsAdvanced;
+});
 </script>
-
-<style scoped>
-
-</style>
