@@ -192,7 +192,6 @@ export function getRuleFormData() {
       componentProps: {
         placeholder: '这是一个Input表单',
       },
-      colProps: {xs: 24, sm: 24, md: 12, lg: 12, xl: 12},
     },
     {
       field: 'input_number',
@@ -204,7 +203,6 @@ export function getRuleFormData() {
           minWidth: '300px'
         }
       },
-      colProps: {xs: 24, sm: 24, md: 12, lg: 12, xl: 12},
       formProps: {
         rules: [{required: true, message: '这是个必填项', trigger: 'blur'}],
       },
@@ -217,7 +215,6 @@ export function getRuleFormData() {
         placeholder: '这是一个Select',
         options: selectOptions
       },
-      colProps: {xs: 24, sm: 24, md: 12, lg: 12, xl: 12},
     },
     {
       field: 'cascader',
@@ -231,7 +228,6 @@ export function getRuleFormData() {
           console.log(111);
         }
       },
-      colProps: {xs: 24, sm: 24, md: 12, lg: 12, xl: 12},
     },
     {
       field: 'slider',
@@ -240,7 +236,6 @@ export function getRuleFormData() {
       componentProps: {
         placeholder: '这是一个Input表单',
       },
-      colProps: {xs: 24, sm: 24, md: 12, lg: 12, xl: 12},
     },
     {
       field: 'switch',
@@ -249,7 +244,6 @@ export function getRuleFormData() {
       componentProps: {
         placeholder: 'Switch',
       },
-      colProps: {xs: 24, sm: 24, md: 12, lg: 12, xl: 12},
     },
     {
       field: 'time_picker',
@@ -259,7 +253,6 @@ export function getRuleFormData() {
         placeholder: 'TimePicker',
         valueFormat: 'HH:mm:ss',
       },
-      colProps: {xs: 24, sm: 24, md: 12, lg: 12, xl: 12},
     },
     {
       field: 'time_select',
@@ -268,7 +261,6 @@ export function getRuleFormData() {
       componentProps: {
         placeholder: 'TimeSelect',
       },
-      colProps: {xs: 24, sm: 24, md: 12, lg: 12, xl: 12},
     },
     {
       field: 'date_picker',
@@ -283,7 +275,6 @@ export function getRuleFormData() {
           console.log(e)
         },
       },
-      colProps: {xs: 24, sm: 24, md: 12, lg: 12, xl: 12},
     },
     {
       field: 'date_time_picker',
@@ -294,7 +285,6 @@ export function getRuleFormData() {
         valueFormat: 'YYYY-MM-DD HH:mm:ss',
         type: 'datetime',
       },
-      colProps: {xs: 24, sm: 24, md: 12, lg: 12, xl: 12},
     },
     {
       field: 'radio_group',
@@ -304,7 +294,6 @@ export function getRuleFormData() {
         placeholder: 'RadioGroup',
         options: selectOptions,
       },
-      colProps: {xs: 24, sm: 24, md: 12, lg: 12, xl: 12},
     },
     {
       field: 'radio_button_group',
@@ -314,7 +303,6 @@ export function getRuleFormData() {
         placeholder: 'RadioButtonGroup',
         options: selectOptions,
       },
-      colProps: {xs: 24, sm: 24, md: 12, lg: 12, xl: 12},
     },
     {
       field: 'checkbox_group',
@@ -323,7 +311,6 @@ export function getRuleFormData() {
       componentProps: {
         options: selectOptions,
       },
-      colProps: {xs: 24, sm: 24, md: 12, lg: 12, xl: 12},
     },
     {
       field: 'checkbox_button_group',
@@ -332,7 +319,6 @@ export function getRuleFormData() {
       componentProps: {
         options: selectOptions,
       },
-      colProps: {xs: 24, sm: 24, md: 12, lg: 12, xl: 12},
     },
     {
       field: 'upload',
@@ -349,7 +335,46 @@ export function getRuleFormData() {
           },
         ]
       },
-      colProps: {xs: 24, sm: 24, md: 12, lg: 12, xl: 12},
+    },
+  ];
+}
+
+export function getSearchFormData() {
+  return [
+    {
+      field: 'input',
+      label: '输入框',
+      placeholder: '请输入要搜索的内容',
+      component: 'Input',
+    },
+    {
+      field: 'selectSingle',
+      label: '选择器',
+      placeholder: '这是一个单选select选择器',
+      component: 'Select',
+      componentProps: {
+        options: selectOptions
+      },
+    },
+    {
+      field: 'selectMultiple',
+      label: '选择器',
+      placeholder: '这是一个多选select选择器',
+      component: 'Select',
+      componentProps: {
+        multiple:true,
+        options: selectOptions
+      },
+    },
+    {
+      field: 'cascader',
+      label: '级联选择器',
+      placeholder: '这是一个级联选择器',
+      component: 'Cascader',
+      componentProps: {
+        collapseTags: true,
+        options: cascaderOptions,
+      },
     },
   ];
 }
@@ -363,7 +388,6 @@ export function getDynamicFormData() {
       componentProps: {
         placeholder: '这是一个Input表单',
       },
-      colProps: {xs: 24, sm: 24, md: 12, lg: 12, xl: 12},
       formProps: {
         rules: [{required: true, message: '这是个必填项', trigger: 'blur'}],
       },
@@ -378,7 +402,6 @@ export function getDynamicFormData() {
           minWidth: '300px'
         }
       },
-      colProps: {xs: 24, sm: 24, md: 12, lg: 12, xl: 12},
       formProps: {
         rules: [{required: true, message: '这是个必填项', trigger: 'blur'}],
       },
@@ -391,7 +414,6 @@ export function getDynamicFormData() {
         placeholder: '这是一个Select',
         options: selectOptions
       },
-      colProps: {xs: 24, sm: 24, md: 12, lg: 12, xl: 12},
     },
     {
       field: 'cascader',
@@ -402,7 +424,6 @@ export function getDynamicFormData() {
         collapseTags: true,
         options: cascaderOptions,
       },
-      colProps: {xs: 24, sm: 24, md: 12, lg: 12, xl: 12},
     },
   ];
 }

@@ -4,18 +4,22 @@
       <el-button type="primary" @click="addItem">新增</el-button>
     </template>
     <el-card shadow="none">
-      <BasicQuery v-model="query" :schemas="querySchemas" @submit="getQuery"></BasicQuery>
+      <BasicQuery v-model="query" :schemas="querySchemas" @submit="submit"></BasicQuery>
     </el-card>
     <el-card shadow="none" class="mt-2">
-      <BasicTable :columns="tableColumns" :data="lists" :paginate="paginate" :loading="loading.list" @change-page="changePage">
+      <BasicTable :columns="tableColumns"
+                  :data="lists"
+                  :paginate="paginate"
+                  :loading="loading.list"
+                  @change-page="changePage">
         <template #roles="{row:{roles}}">
           <el-tag class="mr-2" v-for="(item,index) in roles" :key="index">{{ item.label }}</el-tag>
         </template>
         <template #actions="{row}">
-          <el-button type="text" @click="editItem(row)">编辑</el-button>
+          <el-button type="primary"  text @click="editItem(row)">编辑</el-button>
           <el-popconfirm title="删除你是认真的吗？" iconColor="red" @confirm="deleteItem(row)">
             <template #reference>
-              <el-button type="text" class="!text-red-500" :loading="loading.delete">删除</el-button>
+              <el-button type="danger" text :loading="loading.delete">删除</el-button>
             </template>
           </el-popconfirm>
         </template>
@@ -49,6 +53,10 @@ const querySchemas = [
 
 const useResources = useFetchResource();
 const {dialog, query, loading, lists, paginate, addItem, editItem, deleteItem, getQuery, changePage} = useResources;
+
+const submit = () => {
+  console.log(111);
+}
 
 provide('useResources', useResources)
 </script>

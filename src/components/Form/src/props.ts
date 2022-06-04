@@ -1,7 +1,11 @@
-import {formProps} from "element-plus";
+import {
+  formProps as elFormProps,
+  formItemProps as elFormItemProps,
+  buttonProps as ElButtonProps,
+} from "element-plus";
 
-const basicFormProps = {
-  ...formProps,
+const formProps = {
+  ...elFormProps,
   modelValue: {
     type: Object,
     default: () => ({})
@@ -10,58 +14,78 @@ const basicFormProps = {
     type: Array,
     default: () => ([]),
   },
-  rules: {
-    type: Object,
-    default: () => ({})
-  },
-  inline: {
-    type: Boolean,
-    default: false,
-  },
-  labelPosition: {
-    type: String,
-    default: 'right',
-  },
-  labelWidth: {
-    type: String,
-    default: '',
-  },
-  labelSuffix: {
-    type: String,
-    default: '',
-  },
-  hideRequiredAsterisk: {
-    type: Boolean,
-    default: false,
-  },
-  showMessage: {
+  showLabel: {
     type: Boolean,
     default: true,
   },
-  inlineMessage: {
-    type: Boolean,
-    default: false,
-  },
-  statusIcon: {
-    type: Boolean,
-    default: false,
-  },
-  validateOnRuleChange: {
-    type: Boolean,
-    default: true
-  },
-  size: {
-    type: String,
-    default: '',
-  },
-  disabled: {
-    type: Boolean,
-    default: false
-  },
   actionProps: {
+    type: Object,
+    default: () => ({})
+  },
+  colProps: {
     type: Object,
     default: () => ({})
   }
 }
 
-export {basicFormProps}
+const formItemProps = {
+  modelValue: {
+    type: [String, Array, Number, Object, Boolean],
+    default: '',
+  },
+  showLabel: {
+    type: Boolean,
+    default: true,
+  },
+  schema: {
+    type: Object,
+    default: () => ({})
+  },
+}
+
+const formActionProps = {
+  submitButtonProps: {
+    type: Object,
+    default: () => ({})
+  },
+  resetButtonProps: {
+    type: Object,
+    default: () => ({})
+  },
+  showResetButton: {
+    type: Boolean,
+    default: true,
+  },
+  resetButtonText: {
+    type: String,
+    default: '重置'
+  },
+  submitButtonText: {
+    type: String,
+    default: '提交'
+  },
+  showAdvancedButton: {
+    type: Boolean,
+    default: false,
+  },
+  showAdvancedLength: {
+    type: Number,
+    default: 3,
+  },
+  advanced: {
+    type: Boolean,
+    default: true,
+  },
+  position: {
+    type: String,
+    default: 'right',
+  },
+  colProps: {
+    type: Object,
+    default: () => ({})
+  }
+}
+
+const defaultColProps = {xs: 24, sm: 24, md: 12, lg: 12, xl: 12}
+
+export {formProps, formItemProps, formActionProps, defaultColProps}

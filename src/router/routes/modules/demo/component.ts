@@ -24,10 +24,10 @@ const componentRoute: AppRouteRecordRaw[] = [
             component: () => import('~/views/demo/component/form/BasicForm.vue'),
           },
           {
-            path: 'advancedForm',
-            name: 'AdvancedForm',
-            meta: {title: '收缩表单'},
-            component: () => import('~/views/demo/component/form/AdvancedForm.vue'),
+            path: 'searchForm',
+            name: 'SearchForm',
+            meta: {title: '搜索表单'},
+            component: () => import('~/views/demo/component/form/SearchForm.vue'),
           },
           {
             path: 'dynamicForm',
@@ -70,7 +70,7 @@ const componentRoute: AppRouteRecordRaw[] = [
           },
           {
             path: 'queryTable',
-            name: 'SearchForm',
+            name: 'QueryTable',
             meta: {title: '查询表格'},
             component: () => import('~/views/demo/component/table/QueryTable.vue'),
           },

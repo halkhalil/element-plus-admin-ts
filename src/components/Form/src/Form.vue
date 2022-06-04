@@ -1,70 +1,85 @@
 <template>
-  <el-form ref="formElRef" :model="formModel" v-bind="props">
+  <el-form ref="formElRef" v-bind="props" :rules="rules" :model="formModel"
+           :label-width="showLabel && props.labelWidth">
     <el-row :gutter="30" v-if="schemas.length > 0">
-      <FormItem v-for="(schema,index) in schemas"
-                :key="index"
-                :schema="schema"
-                v-model="formModel[schema['field']]"
-                v-show="showAdvancedButton ? index < showAdvancedLength || getIsAdvanced : true">
-        <template #[item]="data" v-for="item in Object.keys($slots)">
-          <slot :name="item" v-bind="{...schema,...data}"></slot>
-        </template>
-      </FormItem>
-      <FormAction v-bind="getActionProps" @toggle-advanced="toggleAdvanced">
-        <template v-for="item in ['resetBefore', 'submitBefore', 'advanceBefore', 'advanceAfter']" #[item]="data">
-          <slot :name="item" v-bind="data"></slot>
-        </template>
-      </FormAction>
+      <el-col v-for="(schema,index) in schemas" v-bind="colProps" v-show="showSchema(schema,index)">
+        <FormItem :key="index"
+                  :schema="schema"
+                  :show-label="showLabel"
+                  v-model="formModel[schema['field']]">
+          <template #[item]="data" v-for="item in Object.keys($slots)">
+            <slot :name="item" v-bind="{...schema,...data}"></slot>
+          </template>
+        </FormItem>
+      </el-col>
+      <el-col v-bind="colProps">
+        <slot name="form-action">
+          <FormAction v-bind="actionProps" :advanced="advanced"
+                      @toggle-advanced="toggleAdvanced">
+            <template v-for="item in ['resetBefore', 'submitBefore', 'advanceBefore', 'advanceAfter']" #[item]="data">
+              <slot :name="item" v-bind="data"></slot>
+            </template>
+          </FormAction>
+        </slot>
+      </el-col>
     </el-row>
     <el-empty v-else></el-empty>
   </el-form>
 </template>
 
 <script lang="ts" setup>
-import FormItem from "./components/FormItem.vue";
-import FormAction from "./components/FormAction.vue";
-import {toRefs, unref, provide, ref, computed} from "vue";
+import FormItem from "./FormItem.vue";
+import FormAction from "./FormAction.vue";
+import {unref, provide, ref, toRefs, computed,} from "vue";
 import {useVModel} from "@vueuse/core";
-import {FormInstance} from "element-plus";
-import {basicFormProps} from "~/components/Form/src/props";
+import {FormInstance, FormRules} from "element-plus";
+import {formProps} from "./props";
+import {FormProps, FormSchema} from "./types";
+import {isBoolean, isFunction} from "~/utils/is";
 
-const props = defineProps(basicFormProps);
+const props = defineProps(formProps);
 const emits = defineEmits(['update:modelValue', 'reset', 'submit', 'toggle-advanced']);
 
-const {schemas = [], actionProps = {}} = toRefs(props);
+const {schemas = [] as FormSchema[], rules = [] as FormRules[], actionProps, colProps, showLabel} = toRefs(props);
 
-const formModel = useVModel(props, 'modelValue', emits);
-const {showAdvancedButton = false, showAdvancedLength = 3} = unref(actionProps);
 const formElRef = ref<FormInstance>();
+const formModel = useVModel(props, 'modelValue', emits);
 
-const getIsAdvanced = ref(false);
-const getActionProps = computed(() => {
-  return {isAdvanced: getIsAdvanced.value, ...unref(actionProps)};
-});
+const advanced = ref<boolean>(false);
 
+const showSchema = (schema, index) => {
+  let isShow = true;
+  if (isBoolean(schema.show)) isShow = schema.show;
+  if (isFunction(schema.show)) isShow = schema.show(schema);
 
-// 高级搜索
-const toggleAdvanced = () => {
-  getIsAdvanced.value = !getIsAdvanced.value;
-  emits('toggle-advanced', getIsAdvanced.value);
-}
+  const {showAdvancedButton = false, showAdvancedLength = 3} = actionProps?.value;
+  if (showAdvancedButton) {
+    isShow = index < showAdvancedLength || advanced.value
+  }
 
-const handleSubmit = async (formEl: FormInstance | undefined) => {
-  console.log(formEl)
+  return isShow;
+};
+
+const submitForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return;
-  console.log(111)
-  await formEl.validate((valid, fields) => {
-    console.log(222)
-    emits('submit', valid);
+  formEl.validate((valid, fields) => {
+    emits('submit', valid, fields);
   })
 }
-const handleReset = (formEl: FormInstance | undefined) => {
+
+const resetForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   formEl.resetFields();
   emits('reset');
 }
 
+const toggleAdvanced = () => {
+  advanced.value = !advanced.value;
+  emits('toggle-advanced', advanced.value);
+}
+
 provide('formElRef', formElRef);
-provide('handleReset', handleReset);
-provide('handleSubmit', handleSubmit)
+provide('submitForm', submitForm);
+provide('resetForm', resetForm)
+provide('toggleAdvanced', toggleAdvanced)
 </script>
