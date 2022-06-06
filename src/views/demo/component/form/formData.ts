@@ -349,7 +349,7 @@ export function getSearchFormData() {
     },
     {
       field: 'selectSingle',
-      label: '选择器',
+      label: '单选框',
       placeholder: '这是一个单选select选择器',
       component: 'Select',
       componentProps: {
@@ -358,11 +358,11 @@ export function getSearchFormData() {
     },
     {
       field: 'selectMultiple',
-      label: '选择器',
+      label: '多选框',
       placeholder: '这是一个多选select选择器',
       component: 'Select',
       componentProps: {
-        multiple:true,
+        multiple: true,
         options: selectOptions
       },
     },
@@ -374,6 +374,84 @@ export function getSearchFormData() {
       componentProps: {
         collapseTags: true,
         options: cascaderOptions,
+      },
+    },
+    {
+      field: 'treeSelect',
+      label: '树形选择器',
+      placeholder: '这是一个树形选择器',
+      component: 'TreeSelect',
+      componentProps: {
+        data: [
+          {
+            value: '1',
+            label: 'Level one 1',
+            children: [
+              {
+                value: '1-1',
+                label: 'Level two 1-1',
+                children: [
+                  {
+                    value: '1-1-1',
+                    label: 'Level three 1-1-1',
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            value: '2',
+            label: 'Level one 2',
+            children: [
+              {
+                value: '2-1',
+                label: 'Level two 2-1',
+                children: [
+                  {
+                    value: '2-1-1',
+                    label: 'Level three 2-1-1',
+                  },
+                ],
+              },
+              {
+                value: '2-2',
+                label: 'Level two 2-2',
+                children: [
+                  {
+                    value: '2-2-1',
+                    label: 'Level three 2-2-1',
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            value: '3',
+            label: 'Level one 3',
+            children: [
+              {
+                value: '3-1',
+                label: 'Level two 3-1',
+                children: [
+                  {
+                    value: '3-1-1',
+                    label: 'Level three 3-1-1',
+                  },
+                ],
+              },
+              {
+                value: '3-2',
+                label: 'Level two 3-2',
+                children: [
+                  {
+                    value: '3-2-1',
+                    label: 'Level three 3-2-1',
+                  },
+                ],
+              },
+            ],
+          },
+        ],
       },
     },
   ];

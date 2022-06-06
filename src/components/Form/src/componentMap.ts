@@ -19,6 +19,7 @@ import {
   ElCascader,
   ElSlider,
   ElTimeSelect,
+  ElTreeSelect,
 } from 'element-plus'
 import Select from "./components/Select.vue";
 import Textarea from "./components/Textarea.vue";
@@ -50,6 +51,7 @@ componentMap.set('DateTimePicker', DateTimePicker);
 componentMap.set('TimePicker', TimePicker);
 componentMap.set('TimeSelect', ElTimeSelect);
 componentMap.set('Upload', Upload);
+componentMap.set('TreeSelect', ElTreeSelect);
 
 export {
   componentMap

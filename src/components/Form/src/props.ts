@@ -82,7 +82,7 @@ const formActionProps = {
   },
   colProps: {
     type: Object,
-    default: () => ({})
+    default: undefined,
   }
 }
 

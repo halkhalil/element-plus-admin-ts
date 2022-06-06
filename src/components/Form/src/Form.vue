@@ -12,16 +12,14 @@
           </template>
         </FormItem>
       </el-col>
-      <el-col v-bind="colProps">
-        <slot name="form-action">
-          <FormAction v-bind="actionProps" :advanced="advanced"
-                      @toggle-advanced="toggleAdvanced">
-            <template v-for="item in ['resetBefore', 'submitBefore', 'advanceBefore', 'advanceAfter']" #[item]="data">
-              <slot :name="item" v-bind="data"></slot>
-            </template>
-          </FormAction>
-        </slot>
-      </el-col>
+
+        <FormAction v-bind="actionProps"
+                    :advanced="advanced"
+                    @toggle-advanced="toggleAdvanced">
+          <template v-for="item in ['resetBefore', 'submitBefore', 'advanceBefore', 'advanceAfter']" #[item]="data">
+            <slot :name="item" v-bind="data"></slot>
+          </template>
+        </FormAction>
     </el-row>
     <el-empty v-else></el-empty>
   </el-form>
@@ -30,7 +28,7 @@
 <script lang="ts" setup>
 import FormItem from "./FormItem.vue";
 import FormAction from "./FormAction.vue";
-import {unref, provide, ref, toRefs, computed,} from "vue";
+import {provide, ref, toRefs,} from "vue";
 import {useVModel} from "@vueuse/core";
 import {FormInstance, FormRules} from "element-plus";
 import {formProps} from "./props";
@@ -78,6 +76,7 @@ const toggleAdvanced = () => {
   emits('toggle-advanced', advanced.value);
 }
 
+provide('colProps', colProps);
 provide('formElRef', formElRef);
 provide('submitForm', submitForm);
 provide('resetForm', resetForm)

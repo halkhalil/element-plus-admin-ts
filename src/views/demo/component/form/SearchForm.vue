@@ -3,15 +3,16 @@
     :title="$route.meta?.title"
     content-background>
     <div class="p-5 mb-2">
-      <el-form v-model="formProps">
+      <el-divider content-position="left">表单选项</el-divider>
+      <el-form v-model="formProps" inline>
         <el-form-item label="label显示">
           <el-switch v-model="formProps.showLabel"></el-switch>
         </el-form-item>
         <el-form-item label="label宽度">
-          <el-input-number v-model="formProps.labelWidth"></el-input-number>
+          <el-input-number v-model="formProps.labelWidth" :disabled="!formProps.showLabel"></el-input-number>
         </el-form-item>
         <el-form-item label="label位置">
-          <el-radio-group v-model="formProps.labelPosition">
+          <el-radio-group v-model="formProps.labelPosition" :disabled="!formProps.showLabel">
             <el-radio-button label="left"/>
             <el-radio-button label="right"/>
             <el-radio-button label="top"/>
@@ -24,19 +25,22 @@
             <el-radio-button label="small"/>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="actionPosition">
+        <el-form-item label="超过数量折叠">
+          <el-input-number v-model="formProps.actionProps.showAdvancedLength"></el-input-number>
+        </el-form-item>
+        <el-form-item label="按钮位置">
           <el-radio-group v-model="formProps.actionProps.position">
             <el-radio-button label="left"/>
             <el-radio-button label="center"/>
             <el-radio-button label="right"/>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="超过折叠">
-          <el-input-number v-model="formProps.actionProps.showAdvancedLength"></el-input-number>
+        <el-form-item label="按钮单独一行">
+          <el-switch v-model="otherForm.buttonLine" @change="changeButtonLine"></el-switch>
         </el-form-item>
       </el-form>
     </div>
-    <el-divider/>
+    <el-divider content-position="left">表单预览</el-divider>
     <div class="p-5">
       <BasicForm v-model="searchForm"
                  :schemas="formSchema"
@@ -44,10 +48,8 @@
       ></BasicForm>
     </div>
 
-    <el-divider/>
-    <pre>
-      {{ searchForm }}
-      </pre>
+    <el-divider content-position="left">数据预览</el-divider>
+    <pre class="m-5">{{ searchForm }}</pre>
   </PageWrapper>
 </template>
 <script lang="ts" setup>
@@ -55,14 +57,15 @@ import {reactive, ref} from "vue";
 import {BasicForm} from "~/components/Form";
 import {getSearchFormData} from './formData'
 import {PageWrapper} from '~/components/Page';
+import {unset} from "lodash";
 
 const formProps = reactive({
-  showLabel: true,
+  showLabel: false,
   labelPosition: 'right',
   labelWidth: 100,
   size: 'default',
   actionProps: {
-    position:'left',
+    position: 'left',
     advanced: false,
     actionPosition: 'right',
     showAdvancedButton: true,
@@ -71,7 +74,15 @@ const formProps = reactive({
   colProps: {xs: 24, sm: 12, md: 12, lg: 8, xl: 6}
 })
 
+const otherForm = reactive({
+  buttonLine: false,
+})
 
 const searchForm = reactive({});
 const formSchema = reactive(getSearchFormData());
+
+const changeButtonLine = (boolean) => {
+  const colProps = boolean ? {span: 24} : undefined;
+  formProps.actionProps['colProps'] = colProps;
+}
 </script>
