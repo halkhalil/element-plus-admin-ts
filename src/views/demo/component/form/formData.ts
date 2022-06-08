@@ -13,6 +13,26 @@ export const selectOptions = [
   }
 ];
 
+export const selectGroupOptions = [
+  {
+    label: '分组1',
+    options:selectOptions
+  },
+  {
+    label: '分组2',
+    options:[
+      {
+        label: '选项5',
+        value: 'value5',
+      },
+      {
+        label: '选项6',
+        value: 'value6',
+      }
+    ]
+  },
+];
+
 export const cascaderOptions = [
   {
     label: '选项1',
@@ -348,12 +368,26 @@ export function getSearchFormData() {
       component: 'Input',
     },
     {
+      field: 'daterange',
+      label: '时间范围',
+      placeholder: '请选择时间范围',
+      component: 'DatePicker',
+      componentProps: {type: 'daterange',startPlaceholder:'开始时间',endPlaceholder:'结束时间', valueFormat: 'YYYY-MM-DD'},
+    },
+    {
+      field: 'date',
+      label: '时间',
+      placeholder: '请选择时间',
+      component: 'DatePicker',
+      componentProps: {type: 'date', valueFormat: 'YYYY-MM-DD'},
+    },
+    {
       field: 'selectSingle',
       label: '单选框',
       placeholder: '这是一个单选select选择器',
       component: 'Select',
       componentProps: {
-        options: selectOptions
+        options: selectGroupOptions
       },
     },
     {

@@ -1,34 +1,33 @@
 <template>
-  <div>
-    <el-checkbox-group v-model="VModel" v-bind="{...$props,...$attrs}">
-      <el-checkbox v-for="(option) in $attrs.options" :key="option.value" v-bind="option" :label="option.value">
-        {{ option.label }}
-      </el-checkbox>
-    </el-checkbox-group>
-  </div>
+  <el-checkbox-group v-model="VModel" v-bind="$props">
+    <el-checkbox-button v-if="button" v-for="(option) in options" :key="option.value" v-bind="option"
+                        :label="option.value">
+      {{ option.label }}
+    </el-checkbox-button>
+    <el-checkbox v-else v-for="(option) in options" :key="option.value" v-bind="option" :label="option.value">
+      {{ option.label }}
+    </el-checkbox>
+  </el-checkbox-group>
 </template>
 
-<script>
-import {ref, toRefs, watch} from 'vue'
+<script lang="ts" setup>
+import {toRefs} from 'vue'
 import {useVModel} from "@vueuse/core";
 
-export default {
-  name: "BasicCheckboxGroup",
-  emits:['update:modelValue'],
-  props: {
-    modelValue: {
-      type: [Array, Number, String],
-    }
+const emits = defineEmits(['update:modelValue']);
+const props = defineProps({
+  modelValue: {
+    type: [Array, Number, String],
   },
-  setup(props, {emit}) {
-    const VModel = useVModel(props, 'modelValue', emit);
-    return {
-      VModel,
-    }
+  options: {
+    type: Array,
   },
-}
+  button: {
+    type: Boolean,
+    default: false,
+  }
+});
+
+const VModel = useVModel(props, 'modelValue', emits);
+const {options, button} = toRefs(props);
 </script>
-
-<style scoped>
-
-</style>

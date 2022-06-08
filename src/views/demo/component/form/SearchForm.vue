@@ -57,16 +57,15 @@ import {reactive, ref} from "vue";
 import {BasicForm} from "~/components/Form";
 import {getSearchFormData} from './formData'
 import {PageWrapper} from '~/components/Page';
-import {unset} from "lodash";
 
 const formProps = reactive({
-  showLabel: false,
+  showLabel: true,
   labelPosition: 'right',
   labelWidth: 100,
   size: 'default',
   actionProps: {
     position: 'left',
-    advanced: false,
+    advanced: true,
     actionPosition: 'right',
     showAdvancedButton: true,
     showAdvancedLength: 3,

@@ -13,13 +13,13 @@
         </FormItem>
       </el-col>
 
-        <FormAction v-bind="actionProps"
-                    :advanced="advanced"
-                    @toggle-advanced="toggleAdvanced">
-          <template v-for="item in ['resetBefore', 'submitBefore', 'advanceBefore', 'advanceAfter']" #[item]="data">
-            <slot :name="item" v-bind="data"></slot>
-          </template>
-        </FormAction>
+      <FormAction v-bind="actionProps"
+                  :advanced="advanced"
+                  @toggle-advanced="toggleAdvanced">
+        <template v-for="item in ['resetBefore', 'submitBefore', 'advanceBefore', 'advanceAfter']" #[item]="data">
+          <slot :name="item" v-bind="data"></slot>
+        </template>
+      </FormAction>
     </el-row>
     <el-empty v-else></el-empty>
   </el-form>
@@ -28,7 +28,7 @@
 <script lang="ts" setup>
 import FormItem from "./FormItem.vue";
 import FormAction from "./FormAction.vue";
-import {provide, ref, toRefs,} from "vue";
+import {computed, provide, ref, toRefs, unref,} from "vue";
 import {useVModel} from "@vueuse/core";
 import {FormInstance, FormRules} from "element-plus";
 import {formProps} from "./props";
@@ -42,8 +42,7 @@ const {schemas = [] as FormSchema[], rules = [] as FormRules[], actionProps, col
 
 const formElRef = ref<FormInstance>();
 const formModel = useVModel(props, 'modelValue', emits);
-
-const advanced = ref<boolean>(false);
+const advanced = ref<boolean>(unref(actionProps)?.advanced);
 
 const showSchema = (schema, index) => {
   let isShow = true;
