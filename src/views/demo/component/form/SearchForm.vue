@@ -38,6 +38,13 @@
         <el-form-item label="按钮单独一行">
           <el-switch v-model="otherForm.buttonLine" @change="changeButtonLine"></el-switch>
         </el-form-item>
+        <el-form-item label="每行展示个数">
+          <el-select v-model="formProps.colProps" value-key="xl">
+            <el-option :value="{xs: 24, sm: 12, md: 12, lg: 8, xl: 12}" :label="2"></el-option>
+            <el-option :value="{xs: 24, sm: 12, md: 12, lg: 8, xl: 8}" :label="3"></el-option>
+            <el-option :value="{xs: 24, sm: 12, md: 12, lg: 8, xl: 6}" :label="4"></el-option>
+          </el-select>
+        </el-form-item>
       </el-form>
     </div>
     <el-divider content-position="left">表单预览</el-divider>
@@ -65,7 +72,7 @@ const formProps = reactive({
   size: 'default',
   actionProps: {
     position: 'left',
-    advanced: true,
+    advanced: false,
     actionPosition: 'right',
     showAdvancedButton: true,
     showAdvancedLength: 3,

@@ -18,7 +18,7 @@ import {toRefs} from "vue";
 const emits = defineEmits(['update:modelValue']);
 const props = defineProps({
   modelValue: {
-    type: [Array, Number, String],
+    type: [Array, Number, String, Object],
   },
   options: {
     type: Array,
