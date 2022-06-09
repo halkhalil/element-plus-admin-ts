@@ -20,7 +20,7 @@
 import {PageWrapper} from '~/components/Page/index.ts';
 import {BasicTable, BasicQuery} from "~/components/Table/index.ts";
 import {getBasicColumns, getBasicData} from './tableData.ts';
-import {cascaderOptions, selectOptions} from "~/views/demo/component/form/formData.ts";
+import {cascaderOptions, selectOptions} from "~/views/demo/component/form/data.ts";
 import {reactive, toRefs} from "vue";
 import {ElMessage, ElMessageBox} from "element-plus";
 

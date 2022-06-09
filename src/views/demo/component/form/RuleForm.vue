@@ -17,7 +17,7 @@
 <script lang="ts" setup>
 import {BasicForm} from "~/components/Form";
 import {PageWrapper} from '~/components/Page';
-import {getRuleFormData} from "~/views/demo/component/form/formData";
+import {getRuleFormData} from "~/views/demo/component/form/data";
 import {useRootSetting} from "~/composables/setting/useRootSeeting";
 import {reactive} from "vue";
 

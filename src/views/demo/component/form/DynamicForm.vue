@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import {getDynamicFormData} from "~/views/demo/component/form/formData.ts";
+import {getDynamicFormData} from "~/views/demo/component/form/data.ts";
 import {BasicForm} from "~/components/Form/index.ts";
 import {PageWrapper} from '~/components/Page/index.ts';
 import {reactive, ref, toRefs} from "vue";

@@ -62,7 +62,7 @@
 <script lang="ts" setup>
 import {reactive, ref} from "vue";
 import {BasicForm} from "~/components/Form";
-import {getSearchFormData} from './formData'
+import {getSearchFormData} from './data'
 import {PageWrapper} from '~/components/Page';
 
 const formProps = reactive({

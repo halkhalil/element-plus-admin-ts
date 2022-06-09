@@ -1,6 +1,9 @@
 <template>
   <el-radio-group v-model="VModel" v-bind="$props">
-    <el-radio v-for="(option,index) in options" :key="index" v-bind="option" :label="option.value">
+    <el-radio-button v-if="button" v-for="(option,index) in options" :key="index" v-bind="option" :label="option.value">
+      {{ option.label }}
+    </el-radio-button>
+    <el-radio v-else v-for="(option,_index) in options" :key="_index" v-bind="option" :label="option.value">
       {{ option.label }}
     </el-radio>
   </el-radio-group>

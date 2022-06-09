@@ -16,11 +16,11 @@ export const selectOptions = [
 export const selectGroupOptions = [
   {
     label: '分组1',
-    options:selectOptions
+    options: selectOptions
   },
   {
     label: '分组2',
-    options:[
+    options: [
       {
         label: '选项5',
         value: 'value5',
@@ -53,7 +53,7 @@ export const cascaderOptions = [
 ];
 
 
-export function getFormData() {
+export function getBasicFormData() {
   return [
     {
       field: 'input',
@@ -162,10 +162,11 @@ export function getFormData() {
     {
       field: 'radio_button_group',
       label: '单选框按钮',
-      component: 'RadioButtonGroup',
+      component: 'RadioGroup',
       componentProps: {
         placeholder: 'RadioButtonGroup',
         options: selectOptions,
+        button: true,
       },
     },
     {
@@ -179,9 +180,10 @@ export function getFormData() {
     {
       field: 'checkbox_button_group',
       label: '多选框按钮',
-      component: 'CheckboxButtonGroup',
+      component: 'CheckboxGroup',
       componentProps: {
         options: selectOptions,
+        button: true,
       },
     },
     {
@@ -191,13 +193,13 @@ export function getFormData() {
       componentProps: {
         action: "https://jsonplaceholder.typicode.com/posts/",
         listType: "text",
-        tips: '我是一个温馨小提示',
-        fileList: [
-          {
-            name: 'food.jpeg',
-            url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
-          },
-        ]
+        // tips: '我是一个温馨小提示',
+        // fileList: [
+        //   {
+        //     name: 'food.jpeg',
+        //     url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
+        //   },
+        // ]
       },
     },
   ];
@@ -372,7 +374,7 @@ export function getSearchFormData() {
       label: '时间范围',
       placeholder: '请选择时间范围',
       component: 'DatePicker',
-      componentProps: {type: 'daterange',startPlaceholder:'开始时间',endPlaceholder:'结束时间', valueFormat: 'YYYY-MM-DD'},
+      componentProps: {type: 'daterange', startPlaceholder: '开始时间', endPlaceholder: '结束时间', valueFormat: 'YYYY-MM-DD'},
     },
     {
       field: 'date',

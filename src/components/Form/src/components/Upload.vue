@@ -1,48 +1,25 @@
 <template>
-  <basic-upload :on-success="handleSuccess" :on-remove="handleRemove" :on-exceed="handleExceed"></basic-upload>
+  <BasicUpload :on-success="handleSuccess" :on-remove="handleRemove" :on-exceed="handleExceed"></BasicUpload>
 </template>
 
-<script>
+<script lang="ts" setup>
 import {BasicUpload} from '~/components/Upload'
 import {toRefs} from 'vue'
 import {ElMessage} from 'element-plus'
 
-export default {
-  name: "Upload",
-  emits:['update:modelValue'],
-  components: {BasicUpload},
-  props: {
-    modelValue: {
-      type: [Number, String, Array, Object],
-    }
-  },
-  setup(props, {emit}) {
-    const {modelValue} = toRefs(props);
-    const VModel = modelValue;
+const props = defineProps({})
+const emits = defineEmits(['update:modelValue'])
 
-    const handleSuccess = (response) => {
-      const [file] = response.data;
-      emit('update:modelValue', file.url);
-    }
+const handleSuccess = (response) => {
+  const [file] = response.data;
+  emits('update:modelValue', file.url);
+}
 
-    const handleRemove = () => {
-      emit('update:modelValue', '');
-    }
+const handleRemove = () => {
+  emits('update:modelValue', '');
+}
 
-    const handleExceed = () => {
-      ElMessage.error('超过上传最大限制数量');
-    }
-
-    return {
-      VModel,
-      handleSuccess,
-      handleRemove,
-      handleExceed,
-    }
-  },
+const handleExceed = () => {
+  ElMessage.error('超过上传最大限制数量');
 }
 </script>
-
-<style scoped>
-
-</style>
