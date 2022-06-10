@@ -18,7 +18,6 @@
 </template>
 
 <script lang="ts" setup>
-import {PageWrapper} from '~/components/Page';
 import {getBasicFormData} from "~/views/demo/component/form/data";
 import {BasicForm} from "~/components/Form";
 import {useRootSetting} from "~/composables/setting/useRootSeeting";

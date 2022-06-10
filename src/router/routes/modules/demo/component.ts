@@ -158,6 +158,27 @@ const componentRoute: AppRouteRecordRaw[] = [
         ]
       },
       {
+        path: 'upload',
+        name: 'Upload',
+        redirect: '/component/upload/basic-upload',
+        meta: {title: '上传', icon: 'tb-upload'},
+        component: LayoutContent,
+        children: [
+          {
+            path: 'basic-upload',
+            name: 'BasicUpload',
+            meta: {title: '基本使用'},
+            component: () => import('~/views/demo/component/upload/BasicUpload.vue'),
+          },
+          {
+            path: 'oss-upload',
+            name: 'OssUpload',
+            meta: {title: 'OSS直传'},
+            component: () => import('~/views/demo/component/upload/OssUpload.vue'),
+          },
+        ]
+      },
+      {
         path: 'page-wrapper',
         name: 'PageWrapper',
         meta: {title: '页面包裹'},

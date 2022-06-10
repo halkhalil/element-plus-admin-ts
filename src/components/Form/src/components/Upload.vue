@@ -4,7 +4,6 @@
 
 <script lang="ts" setup>
 import {BasicUpload} from '~/components/Upload'
-import {toRefs} from 'vue'
 import {ElMessage} from 'element-plus'
 
 const props = defineProps({})

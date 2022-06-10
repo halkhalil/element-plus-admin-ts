@@ -189,18 +189,18 @@ export function getBasicFormData() {
     {
       field: 'upload',
       label: '上传',
-      component: 'Upload',
-      componentProps: {
-        action: "https://jsonplaceholder.typicode.com/posts/",
-        listType: "text",
-        // tips: '我是一个温馨小提示',
-        // fileList: [
-        //   {
-        //     name: 'food.jpeg',
-        //     url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
-        //   },
-        // ]
-      },
+      // component: 'Upload',
+      // componentProps: {
+      //   action: "https://jsonplaceholder.typicode.com/posts/",
+      //   listType: "text",
+      //   // tips: '我是一个温馨小提示',
+      //   // fileList: [
+      //   //   {
+      //   //     name: 'food.jpeg',
+      //   //     url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
+      //   //   },
+      //   // ]
+      // },
     },
   ];
 }

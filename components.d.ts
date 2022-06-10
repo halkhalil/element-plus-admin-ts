@@ -15,6 +15,7 @@ declare module '@vue/runtime-core' {
     DatePicker: typeof import('./src/components/Form/src/components/DatePicker.vue')['default']
     DateTimePicker: typeof import('./src/components/Form/src/components/DateTimePicker.vue')['default']
     Drawer: typeof import('./src/components/Drawer/src/Drawer.vue')['default']
+    ElAlert: typeof import('element-plus/es')['ElAlert']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElBadge: typeof import('element-plus/es')['ElBadge']
