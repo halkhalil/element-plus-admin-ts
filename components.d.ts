@@ -88,7 +88,7 @@ declare module '@vue/runtime-core' {
     Textarea: typeof import('./src/components/Form/src/components/Textarea.vue')['default']
     TimePicker: typeof import('./src/components/Form/src/components/TimePicker.vue')['default']
     Tinymce: typeof import('./src/components/Tinymce/src/Tinymce.vue')['default']
-    Upload: typeof import('./src/components/Form/src/components/Upload.vue')['default']
+    Upload: typeof import('./src/components/Upload/src/Upload.vue')['default']
   }
 }
 
