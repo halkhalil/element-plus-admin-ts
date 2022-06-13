@@ -1,3 +1,5 @@
-import * as BasicDrawer from "~/components/Drawer/src/Drawer.vue";
+import Drawer from "~/components/Drawer/src/Drawer.vue";
 
-export {BasicDrawer};
+export {
+  Drawer as BasicDrawer
+};

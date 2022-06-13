@@ -12,12 +12,12 @@ const props = defineProps({
     type: [Array, Number, String, Object],
   },
 })
-const emits = defineEmits(['update:modelValue']);
+const emits = defineEmits(['onSuccess']);
 const VModel = useVModel(props, 'modelValue', emits);
 
 const handleSuccess: UploadProps['onSuccess'] = (response: any, uploadFile: UploadFile, uploadFiles: UploadFiles) => {
   const {data: {url}} = response;
   uploadFile.url = url
-  VModel.value = url;
+  emits('onSuccess', response, VModel)
 }
 </script>
