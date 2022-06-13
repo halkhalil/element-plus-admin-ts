@@ -1,8 +1,10 @@
 <template>
   <PageWrapper :title="$route['meta']['title']" content-full-height content-background>
     <div class="p-5">
-      <el-divider content-position="left">表单选项</el-divider>
       <el-form v-model="uploadProps">
+        <el-form-item label="文件上传地址">
+          <el-input v-model="uploadProps.actions"></el-input>
+        </el-form-item>
         <el-form-item label="文件列表类型">
           <el-radio-group v-model="uploadProps.listType">
             <el-radio-button label="text"/>
@@ -13,8 +15,11 @@
         <el-form-item label="是否自动上传">
           <el-switch v-model="uploadProps.autoUpload"></el-switch>
         </el-form-item>
+        <el-form-item label="是否禁用上传">
+          <el-switch v-model="uploadProps.disabled"></el-switch>
+        </el-form-item>
       </el-form>
-      <el-divider content-position="left">上传预览</el-divider>
+      <el-divider content-position="left">组件预览</el-divider>
       <BasicUpload v-bind="uploadProps" :file-list="fileList"></BasicUpload>
     </div>
   </PageWrapper>
@@ -26,8 +31,12 @@ import {BasicUpload} from '~/components/Upload';
 import type {UploadProps, UploadUserFile} from 'element-plus'
 
 const uploadProps = reactive({
+  actions: import.meta.env.VITE_UPLOAD_URL,
   listType: 'text',
   autoUpload: true,
+  disabled: false,
+  multiple: true,
+  limit:1,
 });
 
 const fileList = ref<UploadUserFile[]>([

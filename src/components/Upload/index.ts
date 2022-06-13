@@ -1,3 +1,5 @@
-import BasicUpload from "./src/Upload.vue";
+import Upload from "./src/Upload.vue";
 
-export {BasicUpload}
+export {
+  Upload as BasicUpload
+}

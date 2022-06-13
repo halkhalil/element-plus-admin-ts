@@ -1,24 +1,23 @@
 <template>
-  <BasicUpload :on-success="handleSuccess" :on-remove="handleRemove" :on-exceed="handleExceed"></BasicUpload>
+  <BasicUpload :on-success="handleSuccess"></BasicUpload>
 </template>
 
 <script lang="ts" setup>
 import {BasicUpload} from '~/components/Upload'
-import {ElMessage} from 'element-plus'
+import {ElMessage, genFileId, UploadFile, UploadFiles, UploadProps, UploadRawFile} from 'element-plus'
+import {useVModel} from "@vueuse/core";
 
-const props = defineProps({})
-const emits = defineEmits(['update:modelValue'])
+const props = defineProps({
+  modelValue: {
+    type: [Array, Number, String, Object],
+  },
+})
+const emits = defineEmits(['update:modelValue']);
+const VModel = useVModel(props, 'modelValue', emits);
 
-const handleSuccess = (response) => {
-  const [file] = response.data;
-  emits('update:modelValue', file.url);
-}
-
-const handleRemove = () => {
-  emits('update:modelValue', '');
-}
-
-const handleExceed = () => {
-  ElMessage.error('超过上传最大限制数量');
+const handleSuccess: UploadProps['onSuccess'] = (response: any, uploadFile: UploadFile, uploadFiles: UploadFiles) => {
+  const {data: {url}} = response;
+  uploadFile.url = url
+  VModel.value = url;
 }
 </script>

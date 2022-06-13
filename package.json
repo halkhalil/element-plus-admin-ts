@@ -37,6 +37,7 @@
     "windicss": "^3.5.1"
   },
   "devDependencies": {
+    "@element-plus/icons-vue": "^2.0.4",
     "@types/node": "^16.11.6",
     "@vitejs/plugin-legacy": "^1.4.4",
     "@vitejs/plugin-vue": "^1.9.4",
