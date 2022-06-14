@@ -1,7 +1,7 @@
-import {uploadProps as elUploadProps} from 'element-plus'
+import {uploadContentProps as elUploadContentProps} from 'element-plus'
 
 const uploadProps = {
-  ...elUploadProps,
+  ...elUploadContentProps,
   action: {
     type: String,
     default: () => {

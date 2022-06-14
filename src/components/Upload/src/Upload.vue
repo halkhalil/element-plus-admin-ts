@@ -4,7 +4,8 @@
                :on-preview="handlePreview"
                :on-exceed="handleExceed"
                :on-success="handleSuccess"
-               v-bind="props">
+               v-bind="props"
+    >
       <template #trigger>
         <el-button type="primary" v-if="props.listType !== 'picture-card'" :disabled="props.disabled">
           Upload
