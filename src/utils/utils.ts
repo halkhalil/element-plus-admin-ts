@@ -28,5 +28,8 @@ const utils = {
 
 
 }
-
+const getUrlFileName = (url: string) => {
+  const _url = url.substring(0, url.indexOf('?'));
+  return _url.substring(_url.lastIndexOf('/') + 1);
+}
 export default utils

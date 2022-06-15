@@ -4,6 +4,7 @@
                :is="getComponent"
                v-model="VModel"
                v-bind="getComponentProps"
+               v-on="getComponentEvents"
                class="!w-full"></component>
     <slot v-else :name="slot" v-bind="props.schema"></slot>
     <template #[item]="data" v-for="item in Object.keys($slots)">
@@ -36,6 +37,11 @@ const getComponentProps = computed(() => {
   }
   const {style = {}} = componentProps;
   return {placeholder, style, ...componentProps};
+})
+
+const getComponentEvents = computed(() => {
+  const {componentEvents = {}} = props.schema;
+  return componentEvents;
 })
 
 </script>

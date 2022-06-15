@@ -191,18 +191,22 @@ export function getBasicFormData() {
       label: '上传',
       component: 'Upload',
       componentProps: {
-        listType: "picture-card",
-        limit: 1,
+        listType: "text",
+        // limit: 1,
+        multiple: true,
         fileList: [
           {
             name: 'food.jpeg',
             url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
           },
         ],
-        onSuccess: (response, VModel) => {
-          console.log('response,VModel', response, VModel)
-        }
       },
+      // componentEvents: {
+      //   'on-success': (response, VModel) => {
+      //     const {url} = response.data;
+      //     VModel.value=response.data;
+      //   }
+      // }
     },
   ];
 }

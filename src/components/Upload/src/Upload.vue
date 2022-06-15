@@ -1,10 +1,8 @@
 <template>
   <div>
     <el-upload ref="uploadRef"
-               :on-preview="handlePreview"
-               :on-exceed="handleExceed"
-               :on-success="handleSuccess"
                v-bind="props"
+               :on-preview="handlePreview"
     >
       <template #trigger>
         <el-button type="primary" v-if="props.listType !== 'picture-card'" :disabled="props.disabled">
@@ -32,10 +30,11 @@
 import {ref} from 'vue';
 import {uploadProps} from "./props";
 import {Upload, Plus} from '@element-plus/icons-vue'
-import {genFileId} from 'element-plus';
+import {genFileId, UploadUserFile} from 'element-plus';
 import type {UploadProps, UploadInstance, UploadRawFile, UploadFile, UploadFiles} from "element-plus";
 
 const props = defineProps(uploadProps);
+const emits = defineEmits(['on-exceed', 'on-success']);
 
 const uploadRef = ref<UploadInstance>()
 const dialogImageUrl = ref();
@@ -46,17 +45,30 @@ const handlePreview: UploadProps['onPreview'] = (uploadFile) => {
   dialogVisible.value = true
 }
 
-const handleExceed: UploadProps['onExceed'] = (files: File[]) => {
-  uploadRef.value!.clearFiles()
-  const file = files[0] as UploadRawFile
-  file.uid = genFileId()
-  uploadRef.value!.handleStart(file)
-  submitUpload();
+const handleRemove: UploadProps['onRemove'] = (uploadFile: UploadFile, uploadFiles: UploadFiles) => {
+  console.log(uploadFile, uploadFiles);
+
+}
+
+// 当允许上传文件数量为1时，覆盖前一个文件
+const handleExceed: UploadProps['onExceed'] = (files: File[], uploadFiles: UploadUserFile[]) => {
+  if (props.limit! === 1) {
+    const uploadInstance = uploadRef.value as UploadInstance
+    uploadInstance.clearFiles()
+    const file = files[0] as UploadRawFile
+    file.uid = genFileId()
+    uploadInstance.handleStart(file);
+    uploadInstance.submit();
+  } else {
+
+  }
+  emits('on-exceed', files, uploadFiles);
 }
 
 const handleSuccess: UploadProps['onSuccess'] = (response: any, uploadFile: UploadFile, uploadFiles: UploadFiles) => {
   const {data: {url}} = response;
   uploadFile.url = url
+  emits('on-success', response, uploadFile, uploadFiles);
 }
 
 const submitUpload = () => {
