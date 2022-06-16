@@ -28,8 +28,8 @@ const utils = {
 
 
 }
-const getUrlFileName = (url: string) => {
-  const _url = url.substring(0, url.indexOf('?'));
+export const getUrlFileName = (url: string) => {
+  const _url = url?.substring(0, url.indexOf('?') >= 0 ? url.indexOf('?') : url.length);
   return _url.substring(_url.lastIndexOf('/') + 1);
 }
 export default utils
