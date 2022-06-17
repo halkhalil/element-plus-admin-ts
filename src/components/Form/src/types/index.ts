@@ -8,8 +8,8 @@ import {Ref} from "vue";
 
 export interface FormSchema {
   field: string,
-  placeholder: string,
   component: string,
+  placeholder?: string,
   componentProps?: object | callbackFn,
   formItemProps?: ElFormItemProps,
   slot?: string,

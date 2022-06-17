@@ -1,3 +1,5 @@
+import {getUrlFileName} from "~/utils/utils";
+
 export const selectOptions = [
   {
     label: '选项1',
@@ -192,21 +194,14 @@ export function getBasicFormData() {
       component: 'Upload',
       componentProps: {
         listType: "text",
-        // limit: 1,
         multiple: true,
-        // fileList: [
-        //   {
-        //     name: 'food.jpeg',
-        //     url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
-        //   },
-        // ],
+        transform: (response, uploadFile, uploadFiles, VModel) => {
+          const {data: {url}} = response;
+          uploadFile.url = url
+          uploadFile.name = getUrlFileName(url)
+          VModel.value.push(url);
+        }
       },
-      // componentEvents: {
-      //   'on-success': (response, VModel) => {
-      //     const {url} = response.data;
-      //     VModel.value=response.data;
-      //   }
-      // }
     },
   ];
 }

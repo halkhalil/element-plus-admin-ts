@@ -6,12 +6,16 @@
           <el-divider content-position="left">组件预览</el-divider>
           <BasicForm
             v-model="form"
-            :schemas="schemas"
+            :schemas="formSchemas"
             label-width="150px"
             :label-position="getIsMobile ? 'top' : 'right'"
             @submit="handleSubmit"
             @reset="handleReset"
-          ></BasicForm>
+          >
+            <template #submitBefore>
+              <el-button type="danger" @click="fetchInfo" :loading="loading">异步加载数据</el-button>
+            </template>
+          </BasicForm>
         </el-col>
         <el-col :span="12">
           <el-divider content-position="left">数据预览</el-divider>
@@ -27,24 +31,26 @@ import {getBasicFormData} from "~/views/demo/component/form/data";
 import {BasicForm} from "~/components/Form";
 import {useRootSetting} from "~/composables/setting/useRootSeeting";
 import {onMounted, reactive, ref} from "vue";
-import {getUrlFileName} from "~/utils/utils";
+import {ElMessage} from "element-plus";
+
+const form = ref({
+  input: '',
+  input_number: 0,
+  select: "",
+  switch: false,
+});
+const formSchemas = reactive(getBasicFormData())
+const loading = ref(false);
+
 
 const {getIsMobile} = useRootSetting();
-const schemas = reactive(getBasicFormData());
-
-const form = ref({})
-
-const handleReset = () => {
-  console.log('reset')
-};
-const handleSubmit = () => {
-  console.log('submit')
-};
+const handleReset = () => ElMessage.info('handle reset');
+const handleSubmit = () => ElMessage.info('handle submit');
 
 // 模拟数据请求
 const fetchInfo = () => {
   const response = {
-    input: "",
+    input: "2342 ",
     input_number: 12321,
     select: "value1",
     time_picker: "16:40:33",
@@ -59,16 +65,11 @@ const fetchInfo = () => {
     time_select: "11:00",
     upload: ['http://element-plus-admin.local/storage/Us7YqWbcme8De8mUhyYDE0289TnDykxrfKFTyTrC.png']
   };
-
+  loading.value = true;
   setTimeout(() => {
     form.value = response;
-    // upload组件需要通过props设置默认值
-    schemas[14].componentProps.fileList! = response.upload.map(item => ({url: item, name: getUrlFileName(item)}))
+    loading.value = false;
   }, 2000)
 
-  return response;
 }
-
-onMounted(() => fetchInfo())
-
 </script>
