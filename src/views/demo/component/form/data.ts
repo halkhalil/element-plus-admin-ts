@@ -312,47 +312,6 @@ export function getRuleFormData() {
         options: selectOptions,
       },
     },
-    {
-      field: 'radio_button_group',
-      label: '单选框按钮',
-      component: 'RadioButtonGroup',
-      componentProps: {
-        placeholder: 'RadioButtonGroup',
-        options: selectOptions,
-      },
-    },
-    {
-      field: 'checkbox_group',
-      label: '多选框',
-      component: 'CheckboxGroup',
-      componentProps: {
-        options: selectOptions,
-      },
-    },
-    {
-      field: 'checkbox_button_group',
-      label: '多选框按钮',
-      component: 'CheckboxButtonGroup',
-      componentProps: {
-        options: selectOptions,
-      },
-    },
-    {
-      field: 'upload',
-      label: '上传',
-      component: 'Upload',
-      componentProps: {
-        action: "https://jsonplaceholder.typicode.com/posts/",
-        listType: "text",
-        tips: '我是一个温馨小提示',
-        fileList: [
-          {
-            name: 'food.jpeg',
-            url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
-          },
-        ]
-      },
-    },
   ];
 }
 

@@ -41,6 +41,7 @@ const form = reactive({
 const rules = reactive({
   input: [{required: true}],
   select: [{required: true}],
+  input_number:[{required: true}],
 })
 
 const handleReset = () => {
