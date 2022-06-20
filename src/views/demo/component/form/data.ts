@@ -195,12 +195,6 @@ export function getBasicFormData() {
       componentProps: {
         listType: "text",
         multiple: true,
-        transform: (response, uploadFile, uploadFiles, VModel) => {
-          const {data: {url}} = response;
-          uploadFile.url = url
-          uploadFile.name = getUrlFileName(url)
-          VModel.value.push(url);
-        }
       },
     },
   ];

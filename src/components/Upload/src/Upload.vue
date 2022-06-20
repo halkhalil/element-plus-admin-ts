@@ -2,8 +2,11 @@
   <div>
     <el-upload ref="uploadRef"
                v-bind="props"
+               :file-list="fileList"
+               :on-exceed="handleExceed"
                :on-preview="handlePreview"
-    >
+               :on-remove="handleRemove"
+               :on-success="handleSuccess">
       <template #trigger>
         <el-button type="primary" v-if="props.listType !== 'picture-card'" :disabled="props.disabled">
           Upload
@@ -27,27 +30,37 @@
 </template>
 
 <script lang="ts" setup>
-import {ref} from 'vue';
+import {onMounted, Ref, ref} from 'vue';
 import {uploadProps} from "./props";
 import {Upload, Plus} from '@element-plus/icons-vue'
-import {genFileId, UploadUserFile} from 'element-plus';
+import {ElMessage, genFileId, UploadUserFile} from 'element-plus';
 import type {UploadProps, UploadInstance, UploadRawFile, UploadFile, UploadFiles} from "element-plus";
+import {useVModel, watchOnce} from "@vueuse/core";
+import {getUrlFileName} from "~/utils/utils";
 
 const props = defineProps(uploadProps);
-const emits = defineEmits(['on-exceed', 'on-success']);
+const emits = defineEmits(['update:modelValue', 'on-exceed', 'on-success', 'on-remove']);
 
+const VModel: Ref = useVModel(props, 'modelValue', emits);
 const uploadRef = ref<UploadInstance>()
-const dialogImageUrl = ref();
-const dialogVisible = ref(false)
+const fileList = ref<UploadUserFile[]>()
+const dialogImageUrl = ref<string>();
+const dialogVisible = ref<boolean>(false)
+
+watchOnce(VModel, () => initFileList());
+onMounted(() => initFileList());
+
+const initFileList = () => {
+  if (props.limit! === 1) {
+    fileList.value = VModel.value;
+  } else {
+    fileList.value = [...VModel.value].map(url => ({url, name: getUrlFileName(url)}));
+  }
+}
 
 const handlePreview: UploadProps['onPreview'] = (uploadFile) => {
   dialogImageUrl.value = uploadFile.url!
   dialogVisible.value = true
-}
-
-const handleRemove: UploadProps['onRemove'] = (uploadFile: UploadFile, uploadFiles: UploadFiles) => {
-  console.log(uploadFile, uploadFiles);
-
 }
 
 // 当允许上传文件数量为1时，覆盖前一个文件
@@ -60,15 +73,30 @@ const handleExceed: UploadProps['onExceed'] = (files: File[], uploadFiles: Uploa
     uploadInstance.handleStart(file);
     uploadInstance.submit();
   } else {
-
+    ElMessage.error('超过最大上传文件数量:' + props.limit);
   }
   emits('on-exceed', files, uploadFiles);
 }
 
+const handleRemove: UploadProps['onRemove'] = (uploadFile: UploadFile, uploadFiles: UploadFiles) => {
+  VModel.value = uploadFiles.map(file => file.url);
+  emits('on-remove', uploadFile, uploadFiles);
+}
+
 const handleSuccess: UploadProps['onSuccess'] = (response: any, uploadFile: UploadFile, uploadFiles: UploadFiles) => {
-  const {data: {url}} = response;
-  uploadFile.url = url
-  emits('on-success', response, uploadFile, uploadFiles);
+  if (typeof props.transformResponse === 'function') {
+    props.transformResponse(response, uploadFile, uploadFiles, VModel);
+  } else {
+    const {data: {url}} = response;
+    uploadFile.url = url
+    uploadFile.name = getUrlFileName(url)
+    if (props.limit! === 1) {
+      VModel.value = url;
+    } else {
+      VModel.value.push(url);
+    }
+  }
+  emits('on-success', response, uploadFile, uploadFiles, VModel);
 }
 
 const submitUpload = () => {

@@ -3,7 +3,7 @@
     <div class="p-5">
       <el-form v-model="uploadProps">
         <el-form-item label="文件上传地址">
-          <el-input v-model="uploadProps.actions"></el-input>
+          <el-input v-model="uploadProps.action"></el-input>
         </el-form-item>
         <el-form-item label="文件列表类型">
           <el-radio-group v-model="uploadProps.listType">
@@ -18,9 +18,24 @@
         <el-form-item label="是否禁用上传">
           <el-switch v-model="uploadProps.disabled"></el-switch>
         </el-form-item>
+        <el-form-item label="允许上传文件的最大数量	">
+          <el-input-number v-model="uploadProps.limit"></el-input-number>
+        </el-form-item>
+        <el-form-item label="自定义响应数据格式">
+          <el-switch v-model="customResponse"></el-switch>
+        </el-form-item>
       </el-form>
-      <el-divider content-position="left">组件预览</el-divider>
-      <BasicUpload v-bind="uploadProps" :file-list="fileList"></BasicUpload>
+      <el-row :gutter="40">
+        <el-col :span="12">
+          <el-divider content-position="left">组件预览</el-divider>
+          <BasicUpload v-model="files" v-bind="uploadProps"
+                       :transform-response="customResponse && transformResponse"></BasicUpload>
+        </el-col>
+        <el-col :span="12">
+          <el-divider content-position="left">数据预览</el-divider>
+          <pre>{{ files }}</pre>
+        </el-col>
+      </el-row>
     </div>
   </PageWrapper>
 </template>
@@ -28,25 +43,29 @@
 <script lang="ts" setup>
 import {reactive, ref} from 'vue'
 import {BasicUpload} from '~/components/Upload';
-import type {UploadProps, UploadUserFile} from 'element-plus'
+import type {UploadProps} from 'element-plus'
+import {UploadFile, UploadFiles} from "element-plus";
+import {getUrlFileName} from "~/utils/utils";
 
-const uploadProps = reactive({
-  actions: import.meta.env.VITE_UPLOAD_URL,
+const uploadProps = reactive<Partial<UploadProps>>({
+  action: import.meta.env.VITE_UPLOAD_URL,
   listType: 'text',
   autoUpload: true,
   disabled: false,
   multiple: true,
-  limit:1,
+  limit: 3,
+  accept: '',
 });
 
-const fileList = ref<UploadUserFile[]>([
-  {
-    name: 'food.jpeg',
-    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100',
-  },
-  {
-    name: 'food2.jpeg',
-    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100',
-  },
-])
+const customResponse = ref<boolean>(false);
+
+// 自定义响应数据格式
+const transformResponse = (response: any, uploadFile: UploadFile, uploadFiles: UploadFiles, VModel) => {
+  const {data: {url, name}} = response;
+  uploadFile.url = url
+  uploadFile.name = name
+  VModel.value.push({url});
+}
+
+const files = ref(['https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg'])
 </script>

@@ -9,6 +9,8 @@ const uploadProps = {
     },
     required: true,
   },
+  modelValue: Array,
+  transformResponse:Function
 };
 
 export {uploadProps}

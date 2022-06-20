@@ -24,7 +24,7 @@ import {
 import Select from "./components/Select.vue";
 import RadioGroup from "./components/RadioGroup.vue";
 import CheckboxGroup from "./components/CheckboxGroup.vue";
-import Upload from './components/Upload.vue'
+import {BasicUpload} from '~/components/Upload'
 
 const componentMap = new Map;
 componentMap.set('Input', ElInput);
@@ -41,7 +41,7 @@ componentMap.set('DatePicker', ElDatePicker);
 componentMap.set('TimePicker', ElTimePicker);
 componentMap.set('TimeSelect', ElTimeSelect);
 componentMap.set('TreeSelect', ElTreeSelect);
-componentMap.set('Upload', Upload);
+componentMap.set('Upload', BasicUpload);
 
 export {
   componentMap
