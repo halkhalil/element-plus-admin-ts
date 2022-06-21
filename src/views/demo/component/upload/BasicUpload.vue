@@ -54,7 +54,7 @@ const uploadProps = reactive<Partial<UploadProps>>({
   disabled: false,
   multiple: true,
   limit: 3,
-  accept: '',
+  accept: '.jpeg',
 });
 
 const customResponse = ref<boolean>(false);

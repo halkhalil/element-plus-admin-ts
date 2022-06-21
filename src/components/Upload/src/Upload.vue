@@ -6,7 +6,8 @@
                :on-exceed="handleExceed"
                :on-preview="handlePreview"
                :on-remove="handleRemove"
-               :on-success="handleSuccess">
+               :on-success="handleSuccess"
+               :on-error="handleError">
       <template #trigger>
         <el-button type="primary" v-if="props.listType !== 'picture-card'" :disabled="props.disabled">
           Upload
@@ -39,7 +40,7 @@ import {useVModel, watchOnce} from "@vueuse/core";
 import {getUrlFileName} from "~/utils/utils";
 
 const props = defineProps(uploadProps);
-const emits = defineEmits(['update:modelValue', 'on-exceed', 'on-success', 'on-remove']);
+const emits = defineEmits(['update:modelValue', 'on-exceed', 'on-success', 'on-remove', 'on-error']);
 
 const VModel: Ref = useVModel(props, 'modelValue', emits);
 const uploadRef = ref<UploadInstance>()
@@ -84,6 +85,7 @@ const handleRemove: UploadProps['onRemove'] = (uploadFile: UploadFile, uploadFil
 }
 
 const handleSuccess: UploadProps['onSuccess'] = (response: any, uploadFile: UploadFile, uploadFiles: UploadFiles) => {
+  console.log('response',response);
   if (typeof props.transformResponse === 'function') {
     props.transformResponse(response, uploadFile, uploadFiles, VModel);
   } else {
@@ -97,6 +99,13 @@ const handleSuccess: UploadProps['onSuccess'] = (response: any, uploadFile: Uplo
     }
   }
   emits('on-success', response, uploadFile, uploadFiles, VModel);
+}
+
+const handleError: UploadProps['onError'] = (error: Error, uploadFile: UploadFile, uploadFiles: UploadFiles) => {
+  const {message} = error;
+  ElMessage.error({message, duration: 0, grouping: true, showClose: true,});
+
+  emits('on-error', error, uploadFile, uploadFiles);
 }
 
 const submitUpload = () => {
