@@ -1,6 +1,8 @@
 <template>
   <PageWrapper :title="$route['meta']['title']" content-full-height content-background>
     <BasicUpload v-model="files" v-bind="uploadProps" :before-upload="handleBeforeUpload"></BasicUpload>
+
+    <pre>{{uploadProps}}</pre>
   </PageWrapper>
 </template>
 
