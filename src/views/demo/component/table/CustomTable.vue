@@ -1,12 +1,12 @@
 <template>
-  <page-wrapper
+  <PageWrapper
     :title="$route['meta']['title']"
     :sub-title="$route['meta']['title']"
     content-background>
     <el-card shadow="none">
-      <basic-table :data="tableData" :columns="tableColumns" border size="small">
-        <template #name="{row:{name}}">
-          <el-button type="text">{{ name }}</el-button>
+      <BasicTable :data="tableData" :columns="tableColumns" border>
+        <template #name="{row,$index}">
+          <el-button type="text">{{ row.name }}</el-button>
         </template>
         <template #action="{row,$index}">
           <el-button type="text" @click="handleEdit(row,$index)">编辑</el-button>
@@ -16,35 +16,20 @@
             </template>
           </el-popconfirm>
         </template>
-      </basic-table>
+      </BasicTable>
     </el-card>
-  </page-wrapper>
+  </PageWrapper>
 </template>
 
-<script>
-import {BasicTable} from "~/components/Table/index.ts";
-import {PageWrapper} from '~/components/Page/index.ts';
+<script lang="ts" setup>
+import {BasicTable} from "~/components/Table";
+import {PageWrapper} from '~/components/Page';
+import {getCustomColumns, getBasicData} from './data';
+import {reactive} from "vue";
 
-import {getCustomColumns, getBasicData} from './tableData.ts';
-import {reactive, toRefs} from "vue";
+const tableColumns = reactive(getCustomColumns())
+const tableData = reactive(getBasicData())
 
-export default {
-  name: 'Basic',
-  components: {BasicTable, PageWrapper},
-  setup() {
-    const state = reactive({
-      tableColumns: getCustomColumns(),
-      tableData: getBasicData(),
-    });
-
-    const handleEdit = (index, row) => console.log(index, row);
-    const handleDelete = (index, row) => console.log(index, row);
-
-    return {
-      ...toRefs(state),
-      handleEdit,
-      handleDelete
-    }
-  }
-}
+const handleEdit = (row, index) => console.log(index, row);
+const handleDelete = (row, index) => console.log(index, row);
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <page-wrapper
+  <PageWrapper
     :title="$route['meta']['title']"
     :sub-title="$route['meta']['title']"
     content-background>
@@ -11,35 +11,23 @@
       <el-button type="primary">操作2</el-button>
     </template>
     <el-card shadow="none">
-      <basic-table :data="tableData" :columns="tableColumns" border>
+      <BasicTable :data="tableData" :columns="tableColumns" border>
         <template #action>
           <el-button type="text">编辑</el-button>
           <el-button type="text" style="color: red">删除</el-button>
         </template>
-      </basic-table>
+      </BasicTable>
     </el-card>
-  </page-wrapper>
+  </PageWrapper>
 </template>
 
-<script>
-import {BasicTable} from "~/components/Table/index.ts";
-import {PageWrapper} from '~/components/Page/index.ts';
+<script lang="ts" setup>
+import {BasicTable} from "~/components/Table";
+import {PageWrapper} from '~/components/Page';
 
-import {getBasicColumns, getBasicData} from './tableData.ts';
-import {reactive, toRefs} from "vue";
+import {getBasicColumns, getBasicData} from './data';
+import {reactive} from "vue";
 
-export default {
-  name: 'Basic',
-  components: {BasicTable, PageWrapper},
-  setup() {
-    const state = reactive({
-      tableColumns: getBasicColumns(),
-      tableData: getBasicData(),
-    });
-
-    return {
-      ...toRefs(state),
-    }
-  }
-}
+const tableColumns = reactive(getBasicColumns());
+const tableData = reactive(getBasicData());
 </script>

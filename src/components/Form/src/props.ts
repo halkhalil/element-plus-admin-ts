@@ -78,7 +78,7 @@ const formActionProps = {
   },
   position: {
     type: String,
-    default: 'right',
+    default: 'left',
   },
   colProps: {
     type: Object,
