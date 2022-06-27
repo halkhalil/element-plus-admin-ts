@@ -12,8 +12,3 @@ const {currentRoute} = useRouter();
 const loading = ref(true);
 const hideLoading = () => loading.value = false;
 </script>
-<style lang="scss">
-.iframe-scroll .el-scrollbar__view {
-  height: 100%;
-}
-</style>

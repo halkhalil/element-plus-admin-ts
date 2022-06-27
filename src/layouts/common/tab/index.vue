@@ -1,5 +1,5 @@
 <template>
-  <el-scrollbar ref="scrollbarRef" wrap-class="border-b-1 bg-white" height="auto">
+  <el-scrollbar ref="scrollbarRef" wrap-class="border-b-1 bg-white" height="auto" style="height: auto" noresize>
     <div class="flex p-1 select-none">
       <el-tag
         class="mx-0.5 cursor-pointer font-bold"
