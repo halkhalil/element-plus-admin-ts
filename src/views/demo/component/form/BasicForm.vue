@@ -1,7 +1,7 @@
 <template>
   <PageWrapper :title="$route['meta']['title']" content-full-height content-background>
     <div class="flex-center">
-      <el-row :gutter="50">
+      <el-row :gutter="10">
         <el-col :span="12">
           <el-divider content-position="left">组件预览</el-divider>
           <BasicForm
