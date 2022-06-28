@@ -1,8 +1,8 @@
 import {createApp} from "vue";
 import App from "./App.vue";
 import {router, setupRouter} from '~/router'
-import 'element-plus/dist/index.css'
-import 'element-plus/theme-chalk/dark/css-vars.css'
+// import 'element-plus/dist/index.css'
+// import 'element-plus/theme-chalk/dark/css-vars.css'
 import 'virtual:windi.css'
 import 'virtual:svg-icons-register';
 import {setupStore} from '~/store'
@@ -14,6 +14,7 @@ import {setupPlugins} from "~/logics/setupPlugins";
 
 import "~/styles/index.scss";
 import 'uno.css'
+import "element-plus/theme-chalk/src/message.scss"
 
 
 (async () => {
