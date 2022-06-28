@@ -12,6 +12,9 @@ import {registerGlobComp} from "~/components/registerGlobComp";
 import {setupProjectConfig} from "~/logics/setupProjectConfig";
 import {setupPlugins} from "~/logics/setupPlugins";
 
+import "~/styles/index.scss";
+import 'uno.css'
+
 
 (async () => {
   const app = createApp(App);

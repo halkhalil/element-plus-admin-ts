@@ -13,6 +13,9 @@
 
       <div class="header-right inline-flex items-center">
         <div class="action flex-col-center">
+          <Dark/>
+        </div>
+        <div class="action flex-col-center">
           <GitHub/>
         </div>
         <div class="action flex-col-center">
@@ -34,6 +37,7 @@
 
 <script lang="ts" setup>
 import Logo from "~/layouts/common/header/components/Logo.vue";
+import Dark from "~/layouts/common/header/components/Dark.vue";
 import Notify from "~/layouts/common/header/components/Notify.vue";
 import FullScreen from "~/layouts/common/header/components/FullScreen.vue";
 import UserDropdown from "~/layouts/common/header/components/UserDropdown.vue";

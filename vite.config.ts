@@ -9,6 +9,15 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 import {ElementPlusResolver} from "unplugin-vue-components/resolvers";
 import WindiCSS from 'vite-plugin-windicss'
 
+import Unocss from 'unocss/vite'
+import {
+  presetAttributify,
+  presetIcons,
+  presetUno,
+  transformerDirectives,
+  transformerVariantGroup,
+} from 'unocss'
+
 
 function pathResolve(dir: string) {
   return resolve(process.cwd(), '.', dir)
@@ -30,7 +39,7 @@ export default ({command}: ConfigEnv): UserConfig => {
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: `@use "~/styles/index.scss" as *;`,
+          additionalData: `@use "~/styles/element/index.scss" as *;`,
         },
       },
     },
@@ -46,7 +55,16 @@ export default ({command}: ConfigEnv): UserConfig => {
         resolvers: [ElementPlusResolver()],
       }),
       Components({
-        resolvers: [ElementPlusResolver()],
+        // allow auto load markdown components under `./src/components/`
+        extensions: ['vue', 'md'],
+        // allow auto import and register components used in markdown
+        include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
+        resolvers: [
+          ElementPlusResolver({
+            importStyle: 'sass',
+          }),
+        ],
+        dts: 'src/components.d.ts',
       }),
       viteMockServe({
         mockPath: 'mock',
@@ -56,6 +74,22 @@ export default ({command}: ConfigEnv): UserConfig => {
         import { setupProdMockServer } from '/mock/index.ts';
         setupProdMockServer();
       `,
+      }),
+      // https://github.com/antfu/unocss
+      // see unocss.config.ts for config
+      Unocss({
+        presets: [
+          presetUno(),
+          presetAttributify(),
+          presetIcons({
+            scale: 1.2,
+            warn: true,
+          }),
+        ],
+        transformers: [
+          transformerDirectives(),
+          transformerVariantGroup(),
+        ]
       }),
     ],
   }
