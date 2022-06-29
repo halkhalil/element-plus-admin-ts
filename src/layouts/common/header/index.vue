@@ -58,15 +58,15 @@ const {
 
 <style lang="scss" scoped>
 .header-container {
-  background: white;
+  background: var(--el-bg-color);
   width: 100%;
   height: 49px;
   padding: 0 0;
-  border-bottom: 1px solid #E4E7ED;
+  border-bottom: 1px solid var(--el-border-color);
   color: #303133;
 
   .action:hover {
-    background: #F2F6FC;
+    background: var(--el-backtop-text-color);
   }
 
   .header-menu {
@@ -77,6 +77,7 @@ const {
     height: 100%;
     padding: 0 10px;
     cursor: pointer;
+    color: var(--el-text-color-primary);
   }
 }
 </style>

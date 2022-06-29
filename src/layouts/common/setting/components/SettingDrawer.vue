@@ -157,8 +157,8 @@ const {getEnableTab, toggleEnableTab} = useTabSetting();
   word-wrap: break-word;
 
   .drawer-item {
-    color: rgba(0, 0, 0, .65);
-    font-size: 14px;
+    color: var(--el-text-color-primary);
+    font-size: var(--el-font-size-base);
     padding: 8px 0;
     display: flex;
     flex-direction: row;

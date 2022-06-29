@@ -81,7 +81,7 @@ const getContentHeight = computed(() => {
   .page-header {
     flex: 1;
     padding: 16px;
-    background-color: white;
+    //background-color: white;
 
     .page-header-wrap {
       .page-header-title {
@@ -95,7 +95,7 @@ const getContentHeight = computed(() => {
   }
 
   .content-bg {
-    background-color: white;
+    //background-color: white;
   }
 }
 </style>
