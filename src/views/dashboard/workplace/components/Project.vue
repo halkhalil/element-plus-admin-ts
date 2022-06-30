@@ -5,12 +5,12 @@
         <el-card class="card" shadow="hover">
           <div class="flex">
             <el-avatar :src="item.image" :size="24"></el-avatar>
-            <span class="ml-2 font-medium leading-6">{{ item.title }}</span>
+            <span class="ml-2 leading-6 title">{{ item.title }}</span>
           </div>
-          <div class="line-clamp-2 text-gray-500 my-1">
+          <div class="line-clamp-2 desc my-1">
             {{ item.desc }}
           </div>
-          <div class="text-xs text-gray-500 flex-x-between">
+          <div class="desc flex justify-between">
             <span>{{ item.name }}</span>
             <span>{{ item.time }}</span>
           </div>
@@ -25,3 +25,13 @@ import {getProjectData} from "~/views/dashboard/workplace/data";
 
 const projects = shallowReactive(getProjectData());
 </script>
+<style lang="scss" scoped>
+.title {
+  color: var(--el-text-color-primary);
+  font-size: var(--el-font-size-base);
+}
+.desc{
+  color: var(--el-text-color-secondary);
+  font-size: var(--el-font-size-small);
+}
+</style>

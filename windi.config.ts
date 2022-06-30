@@ -1,11 +1,11 @@
 import { defineConfig } from 'windicss/helpers';
-
+import colors from 'windicss/colors'
 export default defineConfig({
   extract: {
     include: ['src/**/*.{vue,html,jsx,tsx}', 'public/**/*.{html}', './*.html'],
     exclude: ['node_modules', '.git', './stats.html']
   },
-  // darkMode: 'class',
+  darkMode: 'class',
   shortcuts: {
     'wh-full': 'w-full h-full',
     'flex-center': 'flex justify-center items-center',
@@ -23,6 +23,11 @@ export default defineConfig({
     'i-flex-col': 'inline-flex flex-col',
     'flex-1-hidden': 'flex-1 overflow-hidden',
     'transition-base': 'transition-all duration-300 ease-in-out'
+  },
+  theme: {
+    colors: {
+      primary:'red'
+    },
   },
   plugins: [
     require('windicss/plugin/line-clamp'),

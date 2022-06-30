@@ -13,7 +13,7 @@
       <div class="drawer-body">
         <el-form size="small">
           <el-divider>导航栏模式</el-divider>
-          <div class="flex-x-between">
+          <div class="flex content-center">
             <el-tooltip v-for="(item,index) in menuTypes"
                         :key="index"
                         effect="dark"

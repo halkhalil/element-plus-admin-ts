@@ -24,20 +24,4 @@ import Dynamic from "~/views/dashboard/workplace/components/Dynamic.vue";
 import QuickNav from "~/views/dashboard/workplace/components/QuickNav.vue";
 import Carousel from "~/views/dashboard/workplace/components/Carousel.vue";
 import ProjectStatistic from "~/views/dashboard/workplace/components/ProjectStatistic.vue";
-
-import {useRootSetting} from "~/composables/setting/useRootSeeting";
-
-const {getIsMobile} = useRootSetting();
 </script>
-<style lang="scss" scoped>
-:deep(.el-card__header) {
-  padding: 16px 20px !important;
-
-  .card-header {
-    span {
-      font-size: 16px;
-      font-weight: 500;
-    }
-  }
-}
-</style>

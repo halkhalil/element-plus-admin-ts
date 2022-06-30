@@ -1,5 +1,5 @@
 <template>
-  <div class="page-wrapper wh-full" :class="$props.class">
+  <div class="page-wrapper w-full h-full" :class="$props.class">
     <div class="page-header">
       <slot name="header">
         <div class="flex-x-between">
@@ -77,11 +77,14 @@ const getContentHeight = computed(() => {
 .page-wrapper {
   align-items: stretch;
   font-size: 14px;
+  background-color: var(--el-bg-color-page);
 
   .page-header {
     flex: 1;
     padding: 16px;
-    //background-color: white;
+    background-color: var(--el-bg-color);
+    border-bottom: 1px solid var(--el-border-color);
+
 
     .page-header-wrap {
       .page-header-title {
@@ -95,7 +98,7 @@ const getContentHeight = computed(() => {
   }
 
   .content-bg {
-    //background-color: white;
+    background-color: var(--el-bg-color-page);
   }
 }
 </style>

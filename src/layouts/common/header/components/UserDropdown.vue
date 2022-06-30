@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-dropdown size="small" trigger="click">
-      <div class="avatar flex-center">
+      <div class="avatar flex items-center">
         <el-avatar :size="30" :src="getUser['avatar']">{{ getUser['nickname'] }}</el-avatar>
         <div class="flex-center pl-1">
           <span class="text-sm">{{ getUser['nickname'] }}</span>

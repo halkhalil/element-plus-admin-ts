@@ -12,22 +12,22 @@
       </div>
 
       <div class="header-right inline-flex items-center">
-        <div class="action flex-col-center">
+        <div class="action flex items-center">
           <Dark/>
         </div>
-        <div class="action flex-col-center">
+        <div class="action flex items-center">
           <GitHub/>
         </div>
-        <div class="action flex-col-center">
+        <div class="action flex items-center">
           <Notify/>
         </div>
-        <div class="action flex-col-center">
+        <div class="action flex items-center">
           <FullScreen/>
         </div>
-        <div class="action flex-col-center">
+        <div class="action flex items-center">
           <Setting/>
         </div>
-        <div class="action flex-col-center">
+        <div class="action flex items-center">
           <UserDropdown/>
         </div>
       </div>
