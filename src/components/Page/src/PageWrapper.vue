@@ -1,5 +1,5 @@
 <template>
-  <div class="page-wrapper w-full h-full" :class="$props.class">
+  <div class="page-wrapper w-full min-h-full" :class="$props.class">
     <div class="page-header">
       <slot name="header">
         <div class="flex-x-between">
@@ -98,7 +98,7 @@ const getContentHeight = computed(() => {
   }
 
   .content-bg {
-    background-color: var(--el-bg-color-page);
+    background-color: var(--el-card-bg-color);
   }
 }
 </style>

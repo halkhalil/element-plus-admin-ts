@@ -1,13 +1,14 @@
-// import 'element-plus/es/components/select/style/css';
-// import 'element-plus/es/components/input/style/css';
-// import 'element-plus/es/components/time-picker/style/css';
-// import 'element-plus/es/components/date-picker/style/css';
-// import 'element-plus/es/components/radio/style/css';
-// import 'element-plus/es/components/radio-button/style/css';
-// import 'element-plus/es/components/checkbox-group/style/css';
-// import 'element-plus/es/components/checkbox-button/style/css';
-// import 'element-plus/es/components/upload/style/css';
-// import 'element-plus/es/components/slider/style/css';
+import 'element-plus/es/components/select/style/css';
+import 'element-plus/es/components/input/style/css';
+import 'element-plus/es/components/time-picker/style/css';
+import 'element-plus/es/components/date-picker/style/css';
+import 'element-plus/es/components/radio/style/css';
+import 'element-plus/es/components/radio-button/style/css';
+import 'element-plus/es/components/checkbox-group/style/css';
+import 'element-plus/es/components/checkbox-button/style/css';
+import 'element-plus/es/components/upload/style/css';
+import 'element-plus/es/components/slider/style/css';
+import 'element-plus/es/components/cascader/style/css';
 import {
   ElInput,
   ElRadio,
