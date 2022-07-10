@@ -1,7 +1,9 @@
 <template>
   <div >
     <el-badge type="danger" is-dot ref="buttonRef" v-click-outside="onClickOutside">
-      <icon name="el-notify" size="15"/>
+      <Icon icon="carbon:notification" />
+
+<!--      <icon name="el-notify" size="15"/>-->
     </el-badge>
     <el-popover width="500" ref="popoverRef" :virtual-ref="buttonRef" trigger="click" virtual-triggering>
       <el-tabs v-model="activeName">

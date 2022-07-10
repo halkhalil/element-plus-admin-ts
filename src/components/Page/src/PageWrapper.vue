@@ -77,7 +77,7 @@ const getContentHeight = computed(() => {
 .page-wrapper {
   align-items: stretch;
   font-size: 14px;
-  background-color: var(--el-bg-color-page);
+  background-color: var(--el-bg-color);
 
   .page-header {
     flex: 1;
@@ -98,7 +98,7 @@ const getContentHeight = computed(() => {
   }
 
   .content-bg {
-    background-color: var(--el-card-bg-color);
+    background-color: var(--el-bg-color);
   }
 }
 </style>
