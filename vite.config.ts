@@ -7,8 +7,8 @@ import AutoImport from 'unplugin-auto-import/vite';
 import Components from "unplugin-vue-components/vite";
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import {ElementPlusResolver} from "unplugin-vue-components/resolvers";
-import WindiCSS from 'vite-plugin-windicss'
-import presetWind from '@unocss/preset-wind'
+// import WindiCSS from 'vite-plugin-windicss'
+// import presetWind from '@unocss/preset-wind'
 import Unocss from 'unocss/vite'
 import {
   presetAttributify,
@@ -46,7 +46,7 @@ export default ({command}: ConfigEnv): UserConfig => {
     plugins: [
       vue(),
       vueJsx(),
-      WindiCSS(),
+      // WindiCSS(),
       viteSvgIcons({
         iconDirs: [pathResolve('src/assets/svg')],
         symbolId: 'icon-[dir]-[name]',
