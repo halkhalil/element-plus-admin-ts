@@ -1,7 +1,7 @@
 <template>
-  <div @click="toggle">
-    <icon :name="!isFullscreen ? 'el-expend' : 'el-compress'" size="15"/>
-  </div>
+  <el-icon :size="18" @click="toggle">
+    <i :i="!isFullscreen ? 'bytesize-fullscreen' : 'bytesize-fullscreen-exit'"/>
+  </el-icon>
 </template>
 <script lang="ts" setup>
 import {useFullscreen} from '@vueuse/core';

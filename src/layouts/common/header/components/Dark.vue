@@ -1,6 +1,6 @@
 <template>
-  <el-icon size="20px" @click="toggleDark()">
-    <i inline-flex i="dark:ep-moon ep-sunny"/>
+  <el-icon :size="18" @click="toggleDark()">
+    <i i="dark:ep-moon ep-sunny"/>
   </el-icon>
 </template>
 <script lang="ts" setup>
