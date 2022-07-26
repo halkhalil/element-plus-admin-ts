@@ -1,6 +1,6 @@
 <template>
   <el-icon :size="18" @click="openGitHub">
-    <i i="uit-github-alt"/>
+    <i i="iconoir-github"/>
   </el-icon>
 </template>
 <script lang="ts" setup>
