@@ -1,15 +1,16 @@
 <template>
-  <icon-svg v-if="$props.mode === 'svg'" :prefix="$props.prefix" :name="$props.name" :size="$props.size"/>
+  <Iconify v-if="$props.mode === 'svg'" :prefix="$props.prefix" :name="$props.name" :size="$props.size"/>
   <!--  <span ref="elRef" :style="getWrapStyle"></span>-->
 </template>
 
 <script>
 import IconSvg from "./IconSvg.vue";
+import {Icon as Iconify} from '@iconify/vue';
 import {computed, ref} from "vue";
 
 export default {
   name: "Icon",
-  components: {IconSvg},
+  components: {IconSvg, Iconify},
   props: {
     mode: {
       type: String,

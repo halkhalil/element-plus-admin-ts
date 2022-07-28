@@ -2,7 +2,7 @@ import {resolve} from "path";
 import {ConfigEnv, UserConfig} from "vite";
 import vue from "@vitejs/plugin-vue";
 import {viteMockServe} from "vite-plugin-mock";
-import viteSvgIcons from 'vite-plugin-svg-icons';
+// import viteSvgIcons from 'vite-plugin-svg-icons';
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from "unplugin-vue-components/vite";
 import vueJsx from '@vitejs/plugin-vue-jsx';
@@ -47,10 +47,10 @@ export default ({command}: ConfigEnv): UserConfig => {
       vue(),
       vueJsx(),
       // WindiCSS(),
-      viteSvgIcons({
-        iconDirs: [pathResolve('src/assets/svg')],
-        symbolId: 'icon-[dir]-[name]',
-      }),
+      // viteSvgIcons({
+      //   iconDirs: [pathResolve('src/assets/svg')],
+      //   symbolId: 'icon-[dir]-[name]',
+      // }),
       AutoImport({
         resolvers: [ElementPlusResolver()],
       }),
@@ -81,10 +81,10 @@ export default ({command}: ConfigEnv): UserConfig => {
         presets: [
           presetUno(),
           presetAttributify(),
-          presetIcons({
-            scale: 1.2,
-            warn: true,
-          }),
+          // presetIcons({
+          //   scale: 1.2,
+          //   warn: true,
+          // }),
         ],
         transformers: [
           transformerDirectives(),
