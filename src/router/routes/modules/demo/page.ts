@@ -8,7 +8,7 @@ const pageRoute: AppRouteRecordRaw[] = [
     name: 'Page',
     component: LAYOUT,
     redirect: '/error-page',
-    meta: {title: '页面', icon: 'el-compass', sort:40},
+    meta: {title: '页面', icon: 'ep:document', sort:40},
     children: [
       {
         path: 'personal',

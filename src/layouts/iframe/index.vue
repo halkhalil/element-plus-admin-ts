@@ -1,6 +1,6 @@
 <template>
   <div class="h-full" v-loading="loading">
-    <iframe class="wh-full" :src="currentRoute?.meta?.frameSrc" @load="hideLoading"></iframe>
+    <iframe class="h-full w-full border-0" :src="currentRoute?.meta?.frameSrc" @load="hideLoading"></iframe>
   </div>
 </template>
 

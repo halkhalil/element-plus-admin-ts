@@ -2,7 +2,7 @@
   <div class="page-wrapper w-full min-h-full" :class="$props.class">
     <div class="page-header">
       <slot name="header">
-        <div class="flex-x-between">
+        <div class="flex justify-between">
           <div class="page-header-wrap flex items-end">
             <slot name="title">
               <div class="page-header-title text-xl">{{ title }}</div>

@@ -8,14 +8,14 @@ const componentRoute: AppRouteRecordRaw[] = [
     name: 'Component',
     component: LAYOUT,
     redirect: '/component/table/basicTable',
-    meta: {title: '组件', icon: 'el-component', sort: 20},
+    meta: {title: '组件', icon: 'ep:coin', sort: 20},
     children: [
       {
         path: 'form',
         name: 'Form',
         component: LayoutContent,
         redirect: '/component/form/basicForm',
-        meta: {title: '表单', icon: 'el-form'},
+        meta: {title: '表单', icon: 'fluent:form-28-regular'},
         children: [
           {
             path: 'basicForm',
@@ -53,7 +53,7 @@ const componentRoute: AppRouteRecordRaw[] = [
         path: 'table',
         name: 'Table',
         redirect: '/component/table/basicTable',
-        meta: {title: '表格', icon: 'el-table'},
+        meta: {title: '表格', icon: 'ant-design:table-outlined'},
         component: LayoutContent,
         children: [
           {
@@ -87,7 +87,7 @@ const componentRoute: AppRouteRecordRaw[] = [
         name: 'Editor',
         component: LayoutContent,
         redirect: '/component/editor/code',
-        meta: {title: '编辑器', icon: 'el-edit-square'},
+        meta: {title: '编辑器', icon: 'ep:edit-pen'},
         children: [
           {
             path: 'code',
@@ -114,7 +114,7 @@ const componentRoute: AppRouteRecordRaw[] = [
         name: 'Charts',
         component: LayoutContent,
         redirect: '/component/echarts/bar',
-        meta: {title: '图表', icon: 'el-piechart'},
+        meta: {title: '图表', icon: 'akar-icons:map'},
         children: [
           {
             path: 'bar',
@@ -140,7 +140,7 @@ const componentRoute: AppRouteRecordRaw[] = [
         path: 'icon',
         name: 'Icon',
         redirect: '/component/icon/iconfont',
-        meta: {title: '图标', icon: 'el-icon-test'},
+        meta: {title: '图标', icon: 'simple-icons:iconify'},
         component: LayoutContent,
         children: [
           {
@@ -161,7 +161,7 @@ const componentRoute: AppRouteRecordRaw[] = [
         path: 'upload',
         name: 'Upload',
         redirect: '/component/upload/basic-upload',
-        meta: {title: '上传', icon: 'tb-upload'},
+        meta: {title: '上传', icon: 'ep:upload'},
         component: LayoutContent,
         children: [
           {

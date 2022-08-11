@@ -7,7 +7,7 @@ const menus1 = [
     name: 'Dashboard',
     component: 'Layout',
     redirect: '/dashboard/workplace',
-    meta: {title: '首页', icon: 'el-home', sort: 10},
+    meta: {title: '首页', icon: 'ep:home', sort: 10},
     children: [
       {
         path: 'analysis',
@@ -34,7 +34,7 @@ const menus1 = [
     name: 'Permission',
     redirect: '/permission/page',
     component: 'Layout',
-    meta: {title: '权限', icon: 'el-lock', sort: 50},
+    meta: {title: '权限', icon: 'ep:lock', sort: 50},
     children: [
       {
         path: 'front',
@@ -55,7 +55,7 @@ const menus1 = [
     name: 'System',
     redirect: '/system/configs',
     component: 'Layout',
-    meta: {title: '系统', icon: 'el-windows', sort: 60},
+    meta: {title: '系统', icon: 'ep:windows', sort: 60},
     children: [
       {
         path: 'users',
@@ -102,7 +102,7 @@ const menus2 = [
     name: 'Dashboard',
     component: 'Layout',
     redirect: '/dashboard/workplace',
-    meta: {title: '首页', icon: 'el-home', sort: 10},
+    meta: {title: '首页', icon: 'ep:home', sort: 10},
     children: [
       {
         path: 'analysis',
@@ -129,7 +129,7 @@ const menus2 = [
     name: 'Permission',
     redirect: '/permission/page',
     component: 'Layout',
-    meta: {title: '权限', icon: 'el-lock', sort: 50},
+    meta: {title: '权限', icon: 'ep:lock', sort: 50},
     children: [
       {
         path: 'front',

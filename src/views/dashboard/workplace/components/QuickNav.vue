@@ -4,7 +4,11 @@
       <div v-for="(item,index) in getMenus" :key="index" class="cursor-pointer">
         <el-card class="card" shadow="hover">
           <div class="flex justify-center items-center flex-col">
-            <span class="text-xl mb-2"><icon :name="item.icon" :style="{color:item.color}" :size="20" /></span>
+            <span class="text-xl mb-2">
+              <el-icon :size="20">
+                <Icon :icon="item.icon"/>
+              </el-icon>
+            </span>
             <span>{{ item.title }}</span>
           </div>
         </el-card>

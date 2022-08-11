@@ -1,7 +1,7 @@
 <template>
   <el-badge type="danger" is-dot style="height: 18px;">
     <el-icon :size="18" ref="buttonRef" v-click-outside="onClickOutside">
-      <i i="clarity-notification-line"/>
+      <Icon icon="clarity:notification-line"/>
     </el-icon>
   </el-badge>
   <el-popover width="500" ref="popoverRef" :virtual-ref="buttonRef" trigger="click" virtual-triggering>

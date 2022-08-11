@@ -7,7 +7,7 @@ const dashboardRoute: AppRouteRecordRaw[] = [
     name: 'Dashboard',
     component: LAYOUT,
     redirect: '/dashboard/workplace',
-    meta: {title: '首页', icon: 'el-home', sort: 10},
+    meta: {title: '首页', icon: 'ant-design:dashboard-outlined', sort: 10},
     children: [
       {
         path: 'analysis',

@@ -1,4 +1,4 @@
-import {LAYOUT} from "~/router/constant";
+import {IFRAME, LAYOUT} from "~/router/constant";
 import {AppRouteRecordRaw} from "~/router/types";
 
 const featureRoute: AppRouteRecordRaw[] = [
@@ -7,8 +7,19 @@ const featureRoute: AppRouteRecordRaw[] = [
     name: 'Feature',
     component: LAYOUT,
     redirect: '/feature',
-    meta: {title: '功能', icon: 'el-ungroup', sort: 30},
+    meta: {title: '功能', icon: 'tabler:function', sort: 30},
     children: [
+      {
+        path: 'element-plus',
+        name: 'ElementPlusIframe',
+        component: IFRAME,
+        meta: {title: '菜单内嵌',frameSrc:'https://element-plus.gitee.io/zh-CN/'},
+      },
+      {
+        path: 'element-plus-blank',
+        name: 'ElementPlusTarget',
+        meta: {title: '菜单外链',href:'https://element-plus.gitee.io/zh-CN/'},
+      },
       {
         path: 'context-menu',
         name: 'ContextMenu',

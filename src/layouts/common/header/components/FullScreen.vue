@@ -1,6 +1,6 @@
 <template>
   <el-icon :size="18" @click="toggle">
-    <i :i="!isFullscreen ? 'bytesize-fullscreen' : 'bytesize-fullscreen-exit'"/>
+    <Icon :icon="!isFullscreen ? 'bytesize:fullscreen' : 'bytesize:fullscreen-exit'"/>
   </el-icon>
 </template>
 <script lang="ts" setup>

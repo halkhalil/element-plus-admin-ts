@@ -12,7 +12,6 @@
       </div>
 
       <div class="header-right inline-flex items-center">
-        <Icon icon="mdi-light:home" />
         <div class="action flex items-center">
           <Dark/>
         </div>

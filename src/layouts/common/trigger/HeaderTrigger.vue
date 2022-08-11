@@ -1,6 +1,8 @@
 <template>
   <div class="flex items-center" @click="toggleCollapsed">
-    <icon :name="getCollapsed ? 'el-zhankai' : 'el-shouqi'" size="20"/>
+    <el-icon :size="18">
+      <Icon :icon="getCollapsed ? 'ep:expand' : 'ep:fold'"/>
+    </el-icon>
   </div>
 </template>
 

@@ -1,48 +1,38 @@
 <template>
-  <Iconify v-if="$props.mode === 'svg'" :prefix="$props.prefix" :name="$props.name" :size="$props.size"/>
+  <Iconify :prefix="$props.prefix" :name="$props.name" :size="$props.size"/>
   <!--  <span ref="elRef" :style="getWrapStyle"></span>-->
 </template>
 
-<script>
+<script lang="ts" setup>
 import IconSvg from "./IconSvg.vue";
 import {Icon as Iconify} from '@iconify/vue';
 import {computed, ref} from "vue";
 
-export default {
-  name: "Icon",
-  components: {IconSvg, Iconify},
-  props: {
-    mode: {
-      type: String,
-      default: 'svg',
-    },
-    prefix: {
-      type: String,
-      default: '',
-    },
-    name: String,
-    color: String,
-    size: {
-      type: [String, Number],
-      default: 16
-    },
-    spin: Boolean,
+defineProps({
+  mode: {
+    type: String,
+    default: 'svg',
   },
-  setup(props) {
-    // const elRef = ref(null);
-    // const getWrapStyle = computed(() => {
-    //   const {size, color} = props;
-    //   const _size = parseInt(size, 10);
-    //
-    //   return {fotSize: `${_size}px`, color: color, display: 'inline-flex'}
-    // })
+  prefix: {
+    type: String,
+    default: '',
+  },
+  name: String,
+  color: String,
+  size: {
+    type: [String, Number],
+    default: 16
+  },
+  spin: Boolean,
+});
 
-    return {
-      // elRef,
-      // getWrapStyle
-    }
-  }
-}
+// const elRef = ref(null);
+// const getWrapStyle = computed(() => {
+//   const {size, color} = props;
+//   const _size = parseInt(size, 10);
+//
+//   return {fotSize: `${_size}px`, color: color, display: 'inline-flex'}
+// })
 </script>
 
 <style scoped>

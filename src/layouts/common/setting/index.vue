@@ -1,6 +1,6 @@
 <template>
   <el-icon :size="18" @click="openSettingDrawer">
-    <i i="ep-setting"/>
+    <Icon icon="ep:setting"/>
   </el-icon>
 </template>
 <script lang="ts" setup>
