@@ -1,7 +1,7 @@
 <template>
   <el-menu-item index="/" :route="{path:'/',title:'首页'}">
     <el-icon>
-      <img :src="logo ? logo : '/src/assets/logo.png'" class="relative -left-1 w-30px">
+      <img :src="logo ? logo : '/src/assets/logo.png'">
     </el-icon>
     <template #title>
       <span class="font-bold">{{ title }} </span>

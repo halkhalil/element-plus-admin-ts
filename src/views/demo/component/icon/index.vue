@@ -34,29 +34,25 @@
         </el-col>
       </el-row>
     </el-card>
-    <el-card shadow="none" header="iconfont 雪碧图, symbol 引用" class="mt-2">
-      <el-alert type="success" :closable="false">
-        <p>icon 已注册成全局组件,可直接使用</p>
-        <p>如需使用自己的图标库，iconfont官网创建自己的项目后，生成symbol连接，main.js 中引入即可使用</p>
-      </el-alert>
+    <el-card shadow="none" header="Iconify" class="mt-2">
       <el-row class="mt-2">
         <el-col v-bind="colProps">
-          <icon name="el-github" :size="30"/>
+          <Icon icon="ep:add-location" :width="30"/>
         </el-col>
         <el-col v-bind="colProps">
-          <icon name="el-notify" :size="30"/>
+          <Icon icon="ep:chat-dot-round" :width="30"/>
         </el-col>
         <el-col v-bind="colProps">
-          <icon name="el-user" :size="30"/>
+          <Icon icon="ep:data-line" :width="30"/>
         </el-col>
         <el-col v-bind="colProps">
-          <icon name="el-lock" :size="30"/>
+          <Icon icon="ep:grid" :width="30"/>
         </el-col>
         <el-col v-bind="colProps">
-          <icon name="el-table" :size="30"/>
+          <Icon icon="ep:headset" :width="30"/>
         </el-col>
         <el-col v-bind="colProps">
-          <icon name="el-windows" :size="30"/>
+          <Icon icon="ep:ice-tea" :width="30"/>
         </el-col>
       </el-row>
     </el-card>
@@ -67,19 +63,19 @@
       </el-alert>
       <el-row class="mt-2">
         <el-col v-bind="colProps">
-          <icon name="icon-android-fill" :size="30"/>
+          <Icon icon="icon-android-fill" :size="30"/>
         </el-col>
         <el-col v-bind="colProps">
-          <icon name="icon-apple-fill" :size="30"/>
+          <Icon icon="icon-apple-fill" :size="30"/>
         </el-col>
         <el-col v-bind="colProps">
-          <icon name="icon-dingtalk" :size="30"/>
+          <Icon icon="icon-dingtalk" :size="30"/>
         </el-col>
         <el-col v-bind="colProps">
-          <icon name="icon-gitlab-fill" :size="30"/>
+          <Icon icon="icon-gitlab-fill" :size="30"/>
         </el-col>
         <el-col v-bind="colProps">
-          <icon name="icon-qq" :size="30"/>
+          <Icon icon="icon-qq" :size="30"/>
         </el-col>
         <el-col v-bind="colProps">
           <IconSvg name="icon-twitter" :size="30"/>
