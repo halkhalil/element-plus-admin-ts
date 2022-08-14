@@ -4,7 +4,7 @@ import {router, setupRouter} from '~/router'
 // import 'element-plus/dist/index.css'
 // import 'element-plus/theme-chalk/dark/css-vars.css'
 // import 'virtual:windi.css'
-// import 'virtual:svg-icons-register';
+import 'virtual:svg-icons-register';
 import {setupStore} from '~/store'
 import {setupRouterGuard} from "~/router/guard";
 import {setupGlobalDirectives} from "~/directives";
@@ -32,7 +32,7 @@ import "element-plus/theme-chalk/src/message.scss"
 
   // setupGlobalDirectives(app);
 
-  // registerGlobComp(app);
+  registerGlobComp(app);
 
 
   await setupProjectConfig();

@@ -57,28 +57,27 @@
       </el-row>
     </el-card>
     <el-card shadow="none" header="使用本地svg文件" class="mt-2">
-      <el-alert type="success" :closable="false">
-        <p>本地svg文件，以icon-前缀开始,会自动加载/src/assets/svg/目录下的svg文件</p>
-        <p>如需自定义，可在vite.config.js中定义</p>
+      <el-alert type="info" closable show-icon>
+        本地svg文件，以 <code class="color-red">svg-</code>前缀开始,会自动加载/src/assets/svg/目录下的svg文件
       </el-alert>
       <el-row class="mt-2">
         <el-col v-bind="colProps">
-          <Icon icon="icon-android-fill" :size="30"/>
+          <IconSvg icon="svg-android-fill" :size="30"/>
         </el-col>
         <el-col v-bind="colProps">
-          <Icon icon="icon-apple-fill" :size="30"/>
+          <IconSvg icon="svg-apple-fill" :size="30"/>
         </el-col>
         <el-col v-bind="colProps">
-          <Icon icon="icon-dingtalk" :size="30"/>
+          <IconSvg icon="svg-dingtalk" :size="30"/>
         </el-col>
         <el-col v-bind="colProps">
-          <Icon icon="icon-gitlab-fill" :size="30"/>
+          <IconSvg icon="svg-gitlab-fill" :size="30"/>
         </el-col>
         <el-col v-bind="colProps">
-          <Icon icon="icon-qq" :size="30"/>
+          <IconSvg icon="svg-qq" :size="30"/>
         </el-col>
         <el-col v-bind="colProps">
-          <IconSvg name="icon-twitter" :size="30"/>
+          <IconSvg icon="svg-twitter" :size="30"/>
         </el-col>
       </el-row>
     </el-card>

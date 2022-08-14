@@ -34,7 +34,7 @@
       <ul class="icon-list" v-if="true">
         <li v-for="(item, index) in icons" :key="index" @click="handleSelect(item)">
           <slot name="icon" v-bind:icon="item">
-            <icon :name="item" :size="$props.size"/>
+            <Icon :icon="item" :size="$props.size"/>
           </slot>
         </li>
       </ul>

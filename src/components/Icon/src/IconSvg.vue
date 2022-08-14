@@ -12,7 +12,7 @@ const props = defineProps({
     type: String,
     default: '',
   },
-  name: {
+  icon: {
     type: String,
     required: true,
   },
@@ -27,8 +27,8 @@ const props = defineProps({
   },
 });
 
-const {prefix, name, size} = toRefs(props);
-const symbolId = computed(() => `#${prefix.value}${name.value}`)
+const {prefix, icon, size} = toRefs(props);
+const symbolId = computed(() => `#${prefix.value}${icon.value}`)
 const getWrapStyle = computed(() => {
   const s = `${size.value}`.replace('px', '') + 'px';
   return {width: s, height: s};
