@@ -1,47 +1,43 @@
 <template>
-  <el-popover
-    ref="popover"
-    :placement="placement"
-    popper-class="icon-popper"
-    v-model:visible="visible"
-    show-arrow
-    trigger="click"
-    :disabled="disabled"
-    :width="popWrapWidth-20"
-  >
-    <template #reference>
-      <el-input
-        ref="inputElRef"
-        v-model="selectIcon"
-        :placeholder="$props.placeholder"
-        :clearable="$props.clearable"
-        :disabled="$props.disabled"
-        :readonly="$props.readonly"
-        @input="handleSearch"
-        @focus="handleFocus"
-        @blur="handleBlur"
-      >
-        <template #append>
-          <slot name="append">
-            <icon :name="selectIcon ? selectIcon : 'el-edit-square'" :size="$props.size"/>
-          </slot>
-        </template>
-      </el-input>
-    </template>
+  <div>
+    <el-input
+      ref="inputElRef"
+      v-model="selectIcon"
+      :placeholder="$props.placeholder"
+      :clearable="$props.clearable"
+      :disabled="$props.disabled"
+      :readonly="$props.readonly"
+      @input="handleSearch"
+    >
+      <template #append>
+        <Icon :icon="selectIcon ? selectIcon : 'ep:aim'" :size="$props.size"/>
+      </template>
+    </el-input>
 
-    <el-scrollbar ref="eScrollbar" wrap-class="el-select-dropdown__wrap"
-                  view-class="el-select-dropdown__list" style="text-align: center">
-      <ul class="icon-list" v-if="true">
-        <li v-for="(item, index) in icons" :key="index" @click="handleSelect(item)">
-          <slot name="icon" v-bind:icon="item">
-            <Icon :icon="item" :size="$props.size"/>
-          </slot>
-        </li>
-      </ul>
-      <span v-else class="no-data" v-text="$props.emptyText"></span>
-    </el-scrollbar>
-  </el-popover>
-
+    <el-popover
+      ref="popoverRef"
+      :virtual-ref="inputElRef"
+      trigger="click"
+      show-arrow
+      virtual-triggering
+      :placement="placement"
+      :disabled="disabled"
+      :width="popWrapWidth"
+    >
+      <el-scrollbar :max-height="300">
+        <div class="flex-row" v-if="true">
+          <el-icon v-for="(item, index) in icons"
+                   :key="index"
+                   @click="handleSelect(item)"
+                   :size="$props.size"
+                   class="w-10 h-10 cursor-pointer hover:bg-gray-100 ">
+            <Icon :icon="item"/>
+          </el-icon>
+        </div>
+        <span v-else class="no-data" v-text="$props.emptyText"></span>
+      </el-scrollbar>
+    </el-popover>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -56,7 +52,7 @@ const props = defineProps({
   },
   size: {
     type: [String, Number],
-    default: 18,
+    default: 20,
   },
   placement: {
     type: String,
@@ -104,40 +100,3 @@ const handleSearch = useDebounceFn((value) => {
 const handleFocus = () => visible.value = true;
 const handleBlur = () => visible.value = false;
 </script>
-<style lang="scss" scoped>
-.icon-list {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  overflow-x: hidden;
-
-  li {
-    width: 30px;
-    height: 30px;
-    margin: 5px;
-
-    i, svg {
-      font-size: 20px;
-      cursor: pointer;
-    }
-  }
-}
-
-.icon-popper {
-  max-height: 400px;
-  overflow: auto;
-  overflow-x: hidden;
-  overflow-y: hidden;
-
-  &[x-placement^="bottom"] {
-    margin-top: 5px;
-  }
-}
-
-:deep(.el-input-group__append) {
-  cursor: pointer;
-}
-</style>

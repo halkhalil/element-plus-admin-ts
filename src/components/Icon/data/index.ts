@@ -1,22 +1,6 @@
-import taobaoIcon from './taobao.icon'
-import alibabaIcon from './alibaba.icon.js'
-import elCustomIcon from './el-custom.icon.js'
+import icons from './ep.data'
 
-const modules = [taobaoIcon, alibabaIcon, elCustomIcon]
-const groups = [];
-const icons = [];
-
-modules.map(({name, glyphs, css_prefix_text}) => {
-  const group = {name, icons: []}
-  glyphs.map(({font_class}) => {
-    const _icon = css_prefix_text + font_class;
-    group.icons.push(_icon);
-    icons.push(_icon);
-  })
-  groups.push(group)
-})
 
 export {
   icons,
-  groups,
 }
