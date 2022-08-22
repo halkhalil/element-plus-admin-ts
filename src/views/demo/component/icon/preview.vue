@@ -11,24 +11,24 @@
 </template>
 
 <script>
-import {PageWrapper} from '~/components/Page/index.ts'
-import {groups} from '~/components/Icon/data/index.ts'
-import {ref, shallowRef} from "vue";
-import GroupPreview from './GroupPreview.vue'
-
-export default {
-  name: "index",
-  components: {PageWrapper, GroupPreview},
-  setup() {
-    const iconGroups = shallowRef(groups);
-    const active = ref('0')
-
-    return {
-      iconGroups,
-      active
-    }
-  }
-}
+// import {PageWrapper} from '~/components/Page/index.ts'
+// import {groups} from '~/components/Icon/data/index.ts'
+// import {ref, shallowRef} from "vue";
+// import GroupPreview from './GroupPreview.vue'
+//
+// export default {
+//   name: "index",
+//   components: {PageWrapper, GroupPreview},
+//   setup() {
+//     const iconGroups = shallowRef(groups);
+//     const active = ref('0')
+//
+//     return {
+//       iconGroups,
+//       active
+//     }
+//   }
+// }
 </script>
 <style lang="scss" scoped>
 .icon-wrap {
