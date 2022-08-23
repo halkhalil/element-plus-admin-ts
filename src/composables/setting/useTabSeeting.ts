@@ -1,5 +1,5 @@
 import {computed, unref} from 'vue'
-import store from "~/store";
+import store from "~/store_bak";
 
 export function useTabSetting() {
 

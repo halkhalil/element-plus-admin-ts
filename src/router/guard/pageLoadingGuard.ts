@@ -1,6 +1,6 @@
 import {unref} from 'vue'
 import {useTransitionSetting} from "~/composables/setting/useTransitionSeeting";
-import store from "~/store";
+import store from "~/store_bak";
 import {Router} from "vue-router";
 
 

@@ -1,5 +1,5 @@
 import {computed, shallowReactive} from 'vue'
-import store from "~/store";
+import store from "~/store_bak";
 import {useRouter} from "vue-router";
 
 export function useConfig() {

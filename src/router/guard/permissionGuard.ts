@@ -1,4 +1,4 @@
-import store from "~/store";
+import store from "~/store_bak";
 import {Router, RouteRecordRaw} from "vue-router";
 import {PageEnum} from "~/enums/page";
 

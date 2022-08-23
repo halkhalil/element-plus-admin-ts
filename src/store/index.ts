@@ -1,34 +1,7 @@
-import type {App} from 'vue';
-import {createStore} from 'vuex'
-import createPersistedState from 'vuex-persistedstate'
-import getters from "./getters"
+import {createPinia} from 'pinia'
+import type {App} from "vue";
 
-
-// module
-const modules:any = {};
-const moduleFiles = import.meta.globEager('./modules/*.ts');
-Object.keys(moduleFiles).forEach((key) => {
-  const moduleName = key.slice(key.lastIndexOf('/') + 1, -3);
-  modules[moduleName] = moduleFiles[key].default;
-});
-
-// vuex plugin
-const localStoragePlugin = createPersistedState({
-  storage: localStorage,
-  paths: ['setting', 'config', 'app', 'tab','user.roles']
-});
-
-// vuex plugin
-const sessionStoragePlugin = createPersistedState({
-  storage: sessionStorage,
-  paths: ['user.accessToken']
-});
-
-const store = createStore({
-  plugins: [localStoragePlugin, sessionStoragePlugin],
-  modules: modules,
-  getters: getters,
-})
+const store = createPinia();
 
 export function setupStore(app: App<Element>) {
   app.use(store);

@@ -1,4 +1,4 @@
-import store from "~/store";
+import store from "~/store_bak";
 import {setting} from "~/settings/projectSetting";
 
 export const setupProjectConfig = async () => {

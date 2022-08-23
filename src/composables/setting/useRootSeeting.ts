@@ -1,5 +1,5 @@
 import {computed, unref} from 'vue'
-import store from "~/store";
+import store from "~/store_bak";
 import {useMenuSetting} from "~/composables/setting/useMenuSeeting";
 import {useWindowSize} from "@vueuse/core";
 import {useTabSetting} from "~/composables/setting/useTabSeeting.js";

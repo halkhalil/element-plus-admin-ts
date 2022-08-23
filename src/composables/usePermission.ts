@@ -1,5 +1,5 @@
 import {computed, unref} from "vue";
-import store from "~/store";
+import store from "~/store_bak";
 import {isString} from "~/utils/is";
 import {PermissionEnum, PermissionModeEnum, RoleEnum} from "~/enums/permission";
 import {resetRouter, router} from "~/router";

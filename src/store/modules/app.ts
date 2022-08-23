@@ -1,29 +1,45 @@
-const app = {
-  namespaced: true,
-  state: {
+import {defineStore} from 'pinia'
+import {ThemeEnum} from "~/enums/app";
+import {ProjectSetting} from "#/config";
+import store from "~/store";
+
+interface AppState {
+  darkMode?: ThemeEnum,
+  pageLoading: boolean,
+  projectConfig: ProjectSetting | null,
+}
+
+export const useAppStore = defineStore({
+  id: 'app',
+  state: (): AppState => ({
     darkMode: undefined,
     pageLoading: false,
-    projectConfig: undefined,
-  },
-  mutations: {
-    setProjectConfig: (state, projectConfig) => {
-      state.projectConfig = {...state.projectConfig, ...projectConfig};
+    projectConfig: null,
+  }),
+  getters: {
+    getProjectConfig: (state): ProjectSetting => {
+      return state.projectConfig as ProjectSetting;
     },
-    setPageLoading(state, loading) {
-      state.pageLoading = loading;
-    }
+    getPageLoading: (state): boolean => {
+      return state.pageLoading as boolean;
+    },
+    getDarkMode: (state): ThemeEnum => {
+      return state.darkMode as ThemeEnum;
+    },
   },
   actions: {
-    setPageLoading({commit}, loading) {
-      commit('setPageLoading', loading);
+    setPageLoading(loading: boolean) {
+      this.pageLoading = loading;
     },
-    setDarkMode({commit},mode) {
-      commit('darkMode', mode);
+    setDarkMode(mode: ThemeEnum) {
+      this.darkMode = mode;
     },
-    setProjectConfig({commit}, projectConfig) {
-      commit('setProjectConfig', projectConfig);
+    setProjectConfig(config: ProjectSetting) {
+      this.projectConfig = config;
     },
-  }
-};
+  },
+})
 
-export default app;
+export function useAppStoreWithOut() {
+  return useAppStore(store)
+}

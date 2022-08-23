@@ -1,35 +1,41 @@
-import {asyncRoutes} from '~/router/routes';
 import {fetchPermissions} from "~/api/account";
 import {buildRouteByBackMenu, buildRouteByRole} from "~/router/helper/routeHelper";
 import {transformRouteToMenu} from "~/router/helper/menuHelper";
-import store from "~/store";
-import {AppRouteRecordRaw} from "~/router/types";
+import {AppRouteRecordRaw, Menu} from "~/router/types";
 import {PermissionModeEnum} from "~/enums/permission";
+import {defineStore} from "pinia";
+import {useAppStore} from "~/store/modules/app";
+import store from "~/store";
 
-const permission = {
-  namespaced: true,
-  state: {
+interface PermissionState {
+  menus: Menu[],
+  permissions: string[] | number[],
+  isLoaded: boolean, // 是否已加载，该字段禁止缓存
+}
+
+export const usePermissionStore = defineStore({
+  id: 'permission',
+  state: (): PermissionState => ({
     menus: [],
     permissions: [],
-    isLoaded: false, // 是否已加载，该字段禁止缓存
-  },
-  mutations: {
-    SET_PERMISSIONS(state, {menus, permissions}) {
-      if (menus) state.menus = menus;
-      if (permissions) state.permissions = permissions;
-      state.isLoaded = true;
-    },
+    isLoaded: false,
+  }),
+  getters: {
+    getMenus: (state) => state.menus,
+    getPermissions: (state) => state.permissions,
+    getIsLoaded: (state) => state.isLoaded,
   },
   actions: {
     // 获取权限节点
-    getPermissions: async ({commit, dispatch}) => {
+    async getPermissions() {
       const {data: {data: permissions}} = await fetchPermissions();
-      commit('SET_PERMISSIONS', {permissions});
+      this.permissions = permissions;
       return Promise.resolve(permissions);
     },
     // 生成路由
-    buildRoutes: async ({commit, dispatch}) => {
-      const {permissionMode} = store.getters.getProjectConfig;
+    async buildRoutes() {
+      const appStore = useAppStore();
+      const {permissionMode} = appStore.getProjectConfig;
       let routes: AppRouteRecordRaw[] = [];
 
       switch (permissionMode) {
@@ -37,16 +43,19 @@ const permission = {
           routes = await buildRouteByRole();
           break;
         case PermissionModeEnum.BACK_MENU:// 后端菜单模式，根据后端返回的菜单生成路由
-          await dispatch('getPermissions');
+          await this.getPermissions();
           routes = await buildRouteByBackMenu();
           break;
       }
 
-      const menus = transformRouteToMenu(routes);
+      const menus = transformRouteToMenu(routes) as unknown as Menu[];
       menus.sort((a, b) => (a?.sort || 0) - (b?.sort || 0));
-      commit('SET_PERMISSIONS', {menus});
+      this.menus = menus;
       return Promise.resolve(routes);
     }
   }
-};
-export default permission;
+});
+
+export function usePermissionStoreWithOut() {
+  return usePermissionStore(store);
+}

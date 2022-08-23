@@ -1,5 +1,5 @@
 import {createFetch} from "@vueuse/core";
-import store from "~/store";
+import store from "~/store_bak";
 import utils from "~/utils/utils.js";
 
 /**

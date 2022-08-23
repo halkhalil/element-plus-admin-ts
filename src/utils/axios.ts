@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Qs from 'qs';
-import store from "~/store";
+import store from "~/store_bak";
 import {ElMessage} from "element-plus";
 
 import {router} from "~/router";

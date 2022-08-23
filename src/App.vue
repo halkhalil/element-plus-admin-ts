@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import {configItemsApi} from '~/api/configs'
 import {useRootSetting} from '~/composables/setting/useRootSeeting'
-import store from "~/store";
+import store from "~/store_bak";
 
 const {getGlobalSize} = useRootSetting();
 configItemsApi().then((response) => {

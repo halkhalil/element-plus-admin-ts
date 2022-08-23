@@ -5,7 +5,7 @@ import {warn} from "~/utils/log";
 import {fetchMenus} from "~/api/account";
 import {asyncRoutes} from "~/router/routes";
 import {RoleEnum} from "~/enums/permission";
-import store from "~/store";
+import store from "~/store_bak";
 
 
 let dynamicViewsModules: Record<string, () => Promise<Record<any, any>>>;

@@ -2,7 +2,7 @@ import {asyncRoutes} from '~/router/routes';
 import {fetchPermissions} from "~/api/account";
 import {buildRouteByBackMenu, buildRouteByRole} from "~/router/helper/routeHelper";
 import {transformRouteToMenu} from "~/router/helper/menuHelper";
-import store from "~/store";
+import store from "~/store_bak";
 import {AppRouteRecordRaw} from "~/router/types";
 import {PermissionModeEnum} from "~/enums/permission";
 

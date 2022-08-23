@@ -1,11 +1,49 @@
 import * as personal from '~/api/account';
 import {RoleEnum} from "~/enums/permission";
+import {defineStore} from "pinia";
 
 interface UserState {
   accessToken: string,
   user: object,
   roles: string[],
 }
+
+export const useUserStore = defineStore({
+  id: 'user',
+  state: (): UserState => ({
+    accessToken: '',
+    user: {},
+    roles: [],
+  }),
+  getters: {},
+  actions: {
+    setToken(token) {
+      this.accessToken = token;
+    },
+    setRoles(roles: string[]) {
+      this.roles = roles;
+    },
+    setUser(user) {
+      this.user = user;
+    },
+    async login(params) {
+      const {data: {data}} = await personal.login(params);
+      this.accessToken = data.access_token;
+      return data;
+    },
+    async logout() {
+      await personal.logout();
+      this.accessToken = null;
+      this.user = null;
+    },
+    async getUserInfo() {
+      const {data: {data: {roles, ...user}}} = await personal.info();
+      this.user = user;
+      this.roles = roles.map(item => item.name);
+      return user;
+    },
+  }
+})
 
 const user = {
   namespaced: true,
@@ -42,7 +80,7 @@ const user = {
       commit('setRoles', roles.map(item => item.name));
       return user;
     },
-    setToken({commit},token){
+    setToken({commit}, token) {
       commit('setAccessToken', token);
     },
     async setRoles({commit}, roles: RoleEnum[]) {
