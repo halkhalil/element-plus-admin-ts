@@ -1,10 +1,9 @@
-import {computed} from "vue";
-import {useStore} from "vuex";
+import {useUserStore} from "~/store/modules/user";
 
 export function useUser() {
-  const {getters} = useStore();
-  const getUser = computed(() => getters.getUser);
-  const getToken = computed(() => getters.getAccessToken);
+  const userStore = useUserStore();
+  const getUser = userStore.getUser;
+  const getToken = userStore.getAccessToken;
 
   return {
     getUser,

@@ -1,19 +1,15 @@
 import {computed, unref} from 'vue'
-import store from "~/store_bak";
+import {useAppStore} from "~/store/modules/app";
 
-/**
- * headerSetting
- * @returns {any}
- */
 export function useHeaderSetting() {
 
-  const {dispatch, getters} = store;
-  const getHeaderSetting = computed(() => getters.getHeaderSetting);
-  const getHeaderFixed = computed(() => unref(getHeaderSetting).fixed);
+  const appStore = useAppStore();
 
-  async function setHeaderSetting(options) {
-    const headerSetting = {...getHeaderSetting.value, ...options};
-    await dispatch('app/setProjectConfig', {headerSetting});
+  const getHeaderSetting = appStore.getHeaderSetting;
+  const getHeaderFixed = computed(() => appStore.getHeaderSetting?.fixed);
+
+  function setHeaderSetting(options) {
+    appStore.setProjectConfig({headerSetting: {...getHeaderSetting, ...options}})
   }
 
   async function toggleHeaderFixed() {
@@ -21,8 +17,9 @@ export function useHeaderSetting() {
   }
 
   return {
+    toggleHeaderFixed,
+
     getHeaderSetting,
     getHeaderFixed,
-    toggleHeaderFixed,
   };
 }

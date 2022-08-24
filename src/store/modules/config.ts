@@ -1,12 +1,21 @@
-const config = {
-  namespaced: true,
-  state: {
+import {defineStore} from "pinia";
+import store from "~/store";
+
+interface ConfigState {
+  configs: object,
+}
+
+export const useConfigStore = defineStore({
+  id: 'config',
+  state: (): ConfigState => ({
     configs: {},
+  }),
+  getters: {
+    getConfigs: (state) => state.configs,
   },
-  mutations: {
-    setConfig(state, configs) {
-      state.configs = configs;
-    },
-  },
-};
-export default config;
+  actions: {}
+})
+
+export function useConfigStoreWithOut() {
+  return useConfigStore(store)
+}

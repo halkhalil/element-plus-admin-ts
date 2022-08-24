@@ -1,10 +1,11 @@
 import {defineStore} from 'pinia'
 import {ThemeEnum} from "~/enums/app";
-import {ProjectSetting} from "#/config";
+import {HeaderSetting, MenuSetting, ProjectSetting, TabSetting, TransitionSetting} from "#/config";
 import store from "~/store";
+import {merge} from 'lodash-es'
 
 interface AppState {
-  darkMode?: ThemeEnum,
+  darkMode?: ThemeEnum | null,
   pageLoading: boolean,
   projectConfig: ProjectSetting | null,
 }
@@ -12,32 +13,47 @@ interface AppState {
 export const useAppStore = defineStore({
   id: 'app',
   state: (): AppState => ({
-    darkMode: undefined,
+    darkMode: null,
     pageLoading: false,
     projectConfig: null,
   }),
   getters: {
-    getProjectConfig: (state): ProjectSetting => {
-      return state.projectConfig as ProjectSetting;
+    getProjectConfig(): ProjectSetting {
+      return this.projectConfig || ({} as ProjectSetting);
     },
-    getPageLoading: (state): boolean => {
-      return state.pageLoading as boolean;
+    getPageLoading(): boolean {
+      return this.pageLoading;
     },
-    getDarkMode: (state): ThemeEnum => {
-      return state.darkMode as ThemeEnum;
+    getDarkMode(): ThemeEnum {
+      return this.darkMode as ThemeEnum;
+    },
+    getMenuSetting(): MenuSetting {
+      return this.getProjectConfig.menuSetting;
+    },
+    getHeaderSetting(): HeaderSetting {
+      return this.getProjectConfig.headerSetting;
+    },
+    getTransitionSetting(): TransitionSetting {
+      return this.getProjectConfig.transitionSetting;
+    },
+    getTabSetting(): TabSetting {
+      return this.getProjectConfig.tabSetting;
     },
   },
   actions: {
-    setPageLoading(loading: boolean) {
+    setPageLoading(loading: boolean): void {
       this.pageLoading = loading;
     },
-    setDarkMode(mode: ThemeEnum) {
+    setDarkMode(mode: ThemeEnum): void {
       this.darkMode = mode;
     },
-    setProjectConfig(config: ProjectSetting) {
-      this.projectConfig = config;
+    setProjectConfig(config: Partial<ProjectSetting>): void {
+      this.projectConfig = merge(this.projectConfig || {}, config) as ProjectSetting;
     },
   },
+  persist: {
+    enabled: true
+  }
 })
 
 export function useAppStoreWithOut() {

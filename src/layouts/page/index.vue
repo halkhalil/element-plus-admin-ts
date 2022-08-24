@@ -16,9 +16,9 @@ import {useStore} from 'vuex';
 import {useTransitionSetting} from "~/composables/setting/useTransitionSeeting";
 import {useRootSetting} from "~/composables/setting/useRootSeeting";
 import {_RouteLocationBase} from "vue-router";
+import {useTabStore} from "~/store/modules/tab";
 
-const {getters} = useStore();
-const getCachedViews = getters.getCachedTabs;
+const getCachedViews = useTabStore().getCachedTabs;
 
 const {getEnableTransition, getBasicTransition} = useTransitionSetting();
 const {getOpenKeepAlive} = useRootSetting();

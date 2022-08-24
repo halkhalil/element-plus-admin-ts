@@ -1,11 +1,13 @@
-import store from "~/store_bak";
 import {Router, RouteRecordRaw} from "vue-router";
 import {PageEnum} from "~/enums/page";
+import {useUserStore} from "~/store/modules/user";
+import {usePermissionStore} from "~/store/modules/permission";
 
 const whiteList: PageEnum[] = [PageEnum.LOGIN];
 
 export function createPermissionGuard(router: Router) {
-  const {dispatch, getters} = store;
+  const userStore = useUserStore();
+  const permissionStore = usePermissionStore();
   router.beforeEach(async (to, from, next) => {
 
     // 外链路由, 从新标签打开，返回上一个路由
@@ -17,10 +19,10 @@ export function createPermissionGuard(router: Router) {
 
     if (whiteList.indexOf(to.path as PageEnum) !== -1) { // 白名单，直接进入
       next();
-    } else if (getters.getAccessToken) { // 已登录 拉取用户信息,过滤权限路由,动态注册路由
-      if (!getters.getUser) await dispatch('user/getUserInfo');
-      if (!getters.getIsLoaded) {
-        const accessRoutes: RouteRecordRaw[] = await dispatch('permission/buildRoutes');
+    } else if (userStore.getToken) { // 已登录 拉取用户信息,过滤权限路由,动态注册路由
+      if (!userStore.getUser) await userStore.fetchUserInfo();
+      if (!permissionStore.getIsLoaded) {
+        const accessRoutes: RouteRecordRaw[] = await permissionStore.buildRoutes();
         accessRoutes.forEach(item => router.addRoute(item));
         next({path: to.fullPath, replace: true, query: to.query});
       } else {

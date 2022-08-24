@@ -1,11 +1,8 @@
-import {useStore} from "vuex";
-import {computed} from "vue";
+import {usePermissionStore} from "~/store/modules/permission";
 
 export function useLayoutMenus() {
-  const {getters} = useStore();
-  const getMenus = computed(() => {
-    return getters.getMenus;
-  });
+  const permissionStore = usePermissionStore();
+  const getMenus = permissionStore.getMenus;
 
   return {
     getMenus

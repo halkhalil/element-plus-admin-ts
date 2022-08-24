@@ -1,5 +1,8 @@
 import {computed, unref} from 'vue'
 import store from "~/store_bak";
+import {useAppStore} from "~/store/modules/app";
+import {TransitionSetting} from "#/config";
+import {TransitionEnum} from "~/enums/app";
 
 /**
  * 动画设置
@@ -7,21 +10,19 @@ import store from "~/store_bak";
  */
 export function useTransitionSetting() {
 
-  const {dispatch, getters} = store;
-  const getTransitionSetting = computed(() => getters.getTransitionSetting);
-  const getEnableTransition = computed(() => unref(getTransitionSetting).enable);
-  const getOpenNProgress = computed(() => unref(getTransitionSetting).openNProgress);
-  const getOpenPageLoading = computed(() => unref(getTransitionSetting).openPageLoading);
-  const getBasicTransition = computed(() => unref(getTransitionSetting).basicTransition);
+  const appStore = useAppStore();
+  const getTransitionSetting = appStore.getTransitionSetting;
+  console.log(appStore.getTransitionSetting)
+  const getEnableTransition = computed(() => appStore.getTransitionSetting?.enable);
+  const getOpenNProgress = computed(() => appStore.getTransitionSetting?.openNProgress);
+  const getOpenPageLoading = computed(() => appStore.getTransitionSetting?.openPageLoading);
+  const getBasicTransition = computed(() => appStore.getTransitionSetting?.basicTransition);
 
-
-
-  async function setTransitionSetting(options) {
-    const transitionSetting = {...unref(getTransitionSetting), ...options};
-    await dispatch('app/setProjectConfig', {transitionSetting});
+  async function setTransitionSetting(transitionSetting: Partial<TransitionSetting>) {
+    appStore.setProjectConfig({transitionSetting: {...getTransitionSetting, ...transitionSetting}})
   }
 
-  async function setBasicTransition(name) {
+  async function setBasicTransition(name: TransitionEnum) {
     await setTransitionSetting({basicTransition: name});
   }
 
@@ -36,7 +37,6 @@ export function useTransitionSetting() {
   async function toggleOpenPageLoading() {
     await setTransitionSetting({openPageLoading: !unref(getOpenPageLoading)});
   }
-
 
   return {
     setBasicTransition,

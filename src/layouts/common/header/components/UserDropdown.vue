@@ -29,13 +29,13 @@
 </template>
 <script lang="ts" setup>
 import {useUser} from "~/composables/useUser";
-import {useStore} from "vuex";
+import {useUserStore} from "~/store/modules/user";
 
 const {getUser} = useUser();
-const {dispatch} = useStore()
+const userStore = useUserStore()
 
 const logout = async () => {
-  await dispatch('user/logout');
+  await userStore.fetchLogout();
   location.reload();
 }
 </script>

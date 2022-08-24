@@ -27,7 +27,7 @@ export const usePermissionStore = defineStore({
   },
   actions: {
     // 获取权限节点
-    async getPermissions() {
+    async fetchPermissions() {
       const {data: {data: permissions}} = await fetchPermissions();
       this.permissions = permissions;
       return Promise.resolve(permissions);
@@ -35,6 +35,7 @@ export const usePermissionStore = defineStore({
     // 生成路由
     async buildRoutes() {
       const appStore = useAppStore();
+      console.log(appStore.getProjectConfig);
       const {permissionMode} = appStore.getProjectConfig;
       let routes: AppRouteRecordRaw[] = [];
 
@@ -43,7 +44,7 @@ export const usePermissionStore = defineStore({
           routes = await buildRouteByRole();
           break;
         case PermissionModeEnum.BACK_MENU:// 后端菜单模式，根据后端返回的菜单生成路由
-          await this.getPermissions();
+          await this.fetchPermissions();
           routes = await buildRouteByBackMenu();
           break;
       }
@@ -51,6 +52,7 @@ export const usePermissionStore = defineStore({
       const menus = transformRouteToMenu(routes) as unknown as Menu[];
       menus.sort((a, b) => (a?.sort || 0) - (b?.sort || 0));
       this.menus = menus;
+      this.isLoaded = true;
       return Promise.resolve(routes);
     }
   }

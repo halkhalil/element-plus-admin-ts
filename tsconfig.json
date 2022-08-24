@@ -16,7 +16,10 @@
     "paths": {
       "~/*": ["src/*"],
       "#/*": ["types/*"]
-    }
+    },
+    "types": [
+      "pinia-plugin-persist"
+    ]
   },
   "include": [
     "src/**/*.ts",

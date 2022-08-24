@@ -37,9 +37,9 @@
 
 <script lang="ts" setup>
 import {reactive, ref} from "vue";
-import {useStore} from 'vuex'
 import {RouteLocationRaw, useRouter} from "vue-router";
 import {FormInstance} from "element-plus";
+import {useUserStore} from "~/store/modules/user";
 
 const title = import.meta.env.VITE_TITLE;
 const formElRef = ref<FormInstance>()
@@ -50,14 +50,14 @@ const rules = reactive({
 })
 const loading = ref(false)
 
-const {dispatch} = useStore();
+const userStore = useUserStore();
 const {push, currentRoute} = useRouter();
 
 const login = async (formEl: FormInstance) => {
   formEl?.validate(async (valid) => {
     if (valid) {
       loading.value = true;
-      const {access_token} = await dispatch('user/login', form);
+      const {access_token} = await userStore.login(form);
       if (access_token) {
         const {query: {redirect, ...otherQuery}} = currentRoute.value;
         await push({path: redirect || '/', query: {...otherQuery}} as RouteLocationRaw);

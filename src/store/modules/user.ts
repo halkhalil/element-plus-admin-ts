@@ -1,26 +1,31 @@
 import * as personal from '~/api/account';
 import {RoleEnum} from "~/enums/permission";
 import {defineStore} from "pinia";
+import store from "~/store";
 
 interface UserState {
-  accessToken: string,
-  user: object,
-  roles: string[],
+  token: string | null,
+  user: object | null,
+  roles: RoleEnum[],
 }
 
 export const useUserStore = defineStore({
   id: 'user',
   state: (): UserState => ({
-    accessToken: '',
-    user: {},
+    token: null,
+    user: null,
     roles: [],
   }),
-  getters: {},
+  getters: {
+    getToken: (state) => state.token,
+    getUser: (state) => state.user,
+    getRoles: (state) => state.roles,
+  },
   actions: {
     setToken(token) {
-      this.accessToken = token;
+      this.token = token;
     },
-    setRoles(roles: string[]) {
+    setRoles(roles: RoleEnum[]) {
       this.roles = roles;
     },
     setUser(user) {
@@ -28,64 +33,26 @@ export const useUserStore = defineStore({
     },
     async login(params) {
       const {data: {data}} = await personal.login(params);
-      this.accessToken = data.access_token;
+      this.token = data.access_token;
       return data;
     },
-    async logout() {
+    async fetchLogout() {
       await personal.logout();
-      this.accessToken = null;
-      this.user = null;
+      this.setToken(null);
+      this.setUser(null);
     },
-    async getUserInfo() {
+    async fetchUserInfo() {
       const {data: {data: {roles, ...user}}} = await personal.info();
-      this.user = user;
-      this.roles = roles.map(item => item.name);
+      this.setUser(user)
+      this.setRoles(roles.map(item => item.name))
       return user;
     },
+  },
+  persist: {
+    enabled: true
   }
 })
 
-const user = {
-  namespaced: true,
-  state: {
-    accessToken: undefined,
-    user: undefined,
-    roles: [],
-  },
-  mutations: {
-    setAccessToken: (state, accessToken: string) => {
-      state.accessToken = accessToken;
-    },
-    setUser: (state, user: object | null) => {
-      state.user = user;
-    },
-    setRoles: (state, roles: string[]) => {
-      state.roles = roles;
-    },
-  },
-  actions: {
-    async login({commit}, params) {
-      const {data: {data}} = await personal.login(params);
-      commit('setAccessToken', data.access_token);
-      return data;
-    },
-    async logout({commit}) {
-      await personal.logout();
-      commit('setAccessToken', undefined);
-      commit('setUser', undefined);
-    },
-    async getUserInfo({commit}) {
-      const {data: {data: {roles, ...user}}} = await personal.info();
-      commit('setUser', user);
-      commit('setRoles', roles.map(item => item.name));
-      return user;
-    },
-    setToken({commit}, token) {
-      commit('setAccessToken', token);
-    },
-    async setRoles({commit}, roles: RoleEnum[]) {
-      commit('setRoles', roles);
-    }
-  }
-};
-export default user;
+export function useUserStoreWithOut() {
+  return useUserStore(store);
+}

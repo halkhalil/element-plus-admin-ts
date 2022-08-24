@@ -1,9 +1,11 @@
-import store from "~/store_bak";
 import {setting} from "~/settings/projectSetting";
+import {useAppStore} from "~/store/modules/app";
+import {isEmpty} from "lodash-es";
 
 export const setupProjectConfig = async () => {
-  const {getters, dispatch} = store;
-  if (!getters.getProjectConfig) {
-    await dispatch('app/setProjectConfig', setting)
+  const appStore = useAppStore();
+
+  if (isEmpty(appStore.getProjectConfig)) {
+    appStore.setProjectConfig(setting);
   }
 }

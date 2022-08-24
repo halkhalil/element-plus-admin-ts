@@ -11,10 +11,11 @@ import SubMenu from "~/layouts/common/menu/SubMenu.vue";
 import SidebarLogo from "~/layouts/common/menu/SidebarLogo.vue";
 import {useMenuSetting} from "~/composables/setting/useMenuSeeting";
 import {useRootSetting} from "~/composables/setting/useRootSeeting";
-import {useLayoutMenus} from "~/layouts/common/menu/useLayoutMenus";
+// import {useLayoutMenus} from "~/layouts/common/menu/useLayoutMenus";
+import {usePermissionStore} from "~/store/modules/permission";
 
 const {currentRoute} = useRouter();
-const {getMenus} = useLayoutMenus();
+const {getMenus} = usePermissionStore();
 const {getMenuSetting} = useMenuSetting();
 const {getShowSidebarLogo} = useRootSetting();
 
