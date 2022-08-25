@@ -1,19 +1,17 @@
-import {computed, unref} from 'vue'
-import store from "~/store_bak";
+import {computed} from 'vue'
+import {useAppStore} from "~/store/modules/app";
 
 export function useTabSetting() {
 
-  const {dispatch, getters} = store;
-  const getTabSetting = computed(() => getters.getTabSetting);
-  const getEnableTab = computed(() => unref(getTabSetting)?.enable);
+  const appStore = useAppStore();
+  const getEnableTab = computed(() => appStore.getTabSetting.enable);
 
-  async function setTabSetting(options) {
-    const tabSetting = {...unref(getTabSetting), ...options};
-    await dispatch('app/setProjectConfig', {tabSetting});
+  async function setTabSetting(setting) {
+    appStore.setProjectConfig({tabSetting: {...appStore.getTabSetting, ...setting}})
   }
 
   async function toggleEnableTab() {
-    await setTabSetting({enable: !unref(getEnableTab)})
+    await setTabSetting({enable: !getEnableTab.value})
   }
 
   return {

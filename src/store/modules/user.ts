@@ -1,7 +1,7 @@
-import * as personal from '~/api/account';
-import {RoleEnum} from "~/enums/permission";
 import {defineStore} from "pinia";
 import store from "~/store";
+import * as personal from '~/api/account';
+import {RoleEnum} from "~/enums/permission";
 
 interface UserState {
   token: string | null,
@@ -17,9 +17,15 @@ export const useUserStore = defineStore({
     roles: [],
   }),
   getters: {
-    getToken: (state) => state.token,
-    getUser: (state) => state.user,
-    getRoles: (state) => state.roles,
+    getToken(): string | null {
+      return this.token;
+    },
+    getUser(): object | null {
+      return this.user;
+    },
+    getRoles(): RoleEnum[] {
+      return this.roles;
+    },
   },
   actions: {
     setToken(token) {
@@ -31,10 +37,9 @@ export const useUserStore = defineStore({
     setUser(user) {
       this.user = user;
     },
-    async login(params) {
+    async fetchLogin(params) {
       const {data: {data}} = await personal.login(params);
-      this.token = data.access_token;
-      return data;
+      this.setToken(data.access_token);
     },
     async fetchLogout() {
       await personal.logout();
@@ -45,7 +50,6 @@ export const useUserStore = defineStore({
       const {data: {data: {roles, ...user}}} = await personal.info();
       this.setUser(user)
       this.setRoles(roles.map(item => item.name))
-      return user;
     },
   },
   persist: {

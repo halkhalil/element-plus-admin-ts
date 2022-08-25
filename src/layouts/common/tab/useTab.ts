@@ -1,27 +1,25 @@
 import path from "path";
-import store from "~/store_bak";
 import {RouteLocation, RouteRecord, useRouter} from "vue-router";
 import {computed, nextTick, onMounted, Ref, ref, unref, UnwrapRef, watch} from 'vue';
+import {useTabStore} from "~/store/modules/tab";
 
 export function useTab() {
 
-  const {getters, dispatch} = store;
+  const tabStore = useTabStore();
   const {push, replace, currentRoute, getRoutes} = useRouter();
 
   const scrollbarRef: UnwrapRef<any> = ref();
   const getTabRefs: Ref<UnwrapRef<any[]>> = ref([]);
   const getSelectTab = ref();
-  const getVisitedTabs = computed(() => getters.getVisitedTabs);
+  const getVisitedTabs = computed(() => tabStore.getVisitedTabs);
 
-  /**
-   * 初始化视图
-   * @returns {Promise<void>}
-   */
-  async function initTabs() {
+  // 初始化视图
+  function initTabs() {
     const affixTabs = filterAffixTabs(getRoutes());
     for (const tab of affixTabs) {
       const {name, path, fullPath, meta} = tab as RouteLocation;
-      name && await dispatch('tab/addVisitedTab', {name, path, fullPath, meta});
+      name && tabStore.addVisitedTab( {name, path, fullPath, meta});
+
     }
   }
 
@@ -36,49 +34,35 @@ export function useTab() {
     await replace({path: fullPath})
   }
 
-  /**
-   * 添加视图
-   * @returns {Promise<void>}
-   */
-  async function addTab() {
+  // 添加视图
+  function addTab() {
     const {name, path, fullPath, meta} = currentRoute.value
-    !meta?.hideTab && name && await dispatch('tab/addTab', {name, path, fullPath, meta});
+    !meta?.hideTab && name && tabStore.addTab({name, path, fullPath, meta});
+
   }
 
-  /**
-   * 关闭视图
-   * @param tab
-   * @returns {Promise<void>}
-   */
+  // 关闭视图
   async function closeTab({name, path, fullPath, meta}: RouteLocation) {
-    const {visitedTabs} = await dispatch('tab/delTab', {name, path, fullPath, meta});
+    const {visitedTabs} = tabStore.delTab({name, path, fullPath, meta});
     if (tabIsActive({name, path, fullPath, meta} as RouteLocation)) {
       await toLastTab(visitedTabs, {name, path, fullPath, meta} as RouteLocation);
     }
   }
 
-  /**
-   * 刷新视图
-   * @param tab
-   * @returns {Promise<void>}
-   */
+  // 刷新视图
   async function refreshTab({name, path, fullPath, meta}: RouteLocation) {
-    await dispatch('tab/delCachedTab', {name, path, fullPath, meta});
+    tabStore.delCachedTab({name, path, fullPath, meta})
     await nextTick(() => {
       replace({path: '/redirect' + fullPath});
     })
   }
 
-  /**
-   * 关闭其他视图
-   * @param tab
-   * @returns {Promise<void>}
-   */
+  // 关闭其他视图
   async function closeOtherTab({name, path, fullPath, meta}: RouteLocation) {
     if (fullPath !== currentRoute.value.fullPath) {
       await push({name, path, fullPath, meta} as RouteLocation);
     }
-    await dispatch('tab/delOtherTabs', currentRoute);
+    tabStore.delOtherTabs(currentRoute)
     await moveToCurrentTab();
   }
 
@@ -87,7 +71,7 @@ export function useTab() {
    * @param tab
    */
   async function closeAllTab(tab: RouteLocation) {
-    const {visitedTabs} = await dispatch('tab/delAllTabs');
+    const {visitedTabs} = tabStore.delAllTabs();
     await toLastTab(visitedTabs, tab);
   }
 
@@ -124,7 +108,7 @@ export function useTab() {
         if (tag.$attrs.route.path === unref(currentRoute).path) {
           moveToTarget(tag)
           if (tag.$attrs.route.fullPath !== unref(currentRoute).fullPath) {
-            await dispatch('tab/updateVisitedTab', unref(currentRoute))
+            tabStore.updateVisitedTab(currentRoute.value)
           }
           break
         }

@@ -5,12 +5,9 @@
 </template>
 
 <script setup lang="ts">
-import {configItemsApi} from '~/api/configs'
 import {useRootSetting} from '~/composables/setting/useRootSeeting'
-import store from "~/store_bak";
+import {useConfigStore} from "~/store/modules/config";
 
 const {getGlobalSize} = useRootSetting();
-configItemsApi().then((response) => {
-  store.commit('config/setConfig', response.data.data);
-});
+useConfigStore().setConfig();
 </script>

@@ -1,14 +1,15 @@
 import {unref} from 'vue'
 import {useTransitionSetting} from "~/composables/setting/useTransitionSeeting";
-import store from "~/store_bak";
-import {Router} from "vue-router";
+import type {Router} from "vue-router";
+import {useAppStore} from "~/store/modules/app";
 
 
-export function createPageLoadingGuard(router:Router) {
+export function createPageLoadingGuard(router: Router) {
+  const appStore = useAppStore();
   const {getOpenPageLoading} = useTransitionSetting();
   router.beforeEach(async ({meta}) => {
     if (meta.loaded) return true;
-    if (unref(getOpenPageLoading)) await store.dispatch('app/setPageLoading', true);
+    if (unref(getOpenPageLoading)) appStore.setPageLoading(true);
     return true;
   });
 
@@ -16,7 +17,7 @@ export function createPageLoadingGuard(router:Router) {
     if (meta.loaded) return true;
     if (unref(getOpenPageLoading)) {
       setTimeout(async () => {
-        await store.dispatch('app/setPageLoading', false);
+        appStore.setPageLoading(false)
       }, 1000);
     }
     return true;

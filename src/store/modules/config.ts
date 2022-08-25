@@ -1,5 +1,6 @@
 import {defineStore} from "pinia";
 import store from "~/store";
+import {configItemsApi} from "~/api/configs";
 
 interface ConfigState {
   configs: object,
@@ -13,7 +14,15 @@ export const useConfigStore = defineStore({
   getters: {
     getConfigs: (state) => state.configs,
   },
-  actions: {}
+  actions: {
+    async setConfig() {
+      const {data: {data}} = await configItemsApi();
+      this.configs = data;
+    }
+  },
+  persist: {
+    enabled: true
+  }
 })
 
 export function useConfigStoreWithOut() {

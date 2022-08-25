@@ -1,5 +1,4 @@
 import {computed, unref} from 'vue'
-import store from "~/store_bak";
 import {useAppStore} from "~/store/modules/app";
 import {TransitionSetting} from "#/config";
 import {TransitionEnum} from "~/enums/app";
@@ -12,7 +11,6 @@ export function useTransitionSetting() {
 
   const appStore = useAppStore();
   const getTransitionSetting = appStore.getTransitionSetting;
-  console.log(appStore.getTransitionSetting)
   const getEnableTransition = computed(() => appStore.getTransitionSetting?.enable);
   const getOpenNProgress = computed(() => appStore.getTransitionSetting?.openNProgress);
   const getOpenPageLoading = computed(() => appStore.getTransitionSetting?.openPageLoading);

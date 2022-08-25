@@ -1,17 +1,20 @@
 import {computed, unref} from "vue";
-import store from "~/store_bak";
 import {isString} from "~/utils/is";
 import {PermissionEnum, PermissionModeEnum, RoleEnum} from "~/enums/permission";
 import {resetRouter, router} from "~/router";
 import {useRootSetting} from "~/composables/setting/useRootSeeting";
+import {usePermissionStore} from "~/store/modules/permission";
+import {useUserStore} from "~/store/modules/user";
+import {RouteRecordRaw} from "vue-router";
 
 type Permission = RoleEnum | PermissionEnum | string;
 
 export function usePermission() {
-  const {getters, dispatch} = store;
+  const userStore = useUserStore();
+  const permissionStore = usePermissionStore();
   const {getPermissionMode} = useRootSetting();
-  const getPermissions = computed(() => getters.getPermissions);
-  const getRoles = computed(() => getters.getRoles);
+  const getPermissions = computed(() => permissionStore.getPermissions);
+  const getRoles = computed(() => userStore.getRoles);
 
   /**
    * 权限校验
@@ -22,7 +25,7 @@ export function usePermission() {
     if (!value) return def;
     const checks = isString(value) ? [value] : value;
     if (getPermissionMode.value == PermissionModeEnum.FRONT_MENU) {
-      const getRoles = computed(() => getters.getRoles);
+      const getRoles = computed(() => userStore.getRoles);
       return unref(getRoles).some(item => checks.includes(item as RoleEnum));
     }
 
@@ -39,10 +42,10 @@ export function usePermission() {
    */
   const changeRoles = async (roles: RoleEnum | RoleEnum[]) => {
     const _roles = isString(roles) ? [roles] : roles;
-    await dispatch('user/setRoles', _roles);
+    userStore.setRoles(_roles as RoleEnum[])
     resetRouter();
-    const routes = await dispatch('permission/buildRoutes');
-    routes.forEach(route => router.addRoute(route));
+    const routes = await permissionStore.buildRoutes();
+    routes.forEach(route => router.addRoute(route as unknown as RouteRecordRaw));
   }
 
   return {

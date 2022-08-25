@@ -35,7 +35,6 @@ export const usePermissionStore = defineStore({
     // 生成路由
     async buildRoutes() {
       const appStore = useAppStore();
-      console.log(appStore.getProjectConfig);
       const {permissionMode} = appStore.getProjectConfig;
       let routes: AppRouteRecordRaw[] = [];
 
@@ -55,7 +54,7 @@ export const usePermissionStore = defineStore({
       this.isLoaded = true;
       return Promise.resolve(routes);
     }
-  }
+  },
 });
 
 export function usePermissionStoreWithOut() {

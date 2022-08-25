@@ -1,6 +1,6 @@
 import {createFetch} from "@vueuse/core";
-import store from "~/store_bak";
 import utils from "~/utils/utils.js";
+import {useUserStore} from "~/store/modules/user";
 
 /**
  * 生成header
@@ -9,7 +9,8 @@ import utils from "~/utils/utils.js";
  */
 const buildHeaders = (headers) => {
   headers = {...headers, Accept: 'text/json'};
-  const token = store.getters.getAccessToken;
+
+  const token = useUserStore().getToken;
   if (token) {
     headers.Authorization = `Bearer ${token}`;
   }

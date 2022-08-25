@@ -50,15 +50,15 @@ const rules = reactive({
 })
 const loading = ref(false)
 
-const userStore = useUserStore();
 const {push, currentRoute} = useRouter();
 
 const login = async (formEl: FormInstance) => {
   formEl?.validate(async (valid) => {
     if (valid) {
       loading.value = true;
-      const {access_token} = await userStore.login(form);
-      if (access_token) {
+      const userStore = useUserStore();
+      await userStore.fetchLogin(form);
+      if (userStore.getToken) {
         const {query: {redirect, ...otherQuery}} = currentRoute.value;
         await push({path: redirect || '/', query: {...otherQuery}} as RouteLocationRaw);
         loading.value = false;
