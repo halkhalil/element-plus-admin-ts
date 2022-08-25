@@ -53,10 +53,10 @@ const loading = ref(false)
 const {push, currentRoute} = useRouter();
 
 const login = async (formEl: FormInstance) => {
+  const userStore = useUserStore();
   formEl?.validate(async (valid) => {
     if (valid) {
       loading.value = true;
-      const userStore = useUserStore();
       await userStore.fetchLogin(form);
       if (userStore.getToken) {
         const {query: {redirect, ...otherQuery}} = currentRoute.value;
