@@ -3,9 +3,8 @@ import Qs from 'qs';
 import {ElMessage} from "element-plus";
 
 import {router} from "~/router";
-import {useUserStoreWithOut} from "~/store/modules/user";
+import {useUserStore} from "~/store/modules/user";
 
-const userStore = useUserStoreWithOut();
 
 const handleParamInUrl = (url: string, params: any): string => {
   return url.replace(/:(\w+)/g, (_, key) => {
@@ -28,6 +27,7 @@ instance.interceptors.request.use(function (config) {
     config.data = Qs.stringify(config.data);
     config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
   }
+  const userStore = useUserStore();
   if (userStore.getToken) {
     config.headers['Authorization'] = 'Bearer ' + userStore.getToken;
   }

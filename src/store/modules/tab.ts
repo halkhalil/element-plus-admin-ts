@@ -77,6 +77,9 @@ export const useTabStore = defineStore({
       this.delAllCachedTabs();
     }
   },
+  persist: {
+    enabled: true,
+  }
 })
 
 export function useTabStoreWithOut() {

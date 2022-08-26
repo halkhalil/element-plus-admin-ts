@@ -55,6 +55,9 @@ export const usePermissionStore = defineStore({
       return Promise.resolve(routes);
     }
   },
+  persist: {
+    enabled: true
+  }
 });
 
 export function usePermissionStoreWithOut() {

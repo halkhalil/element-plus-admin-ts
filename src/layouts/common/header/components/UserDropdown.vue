@@ -28,11 +28,10 @@
   </div>
 </template>
 <script lang="ts" setup>
-import {useUser} from "~/composables/useUser";
 import {useUserStore} from "~/store/modules/user";
 
-const {getUser} = useUser();
 const userStore = useUserStore()
+const getUser = userStore.getUser || {}
 
 const logout = async () => {
   await userStore.fetchLogout();

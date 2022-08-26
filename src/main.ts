@@ -30,10 +30,9 @@ import "element-plus/theme-chalk/src/message.scss"
 
   setupPlugins(app);
 
-  // setupGlobalDirectives(app);
+  setupGlobalDirectives(app);
 
   registerGlobComp(app);
-
 
   await setupProjectConfig();
 

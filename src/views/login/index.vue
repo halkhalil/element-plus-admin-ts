@@ -59,6 +59,7 @@ const login = async (formEl: FormInstance) => {
       loading.value = true;
       await userStore.fetchLogin(form);
       if (userStore.getToken) {
+        console.log(userStore.getToken)
         const {query: {redirect, ...otherQuery}} = currentRoute.value;
         await push({path: redirect || '/', query: {...otherQuery}} as RouteLocationRaw);
         loading.value = false;
