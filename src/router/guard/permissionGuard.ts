@@ -2,6 +2,7 @@ import {Router, RouteRecordRaw} from "vue-router";
 import {PageEnum} from "~/enums/page";
 import {useUserStore, useUserStoreWithOut} from "~/store/modules/user";
 import {usePermissionStore} from "~/store/modules/permission";
+import {AppRouteRecordRaw} from "~/router/types";
 
 const whiteList: PageEnum[] = [PageEnum.LOGIN];
 
@@ -23,7 +24,7 @@ export function createPermissionGuard(router: Router) {
       console.log(userStore.getUser);
       if (!userStore.getUser) await userStore.fetchUserInfo();
       if (!permissionStore.getIsLoaded) {
-        const accessRoutes: RouteRecordRaw[] = await permissionStore.buildRoutes();
+        const accessRoutes: AppRouteRecordRaw[] = await permissionStore.buildRoutes();
         accessRoutes.forEach(item => router.addRoute(item));
         next({path: to.fullPath, replace: true, query: to.query});
       } else {
