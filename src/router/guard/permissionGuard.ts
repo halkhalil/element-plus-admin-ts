@@ -5,7 +5,7 @@ import {usePermissionStore} from "~/store/modules/permission";
 import {AppRouteRecordRaw} from "~/router/types";
 import store from "~/store";
 
-const whiteList: PageEnum[] = [PageEnum.LOGIN,PageEnum.HOME];
+const whiteList: PageEnum[] = [PageEnum.LOGIN];
 
 export function createPermissionGuard(router: Router) {
   router.beforeEach(async (to, from, next) => {
