@@ -18,7 +18,7 @@ export const useUserStore = defineStore({
   }),
   getters: {
     getToken(): string | null {
-      return this.token;
+      return this.token || localStorage.getItem('token');
     },
     getUser(): object | null {
       return this.userInfo;
@@ -30,6 +30,7 @@ export const useUserStore = defineStore({
   actions: {
     setToken(token) {
       this.token = token;
+      localStorage.setItem('token', token);
     },
     setRoles(roles: RoleEnum[]) {
       this.roles = roles;

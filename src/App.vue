@@ -7,9 +7,7 @@
 <script setup lang="ts">
 import {useRootSetting} from '~/composables/setting/useRootSeeting'
 import {useConfigStore} from "~/store/modules/config";
-import {useUserStore} from "~/store/modules/user";
 
 const {getGlobalSize} = useRootSetting();
 useConfigStore().setConfig();
-useUserStore().setToken('dsadsa');
 </script>

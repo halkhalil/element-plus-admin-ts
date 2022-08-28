@@ -20,9 +20,6 @@ export const useConfigStore = defineStore({
       this.configs = data;
     }
   },
-  persist: {
-    enabled: true
-  }
 })
 
 export function useConfigStoreWithOut() {
