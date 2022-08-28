@@ -1,5 +1,4 @@
 import {defineStore} from "pinia";
-import store from "~/store";
 import * as personal from '~/api/account';
 import {RoleEnum} from "~/enums/permission";
 
@@ -18,7 +17,7 @@ export const useUserStore = defineStore({
   }),
   getters: {
     getToken(): string | null {
-      return this.token || localStorage.getItem('token');
+      return this.token;
     },
     getUser(): object | null {
       return this.userInfo;
@@ -30,7 +29,6 @@ export const useUserStore = defineStore({
   actions: {
     setToken(token) {
       this.token = token;
-      localStorage.setItem('token', token);
     },
     setRoles(roles: RoleEnum[]) {
       this.roles = roles;
@@ -44,8 +42,8 @@ export const useUserStore = defineStore({
     },
     async fetchLogout() {
       await personal.logout();
-      // this.setToken(null);
-      // this.setUser(null);
+      this.setToken(null);
+      this.setUser(null);
     },
     async fetchUserInfo() {
       const {data: {data: {roles, ...user}}} = await personal.info();
@@ -57,7 +55,3 @@ export const useUserStore = defineStore({
     enabled: true
   }
 })
-
-export function useUserStoreWithOut() {
-  return useUserStore(store);
-}

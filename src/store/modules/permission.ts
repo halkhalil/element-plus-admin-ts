@@ -5,7 +5,6 @@ import {AppRouteRecordRaw, Menu} from "~/router/types";
 import {PermissionModeEnum} from "~/enums/permission";
 import {defineStore} from "pinia";
 import {useAppStore} from "~/store/modules/app";
-import store from "~/store";
 
 interface PermissionState {
   menus: Menu[],
@@ -56,7 +55,3 @@ export const usePermissionStore = defineStore({
     }
   },
 });
-
-export function usePermissionStoreWithOut() {
-  return usePermissionStore(store);
-}

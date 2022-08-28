@@ -1,5 +1,4 @@
 import {defineStore} from "pinia";
-import store from "~/store";
 
 export const useTabStore = defineStore({
   id: 'tab',
@@ -81,7 +80,3 @@ export const useTabStore = defineStore({
     enabled: true,
   }
 })
-
-export function useTabStoreWithOut() {
-  return useTabStore(store)
-}

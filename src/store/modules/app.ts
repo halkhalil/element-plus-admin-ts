@@ -1,7 +1,6 @@
 import {defineStore} from 'pinia'
 import {ThemeEnum} from "~/enums/app";
 import {HeaderSetting, MenuSetting, ProjectSetting, TabSetting, TransitionSetting} from "#/config";
-import store from "~/store";
 import {merge} from 'lodash-es'
 
 interface AppState {
@@ -55,7 +54,3 @@ export const useAppStore = defineStore({
     enabled: true
   }
 })
-
-export function useAppStoreWithOut() {
-  return useAppStore(store)
-}

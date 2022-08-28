@@ -1,5 +1,4 @@
 import {defineStore} from "pinia";
-import store from "~/store";
 import {configItemsApi} from "~/api/configs";
 
 interface ConfigState {
@@ -21,7 +20,3 @@ export const useConfigStore = defineStore({
     }
   },
 })
-
-export function useConfigStoreWithOut() {
-  return useConfigStore(store)
-}

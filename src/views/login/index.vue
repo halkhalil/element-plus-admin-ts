@@ -1,6 +1,6 @@
 <template>
-  <div class="login flex-col-center">
-    <el-form ref="formElRef" size="large" :model="form" :rules="rules" class="w-520px m-3">
+  <div class="login flex justify-center items-center">
+    <el-form ref="formElRef" size="large" :model="form" :rules="rules" class="max-w-90% translate-y--20">
       <el-row>
         <el-col>
           <h3 class="title">{{ title }}</h3>
@@ -9,8 +9,8 @@
           <el-form-item prop="username">
             <el-input v-model="form.username" placeholder="Username">
               <template #prefix>
-                <el-icon>
-                  <icon name='el-user' size="15"/>
+                <el-icon :size="15">
+                  <Icon icon='ep:user'/>
                 </el-icon>
               </template>
             </el-input>
@@ -20,8 +20,8 @@
           <el-form-item prop="username">
             <el-input v-model="form.password" placeholder="Password" show-password>
               <template #prefix>
-                <el-icon>
-                  <icon name='el-lock' size="15"/>
+                <el-icon :size="15">
+                  <Icon icon='ep:lock'/>
                 </el-icon>
               </template>
             </el-input>
@@ -39,7 +39,7 @@
 import {reactive, ref} from "vue";
 import {RouteLocationRaw, useRouter} from "vue-router";
 import {FormInstance} from "element-plus";
-import {useUserStore} from "~/store/modules/user";
+import {useStore} from "~/store";
 
 const title = import.meta.env.VITE_TITLE;
 const formElRef = ref<FormInstance>()
@@ -49,11 +49,10 @@ const rules = reactive({
   password: [{required: true, trigger: 'blur'}]
 })
 const loading = ref(false)
-
 const {push, currentRoute} = useRouter();
+const {userStore} = useStore();
 
 const login = async (formEl: FormInstance) => {
-  const userStore = useUserStore();
   formEl?.validate(async (valid) => {
     if (valid) {
       loading.value = true;

@@ -3,14 +3,15 @@ import {PageEnum} from "~/enums/page";
 import {useUserStore, useUserStoreWithOut} from "~/store/modules/user";
 import {usePermissionStore} from "~/store/modules/permission";
 import {AppRouteRecordRaw} from "~/router/types";
-import store from "~/store";
+import store, {useStore} from "~/store";
 
 const whiteList: PageEnum[] = [PageEnum.LOGIN];
 
 export function createPermissionGuard(router: Router) {
   router.beforeEach(async (to, from, next) => {
-    const permissionStore = usePermissionStore();
-    const userStore = useUserStore();
+    const {userStore,permissionStore} = useStore();
+    // const permissionStore = usePermissionStore();
+    // const userStore = useUserStore();
 
     // 外链路由, 从新标签打开，返回上一个路由
     if (to.meta.href) {

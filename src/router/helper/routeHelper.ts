@@ -5,9 +5,9 @@ import {warn} from "~/utils/log";
 import {fetchMenus} from "~/api/account";
 import {asyncRoutes} from "~/router/routes";
 import {RoleEnum} from "~/enums/permission";
-import {useUserStoreWithOut} from "~/store/modules/user";
+import {useUserStore} from "~/store/modules/user";
 
-const userStore = useUserStoreWithOut();
+
 
 let dynamicViewsModules: Record<string, () => Promise<Record<any, any>>>;
 
@@ -37,6 +37,7 @@ const dynamicImport = (dynamicViewsModules: Record<string, () => Promise<Record<
  * 根据用户角色过滤路由
  */
 export const buildRouteByRole = async () => {
+  const userStore = useUserStore();
   let routes = asyncRoutes;
   const roleList = userStore.getRoles;
 
