@@ -18,8 +18,7 @@ export function useTab() {
     const affixTabs = filterAffixTabs(getRoutes());
     for (const tab of affixTabs) {
       const {name, path, fullPath, meta} = tab as RouteLocation;
-      name && tabStore.addVisitedTab( {name, path, fullPath, meta});
-
+      name && tabStore.addVisitedTab({name, path, fullPath, meta});
     }
   }
 
