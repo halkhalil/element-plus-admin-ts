@@ -1,25 +1,32 @@
 <template>
   <div class="page-wrapper w-full min-h-full" :class="$props.class">
-    <div class="page-header">
-      <slot name="header">
-        <div class="flex justify-between">
-          <div class="page-header-wrap flex items-end">
-            <slot name="title">
-              <div class="page-header-title text-xl">{{ title }}</div>
-            </slot>
-            <div class="page-header-sub-title text-gray-500 text-xs ml-2 ">
-              <slot name="sub-title">{{ subTitle }}</slot>
-            </div>
-          </div>
-          <div>
-            <slot name="extra"></slot>
-          </div>
-        </div>
-        <div class="page-content text-gray-500">
-          <slot name="content"> {{ content }}</slot>
-        </div>
-      </slot>
-    </div>
+<!--    <div class="page-header">-->
+<!--      <slot name="header">-->
+<!--        <div class="flex justify-between">-->
+<!--          <div class="page-header-wrap flex items-end">-->
+<!--            <slot name="title">-->
+<!--              <div class="page-header-title text-xl">{{ title }}</div>-->
+<!--            </slot>-->
+<!--            <div class="page-header-sub-title text-gray-500 text-xs ml-2 ">-->
+<!--              <slot name="sub-title">{{ subTitle }}</slot>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div>-->
+<!--            <slot name="extra"></slot>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="page-content text-gray-500">-->
+<!--          <slot name="content"> {{ content }}</slot>-->
+<!--        </div>-->
+<!--      </slot>-->
+<!--    </div>-->
+    <el-page-header :bind="$props" :title="$route?.meta?.title" content="asdasdasda" :icon="null" class="mx-5">
+      <template #extra >
+        <el-button>Create</el-button>
+        <el-button type="primary">Edit</el-button>
+      </template>
+<!--      adsadasdasdas-->
+    </el-page-header>
     <div class="page-wrapper-content m-2"
          ref="contentElRef"
          :class="{'content-bg' :$props.contentBackground}"
