@@ -42,9 +42,9 @@ export function useTab() {
 
   // 关闭视图
   async function closeTab({name, path, fullPath, meta}: RouteLocation) {
-    const {visitedTabs} = tabStore.delTab({name, path, fullPath, meta});
+    tabStore.delTab({name, path, fullPath, meta});
     if (tabIsActive({name, path, fullPath, meta} as RouteLocation)) {
-      await toLastTab(visitedTabs, {name, path, fullPath, meta} as RouteLocation);
+      await toLastTab(tabStore.visitedTabs, {name, path, fullPath, meta} as RouteLocation);
     }
   }
 
@@ -70,8 +70,8 @@ export function useTab() {
    * @param tab
    */
   async function closeAllTab(tab: RouteLocation) {
-    const {visitedTabs} = tabStore.delAllTabs();
-    await toLastTab(visitedTabs, tab);
+    tabStore.delAllTabs();
+    await toLastTab(tabStore.visitedTabs, tab);
   }
 
   /**
@@ -206,6 +206,7 @@ export function useTab() {
     getTabRefs,
     getSelectTab,
     getVisitedTabs,
+
     goTab,
     addTab,
     closeTab,

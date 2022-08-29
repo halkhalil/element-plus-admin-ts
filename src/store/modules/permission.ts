@@ -4,7 +4,6 @@ import {transformRouteToMenu} from "~/router/helper/menuHelper";
 import {AppRouteRecordRaw, Menu} from "~/router/types";
 import {PermissionModeEnum} from "~/enums/permission";
 import {defineStore} from "pinia";
-import type {RouteRecordRaw} from "vue-router";
 import {useStore} from "~/store";
 
 interface PermissionState {

@@ -1,8 +1,21 @@
 import {defineStore} from "pinia";
+import {RouteMeta} from "~/router/types";
+
+interface tabView {
+  name: string,
+  path: string,
+  fullPath: string,
+  meta: RouteMeta
+}
+
+interface TabState {
+  visitedTabs: tabView[],
+  cachedTabs: tabView[],
+}
 
 export const useTabStore = defineStore({
   id: 'tab',
-  state: () => ({
+  state: (): TabState => ({
     visitedTabs: [],
     cachedTabs: [],
   }),
