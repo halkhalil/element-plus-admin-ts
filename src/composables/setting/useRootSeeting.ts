@@ -5,13 +5,13 @@ import {NavbarModeEnum, SizeEnum, ThemeEnum} from "~/enums/app";
 import {PermissionModeEnum} from "~/enums/permission";
 import {MenuModeEnum} from "~/enums/menu";
 import {setting} from '~/settings/projectSetting'
-import {useAppStore} from "~/store/modules/app";
 import {MenuSetting, ProjectSetting} from "#/config";
+import {useStore} from "~/store";
 
 
 export function useRootSetting() {
 
-  const appStore = useAppStore();
+  const {appStore} = useStore();
   const {setMenuSetting} = useMenuSetting();
 
   const getIsMobile = computed(() => {

@@ -6,7 +6,6 @@
 
 <script setup lang="ts">
 import {useRootSetting} from '~/composables/setting/useRootSeeting'
-import {useConfigStore} from "~/store/modules/config";
 import {useStore} from "~/store";
 
 const {configStore} = useStore();

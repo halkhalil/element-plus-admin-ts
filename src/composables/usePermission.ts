@@ -3,15 +3,13 @@ import {isString} from "~/utils/is";
 import {PermissionEnum, PermissionModeEnum, RoleEnum} from "~/enums/permission";
 import {resetRouter, router} from "~/router";
 import {useRootSetting} from "~/composables/setting/useRootSeeting";
-import {usePermissionStore} from "~/store/modules/permission";
-import {useUserStore} from "~/store/modules/user";
 import {RouteRecordRaw} from "vue-router";
+import {useStore} from "~/store";
 
 type Permission = RoleEnum | PermissionEnum | string;
 
 export function usePermission() {
-  const userStore = useUserStore();
-  const permissionStore = usePermissionStore();
+  const {userStore, permissionStore} = useStore();
   const {getPermissionMode} = useRootSetting();
   const getPermissions = computed(() => permissionStore.getPermissions);
   const getRoles = computed(() => userStore.getRoles);

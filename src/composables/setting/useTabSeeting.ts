@@ -1,9 +1,9 @@
 import {computed} from 'vue'
-import {useAppStore} from "~/store/modules/app";
+import {useStore} from "~/store";
 
 export function useTabSetting() {
 
-  const appStore = useAppStore();
+  const {appStore} = useStore();
   const getEnableTab = computed(() => appStore.getTabSetting.enable);
 
   async function setTabSetting(setting) {

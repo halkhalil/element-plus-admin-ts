@@ -1,9 +1,10 @@
 import {computed, shallowReactive} from 'vue'
 import {useRouter} from "vue-router";
-import {useConfigStore} from "~/store/modules/config";
+import {useStore} from "~/store";
 
 export function useConfig() {
-  const configStore = useConfigStore();
+
+  const {configStore} = useStore();
   const getConfigGroups = computed(() => configStore.getConfigs['config_groups']);
   const getConfigTypes = computed(() => configStore.getConfigs['config_types']);
   const getConfigComponents = computed(() => configStore.getConfigs['config_components']);

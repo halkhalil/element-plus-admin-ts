@@ -1,10 +1,10 @@
-import {computed, unref} from 'vue'
-import {useAppStore} from "~/store/modules/app";
+import {computed} from 'vue'
 import {MenuSetting} from "#/config";
+import {useStore} from "~/store";
 
 export function useMenuSetting() {
 
-  const appStore = useAppStore();
+  const {appStore} = useStore();
   const getMenuSetting = appStore.getMenuSetting;
   const getCollapsed = computed(() => getMenuSetting.collapse);
   const getMenuMode = computed(() => getMenuSetting.mode);

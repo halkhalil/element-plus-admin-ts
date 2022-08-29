@@ -1,7 +1,7 @@
 <template>
   <el-menu class="menu-container" v-bind="getMenuSetting" :default-active="defaultActive">
     <SidebarLogo class="logo" v-if="getShowSidebarLogo"/>
-    <sub-menu v-for="menu in getMenus" :index="menu.path" :key="menu.path" :menu="menu"/>
+    <sub-menu v-for="menu in permissionStore.getMenus" :index="menu.path" :key="menu.path" :menu="menu"/>
   </el-menu>
 </template>
 <script lang="ts" setup>
@@ -11,11 +11,10 @@ import SubMenu from "~/layouts/common/menu/SubMenu.vue";
 import SidebarLogo from "~/layouts/common/menu/SidebarLogo.vue";
 import {useMenuSetting} from "~/composables/setting/useMenuSeeting";
 import {useRootSetting} from "~/composables/setting/useRootSeeting";
-// import {useLayoutMenus} from "~/layouts/common/menu/useLayoutMenus";
-import {usePermissionStore} from "~/store/modules/permission";
+import {useStore} from "~/store";
 
 const {currentRoute} = useRouter();
-const {getMenus} = usePermissionStore();
+const {permissionStore} = useStore()
 const {getMenuSetting} = useMenuSetting();
 const {getShowSidebarLogo} = useRootSetting();
 

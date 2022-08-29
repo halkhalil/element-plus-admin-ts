@@ -1,9 +1,9 @@
 import {computed, unref} from 'vue'
-import {useAppStore} from "~/store/modules/app";
+import {useStore} from "~/store";
 
 export function useHeaderSetting() {
 
-  const appStore = useAppStore();
+  const {appStore} = useStore();
 
   const getHeaderSetting = appStore.getHeaderSetting;
   const getHeaderFixed = computed(() => appStore.getHeaderSetting?.fixed);

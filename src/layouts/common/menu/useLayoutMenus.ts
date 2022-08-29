@@ -1,7 +1,7 @@
-import {usePermissionStore} from "~/store/modules/permission";
+import {useStore} from "~/store";
 
 export function useLayoutMenus() {
-  const permissionStore = usePermissionStore();
+  const {permissionStore} = useStore()
   const getMenus = permissionStore.getMenus;
 
   return {

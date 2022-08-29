@@ -28,9 +28,9 @@
   </div>
 </template>
 <script lang="ts" setup>
-import {useUserStore} from "~/store/modules/user";
+import {useStore} from "~/store";
 
-const userStore = useUserStore()
+const {userStore} = useStore()
 const getUser = userStore.getUser || {}
 
 const logout = async () => {

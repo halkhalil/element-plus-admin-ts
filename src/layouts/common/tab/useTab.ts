@@ -1,11 +1,11 @@
 import path from "path";
 import {RouteLocation, RouteRecord, useRouter} from "vue-router";
 import {computed, nextTick, onMounted, Ref, ref, unref, UnwrapRef, watch} from 'vue';
-import {useTabStore} from "~/store/modules/tab";
+import {useStore} from "~/store";
 
 export function useTab() {
 
-  const tabStore = useTabStore();
+  const {tabStore} = useStore();
   const {push, replace, currentRoute, getRoutes} = useRouter();
 
   const scrollbarRef: UnwrapRef<any> = ref();

@@ -1,8 +1,8 @@
-import {useUserStore} from "~/store/modules/user";
 import {computed} from "vue";
+import {useStore} from "~/store";
 
 export function useUser() {
-  const userStore = useUserStore();
+  const {userStore} = useStore()
   const getUser = computed(() => userStore.getUser);
   const getToken = computed(() => userStore.getToken);
 
