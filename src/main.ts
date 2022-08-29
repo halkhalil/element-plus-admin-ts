@@ -1,8 +1,6 @@
 import {createApp} from "vue";
 import App from "./App.vue";
 import {router, setupRouter} from '~/router'
-// import 'element-plus/dist/index.css'
-// import 'element-plus/theme-chalk/dark/css-vars.css'
 // import 'virtual:windi.css'
 import 'virtual:svg-icons-register';
 import {setupStore} from '~/store'
@@ -11,7 +9,6 @@ import {setupGlobalDirectives} from "~/directives";
 import {registerGlobComp} from "~/components/registerGlobComp";
 import {setupProjectConfig} from "~/logics/setupProjectConfig";
 import {setupPlugins} from "~/logics/setupPlugins";
-
 
 
 import "~/styles/index.scss";
@@ -34,7 +31,7 @@ import "element-plus/theme-chalk/src/message.scss"
 
   registerGlobComp(app);
 
-  await setupProjectConfig();
+  setupProjectConfig();
 
   await router.isReady();
 

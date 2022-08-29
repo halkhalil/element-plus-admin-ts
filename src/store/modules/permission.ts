@@ -4,7 +4,8 @@ import {transformRouteToMenu} from "~/router/helper/menuHelper";
 import {AppRouteRecordRaw, Menu} from "~/router/types";
 import {PermissionModeEnum} from "~/enums/permission";
 import {defineStore} from "pinia";
-import {useAppStore} from "~/store/modules/app";
+import type {RouteRecordRaw} from "vue-router";
+import {useStore} from "~/store";
 
 interface PermissionState {
   menus: Menu[],
@@ -32,8 +33,8 @@ export const usePermissionStore = defineStore({
       return Promise.resolve(permissions);
     },
     // 生成路由
-    async buildRoutes() {
-      const appStore = useAppStore();
+    async buildRoutes(): Promise<AppRouteRecordRaw[]> {
+      const {appStore} = useStore();
       const {permissionMode} = appStore.getProjectConfig;
       let routes: AppRouteRecordRaw[] = [];
 

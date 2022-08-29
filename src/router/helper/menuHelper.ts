@@ -1,7 +1,7 @@
-import {AppRouteModule, AppRouteRecordRaw, Menu, RouteMeta} from "~/router/types";
-import {cloneDeep,pick} from 'lodash-es';
+import {AppRouteModule, AppRouteRecordRaw, Menu} from "~/router/types";
+import {cloneDeep} from 'lodash-es';
 import {isUrl} from '~/utils/is';
-import {findPath, treeMap} from '~/utils/helper/treeHelper';
+import {treeMap} from '~/utils/helper/treeHelper';
 
 // 菜单添加父级路径
 function joinParentPath(menus: Menu[], parentPath = '') {
@@ -16,7 +16,7 @@ function joinParentPath(menus: Menu[], parentPath = '') {
   }
 }
 
-export function transformRouteToMenu(routeModList: AppRouteModule[]) {
+export function transformRouteToMenu(routeModList: AppRouteModule[] | AppRouteRecordRaw[]) {
   const cloneRouteModList = cloneDeep(routeModList);
   const routeList: AppRouteRecordRaw[] = [];
   cloneRouteModList.forEach((item) => {
@@ -30,11 +30,11 @@ export function transformRouteToMenu(routeModList: AppRouteModule[]) {
 
   const list = treeMap(routeList, {
     conversion: (node: AppRouteRecordRaw) => {
-      const {title,...meta} = node.meta;
-      return {path: node.path,title, ...meta};
+      const {title, ...meta} = node.meta;
+      return {path: node.path, title, ...meta};
     },
   });
 
-  joinParentPath(list);
+  joinParentPath(list as unknown as Menu[]);
   return cloneDeep(list);
 }

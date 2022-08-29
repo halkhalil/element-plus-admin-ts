@@ -2,7 +2,7 @@ import {setting} from "~/settings/projectSetting";
 import {useAppStore} from "~/store/modules/app";
 import {isEmpty} from "lodash-es";
 
-export const setupProjectConfig = async () => {
+export const setupProjectConfig = () => {
   const appStore = useAppStore();
 
   if (isEmpty(appStore.getProjectConfig)) {

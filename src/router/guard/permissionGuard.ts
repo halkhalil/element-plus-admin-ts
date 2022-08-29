@@ -1,20 +1,15 @@
 import {Router, RouteRecordRaw} from "vue-router";
 import {PageEnum} from "~/enums/page";
-import {useUserStore, useUserStoreWithOut} from "~/store/modules/user";
-import {usePermissionStore} from "~/store/modules/permission";
-import {AppRouteRecordRaw} from "~/router/types";
-import store, {useStore} from "~/store";
+import {useStore} from "~/store";
 
 const whiteList: PageEnum[] = [PageEnum.LOGIN];
 
 export function createPermissionGuard(router: Router) {
   router.beforeEach(async (to, from, next) => {
-    const {userStore,permissionStore} = useStore();
-    // const permissionStore = usePermissionStore();
-    // const userStore = useUserStore();
 
-    // 外链路由, 从新标签打开，返回上一个路由
-    if (to.meta.href) {
+    const {userStore, permissionStore} = useStore();
+
+    if (to.meta.href) { // 外链路由, 从新标签打开，返回上一个路由
       window.open(to.meta.href as string);
       next({path: from.fullPath, replace: true, query: from.query});
       return;
@@ -26,8 +21,8 @@ export function createPermissionGuard(router: Router) {
 
       if (!userStore.getUser) await userStore.fetchUserInfo();
       if (!permissionStore.getIsLoaded) {
-        const accessRoutes: AppRouteRecordRaw[] = await permissionStore.buildRoutes();
-        accessRoutes.forEach(item => router.addRoute(item));
+        const accessRoutes = await permissionStore.buildRoutes();
+        accessRoutes.forEach(item => router.addRoute(item as unknown as RouteRecordRaw));
         next({path: to.fullPath, replace: true, query: to.query});
       } else {
         next();
