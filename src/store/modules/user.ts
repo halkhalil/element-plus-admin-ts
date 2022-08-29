@@ -4,15 +4,15 @@ import {RoleEnum} from "~/enums/permission";
 
 interface UserState {
   token: string | null,
-  userInfo: object | null,
+  user: object | null,
   roles: RoleEnum[],
 }
 
 export const useUserStore = defineStore({
-  id: 'users',
+  id: 'user',
   state: (): UserState => ({
     token: null,
-    userInfo: null,
+    user: null,
     roles: [],
   }),
   getters: {
@@ -20,7 +20,7 @@ export const useUserStore = defineStore({
       return this.token;
     },
     getUser(): object | null {
-      return this.userInfo;
+      return this.user;
     },
     getRoles(): RoleEnum[] {
       return this.roles;
@@ -34,7 +34,7 @@ export const useUserStore = defineStore({
       this.roles = roles;
     },
     setUser(user) {
-      this.userInfo = user;
+      this.user = user;
     },
     async fetchLogin(params) {
       const {data: {data}} = await personal.login(params);
