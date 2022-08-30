@@ -1,31 +1,45 @@
 <template>
   <div class="page-wrapper w-full min-h-full" :class="$props.class">
-<!--    <div class="page-header">-->
-<!--      <slot name="header">-->
-<!--        <div class="flex justify-between">-->
-<!--          <div class="page-header-wrap flex items-end">-->
-<!--            <slot name="title">-->
-<!--              <div class="page-header-title text-xl">{{ title }}</div>-->
-<!--            </slot>-->
-<!--            <div class="page-header-sub-title text-gray-500 text-xs ml-2 ">-->
-<!--              <slot name="sub-title">{{ subTitle }}</slot>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--          <div>-->
-<!--            <slot name="extra"></slot>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--        <div class="page-content text-gray-500">-->
-<!--          <slot name="content"> {{ content }}</slot>-->
-<!--        </div>-->
-<!--      </slot>-->
-<!--    </div>-->
-    <el-page-header :bind="$props" :title="$route?.meta?.title" content="asdasdasda" :icon="null" class="mx-5">
-      <template #extra >
-        <el-button>Create</el-button>
-        <el-button type="primary">Edit</el-button>
+    <!--    {{slotContent}}-->
+    <!--    <div class="page-header">-->
+    <!--      <slot name="header">-->
+    <!--        <div class="flex justify-between">-->
+    <!--          <div class="page-header-wrap flex items-end">-->
+    <!--            <slot name="title">-->
+    <!--              <div class="page-header-title text-xl">{{ title }}</div>-->
+    <!--            </slot>-->
+    <!--            <div class="page-header-sub-title text-gray-500 text-xs ml-2 ">-->
+    <!--              <slot name="sub-title">{{ subTitle }}</slot>-->
+    <!--            </div>-->
+    <!--          </div>-->
+    <!--          <div>-->
+    <!--            <slot name="extra"></slot>-->
+    <!--          </div>-->
+    <!--        </div>-->
+    <!--        <div class="page-content text-gray-500">-->
+    <!--          <slot name="content"> {{ content }}</slot>-->
+    <!--        </div>-->
+    <!--      </slot>-->
+    <!--    </div>-->
+    <el-page-header :bind="$props" :title="$route?.meta?.title" class="mx-5" @back="back">
+      <template #icon>
+        <slot name="icon"></slot>
       </template>
-<!--      adsadasdasdas-->
+      <template #title>
+        <slot name="title"></slot>
+      </template>
+      <template #content>
+        <span class="text-sm" style="color: var(--el-text-color-regular)">
+          <slot name="sub-title"></slot>
+        </span>
+      </template>
+      <template #extra>
+        <slot name="extra"></slot>
+      </template>
+      <template #breadcrumb>
+        <slot name="breadcrumb"></slot>
+      </template>
+      <!--      <template #default><slot name="default"></slot></template>-->
     </el-page-header>
     <div class="page-wrapper-content m-2"
          ref="contentElRef"
@@ -41,6 +55,7 @@
 import {ref, computed} from "vue";
 import {useElementBounding} from '@vueuse/core'
 import {useSlots} from "vue";
+import {useRouter} from "vue-router";
 
 defineProps({
   title: {
@@ -69,8 +84,11 @@ defineProps({
   }
 })
 
+const useSlot = useSlots();
+const slotContent = useSlots().content;
 const slotTitle = !!useSlots().title;
 const slotSubTitle = !!useSlots().subTitle;
+console.log(useSlots())
 
 const contentElRef = ref();
 const {top} = useElementBounding(contentElRef);
@@ -78,27 +96,29 @@ const getContentHeight = computed(() => {
   return document.documentElement.clientHeight - top.value - 10;
 })
 
+const {back} = useRouter();
+
 </script>
 
 <style lang="scss" scoped>
 .page-wrapper {
-  align-items: stretch;
-  font-size: 14px;
-  background-color: var(--el-bg-color);
+  //align-items: stretch;
+  //font-size: 14px;
+  //background-color: var(--el-bg-color);
 
-  .page-header {
-    flex: 1;
-    padding: 16px;
-    background-color: var(--el-bg-color);
-    border-bottom: 1px solid var(--el-border-color);
-
-
-    .page-header-wrap {
-      .page-header-title {
-        font-weight: bolder;
-      }
-    }
-  }
+  //.page-header {
+  //  flex: 1;
+  //  padding: 16px;
+  //  background-color: var(--el-bg-color);
+  //  border-bottom: 1px solid var(--el-border-color);
+  //
+  //
+  //  .page-header-wrap {
+  //    .page-header-title {
+  //      font-weight: bolder;
+  //    }
+  //  }
+  //}
 
   .page-content:not(:empty) {
     margin-top: .5rem;
