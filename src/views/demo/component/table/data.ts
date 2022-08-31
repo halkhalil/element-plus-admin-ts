@@ -3,7 +3,7 @@ export function getBasicColumns() {
     {
       prop: 'id',
       label: 'ID',
-      minWidth: '100',
+      minWidth: '80',
     },
     {
       prop: 'name',
@@ -38,7 +38,7 @@ export function getBasicColumns() {
     {
       slot: 'action',
       label: '操作',
-      minWidth: '200',
+      minWidth: '100',
     },
   ];
 }

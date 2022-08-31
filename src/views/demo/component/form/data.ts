@@ -328,7 +328,12 @@ export function getSearchFormData() {
       label: '时间范围',
       placeholder: '请选择时间范围',
       component: 'DatePicker',
-      componentProps: {type: 'daterange', startPlaceholder: '开始时间', endPlaceholder: '结束时间', valueFormat: 'YYYY-MM-DD'},
+      componentProps: {
+        type: 'daterange',
+        startPlaceholder: '开始时间',
+        endPlaceholder: '结束时间',
+        valueFormat: 'YYYY-MM-DD'
+      },
     },
     {
       field: 'date',

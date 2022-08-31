@@ -1,24 +1,21 @@
 <template>
-  <PageWrapper
-    :title="$route['meta']['title']"
-    :sub-title="$route['meta']['title']">
-    <el-card shadow="none">
-      <BasicForm v-model="formModel"
-                 :schemas="formSchemas"
-                 :label-width="100"
-                 :action-props="{showAdvancedButton:true}"
-                 :col-props="{span:6}"
-                 @submit="handleSearch"></BasicForm>
-    </el-card>
-    <el-card shadow="none" class="mt-2">
-      <BasicTable :data="tableData" :columns="tableColumns" border>
-        <template #action="{row,$index}">
-          <el-button type="text" @click="handleEdit(row,$index)">编辑</el-button>
-          <el-button type="text" style="color: red" @click="handleDelete(row,$index)">删除</el-button>
-        </template>
-      </BasicTable>
-    </el-card>
-  </PageWrapper>
+  <page-wrapper :title="$route['meta']['title']">
+    <template #extra>
+      <el-button type="primary">新增</el-button>
+    </template>
+    <BasicForm v-model="formModel"
+               :schemas="formSchemas"
+               :label-width="100"
+               :action-props="{showAdvancedButton:true}"
+               :col-props="{span:6}"
+               @submit="handleSearch"></BasicForm>
+    <BasicTable :data="tableData" :columns="tableColumns" :border="true">
+      <template #action="{row,$index}">
+        <el-button link @click="handleEdit(row,$index)">编辑</el-button>
+        <el-button link type="danger" @click="handleDelete(row,$index)">删除</el-button>
+      </template>
+    </BasicTable>
+  </page-wrapper>
 </template>
 
 <script lang="ts" setup>

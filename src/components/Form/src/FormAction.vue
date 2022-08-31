@@ -1,6 +1,6 @@
 <template>
   <el-col v-bind="actionColProps || colProps">
-    <el-form-item label-width="0px">
+    <el-form-item label-width="50px">
       <div :style="{textAlign:position}" class="w-full">
         <slot name="submitBefore"></slot>
         <el-button type="primary" v-bind="submitButtonProps" @click="submitForm(formElRef)">

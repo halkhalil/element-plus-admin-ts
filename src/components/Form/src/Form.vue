@@ -1,7 +1,7 @@
 <template>
   <el-form ref="formElRef" v-bind="props" :rules="rules" :model="formModel"
            :label-width="showLabel && props.labelWidth">
-    <el-row :gutter="30" v-if="schemas.length > 0">
+    <el-row :gutter="10" v-if="schemas.length > 0">
       <el-col v-for="(schema,index) in schemas" v-bind="colProps" v-show="showSchema(schema,index)">
         <FormItem :key="index"
                   :schema="schema"
