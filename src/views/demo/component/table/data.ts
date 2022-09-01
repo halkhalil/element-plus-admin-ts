@@ -1,3 +1,14 @@
+interface TableItem {
+  id?: string,
+  name?: string,
+  age?: string,
+  no?: string,
+  address?: string,
+  created_at?: string,
+  updated_at?: string,
+  children?: TableItem[]
+}
+
 export function getBasicColumns() {
   return [
     {
@@ -90,7 +101,7 @@ export function getCustomColumns() {
 }
 
 export function getBasicData() {
-  const tableData = [];
+  const tableData: TableItem[] = [];
   for (let index = 0; index < 15; index++) {
     tableData.push({
       id: `${index}`,
@@ -100,14 +111,15 @@ export function getBasicData() {
       address: '上海市普陀区金沙江路 1517 弄',
       created_at: new Date().toLocaleString(),
       updated_at: new Date().toLocaleString(),
-    });
+    } as TableItem);
   }
 
   return tableData;
 }
 
+
 export function getTreeData() {
-  const tableData = [];
+  const tableData: TableItem[] = [];
   for (let index = 0; index < 15; index++) {
     tableData.push({
       id: `${index}`,
@@ -137,7 +149,7 @@ export function getTreeData() {
           updated_at: new Date().toLocaleString(),
         }
       ]
-    });
+    } as TableItem);
   }
 
   return tableData;
