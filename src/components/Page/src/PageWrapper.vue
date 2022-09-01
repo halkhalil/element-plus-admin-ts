@@ -1,6 +1,6 @@
 <template>
   <div class="page-wrapper w-full min-h-full" :class="$props.class">
-    <el-page-header :bind="$props" class="mx-5" @back="back">
+    <el-page-header :bind="$props" class="mx-5" @back="back" v-if="$props.showHeader">
       <template #icon>
         <slot name="icon"></slot>
       </template>
@@ -36,6 +36,7 @@ import {useSlots} from "vue";
 import {useRouter} from "vue-router";
 
 defineProps({
+  showHeader: Boolean,
   title: {
     type: String,
     default: '',

@@ -1,10 +1,10 @@
 <template>
-  <el-menu-item index="/" :route="{path:'/',title:'首页'}">
-    <el-icon>
-      <img :src="logo ? logo : '/src/assets/logo.png'">
+  <el-menu-item index="/" :route="{path:'/',title:'首页'}" class="!h-50px">
+    <el-icon :size="28">
+      <img :src="logo ? logo : '/src/assets/logo.png'" class="w-28px h-28px">
     </el-icon>
     <template #title>
-      <span class="font-bold">{{ title }} </span>
+      <span class="font-700 !text-base">{{ title }} </span>
     </template>
   </el-menu-item>
 </template>

@@ -1,20 +1,20 @@
 <template>
-  <page-wrapper :title="$route['meta']['title']">
+  <page-wrapper :title="$route['meta']['title']" show-header>
     <template #extra>
       <el-button type="primary">新增</el-button>
     </template>
-    <BasicForm v-model="formModel"
-               :schemas="formSchemas"
-               :label-width="100"
-               :action-props="{showAdvancedButton:true}"
-               :col-props="{span:6}"
-               @submit="handleSearch"></BasicForm>
-    <BasicTable :data="tableData" :columns="tableColumns" :border="true">
+    <basic-form v-model="formModel"
+                :schemas="formSchemas"
+                :label-width="100"
+                :action-props="{showAdvancedButton:true}"
+                :col-props="{span:6}"
+                @submit="handleSearch"></basic-form>
+    <basic-table :data="tableData" :columns="tableColumns" :border="true">
       <template #action="{row,$index}">
         <el-button link @click="handleEdit(row,$index)">编辑</el-button>
         <el-button link type="danger" @click="handleDelete(row,$index)">删除</el-button>
       </template>
-    </BasicTable>
+    </basic-table>
   </page-wrapper>
 </template>
 

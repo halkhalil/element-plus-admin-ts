@@ -14,8 +14,8 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, toRefs, unref, h} from 'vue'
-import {isFunction, isBoolean} from "~/utils/is";
+import {computed, toRefs, h} from 'vue'
+import {isFunction} from "~/utils/is";
 import {componentMap} from './componentMap'
 import {useVModel} from "@vueuse/core";
 import {formItemProps} from "./props";
@@ -45,3 +45,8 @@ const getComponentEvents = computed(() => {
 })
 
 </script>
+<style lang="scss">
+.el-date-editor .el-input__wrapper {
+  width: 93% !important;
+}
+</style>

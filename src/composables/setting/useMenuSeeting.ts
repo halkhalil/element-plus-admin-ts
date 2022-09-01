@@ -13,13 +13,13 @@ export function useMenuSetting() {
    * 菜单设置
    * @param setting
    */
-  async function setMenuSetting(setting: Partial<MenuSetting>) {
+  function setMenuSetting(setting: Partial<MenuSetting>) {
     appStore.setProjectConfig({menuSetting: {...getMenuSetting, ...setting}})
   }
 
   // 菜单水平折叠收起
-  async function toggleCollapsed() {
-    await setMenuSetting({collapse: !getCollapsed.value});
+  function toggleCollapsed() {
+    setMenuSetting({collapse: !getCollapsed.value});
   }
 
   return {

@@ -78,13 +78,14 @@ export function useRootSetting() {
    * @param mode
    */
   function toggleNavbarMode(mode: NavbarModeEnum) {
-    let menuSetting:Partial<MenuSetting> = setting.menuSetting;
+    let menuSetting: Partial<MenuSetting> = setting.menuSetting;
     if (mode === NavbarModeEnum.TOP_MENU) {
-      menuSetting = {...menuSetting, mode: MenuModeEnum.HORIZONTAL, backgroundColor: 'white', textColor: 'black'}
+      menuSetting = {...menuSetting, mode: MenuModeEnum.HORIZONTAL}
     }
     setRootSetting({navbarMode: mode});
     setMenuSetting(menuSetting);
   }
+
   /**
    * 切换布局大小
    * @param size
