@@ -102,7 +102,7 @@ export function getCustomColumns() {
 
 export function getBasicData() {
   const tableData: TableItem[] = [];
-  for (let index = 0; index < 15; index++) {
+  for (let index = 0; index < 35; index++) {
     tableData.push({
       id: `${index}`,
       name: 'John Brown',

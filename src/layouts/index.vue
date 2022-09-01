@@ -58,7 +58,7 @@ export default defineComponent({
             {renderAside()}
             <el-container direction='vertical'>
               {getShowTab.value ? renderTabFixed() : null}
-              <el-main>
+              <el-main class="mb-12">
                 <el-scrollbar>
                   <LayoutContent/>
                 </el-scrollbar>
