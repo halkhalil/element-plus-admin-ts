@@ -1,8 +1,6 @@
 <template>
-  <PageWrapper>
-    <template #content>
-      <UserInfo/>
-    </template>
+  <div class="m-3">
+    <UserInfo class="m-5"/>
     <el-row :gutter="10">
       <el-col :xs="24" :sm="24" :md="24" :lg="18" :xl="16">
         <Project class="mb-2"/>
@@ -14,10 +12,9 @@
         <ProjectStatistic class="mb-2"/>
       </el-col>
     </el-row>
-  </PageWrapper>
+  </div>
 </template>
 <script lang="ts" setup>
-import {PageWrapper} from '~/components/Page'
 import UserInfo from "~/views/dashboard/workplace/components/UserInfo.vue";
 import Project from "~/views/dashboard/workplace/components/Project.vue";
 import Dynamic from "~/views/dashboard/workplace/components/Dynamic.vue";
