@@ -1,4 +1,5 @@
 <template>
+  <el-card shadow="never">
   <el-row :gutter="10">
     <el-col :xs="24" :sm="12" :md="10" :lg="7">
       <div class="flex flex-row">
@@ -28,6 +29,7 @@
       </div>
     </el-col>
   </el-row>
+  </el-card>
 </template>
 
 <script lang="ts" setup>

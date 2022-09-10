@@ -5,7 +5,7 @@ const systemRoute: AppRouteRecordRaw[] = [
   {
     path: '/system',
     name: 'System',
-    redirect: '/system/configs',
+    redirect: '/system/users',
     component: LAYOUT,
     meta: {title: '系统', icon: 'ant-design:windows-outlined', sort: 60},
     children: [

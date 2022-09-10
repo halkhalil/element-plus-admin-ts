@@ -1,12 +1,14 @@
 <template>
   <page-wrapper :title="$route.meta['title']">
     <template #content>
-      使用v-contextmenu
-      <el-link type="primary" href="https://github.com/heynext/v-contextmenu/blob/main/docs/usage.md" target="_blank">
-        查看
-      </el-link>
+      <p class="text-sm">
+        使用v-contextmenu
+        <el-link type="primary" href="https://github.com/heynext/v-contextmenu/blob/main/docs/usage.md" target="_blank">
+          查看
+        </el-link>
+      </p>
     </template>
-    <el-card header="Simple" shadow="none">
+    <el-card header="Simple" shadow="never">
       <v-contextmenu ref="contextmenu1">
         <v-contextmenu-item>菜单1</v-contextmenu-item>
         <v-contextmenu-item>菜单2</v-contextmenu-item>
@@ -16,7 +18,7 @@
       <el-button type="primary" v-contextmenu:contextmenu1>右键点击此区域</el-button>
     </el-card>
 
-    <el-card header="Multiple" shadow="none" class="mt-2">
+    <el-card header="Multiple" shadow="never" class="mt-2">
       <v-contextmenu ref="contextmenu2">
         <v-contextmenu-item>GitHub</v-contextmenu-item>
         <v-contextmenu-item>GitLab</v-contextmenu-item>

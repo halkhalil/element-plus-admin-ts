@@ -1,11 +1,12 @@
 <template>
   <page-wrapper :title="$route.meta['title']">
     <template #content>
-      <p>
+      <p class="text-sm">
         使用VueUse useThrottle
         <el-link type="primary" href="https://vueuse.org/shared/usethrottle/" target="_blank">查看</el-link>
       </p>
-      <p>应用场景：无论频率多高只按照固定节奏执行(类似于技能冷却时间),例如 鼠标不断点击触发，mousedown(单位时间内只触发一次)</p>
+      <p class="text-sm">应用场景：无论频率多高只按照固定节奏执行(类似于技能冷却时间),例如
+        鼠标不断点击触发，mousedown(单位时间内只触发一次)</p>
     </template>
     <el-card shadow="none">
       <el-input v-model="input" placeholder="Try to type anything..." type="text"/>

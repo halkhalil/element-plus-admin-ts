@@ -1,6 +1,6 @@
 <template>
-  <PageWrapper :title="$route.meta['title']">
-    <el-card shadow="none" header="Element-Plus Icon使用">
+  <page-wrapper :title="$route?.meta?.title">
+    <el-card shadow="never" header="Element-Plus Icon使用">
       <div class="grid grid-cols-6">
         <el-icon :size="30">
           <help-filled/>
@@ -52,7 +52,7 @@
         </el-col>
       </el-row>
     </el-card>
-  </PageWrapper>
+  </page-wrapper>
 </template>
 
 <script lang="ts" setup>

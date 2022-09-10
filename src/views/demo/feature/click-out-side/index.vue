@@ -1,8 +1,9 @@
 <template>
-  <page-wrapper :title="$route.meta['title']">
+  <page-wrapper :title="$route?.meta?.title">
     <template #content>
-      使用VueUse onClickOutside
-      <el-link type="primary" href="https://vueuse.org/core/onClickOutside/" target="_blank">查看</el-link>
+      <p class="text-sm">使用VueUse onClickOutside
+        <el-link type="primary" href="https://vueuse.org/core/onClickOutside/" target="_blank">查看</el-link>
+      </p>
     </template>
     <el-card shadow="none">
       <div>

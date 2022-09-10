@@ -1,6 +1,9 @@
 <template>
   <div class="page-wrapper w-full min-h-full" :class="$props.class">
-    <el-page-header :bind="$props" class="mx-5" @back="back" v-if="$props.showHeader">
+    <el-page-header :bind="$props" @back="back" v-if="$props.title" class="!p-5 content-bg">
+      <template #breadcrumb>
+        <slot name="breadcrumb"></slot>
+      </template>
       <template #icon>
         <slot name="icon"></slot>
       </template>
@@ -19,11 +22,11 @@
         <slot name="content"></slot>
       </template>
     </el-page-header>
-    <div class="page-wrapper-content m-3"
+    <div class="!px-5 pb-5 content-bg"
          ref="contentElRef"
-         :class="{'content-bg' :$props.contentBackground}"
          :style="$props.contentFullHeight ?? {minHeight:getContentHeight+'px'}">
-      <slot></slot>
+      <slot>
+      </slot>
     </div>
   </div>
 </template>
@@ -74,14 +77,11 @@ const {back} = useRouter();
 </script>
 
 <style lang="scss" scoped>
-//.page-wrapper {
-//
-//  .page-content:not(:empty) {
-//    margin-top: .5rem;
-//  }
-//
-//  .content-bg {
-//    background-color: var(--el-bg-color);
-//  }
-//}
+:deep(.el-page-header__breadcrumb:empty) {
+  margin: 0 !important;
+}
+
+.content-bg {
+  background-color: var(--el-bg-color);
+}
 </style>

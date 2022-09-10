@@ -1,6 +1,5 @@
 <template>
-  <PageWrapper :title="$route['meta']['title']">
-    <el-card shadow="none" class="mb-2">
+  <page-wrapper :title="$route?.meta?.title">
       <el-row :gutter="10">
         <el-col :xs="24" :sm="12" :md="8" :lg="4" :xl="3" class="my-1">
           <el-button @click="changFieldLabel(0)" class="w-full">更改字段1Label</el-button>
@@ -18,7 +17,6 @@
           <el-button @click="autoWidth=!autoWidth" class="w-full">自动宽度{{ autoWidth }}</el-button>
         </el-col>
       </el-row>
-    </el-card>
     <el-card shadow="none">
       <BasicForm class="m-2"
                  ref="formRef"
@@ -31,7 +29,7 @@
                  label-position="right">
       </BasicForm>
     </el-card>
-  </PageWrapper>
+  </page-wrapper>
 </template>
 
 <script>

@@ -1,9 +1,9 @@
 <template>
-  <PageWrapper :title="$route.meta['title']" content-full-height content-background>
-    <div class="mt-2">
+  <page-wrapper :title="$route.meta['title']" content-full-height>
+    <div>
       <Markdown ref="markdownRef" v-model="markdownData" :options="options"></Markdown>
     </div>
-  </PageWrapper>
+  </page-wrapper>
 </template>
 
 <script lang="ts" setup>

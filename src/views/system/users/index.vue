@@ -1,37 +1,35 @@
 <template>
-  <PageWrapper :title="$route.meta['title']">
+  <page-wrapper :title="$route?.meta?.title">
     <template #extra>
       <el-button type="primary" @click="addItem">新增</el-button>
     </template>
-    <el-card shadow="none">
-      <BasicQuery v-model="query" :schemas="querySchemas" @submit="submit"></BasicQuery>
-    </el-card>
-    <el-card shadow="none" class="mt-2">
-      <BasicTable :columns="tableColumns"
-                  :data="lists"
-                  :paginate="paginate"
-                  :loading="loading.list"
-                  @change-page="changePage">
-        <template #roles="{row:{roles}}">
-          <el-tag class="mr-2" v-for="(item,index) in roles" :key="index">{{ item.label }}</el-tag>
-        </template>
-        <template #actions="{row}">
-          <el-button type="primary"  text @click="editItem(row)">编辑</el-button>
-          <el-popconfirm title="删除你是认真的吗？" iconColor="red" @confirm="deleteItem(row)">
-            <template #reference>
-              <el-button type="danger" text :loading="loading.delete">删除</el-button>
-            </template>
-          </el-popconfirm>
-        </template>
-      </BasicTable>
-      <EditTemplate v-model="dialog"/>
-    </el-card>
-  </PageWrapper>
+    <BasicForm v-model="query" :schemas="querySchemas" :colProps="{xs: 24, sm: 12, md: 12, lg: 8, xl: 6}" @submit="submit"></BasicForm>
+    <basic-table :columns="tableColumns"
+                 :data="lists"
+                 :paginate="paginate"
+                 :loading="loading.list"
+                 :border="true"
+                 @change-page="changePage">
+      <template #roles="{row:{roles}}">
+        <el-tag class="mr-2" v-for="(item,index) in roles" :key="index">{{ item.label }}</el-tag>
+      </template>
+      <template #actions="{row}">
+        <el-button type="primary" text @click="editItem(row)">编辑</el-button>
+        <el-popconfirm title="删除你是认真的吗？" iconColor="red" @confirm="deleteItem(row)">
+          <template #reference>
+            <el-button type="danger" text :loading="loading.delete">删除</el-button>
+          </template>
+        </el-popconfirm>
+      </template>
+    </basic-table>
+    <EditTemplate v-model="dialog"/>
+  </page-wrapper>
 </template>
 
 <script lang="ts" setup>
 import {PageWrapper} from "~/components/Page"
 import {BasicTable, BasicQuery} from "~/components/Table"
+import {BasicForm} from "~/components/Form";
 import EditTemplate from "./EditTemplate.vue";
 import {provide} from "vue";
 import {useFetchResource} from "~/api/user";

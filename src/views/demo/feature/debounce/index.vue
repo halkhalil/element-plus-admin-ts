@@ -1,7 +1,7 @@
 <template>
   <page-wrapper :title="$route.meta['title']">
     <template #content>
-      <p>
+      <p class="text-sm">
         使用VueUse useDebounce
         <el-link type="primary" href="https://vueuse.org/shared/useDebounce/" target="_blank">查看</el-link>
       </p>

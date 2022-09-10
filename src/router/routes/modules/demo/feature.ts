@@ -6,7 +6,7 @@ const featureRoute: AppRouteRecordRaw[] = [
     path: '/feature',
     name: 'Feature',
     component: LAYOUT,
-    redirect: '/feature',
+    redirect: '/feature/element-plus',
     meta: {title: '功能', icon: 'tabler:function', sort: 30},
     children: [
       {
@@ -67,12 +67,6 @@ const featureRoute: AppRouteRecordRaw[] = [
         name: 'Throttle',
         meta: {title: '节流'},
         component: () => import('~/views/demo/feature/throttle/index.vue'),
-      },
-      {
-        path: 'flex',
-        name: 'Flex',
-        meta: {title: '布局'},
-        component: () => import('~/views/demo/feature/flex/index.vue'),
       },
     ]
   }

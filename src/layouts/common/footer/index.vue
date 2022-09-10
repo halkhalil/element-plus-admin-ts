@@ -1,5 +1,5 @@
 <template>
-  <div class="h-1">
-    11
+  <div class="bg-red h-full">
+    Footer
   </div>
 </template>

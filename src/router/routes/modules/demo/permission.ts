@@ -6,7 +6,7 @@ const permissionRoute: AppRouteRecordRaw[] = [
   {
     path: '/permission',
     name: 'Permission',
-    redirect: '/permission/page',
+    redirect: '/permission/front',
     component: LAYOUT,
     meta: {title: '权限', icon: 'ep:lock', sort: 50},
     children: [

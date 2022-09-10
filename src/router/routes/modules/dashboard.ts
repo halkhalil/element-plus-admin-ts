@@ -12,19 +12,19 @@ const dashboardRoute: AppRouteRecordRaw[] = [
       {
         path: 'analysis',
         name: 'analysis',
-        meta: {title: '分析页', affix: true},
+        meta: {title: '分析页', icon: 'ep:data-analysis', affix: true},
         component: () => import('~/views/dashboard/analysis/index.vue'),
       },
       {
         path: 'workplace',
         name: 'workplace',
-        meta: {title: '工作台'},
+        meta: {title: '工作台', icon: 'simple-icons:workplace'},
         component: () => import('~/views/dashboard/workplace/index.vue'),
       },
       {
         path: 'monitor',
         name: 'monitor',
-        meta: {title: '监控页'},
+        meta: {title: '监控页', icon: 'ep:monitor'},
         component: () => import('~/views/dashboard/monitor/index.vue'),
       },
     ]

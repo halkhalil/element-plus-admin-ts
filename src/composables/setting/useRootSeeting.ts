@@ -27,6 +27,8 @@ export function useRootSetting() {
   const getIsSidebarMode = computed(() => appStore.getProjectConfig.navbarMode === NavbarModeEnum.SIDEBAR);
   const getIsTopMenuMode = computed(() => appStore.getProjectConfig.navbarMode === NavbarModeEnum.TOP_MENU);
 
+  const getShowHorizontalMenu = computed(() => !getIsSidebarMode.value);
+
   // 内容显示
   const getShowLogo = computed(() => appStore.getProjectConfig.showLogo);
   const getShowBreadcrumb = computed(() => appStore.getProjectConfig.showBreadcrumb && !getIsMobile.value && !getIsTopMenuMode.value);
@@ -132,6 +134,7 @@ export function useRootSetting() {
     getShowSidebarLogo,
     getShowTab,
     getShowHeaderTrigger,
+    getShowHorizontalMenu,
     getIsSidebarMode,
     getIsMixMode,
     getIsTopMenuMode,

@@ -1,5 +1,5 @@
 <template>
-  <div class="m-2">
+  <div>
     <GrowCard/>
     <VisitCard/>
     <el-row :gutter="10">

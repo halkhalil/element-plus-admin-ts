@@ -1,5 +1,5 @@
 <template>
-  <page-wrapper :title="$route.meta['title']">
+  <page-wrapper :title="$route.meta?.title">
     <template #extra>
       <el-button type="primary" @click="addItem">新增</el-button>
     </template>

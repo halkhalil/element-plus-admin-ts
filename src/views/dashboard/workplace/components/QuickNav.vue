@@ -1,7 +1,7 @@
 <template>
   <el-card header="快捷导航" shadow="none">
     <div class="grid grid-cols-3">
-      <div v-for="(item,index) in getMenus" :key="index" class="cursor-pointer">
+      <div v-for="(item,index) in permissionStore.getMenus" :key="index" class="cursor-pointer">
         <el-card class="card" shadow="hover">
           <div class="flex justify-center items-center flex-col">
             <span class="text-xl mb-2">
@@ -17,7 +17,7 @@
   </el-card>
 </template>
 <script lang="ts" setup>
-import {useLayoutMenus} from "~/layouts/common/menu/useLayoutMenus";
+import {useStore} from "~/store";
 
-const {getMenus} = useLayoutMenus()
+const {permissionStore} = useStore()
 </script>

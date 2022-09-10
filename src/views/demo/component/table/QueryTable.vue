@@ -1,5 +1,5 @@
 <template>
-  <page-wrapper :title="$route['meta']['title']" show-header>
+  <page-wrapper :title="$route['meta']['title']" content-background>
     <template #extra>
       <el-button type="primary">新增</el-button>
     </template>

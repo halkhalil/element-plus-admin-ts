@@ -1,12 +1,12 @@
 <template>
-  <PageWrapper :title="$route.meta.title">
+  <page-wrapper :title="$route?.meta?.title">
     <el-radio-group v-model="codeMode" size="small" @change="handleChange">
       <el-radio-button label="json">Json数据</el-radio-button>
       <el-radio-button label="html">Html代码</el-radio-button>
       <el-radio-button label="javascript">Javascript代码</el-radio-button>
     </el-radio-group>
     <CodeEditor v-model="codeData" class="mt-2" style="height:100%;min-height: 750px"></CodeEditor>
-  </PageWrapper>
+  </page-wrapper>
 </template>
 
 <script lang="ts" setup>

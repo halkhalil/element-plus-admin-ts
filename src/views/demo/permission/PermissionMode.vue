@@ -15,9 +15,7 @@
 import {useRootSetting} from "~/composables/setting/useRootSeeting";
 import {PermissionModeEnum} from "~/enums/permission";
 import {computed} from "vue";
-import {useStore} from "vuex";
 
-const {dispatch} = useStore();
 const {getPermissionMode, togglePermissionMode} = useRootSetting();
 const isBackMode = computed(() => getPermissionMode.value == PermissionModeEnum.BACK_MENU);
 </script>

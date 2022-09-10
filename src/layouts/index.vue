@@ -26,7 +26,7 @@ export default defineComponent({
     }
 
     const renderFooter = () => (
-      <el-footer><LayoutFooter/></el-footer>
+      <el-footer height="60px" class="p-1"><LayoutFooter/></el-footer>
     )
 
     const renderAside = () => (<el-aside width='auto'><LayoutSidebar/></el-aside>)
@@ -39,9 +39,9 @@ export default defineComponent({
           <el-container direction='vertical'>
             {getHeaderFixed.value ? renderHeader() : null}
             <el-main>
-              <el-scrollbar>
+              <el-scrollbar view-class="h-full" wrap-class="h-full">
                 {!getHeaderFixed.value ? renderHeader() : null}
-                <LayoutContent/>
+                <LayoutContent class="p-2"/>
               </el-scrollbar>
             </el-main>
           </el-container>
@@ -52,18 +52,16 @@ export default defineComponent({
     // 混合菜单模式
     const layoutMix = () => {
       return (
-        <el-container direction='vertical'>
-          {renderHeader()}
-          <el-container direction='horizontal'>
-            {renderAside()}
-            <el-container direction='vertical'>
-              {getShowTab.value ? renderTabFixed() : null}
-              <el-main class="mb-12">
-                <el-scrollbar>
-                  <LayoutContent/>
-                </el-scrollbar>
-              </el-main>
-            </el-container>
+        <el-container direction='horizontal'>
+          {renderAside()}
+          <el-container direction='vertical'>
+            {renderHeader()}
+            {getShowTab.value ? renderTabFixed() : null}
+            <el-main>
+              <el-scrollbar view-class="h-full">
+                <LayoutContent class="p-2"/>
+              </el-scrollbar>
+            </el-main>
           </el-container>
         </el-container>
       )
@@ -75,9 +73,9 @@ export default defineComponent({
         <el-container direction='vertical'>
           {getHeaderFixed.value ? renderHeader() : null}
           <el-main>
-            <el-scrollbar>
+            <el-scrollbar view-class="h-full">
               {!getHeaderFixed.value ? renderHeader() : null}
-              <LayoutContent/>
+              <LayoutContent class="p-2"/>
             </el-scrollbar>
           </el-main>
         </el-container>

@@ -2,13 +2,12 @@
   <div class="z-60 w-full">
     <div class="header-container flex justify-between">
       <div class="header-left inline-flex flex-shrink">
-        <Logo v-if="getShowHeaderLogo" class="action"/>
         <HeaderTrigger v-if="getShowHeaderTrigger" class="action"/>
-        <Breadcrumb v-if="getShowBreadcrumb"/>
+        <Breadcrumb v-if="getShowBreadcrumb && !getShowHorizontalMenu"/>
       </div>
 
-      <div class="header-menu" v-if="getIsTopMenuMode">
-        <LayoutMenu/>
+      <div class="w-full" v-if="getShowHorizontalMenu">
+        <HorizontalMenu/>
       </div>
 
       <div class="header-right inline-flex items-center">
@@ -44,7 +43,7 @@ import UserDropdown from "~/layouts/common/header/components/UserDropdown.vue";
 import Breadcrumb from "~/layouts/common/header/components/Breadcrumb.vue";
 import GitHub from "~/layouts/common/header/components/GitHub.vue";
 import Setting from "~/layouts/common/setting/index.vue";
-import LayoutMenu from '~/layouts/common/menu/index.vue';
+import HorizontalMenu from '~/layouts/common/menu/horizontal.vue';
 import HeaderTrigger from "~/layouts/common/trigger/HeaderTrigger.vue";
 import {useRootSetting} from "~/composables/setting/useRootSeeting";
 
@@ -52,7 +51,7 @@ const {
   getShowBreadcrumb,
   getShowHeaderLogo,
   getShowHeaderTrigger,
-  getIsTopMenuMode,
+  getShowHorizontalMenu,
 } = useRootSetting();
 </script>
 
@@ -68,11 +67,6 @@ const {
   .action:hover {
     background: var(--el-backtop-text-color);
   }
-
-  .header-menu {
-    width: 100%;
-  }
-
   .action {
     height: 100%;
     padding: 0 10px;

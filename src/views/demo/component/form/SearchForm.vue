@@ -1,7 +1,7 @@
 <template>
-  <PageWrapper
+  <page-wrapper
     :title="$route.meta?.title"
-    content-background>
+    content-full-height>
     <div class="p-5 mb-2">
       <el-divider content-position="left">表单选项</el-divider>
       <el-form v-model="formProps" inline>
@@ -57,7 +57,7 @@
 
     <el-divider content-position="left">数据预览</el-divider>
     <pre class="m-5">{{ searchForm }}</pre>
-  </PageWrapper>
+  </page-wrapper>
 </template>
 <script lang="ts" setup>
 import {reactive, ref} from "vue";

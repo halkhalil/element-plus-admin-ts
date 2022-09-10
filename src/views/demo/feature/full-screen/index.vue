@@ -1,8 +1,10 @@
 <template>
   <page-wrapper :title="$route.meta['title']">
     <template #content>
-      使用VueUse useFullscreen
-      <el-link type="primary" href="https://vueuse.org/core/useFullscreen/" target="_blank">查看文档</el-link>
+      <p class="text-sm">
+        使用VueUse useFullscreen
+        <el-link type="primary" href="https://vueuse.org/core/useFullscreen/" target="_blank">查看文档</el-link>
+      </p>
     </template>
     <el-card header="Window" shadow="none">
       <p>state：{{ isFullscreen }}</p>

@@ -1,7 +1,7 @@
 <template>
-  <PageWrapper :title="$route.meta.title">
+  <page-wrapper :title="$route?.meta?.title">
     <Tinymce v-model="richContent"></Tinymce>
-  </PageWrapper>
+  </page-wrapper>
 </template>
 
 <script lang="ts" setup>

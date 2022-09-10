@@ -1,7 +1,7 @@
 <template>
   <page-wrapper
-    :title="$route['meta']['title']"
-    :sub-title="$route['meta']['title']"
+    :title="$route?.meta?.title"
+    :sub-title="$route?.meta?.title"
     content-background
     content-full-height
   >
@@ -11,8 +11,9 @@
       <el-button type="primary">按钮3</el-button>
     </template>
     <template #content>
-      <div class="text-sm text-secondary">
-        内容详情内容详情内容详情内容详情内容详情内容详情内容详情内容详情内容详情内容详情内容详情内容详情内容详情内容详情内容详情
+      <div class="text-sm" style="color: var(--el-text-color-secondary)">
+        <p>
+          内容详情内容详情内容详情内容详情内容详情内容详情内容详情内容详情内容详情内容详情内容详情内容详情内容详情内容详情内容详情</p>
       </div>
     </template>
     <div class="p-5">
@@ -49,19 +50,9 @@
   </page-wrapper>
 </template>
 
-<script>
+<script lang="ts" setup>
 import {PageWrapper} from '~/components/Page/index.ts';
-import {useRootSetting} from "~/composables/setting/useRootSeeting.ts";
+import {useRootSetting} from "~/composables/setting/useRootSeeting";
 
-export default {
-  name: "index",
-  components: {PageWrapper},
-  data() {
-    const {getIsMobile} = useRootSetting();
-    return {
-      getIsMobile,
-      activeName: 'first',
-    }
-  }
-}
+const {getIsMobile} = useRootSetting();
 </script>

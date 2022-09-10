@@ -1,7 +1,7 @@
 <template>
   <el-row>
     <el-col>
-      <el-card header="极坐标系下的堆叠柱状图">
+      <el-card header="极坐标系下的堆叠柱状图" shadow="never">
         <div ref="elRef" style="height: 380px;width: 100%;"></div>
       </el-card>
     </el-col>

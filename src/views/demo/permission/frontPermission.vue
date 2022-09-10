@@ -1,11 +1,11 @@
 <template>
   <PageWrapper :title="$route.meta['title']">
     <template #content>
-      <div class="text-secondary text-sm">
+      <p class="text-secondary text-sm">
         前端权限模式，根据用户的角色信息过滤路由和菜单
-      </div>
+      </p>
     </template>
-    <el-card shadow="none">
+    <el-card shadow="never">
       <PermissionMode/>
       <div v-if="getPermissionMode === PermissionModeEnum.FRONT_MENU">
         <el-divider></el-divider>
@@ -31,7 +31,7 @@
       </div>
     </el-card>
 
-    <el-card class="mt-2" header="按钮权限" v-if="getPermissionMode === PermissionModeEnum.FRONT_MENU">
+    <el-card shadow="never" class="mt-2" header="按钮权限" v-if="getPermissionMode === PermissionModeEnum.FRONT_MENU">
       <el-divider content-position="left">指令方式判断权限 v-permission</el-divider>
       <el-space wrap>
         <el-button type="primary" plain v-permission="RoleEnum.ADMINISTRATOR">
@@ -70,12 +70,12 @@ import {PageWrapper} from "~/components/Page";
 import {PermissionModeEnum} from '~/enums/permission';
 import PermissionMode from './PermissionMode.vue'
 import {RoleEnum} from "~/enums/permission";
-import {useStore} from "vuex";
+import {useStore} from "~/store";
 import {computed} from "vue";
 import {usePermission} from "~/composables/usePermission"
 
-const {getters} = useStore();
-const getRoles = computed(() => getters.getRoles);
+const {userStore} = useStore();
+const getRoles = computed(() => userStore.getRoles);
 const isSuper = computed(() => getRoles.value.includes(RoleEnum.ADMINISTRATOR));
 const isTest = computed(() => getRoles.value.includes(RoleEnum.TEST));
 const {changeRoles, hasPermission, getPermissionMode} = usePermission();

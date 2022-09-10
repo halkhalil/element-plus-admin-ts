@@ -1,8 +1,10 @@
 <template>
   <page-wrapper :title="$route.meta['title']">
     <template #content>
-      使用VueUse useQRCode
-      <el-link type="primary" href="https://vueuse.org/integrations/useQRCode/" target="_blank">查看</el-link>
+      <p class="text-sm">
+        使用VueUse useQRCode
+        <el-link type="primary" href="https://vueuse.org/integrations/useQRCode/" target="_blank">查看</el-link>
+      </p>
     </template>
     <el-card shadow="none">
       <note>

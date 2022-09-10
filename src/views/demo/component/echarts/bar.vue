@@ -1,5 +1,5 @@
 <template>
-  <PageWrapper :title="$route['meta']['title']">
+  <page-wrapper :title="$route?.meta?.title">
     <template #content>
       <Notice/>
     </template>
@@ -20,7 +20,7 @@
         </el-card>
       </el-col>
     </el-row>
-  </PageWrapper>
+  </page-wrapper>
 </template>
 
 <script>

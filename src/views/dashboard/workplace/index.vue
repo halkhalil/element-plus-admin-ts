@@ -1,6 +1,6 @@
 <template>
-  <div class="m-3">
-    <UserInfo class="m-5"/>
+  <div>
+    <UserInfo class="mb-2"/>
     <el-row :gutter="10">
       <el-col :xs="24" :sm="24" :md="24" :lg="18" :xl="16">
         <Project class="mb-2"/>

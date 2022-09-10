@@ -1,5 +1,5 @@
 <template>
-  <el-card>
+  <el-card shadow="never">
     <el-row :gutter="10">
       <el-col :span="10">
         <div class="flex-col between">
