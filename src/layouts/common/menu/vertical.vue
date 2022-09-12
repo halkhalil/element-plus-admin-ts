@@ -17,11 +17,11 @@ import {cloneDeep} from "lodash-es";
 const {currentRoute} = useRouter();
 const {permissionStore} = useStore()
 const {getMenuSetting} = useMenuSetting();
-const {getShowLogo, getIsMixMode} = useRootSetting();
+const {getShowLogo, getLayoutMix} = useRootSetting();
 
 const menus = cloneDeep(permissionStore.getMenus);
 const getMenus = computed(() => {
-  if (getIsMixMode.value) { // 混合模式,获取当前一级菜单下的子菜单
+  if (getLayoutMix.value) { // 混合模式,获取当前一级菜单下的子菜单
     const currentMenu = menus.find(menu => menu.path === currentRoute.value?.matched[0]?.path);
     return currentMenu?.children || currentMenu;
   }
@@ -32,14 +32,15 @@ const getDefaultActive = computed(() => {
   const {meta, path} = currentRoute.value;
   return meta?.defaultActive || path;
 })
+
 </script>
 <style lang="scss" scoped>
-
 .el-menu:not(.el-menu--horizontal) {
   height: 100%;
-
-  //&:not(.el-menu--collapse) {
-  //  width: 200px;
-  //}
+  //--el-menu-bg-color: #1d1e1f;
+  //--el-menu-text-color: #E5EAF3;
+  //--el-menu-hover-bg-color: #18222c;
+  ////--el-menu-active-color:red;
+  //--el-menu-bg-color-overlay: #1d1e1f;
 }
 </style>

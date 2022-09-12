@@ -9,7 +9,7 @@ export default defineComponent({
   name: 'Layout',
   setup() {
     const {getHeaderFixed} = useHeaderSetting();
-    const {getIsMixMode, getIsSidebarMode, getShowTab} = useRootSetting();
+    const {getLayoutMix, getLayoutVertical, getShowTab} = useRootSetting();
 
     const renderTab = () => (<LayoutTab/>)
     const renderTabFixed = () => (<el-header height="auto">{renderTab()}</el-header>)
@@ -18,11 +18,11 @@ export default defineComponent({
       const header = () => (
         <>
           <LayoutHeader/>
-          {getShowTab.value && !getIsMixMode.value ? renderTab() : null}
+          {getShowTab.value && !getLayoutMix.value ? renderTab() : null}
         </>
       )
       const headerFixed = () => (<el-header height="auto">{header()}</el-header>)
-      return getIsMixMode.value || getHeaderFixed.value ? headerFixed() : header()
+      return getLayoutMix.value || getHeaderFixed.value ? headerFixed() : header()
     }
 
     const renderFooter = () => (
@@ -85,7 +85,7 @@ export default defineComponent({
     return () => (
       <>
         <LayoutFeature/>
-        {getIsSidebarMode.value ? layoutAside() : getIsMixMode.value ? layoutMix() : layoutTopMenu()}
+        {getLayoutVertical.value ? layoutAside() : getLayoutMix.value ? layoutMix() : layoutTopMenu()}
       </>
     )
   }

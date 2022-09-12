@@ -13,23 +13,33 @@
       <div class="drawer-body">
         <el-form size="small">
           <el-divider>导航栏模式</el-divider>
-          <div class="flex content-center">
+          <div class="flex justify-between">
             <el-tooltip v-for="(item,index) in menuTypes"
                         :key="index"
                         effect="dark"
                         :content="item.title"
                         placement="top-start">
-              <div class="setting-item" @click="toggleNavbarMode(item.type)">
-                <div :class="[
-                       'menu-type',
-                       `menu-type--${item.type}`,
-                       {
-                         [`menu-type--active`]:  item.type === getNavbarMode
-                       }
-                     ]"
-                ></div>
+              <div class="" @click="toggleLayout(item.type)">
+                <div class="flex justify-center items-center" :class="['menu-type',`menu-type--${item.type}`]">
+                  <el-icon size="20px" color="var(--el-color-primary)" v-if="item.type === getLayout">
+                    <Icon icon="ep:select"/>
+                  </el-icon>
+                </div>
               </div>
             </el-tooltip>
+          </div>
+
+          <el-divider>主题色</el-divider>
+          <div class="flex justify-between">
+            <template v-for="theme in getThemes">
+              <div class="h-20px w-20px border-1 m-1 cursor-pointer flex justify-center items-center"
+                   :style="{backgroundColor: theme.color}"
+                   @click="changeTheme(theme.theme)">
+                <el-icon v-if="theme.theme === getTheme" color='var(--el-color-primary)'>
+                  <Icon icon="ep:select"/>
+                </el-icon>
+              </div>
+            </template>
           </div>
 
           <el-divider>内容区域</el-divider>
@@ -112,17 +122,18 @@ import {useTabSetting} from "~/composables/setting/useTabSeeting";
 import {SizeEnum, TransitionEnum} from '~/enums/app';
 import {menuTypes} from './menu'
 import {useDark, useToggle} from '@vueuse/core'
+import {useThemeSetting} from "~/composables/setting/useThemeSeeting";
 
 const {
   getShowLogo,
   getShowBreadcrumb,
   getShowSettingDrawer,
-  getNavbarMode,
+  getLayout,
   getGlobalSize,
   closedSettingDrawer,
   toggleLogo,
   toggleBreadcrumb,
-  toggleNavbarMode,
+  toggleLayout,
   toggleElementSize,
 } = useRootSetting();
 
@@ -142,8 +153,13 @@ const {
 } = useTransitionSetting();
 
 const {getEnableTab, toggleEnableTab} = useTabSetting();
+const {getTheme, getThemes, changeTheme} = useThemeSetting();
+
+
 </script>
 <style lang="scss">
+
+
 .drawer-container {
   .el-drawer__body {
     padding: 0 !important;

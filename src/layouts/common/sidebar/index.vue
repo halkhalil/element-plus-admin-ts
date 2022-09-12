@@ -12,9 +12,9 @@
       <LayoutMenu/>
     </el-scrollbar>
   </el-drawer>
-  <el-scrollbar v-else view-class="scrollbar">
+<!--  <el-scrollbar v-else view-class="scrollbar">-->
     <LayoutMenu/>
-  </el-scrollbar>
+<!--  </el-scrollbar>-->
 </template>
 
 <script lang="ts" setup>

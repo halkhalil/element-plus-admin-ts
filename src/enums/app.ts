@@ -15,15 +15,35 @@ export enum SizeEnum {
 }
 
 // 导航栏模式
-export enum NavbarModeEnum {
-  SIDEBAR = 'sidebar',
-  TOP_MIX = 'top-mix',
-  TOP_MENU = 'top-menu',
+export enum LayoutEnum {
+  VERTICAL = 'vertical',
+  HORIZONTAL = 'horizontal',
+  MIX = 'mix',
 }
 
-export enum ThemeEnum{
+export enum ThemeEnum {
   DARK = 'dark',
   LIGHT = 'light',
+  DEFAULT = 'default',
+  DUSK = 'dusk',
+  VOLCANO = 'volcano',
+  YELLOW = 'yellow',
+  MINGQING = 'mingQing',
+  AURORAGREEN = 'auroraGreen',
+  PINK = 'pink',
+  SAUCEPURPLE = 'saucePurple',
+}
+
+export enum ThemeColorEnum {
+  DARK = 'dark',
+  LIGHT = 'white',
+  DUSK = '#f5222d',
+  VOLCANO = '#fa541c',
+  YELLOW = '#fadb14',
+  MINGQING = '#13c2c2',
+  AURORAGREEN = '#52c41a',
+  PINK = '#eb2f96',
+  SAUCEPURPLE = '#722ed1',
 }
 
 // 菜单类型
@@ -32,4 +52,5 @@ export enum MenuTypeEnum {
   LINK = '外链',
   IFRAME = '内嵌',
 }
+
 

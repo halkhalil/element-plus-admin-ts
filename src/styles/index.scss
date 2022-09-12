@@ -1,11 +1,10 @@
-@import "./element.scss";
-@import "./transition/index.scss";
-//@import "./common.scss";
+@use "./element.scss";
+@use "./transition/index.scss";
+@import "./theme/index";
 
-html, body, #app,.el-container {
+html, body, #app, .el-container {
   height: 100%;
 }
-
 
 .iconfont {
   font-size: 18px !important;
@@ -46,7 +45,6 @@ body {
   position: relative;
   width: 56px;
   height: 48px;
-  margin-right: 16px;
   overflow: hidden;
   cursor: pointer;
   background-color: #f0f2f5;
@@ -59,55 +57,7 @@ body {
   content: ""
 }
 
-.menu-type--sidebar:before, .menu-type--light:before {
-  top: 0;
-  left: 0;
-  z-index: 1;
-  width: 33%;
-  height: 100%;
-  background-color: #273352;
-  border-radius: 4px 0 0 4px
-}
-
-.menu-type--sidebar:after, .menu-type--light:after {
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 25%;
-  background-color: #fff
-}
-
-.menu-type--top-mix:before {
-  top: 0;
-  left: 0;
-  width: 33%;
-  height: 100%;
-  background-color: #fff;
-  border-radius: 4px 0 0 4px
-}
-
-.menu-type--top-mix:after {
-  top: 0;
-  left: 0;
-  z-index: 1;
-  width: 100%;
-  height: 25%;
-  background-color: #273352
-}
-
-.menu-type--top-menu:after {
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 25%;
-  background-color: #273352
-}
-
-.menu-type--dark {
-  background-color: #273352
-}
-
-.menu-type--mix-sidebar:before {
+.menu-type--vertical:before, .menu-type--light:before {
   top: 0;
   left: 0;
   z-index: 1;
@@ -117,7 +67,7 @@ body {
   border-radius: 4px 0 0 4px
 }
 
-.menu-type--mix-sidebar:after {
+.menu-type--vertical:after, .menu-type--light:after {
   top: 0;
   left: 0;
   width: 100%;
@@ -125,20 +75,35 @@ body {
   background-color: #fff
 }
 
-.menu-type--mix-sidebar .mix-sidebar {
-  position: absolute;
-  left: 25%;
-  width: 15%;
+.menu-type--horizontal:after {
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 25%;
+  background-color: #273352
+}
+
+.menu-type--dark {
+  background-color: #273352
+}
+
+.menu-type--mix:before {
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 25%;
   height: 100%;
-  background-color: #fff
+  background-color: #273352;
+  border-radius: 4px 0 0 4px
 }
 
-.menu-type:hover, .menu-type--active {
-  border: 2px solid var(--el-color-primary)
-}
-
-.menu-type:hover:before, .menu-type--active:before, .menu-type:hover:after, .menu-type--active:after {
-  border-radius: 0
+.menu-type--mix:after {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 25%;
+  background-color: #273352
 }
 
 code {

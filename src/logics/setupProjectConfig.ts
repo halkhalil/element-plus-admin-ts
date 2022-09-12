@@ -8,4 +8,7 @@ export const setupProjectConfig = () => {
   if (isEmpty(appStore.getProjectConfig)) {
     appStore.setProjectConfig(setting);
   }
+
+  appStore.setTheme(appStore.getProjectConfig?.theme);
+  appStore.setLayout(appStore.getProjectConfig?.layout);
 }

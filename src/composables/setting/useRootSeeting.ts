@@ -1,7 +1,7 @@
 import {computed} from 'vue'
 import {useMenuSetting} from "~/composables/setting/useMenuSeeting";
 import {useWindowSize} from "@vueuse/core";
-import {NavbarModeEnum, SizeEnum, ThemeEnum} from "~/enums/app";
+import {LayoutEnum, SizeEnum, ThemeEnum} from "~/enums/app";
 import {PermissionModeEnum} from "~/enums/permission";
 import {MenuModeEnum} from "~/enums/menu";
 import {setting} from '~/settings/projectSetting'
@@ -22,25 +22,25 @@ export function useRootSetting() {
   // 主题模式
   const getDarkMode = computed(() => appStore.darkMode);
 
-  // 导航模式
-  const getIsMixMode = computed(() => appStore.getProjectConfig.navbarMode === NavbarModeEnum.TOP_MIX);
-  const getIsSidebarMode = computed(() => appStore.getProjectConfig.navbarMode === NavbarModeEnum.SIDEBAR);
-  const getIsTopMenuMode = computed(() => appStore.getProjectConfig.navbarMode === NavbarModeEnum.TOP_MENU);
+  // 布局模式
+  const getLayout = computed(() => appStore.getProjectConfig.layout);
+  const getLayoutVertical = computed(() => appStore.getProjectConfig.layout === LayoutEnum.VERTICAL);
+  const getLayoutHorizontal = computed(() => appStore.getProjectConfig.layout === LayoutEnum.HORIZONTAL);
+  const getLayoutMix = computed(() => appStore.getProjectConfig.layout === LayoutEnum.MIX);
 
-  const getShowHorizontalMenu = computed(() => !getIsSidebarMode.value);
+  const getShowHorizontalMenu = computed(() => !getLayoutVertical.value);
 
   // 内容显示
   const getShowLogo = computed(() => appStore.getProjectConfig.showLogo);
-  const getShowBreadcrumb = computed(() => appStore.getProjectConfig.showBreadcrumb && !getIsMobile.value && !getIsTopMenuMode.value);
+  const getShowBreadcrumb = computed(() => appStore.getProjectConfig.showBreadcrumb && !getIsMobile.value && !getLayoutHorizontal.value);
   const getShowSettingDrawer = computed(() => appStore.getProjectConfig.showSettingDrawer);
-  const getShowHeaderLogo = computed(() => !getIsSidebarMode.value && getShowLogo.value && !getIsMobile.value);
-  const getShowSidebarLogo = computed(() => getIsSidebarMode.value && getShowLogo.value);
+  const getShowHeaderLogo = computed(() => !getLayoutVertical.value && getShowLogo.value && !getIsMobile.value);
+  const getShowSidebarLogo = computed(() => getLayoutVertical.value && getShowLogo.value);
   const getShowTab = computed(() => appStore.getTabSetting.enable && !getIsMobile.value);
-  const getShowHeaderTrigger = computed(() => !getIsTopMenuMode.value);
+  const getShowHeaderTrigger = computed(() => !getLayoutHorizontal.value);
   const getGlobalSize = computed(() => appStore.getProjectConfig.size);
 
   // 动画
-  const getNavbarMode = computed(() => appStore.getProjectConfig.navbarMode);
   const getPageLoading = computed(() => appStore.getPageLoading);
   const getOpenKeepAlive = computed(() => appStore.getProjectConfig.openKeepAlive);
 
@@ -79,13 +79,14 @@ export function useRootSetting() {
    * 切换导航栏模式
    * @param mode
    */
-  function toggleNavbarMode(mode: NavbarModeEnum) {
+  function toggleLayout(mode: LayoutEnum) {
     let menuSetting: Partial<MenuSetting> = setting.menuSetting;
-    if (mode === NavbarModeEnum.TOP_MENU) {
-      menuSetting = {...menuSetting, mode: MenuModeEnum.HORIZONTAL}
-    }
-    setRootSetting({navbarMode: mode});
+    // if (mode === LayoutEnum.MIX) {
+    //   menuSetting = {...menuSetting, mode: MenuModeEnum.HORIZONTAL}
+    // }
+    setRootSetting({layout: mode});
     setMenuSetting(menuSetting);
+    appStore.setLayout(mode);
   }
 
   /**
@@ -118,7 +119,7 @@ export function useRootSetting() {
     setRootSetting,
     toggleLogo,
     toggleBreadcrumb,
-    toggleNavbarMode,
+    toggleLayout,
     toggleDarkMode,
     openSettingDrawer,
     closedSettingDrawer,
@@ -126,7 +127,7 @@ export function useRootSetting() {
     togglePermissionMode,
 
     getDarkMode,
-    getNavbarMode,
+    getLayout,
     getShowLogo,
     getShowBreadcrumb,
     getShowSettingDrawer,
@@ -135,9 +136,9 @@ export function useRootSetting() {
     getShowTab,
     getShowHeaderTrigger,
     getShowHorizontalMenu,
-    getIsSidebarMode,
-    getIsMixMode,
-    getIsTopMenuMode,
+    getLayoutVertical,
+    getLayoutMix,
+    getLayoutHorizontal,
     getIsMobile,
     getPageLoading,
     getOpenKeepAlive,

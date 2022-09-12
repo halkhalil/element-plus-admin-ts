@@ -38,6 +38,9 @@ export const useAppStore = defineStore({
     getTabSetting(): TabSetting {
       return this.getProjectConfig.tabSetting;
     },
+    getTheme(): ThemeEnum {
+      return this.getProjectConfig.theme;
+    },
   },
   actions: {
     setPageLoading(loading: boolean): void {
@@ -49,6 +52,12 @@ export const useAppStore = defineStore({
     setProjectConfig(config: Partial<ProjectSetting>): void {
       this.projectConfig = merge(this.projectConfig || {}, config) as ProjectSetting;
     },
+    setTheme(theme: ThemeEnum) {
+      document.documentElement.className = theme;
+    },
+    setLayout(layout){
+      document.body.className = layout;
+    }
   },
   persist: {
     enabled: true

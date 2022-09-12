@@ -21,6 +21,24 @@ $--colors: (
   ),
 );
 
+$--menu: (
+  //'active-color': getCssVar('color-primary'),
+  'text-color': 'rgba(255,255,255,0.7)',
+  //'hover-text-color': getCssVar('color-primary'),
+  'bg-color': '#141414',
+  'hover-bg-color': '#414243',
+  'item-height': 56px,
+  //'sub-item-height': calc(#{getCssVar('menu-item-height')} - 6px),
+  'horizontal-sub-item-height': 36px,
+  //'item-font-size': getCssVar('font-size-base'),
+  //'item-hover-fill': getCssVar('color-primary-light-9'),
+  //'border-color': '#141414',
+  'base-level-padding': 20px,
+  'level-padding': 20px,
+  'icon-width': 24px,
+  'icon-transform-closed': 'none',
+  'icon-transform-open': 'rotateZ(180deg)',
+);
 
 // we can add this to custom namespace, default is 'el'
 @forward "element-plus/theme-chalk/src/mixins/config.scss" with (
@@ -31,7 +49,9 @@ $--colors: (
 // comment next lines to use default color
 @forward "element-plus/theme-chalk/src/common/var.scss" with (
   // do not use same name, it will override.
-  $colors: $--colors,
+  //$colors: $--colors,
+  //$menu: $--menu,
+  //$bg-color:$--bg-color,
   $button-padding-horizontal: ("default": 50px)
 );
 

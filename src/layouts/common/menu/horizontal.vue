@@ -1,7 +1,7 @@
 <template>
-  <el-menu class="menu-container h-50px" v-bind="getMenuSetting" mode="horizontal" :collapse="false"
+  <el-menu class="h-50px !border-0" v-bind="getMenuSetting" mode="horizontal" :collapse="false"
            :default-active="getDefaultActive">
-    <SidebarLogo class="logo" v-if="getShowLogo && getIsTopMenuMode"/>
+    <SidebarLogo class="logo" v-if="getShowLogo && getLayoutHorizontal"/>
     <sub-menu v-for="menu in getMenus" :index="menu.path" :key="menu.path" :menu="menu"/>
   </el-menu>
 </template>
@@ -18,11 +18,11 @@ import {cloneDeep} from "lodash-es";
 const {currentRoute} = useRouter();
 const {permissionStore} = useStore()
 const {getMenuSetting} = useMenuSetting();
-const {getShowLogo, getIsTopMenuMode, getIsMixMode} = useRootSetting();
+const {getShowLogo, getLayoutHorizontal, getLayoutMix} = useRootSetting();
 
 const menus = cloneDeep(permissionStore.getMenus);
 const getMenus = computed(() => {
-  if (getIsMixMode.value) { // 混合模式,顶部菜单去掉子集菜单
+  if (getLayoutMix.value) { // 混合模式,顶部菜单去掉子集菜单
     return menus.map(menu => {
       menu.children = [];
       return menu;
@@ -33,6 +33,6 @@ const getMenus = computed(() => {
 
 const getDefaultActive = computed(() => {
   const {meta, path, matched} = currentRoute.value;
-  return getIsMixMode.value ? matched[0]?.path : (meta?.defaultActive || path);
+  return getLayoutMix.value ? matched[0]?.path : (meta?.defaultActive || path);
 })
 </script>

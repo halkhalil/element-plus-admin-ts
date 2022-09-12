@@ -1,0 +1,72 @@
+html:not(.dark) {
+  --el-menu-bg-color: #1d1e1f;
+  --el-menu-text-color: #E5EAF3;
+  --el-menu-hover-bg-color: #18222c;
+  --el-menu-active-color: #409eff;
+  --el-menu-bg-color-overlay: #1d1e1f;
+  --el-menu-border-color: #1d1e1f;
+
+  body.mix, .horizontal {
+    .header {
+      background-color: #1d1e1f;
+      --el-menu-bg-color: #000000;
+      --el-text-color-primary: white;
+      --el-text-color-placeholder: white;
+      --el-text-color-regular: #CFD3DC;
+    }
+  }
+
+  &.light {
+    --el-menu-bg-color: #ffffff;
+    --el-menu-text-color: #303133;
+    --el-menu-hover-bg-color: #ecf5ff;
+    --el-menu-active-color: #409eff;
+    --el-menu-bg-color-overlay: #1d1e1f;
+    --el-menu-border-color: #dcdfe6;
+
+    body.mix, .horizontal {
+      .header {
+        background-color: #ffffff;
+        --el-menu-bg-color: #ffffff;
+        --el-text-color-primary: #303133;
+        --el-text-color-placeholder: #303133;
+        --el-text-color-regular: #CFD3DC;
+      }
+    }
+  }
+
+
+}
+
+html {
+  &.dusk {
+    --el-color-primary: #f5222d;
+    --el-menu-active-color: #f5222d;
+  }
+
+  &.volcano {
+    --el-color-primary: #fa541c;
+    --el-menu-active-color: #fa541c;
+  }
+
+  &.yellow {
+    --el-color-primary: #fadb14;
+    --el-menu-active-color: #fadb14;
+  }
+
+  &.auroraGreen {
+    --el-color-primary: #52c41a;
+    --el-menu-active-color: #52c41a;
+  }
+
+
+  &.pink {
+    --el-color-primary: #eb2f96;
+    --el-menu-active-color: #eb2f96;
+  }
+
+  &.saucePurple {
+    --el-color-primary: #722ed1;
+    --el-menu-active-color: #722ed1;
+  }
+}

@@ -1,6 +1,6 @@
 import {ProjectSetting} from "~/../../types/config";
 import {MenuModeEnum, MenuTrigger} from "~/enums/menu";
-import {NavbarModeEnum, TransitionEnum, SizeEnum, ThemeEnum} from "~/enums/app";
+import {LayoutEnum, TransitionEnum, SizeEnum, ThemeEnum} from "~/enums/app";
 import {PermissionModeEnum} from "~/enums/permission";
 
 export const setting: ProjectSetting = {
@@ -8,9 +8,6 @@ export const setting: ProjectSetting = {
     mode: MenuModeEnum.VERTICAL,
     collapse: false,
     ellipsis: true,
-    // backgroundColor: '#222d32',
-    // textColor: '#fff',
-    // activeTextColor: '#409EFF',
     defaultActive: '',
     defaultOpeneds: [],
     uniqueOpened: true,
@@ -37,8 +34,8 @@ export const setting: ProjectSetting = {
   tabSetting: {
     enable: true,
   },
-  theme: ThemeEnum.LIGHT,
-  navbarMode: NavbarModeEnum.SIDEBAR,
+  theme: ThemeEnum.DEFAULT,
+  layout: LayoutEnum.VERTICAL,
   showLogo: true,
   showBreadcrumb: true,
   showSettingDrawer: false,

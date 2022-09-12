@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-dropdown size="small" trigger="click">
-      <div class="avatar flex items-center">
+      <div class="avatar flex items-center" style="color: var(--el-text-color-primary)">
         <el-avatar :size="30" :src="getUser.avatar">{{ getUser.nickname }}</el-avatar>
         <div class="flex pl-1">
           <span class="text-sm">{{ getUser.nickname }}</span>
@@ -38,24 +38,3 @@ const logout = async () => {
   location.reload();
 }
 </script>
-<style lang="scss" scoped>
-.container {
-  .avatar {
-    //height: 49px;
-
-    //.name {
-    //  color: var(--el-text-color-primary);
-    //  padding-left: 5px;
-    //  width: max-content;
-    //  max-width: 80px;
-    //  @extend .text-overflow-1 !optional;
-    //}
-
-    .el-avatar {
-      //-webkit-transform: scale(0.85);
-      //background: #409EFF;
-      //font-weight: bolder;
-    }
-  }
-}
-</style>

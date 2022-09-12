@@ -1,5 +1,5 @@
 import {MenuModeEnum, MenuTrigger} from "~/enums/menu";
-import {SizeEnum, NavbarModeEnum, TransitionEnum, ThemeEnum} from "~/enums/app";
+import {SizeEnum, LayoutEnum, TransitionEnum, ThemeEnum} from "~/enums/app";
 import {PermissionModeEnum} from "~/enums/permission";
 
 // menu
@@ -7,9 +7,9 @@ export interface MenuSetting {
   mode: MenuModeEnum,
   collapse: boolean,
   ellipsis: boolean,
-  backgroundColor: string,
-  textColor: string,
-  activeTextColor: string,
+  // backgroundColor: string,
+  // textColor: string,
+  // activeTextColor: string,
   defaultActive: string,
   defaultOpeneds: string[],
   uniqueOpened: boolean,
@@ -50,7 +50,7 @@ export interface ProjectSetting {
   transitionSetting: TransitionSetting,
   tabSetting: TabSetting,
   theme: ThemeEnum,
-  navbarMode: NavbarModeEnum,
+  layout: LayoutEnum,
   showLogo: boolean,
   showBreadcrumb: boolean,
   showSettingDrawer: boolean,
