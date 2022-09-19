@@ -17,8 +17,9 @@
         <el-button @click="autoWidth=!autoWidth" class="w-full">自动宽度{{ autoWidth }}</el-button>
       </el-col>
     </el-row>
-    <el-row shadow="never">
-      <el-col :span="12">
+    <el-row :gutter="50">
+      <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+        <el-divider content-position="left">组件预览</el-divider>
         <BasicForm class="m-2"
                    ref="formRef"
                    v-model="form"
@@ -27,8 +28,12 @@
                    @submit="handleSubmit"
                    :auto-width="autoWidth"
                    label-width="90px"
-                   label-position="right">
+                   :label-position="getIsMobile ? 'top' : 'right'">
         </BasicForm>
+      </el-col>
+      <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+        <el-divider content-position="left">数据预览</el-divider>
+        <pre>{{form}}</pre>
       </el-col>
     </el-row>
   </page-wrapper>

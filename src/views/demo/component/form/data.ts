@@ -216,9 +216,6 @@ export function getRuleFormData() {
       component: 'InputNumber',
       componentProps: {
         placeholder: '这是一个InputNumber表单',
-        style: {
-          minWidth: '300px'
-        }
       },
       formProps: {
         rules: [{required: true, message: '这是个必填项', trigger: 'blur'}],
@@ -472,7 +469,7 @@ export function getDynamicFormData() {
       componentProps: {
         placeholder: '这是一个InputNumber表单',
         style: {
-          minWidth: '300px'
+          minWidth: '200px'
         }
       },
       formProps: {

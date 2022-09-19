@@ -1,9 +1,9 @@
 <template>
-  <PageWrapper
+  <page-wrapper
     :title="$route['meta']['title']"
     content-background
     content-full-height>
-    <BasicForm class="p-4"
+    <basic-form class="p-4"
                ref="formRef"
                v-model="form"
                :schemas="schemas"
@@ -15,8 +15,8 @@
       <template #custom>
         <el-input v-model="form.input3" placeholder="自定义Slot"></el-input>
       </template>
-    </BasicForm>
-  </PageWrapper>
+    </basic-form>
+  </page-wrapper>
 </template>
 
 <script>

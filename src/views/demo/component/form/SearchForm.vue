@@ -49,10 +49,10 @@
     </div>
     <el-divider content-position="left">表单预览</el-divider>
     <div class="p-5">
-      <BasicForm v-model="searchForm"
+      <basic-form v-model="searchForm"
                  :schemas="formSchema"
                  v-bind="formProps"
-      ></BasicForm>
+      ></basic-form>
     </div>
 
     <el-divider content-position="left">数据预览</el-divider>

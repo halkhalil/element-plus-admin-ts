@@ -1,17 +1,27 @@
 <template>
-  <PageWrapper :title="$route['meta']['title']" content-background content-full-height>
-    <BasicForm class="p-2"
-               ref="formRef"
-               v-model="form"
-               :schemas="schemas"
-               :rules="rules"
-               @reset="handleReset"
-               @submit="handleSubmit"
-               auto-width
-               label-width="150px"
-               :label-position="getIsMobile ? 'top' : 'right'">
-    </BasicForm>
-  </PageWrapper>
+  <page-wrapper :title="$route['meta']['title']" content-background content-full-height>
+    <el-row :gutter="20">
+      <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+        <el-divider content-position="left">组件预览</el-divider>
+        <basic-form class="p-2"
+                    ref="formRef"
+                    v-model="form"
+                    :schemas="schemas"
+                    :rules="rules"
+                    @reset="handleReset"
+                    @submit="handleSubmit"
+                    auto-width
+                    label-width="150px"
+                    :label-position="getIsMobile ? 'top' : 'right'">
+        </basic-form>
+      </el-col>
+      <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+        <el-divider content-position="left">数据预览</el-divider>
+        <pre>{{form}}</pre>
+      </el-col>
+    </el-row>
+
+  </page-wrapper>
 </template>
 
 <script lang="ts" setup>
@@ -41,7 +51,7 @@ const form = reactive({
 const rules = reactive({
   input: [{required: true}],
   select: [{required: true}],
-  input_number:[{required: true}],
+  input_number: [{required: true}],
 })
 
 const handleReset = () => {
