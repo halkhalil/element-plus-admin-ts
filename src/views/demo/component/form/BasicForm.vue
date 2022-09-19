@@ -2,7 +2,7 @@
   <PageWrapper :title="$route['meta']['title']" content-full-height content-background>
     <div class="flex-center">
       <el-row :gutter="10">
-        <el-col :span="12">
+        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
           <el-divider content-position="left">组件预览</el-divider>
           <BasicForm
             v-model="form"
@@ -17,7 +17,7 @@
             </template>
           </BasicForm>
         </el-col>
-        <el-col :span="12">
+        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
           <el-divider content-position="left">数据预览</el-divider>
           <pre class="m-5">{{ form }}</pre>
         </el-col>

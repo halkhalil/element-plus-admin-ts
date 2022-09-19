@@ -1,13 +1,12 @@
 import type {
   FormProps as ElFormProps,
   FormItemProps as ElFormItemProps,
-  FormInstance as ElFormInstance,
 } from 'element-plus'
 import {callbackFn} from "@tinymce/tinymce-vue/lib/es2015/main/ts/ScriptLoader";
-import {Ref} from "vue";
 
 export interface FormSchema {
   field: string,
+  label?: string,
   component: string,
   placeholder?: string,
   componentProps?: object | callbackFn,

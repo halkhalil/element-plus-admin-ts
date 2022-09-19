@@ -3,7 +3,7 @@
     custom-class="drawer-menu"
     v-if="getIsMobile"
     :model-value="!getCollapsed"
-    :size="219"
+    :size="220"
     :with-header="false"
     :destroy-on-close="true"
     direction="ltr"
@@ -12,9 +12,9 @@
       <LayoutMenu/>
     </el-scrollbar>
   </el-drawer>
-<!--  <el-scrollbar v-else view-class="scrollbar">-->
+  <el-scrollbar v-else view-class="scrollbar">
     <LayoutMenu/>
-<!--  </el-scrollbar>-->
+  </el-scrollbar>
 </template>
 
 <script lang="ts" setup>
