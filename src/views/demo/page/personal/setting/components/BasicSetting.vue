@@ -31,11 +31,11 @@
         </el-row>
       </el-col>
       <el-col :md="6" :lg="8" :xl="10">
-        <div class="flex-row center">
-          <div class="flex-col center">
+        <div class="flex justify-center">
+          <div class="flex-col justify-center">
             <el-avatar :src="form.avatar" :size="130"></el-avatar>
-            <div class="mt-5">
-              <el-button type="primary" class="w-full">更换头像</el-button>
+            <div class="flex justify-center mt-5">
+              <el-button type="primary">更换头像</el-button>
             </div>
           </div>
         </div>
@@ -44,28 +44,13 @@
   </el-form>
 </template>
 
-<script>
-import {BasicForm} from '~/components/Form/index.ts'
+<script lang="ts" setup>
 import {reactive, ref, toRefs} from "vue";
-import {useRootSetting} from "~/composables/setting/useRootSeeting.ts";
-import {useUser} from "~/composables/useUser.ts";
+import {useRootSetting} from "~/composables/setting/useRootSeeting";
+import {useUser} from "~/composables/useUser";
 
-export default {
-  name: "BasicSetting",
-  components: {BasicForm},
-  setup() {
-    const {getUser} = useUser();
-    const state = reactive({
-      form: getUser,
-      rules: [],
-    })
-
-    const {getIsMobile} = useRootSetting();
-
-    return {
-      ...toRefs(state),
-      getIsMobile
-    }
-  },
-}
+const {getUser} = useUser();
+const form = reactive(getUser || {})
+const rules = reactive({});
+const {getIsMobile} = useRootSetting();
 </script>

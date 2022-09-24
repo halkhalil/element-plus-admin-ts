@@ -89,7 +89,36 @@ export default ({command}: ConfigEnv): UserConfig => {
         transformers: [
           transformerDirectives(),
           transformerVariantGroup(),
-        ]
+        ],
+        rules: [
+          ['text-xl', {'font-size': 'var(--el-font-size-extra-large)'}],
+          ['text-lg', {'font-size': 'var(--el-font-size-large)',color:'--el-bg-color:red'}],
+          ['text-md', {'font-size': 'var(--el-font-size-medium)'}],
+          ['text-base', {'font-size': 'var(--el-font-size-base)'}],
+          ['text-sm', {'font-size': 'var(--el-font-size-small)'}],
+          ['text-xs', {'font-size': 'var(--el-font-size-extra-small)'}],
+          ['text-primary', {'color': 'var(--el-text-color-primary)'}],
+          ['text-regular', {'color': 'var(--el-text-color-regular)'}],
+          ['text-secondary', {'color': 'var(--el-text-color-secondary)'}],
+          ['border-darker', {'color': 'var(--el-border-color-darker)'}],
+          ['border-dark', {'color': 'var(--el-border-color-dark)'}],
+          ['border-base', {'color': 'var(--el-border-color)'}],
+          ['border-light', {'color': 'var(--el-border-color-light)'}],
+          ['border-lighter', {'color': 'var(--el-border-color-lighter)'}],
+          ['border-extra-light', {'color': 'var(--el-border-color-extra-light)'}],
+        ],
+        theme:{
+          extend: {
+            colors: {
+              bg_color: "var(--el-bg-color)",
+              primary: "var(--el-color-primary)",
+              primary_light_9: "var(--el-color-primary-light-9)",
+              text_color_primary: "var(--el-text-color-primary)",
+              text_color_regular: "var(--el-text-color-regular)",
+              text_color_disabled: "var(--el-text-color-disabled)"
+            }
+          }
+        },
       }),
     ],
   }

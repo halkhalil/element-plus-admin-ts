@@ -1,11 +1,11 @@
 <template>
-  <div class="list">
-    <div class="item" v-for="(item,index) in secureSettingList" :key="index">
+  <div class="divide-y border-base">
+    <div class="flex justify-between p-2" v-for="(item,index) in secureSettingList" :key="index">
       <div>
-        <div class="title">{{ item.label }}</div>
-        <div class="label">{{ item.description }}</div>
+        <div class="text-base text-primary font-500">{{ item.label }}</div>
+        <div class="text-base text-secondary mt-3">{{ item.description }}</div>
       </div>
-      <div>
+      <div class="flex flex-col justify-center">
         <el-button type="text">修改</el-button>
       </div>
     </div>

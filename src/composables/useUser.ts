@@ -3,11 +3,9 @@ import {useStore} from "~/store";
 
 export function useUser() {
   const {userStore} = useStore()
-  const getUser = computed(() => userStore.getUser);
-  const getToken = computed(() => userStore.getToken);
 
   return {
-    getUser,
-    getToken
+    getUser: userStore.getUser,
+    getToken: userStore.getToken
   }
 }

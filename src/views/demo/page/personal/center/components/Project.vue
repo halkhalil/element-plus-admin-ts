@@ -4,9 +4,9 @@
       <el-card class="" shadow="hover">
         <div class="flex-row mb-1">
           <el-image :src="item.image" class="w-full h-50"></el-image>
-          <div class="font-bold">{{ item.title }}</div>
+          <div class="text-primary text-md">{{ item.title }}</div>
         </div>
-        <div class="text-gray-500 line-clamp-2 h-10">
+        <div class="text-regular text-base line-clamp-2 h-10">
           {{ item.desc }}
         </div>
       </el-card>

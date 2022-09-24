@@ -22,7 +22,7 @@
         <slot name="content"></slot>
       </template>
     </el-page-header>
-    <div class="!px-5 pb-5 content-bg"
+    <div class="!p-5 content-bg"
          ref="contentElRef"
          :style="$props.contentFullHeight ?? {minHeight:getContentHeight+'px'}">
       <slot>
