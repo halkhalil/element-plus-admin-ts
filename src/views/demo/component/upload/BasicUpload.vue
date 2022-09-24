@@ -1,7 +1,7 @@
 <template>
-  <PageWrapper :title="$route['meta']['title']" content-full-height content-background>
+  <page-wrapper :title="$route['meta']['title']" content-full-height content-background>
     <div class="p-5">
-      <el-form v-model="uploadProps">
+      <el-form v-model="uploadProps" :label-position="getIsMobile ? 'top' : 'right'">
         <el-form-item label="文件上传地址">
           <el-input v-model="uploadProps.action"></el-input>
         </el-form-item>
@@ -26,18 +26,20 @@
         </el-form-item>
       </el-form>
       <el-row :gutter="40">
-        <el-col :span="12">
+        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
           <el-divider content-position="left">组件预览</el-divider>
-          <BasicUpload v-model="files" v-bind="uploadProps"
-                       :transform-response="customResponse && transformResponse"></BasicUpload>
+          <basic-upload v-model="files"
+                        v-bind="uploadProps"
+                        :transform-response="customResponse && transformResponse">
+          </basic-upload>
         </el-col>
-        <el-col :span="12">
+        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
           <el-divider content-position="left">数据预览</el-divider>
-          <pre>{{ files }}</pre>
+          <pre style="overflow: hidden">{{ files }}</pre>
         </el-col>
       </el-row>
     </div>
-  </PageWrapper>
+  </page-wrapper>
 </template>
 
 <script lang="ts" setup>
@@ -46,6 +48,9 @@ import {BasicUpload} from '~/components/Upload';
 import type {UploadProps} from 'element-plus'
 import {UploadFile, UploadFiles} from "element-plus";
 import {getUrlFileName} from "~/utils/utils";
+import {useRootSetting} from "~/composables/setting/useRootSeeting";
+
+const {getIsMobile} = useRootSetting()
 
 const uploadProps = reactive<Partial<UploadProps>>({
   action: import.meta.env.VITE_UPLOAD_URL,
