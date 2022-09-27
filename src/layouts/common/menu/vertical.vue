@@ -37,6 +37,11 @@ const getDefaultActive = computed(() => {
 <style lang="scss" scoped>
 .el-menu:not(.el-menu--horizontal) {
   height: 100%;
+
+  &:not(.el-menu--collapse) {
+    width: 200px;
+  }
+
   //--el-menu-bg-color: #1d1e1f;
   //--el-menu-text-color: #E5EAF3;
   //--el-menu-hover-bg-color: #18222c;
