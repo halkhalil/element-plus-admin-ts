@@ -22,31 +22,17 @@
   </div>
 </template>
 
-<script>
+<script lang="ts" setup>
 import {toRefs} from "vue";
 
-export default {
-  name: "Step3",
-  emits: ['redo'],
-  props: {
-    previewInfo: {
-      type: Object,
-      default: () => ({})
-    },
-  },
-  setup(props, {emit}) {
-    const {previewInfo: info} = toRefs(props);
-    const methods = {
-      handleRedo: () => emit('redo')
-    }
-    return {
-      ...methods,
-      info
-    }
+const emits = defineEmits(['redo'])
+const props = defineProps({
+  previewInfo: {
+    type: Object,
+    default: () => ({})
   }
-}
+})
+
+const {previewInfo: info} = toRefs(props);
+const handleRedo = () => emits('redo')
 </script>
-
-<style scoped>
-
-</style>

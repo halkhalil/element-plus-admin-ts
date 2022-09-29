@@ -80,6 +80,9 @@ const {back} = useRouter();
 :deep(.el-page-header__breadcrumb:empty) {
   margin: 0 !important;
 }
+:deep(.el-page-header__main){
+  padding-top: 10px;
+}
 
 .content-bg {
   background-color: var(--el-bg-color);

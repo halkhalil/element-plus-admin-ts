@@ -1,7 +1,7 @@
 <template>
-  <page-wrapper :title="$route['meta']['title']" content-background content-full-height>
+  <page-wrapper :title="$route?.meta?.title" content-background content-full-height>
     <template #content>
-      <span class="text-secondary">表单页用于向用户收集或验证信息，基础表单常见于数据项较少的表单场景。</span>
+      <span class="text-base text-secondary">表单页用于向用户收集或验证信息，基础表单常见于数据项较少的表单场景。</span>
     </template>
     <div class="p-2">
       <el-row justify="center">
@@ -66,62 +66,49 @@
   </page-wrapper>
 </template>
 
-<script>
-import {useRootSetting} from "~/composables/setting/useRootSeeting.ts";
+<script lang="ts" setup>
+import {useRootSetting} from "~/composables/setting/useRootSeeting";
 import {PageWrapper} from '~/components/Page/index.ts';
-import {reactive, ref, toRefs} from "vue";
+import {reactive, ref} from "vue";
+import {FormInstance, FormRules} from "element-plus";
 
-export default {
-  components: {PageWrapper},
-  setup() {
-    const formRef = ref(null);
-    const {getIsMobile} = useRootSetting();
-    const state = reactive({
-      form: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        type: [],
-        resource: '',
-        desc: '',
-        delivery: '',
-      },
-      rules: {
-        name: [
-          {required: true, message: "Please input Activity name", trigger: "blur"},
-          {min: 3, max: 5, message: "Length should be 3 to 5", trigger: "blur"},
-        ],
-        region: [{required: true, message: "Please select Activity zone", trigger: "change"}],
-        date1: [{type: "date", required: true, message: "Please pick a date", trigger: "change"}],
-        date2: [{type: "date", required: true, message: "Please pick a time", trigger: "change"}],
-        type: [{type: "array", required: true, message: "Please select at least one activity type", trigger: "change"}],
-        resource: [{required: true, message: "Please select activity resource", trigger: "change"}],
-        desc: [{required: true, message: "Please input activity form", trigger: "blur"}],
-      }
-    })
+const formRef = ref<FormInstance>()
+const form = reactive({
+  name: '',
+  region: '',
+  date1: '',
+  date2: '',
+  type: [],
+  resource: '',
+  desc: '',
+  delivery: '',
+})
 
-    const methods = {
-      submitForm: () => {
-        formRef.value.validate((valid) => {
-          if (valid) {
-            alert("submit!");
-          } else {
-            console.log("error submit!!");
-            return false;
-          }
-        });
-      },
-      resetForm: () => {
-        formRef.value.resetFields();
-      },
-    };
-    return {
-      ...toRefs(state),
-      ...methods,
-      getIsMobile,
-      formRef
-    };
-  },
-};
+const rules = reactive<FormRules>({
+  name: [
+    {required: true, message: "Please input Activity name", trigger: "blur"},
+    {min: 3, max: 5, message: "Length should be 3 to 5", trigger: "blur"},
+  ],
+  region: [{required: true, message: "Please select Activity zone", trigger: "change"}],
+  date1: [{type: "date", required: true, message: "Please pick a date", trigger: "change"}],
+  date2: [{type: "date", required: true, message: "Please pick a time", trigger: "change"}],
+  type: [{type: "array", required: true, message: "Please select at least one activity type", trigger: "change"}],
+  resource: [{required: true, message: "Please select activity resource", trigger: "change"}],
+  desc: [{required: true, message: "Please input activity form", trigger: "blur"}],
+})
+const submitForm = (formRef: FormInstance) => {
+  formRef.validate((valid) => {
+    if (valid) {
+      alert("submit!");
+    } else {
+      console.log("error submit!!");
+      return false;
+    }
+  });
+}
+const resetForm = (formRef: FormInstance) => {
+  formRef.resetFields();
+}
+
+const {getIsMobile} = useRootSetting();
 </script>
