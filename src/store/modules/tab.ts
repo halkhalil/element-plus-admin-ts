@@ -1,7 +1,7 @@
 import {defineStore} from "pinia";
 import {RouteMeta} from "~/router/types";
 
-interface tabView {
+export interface TabView {
   name: string,
   path: string,
   fullPath: string,
@@ -9,8 +9,8 @@ interface tabView {
 }
 
 interface TabState {
-  visitedTabs: tabView[],
-  cachedTabs: tabView[],
+  visitedTabs: TabView[],
+  cachedTabs: TabView[],
 }
 
 export const useTabStore = defineStore({

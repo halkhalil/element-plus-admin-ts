@@ -1,7 +1,8 @@
 import path from "path";
-import {RouteLocation, RouteRecord, useRouter} from "vue-router";
+import {RouteRecord, useRouter} from "vue-router";
 import {computed, nextTick, onMounted, Ref, ref, unref, UnwrapRef, watch} from 'vue';
 import {useStore} from "~/store";
+import {TabView} from "~/store/modules/tab";
 
 export function useTab() {
 
@@ -13,11 +14,18 @@ export function useTab() {
   const getSelectTab = ref();
   const getVisitedTabs = computed(() => tabStore.getVisitedTabs);
 
+  // 初始化
+  onMounted(async () => {
+    await initTabs();
+    await addTab();
+    await moveToCurrentTab();
+  })
+
   // 初始化视图
   function initTabs() {
     const affixTabs = filterAffixTabs(getRoutes());
     for (const tab of affixTabs) {
-      const {name, path, fullPath, meta} = tab as RouteLocation;
+      const {name, path, fullPath, meta} = tab as TabView;
       name && tabStore.addVisitedTab({name, path, fullPath, meta});
     }
   }
@@ -27,7 +35,7 @@ export function useTab() {
    * @param tab
    * @returns {Promise<void>}
    */
-  async function goTab(tab: RouteLocation) {
+  async function goTab(tab: TabView) {
     const {path, fullPath} = tab;
     if (path === unref(currentRoute).path) return;
     await replace({path: fullPath})
@@ -41,15 +49,15 @@ export function useTab() {
   }
 
   // 关闭视图
-  async function closeTab({name, path, fullPath, meta}: RouteLocation) {
+  async function closeTab({name, path, fullPath, meta}: TabView) {
     tabStore.delTab({name, path, fullPath, meta});
-    if (tabIsActive({name, path, fullPath, meta} as RouteLocation)) {
-      await toLastTab(tabStore.visitedTabs, {name, path, fullPath, meta} as RouteLocation);
+    if (tabIsActive({name, path, fullPath, meta} as TabView)) {
+      await toLastTab(tabStore.visitedTabs, {name, path, fullPath, meta} as TabView);
     }
   }
 
   // 刷新视图
-  async function refreshTab({name, path, fullPath, meta}: RouteLocation) {
+  async function refreshTab({name, path, fullPath, meta}: TabView) {
     tabStore.delCachedTab({name, path, fullPath, meta})
     await nextTick(() => {
       replace({path: '/redirect' + fullPath});
@@ -57,9 +65,9 @@ export function useTab() {
   }
 
   // 关闭其他视图
-  async function closeOtherTab({name, path, fullPath, meta}: RouteLocation) {
+  async function closeOtherTab({name, path, fullPath, meta}: TabView) {
     if (fullPath !== currentRoute.value.fullPath) {
-      await push({name, path, fullPath, meta} as RouteLocation);
+      await push({name, path, fullPath, meta} as TabView);
     }
     tabStore.delOtherTabs(currentRoute)
     await moveToCurrentTab();
@@ -69,7 +77,7 @@ export function useTab() {
    * 关闭所有视图
    * @param tab
    */
-  async function closeAllTab(tab: RouteLocation) {
+  async function closeAllTab(tab: TabView) {
     tabStore.delAllTabs();
     await toLastTab(tabStore.visitedTabs, tab);
   }
@@ -158,8 +166,8 @@ export function useTab() {
    * @param tab
    * @returns {Promise<void>}
    */
-  async function toLastTab(visitedTabs: RouteLocation[], {name, fullPath}: RouteLocation) {
-    const latestTab: RouteLocation = visitedTabs.slice(-1)[0];
+  async function toLastTab(visitedTabs: TabView[], {name, fullPath}: TabView) {
+    const latestTab: TabView = visitedTabs.slice(-1)[0];
     if (latestTab) {
       await push({path: latestTab.fullPath})
     } else {
@@ -176,7 +184,7 @@ export function useTab() {
    * @param tab
    * @returns {boolean}
    */
-  function tabIsActive({path}: RouteLocation) {
+  function tabIsActive({path}: TabView) {
     return path === currentRoute.value.path;
   }
 
@@ -185,16 +193,9 @@ export function useTab() {
    * @param tab
    * @returns {boolean|*}
    */
-  function tabIsAffix({meta}: RouteLocation) {
+  function tabIsAffix({meta}: TabView) {
     return meta && meta.affix;
   }
-
-  // 初始化
-  onMounted(async () => {
-    await initTabs();
-    await addTab();
-    await moveToCurrentTab();
-  })
 
   watch(currentRoute, async () => {
     await addTab();
