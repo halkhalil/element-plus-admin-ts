@@ -7,8 +7,8 @@
     >
       <template #extra>
         <div class="flex-row center">
-          <el-button type="primary" size="medium" @click="handleRedo">再转一笔</el-button>
-          <el-button type="default" size="medium">查看账单</el-button>
+          <el-button type="primary" @click="handleRedo">再转一笔</el-button>
+          <el-button type="default">查看账单</el-button>
         </div>
       </template>
     </el-result>

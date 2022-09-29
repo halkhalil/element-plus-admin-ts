@@ -56,7 +56,6 @@ let previewInfo = ref();
 const active = ref(0)
 const handleStepNext = (form) => {
   active.value++;
-  console.log(form)
   previewInfo.value = form;
 }
 const handleStepPrev = () => {
