@@ -3,16 +3,16 @@
     custom-class="drawer-menu"
     v-if="getIsMobile"
     :model-value="!getCollapsed"
-    :size="220"
+    :size="200"
     :with-header="false"
     :destroy-on-close="true"
     direction="ltr"
     @closed="setMenuSetting({collapse: true})">
-    <el-scrollbar view-class="scrollbar">
+    <el-scrollbar>
       <LayoutMenu/>
     </el-scrollbar>
   </el-drawer>
-  <el-scrollbar v-else view-class="scrollbar">
+  <el-scrollbar v-else>
     <LayoutMenu/>
   </el-scrollbar>
 </template>

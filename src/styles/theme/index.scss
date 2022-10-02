@@ -1,15 +1,23 @@
+html.dark {
+  --el-menu-bg-color: #141414;
+}
+
 html:not(.dark) {
-  --el-menu-bg-color: #1d1e1f;
+  --el-menu-bg-color: #141414;
   --el-menu-text-color: #E5EAF3;
   --el-menu-hover-bg-color: #18222c;
   --el-menu-active-color: #409eff;
   --el-menu-bg-color-overlay: #1d1e1f;
   --el-menu-border-color: #1d1e1f;
 
+  .el-menu--horizontal > .el-sub-menu .el-sub-menu__title:hover {
+    background-color: #18222c;
+  }
+
   body.mix, .horizontal {
     .header {
-      background-color: #1d1e1f;
-      --el-menu-bg-color: #000000;
+      background-color: #141414;
+      --el-menu-bg-color: #1d1e1f;
       --el-text-color-primary: white;
       --el-text-color-placeholder: white;
       --el-text-color-regular: #CFD3DC;

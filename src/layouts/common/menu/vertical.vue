@@ -1,5 +1,5 @@
 <template>
-  <el-menu v-bind="getMenuSetting" mode="vertical" :default-active="getDefaultActive">
+  <el-menu v-bind="getMenuSetting" mode="vertical" class="!min-h-screen" :default-active="getDefaultActive">
     <SidebarLogo class="logo" v-if="getShowLogo"/>
     <sub-menu v-for="menu in getMenus" :index="menu.path" :key="menu.path" :menu="menu"/>
   </el-menu>

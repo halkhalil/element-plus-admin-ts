@@ -1,6 +1,6 @@
 <template>
-  <el-scrollbar ref="scrollbarRef" wrap-class="scroll-wrap" height="auto" style="height: auto" noresize>
-    <div class="flex p-1 select-none" style="background-color: var(--el-bg-color)">
+  <el-scrollbar ref="scrollbarRef" view-class="flex" wrap-class="scroll-wrap"  height="auto" style="height: auto" noresize>
+    <div ref="innerRef" class="flex p-1 select-none" style="background-color: var(--el-bg-color)">
       <el-tag
         class="mx-0.5 cursor-pointer font-bold"
         :ref="(el) => el && getTabRefs.push(el)"
@@ -31,6 +31,8 @@ import {useTab} from "~/layouts/common/tab/useTab";
 
 const {
   scrollbarRef,
+  innerRef,
+  max,
   getTabRefs,
   getSelectTab,
   getVisitedTabs,

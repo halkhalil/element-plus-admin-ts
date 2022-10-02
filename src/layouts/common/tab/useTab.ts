@@ -3,23 +3,32 @@ import {RouteRecord, useRouter} from "vue-router";
 import {computed, nextTick, onMounted, Ref, ref, unref, UnwrapRef, watch} from 'vue';
 import {useStore} from "~/store";
 import {TabView} from "~/store/modules/tab";
+import {ElScrollbar} from "element-plus";
 
 export function useTab() {
 
   const {tabStore} = useStore();
   const {push, replace, currentRoute, getRoutes} = useRouter();
 
-  const scrollbarRef: UnwrapRef<any> = ref();
+  const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>()
+  const innerRef = ref<HTMLDivElement>();
+
   const getTabRefs: Ref<UnwrapRef<any[]>> = ref([]);
   const getSelectTab = ref();
   const getVisitedTabs = computed(() => tabStore.getVisitedTabs);
+  const max = ref(0);
 
   // 初始化
   onMounted(async () => {
-    await initTabs();
-    await addTab();
+    initTabs();
+    addTab();
     await moveToCurrentTab();
   })
+
+  watch(currentRoute, async () => {
+    await addTab();
+    await moveToCurrentTab()
+  });
 
   // 初始化视图
   function initTabs() {
@@ -110,7 +119,7 @@ export function useTab() {
    * @returns {Promise<void>}
    */
   async function moveToCurrentTab() {
-    await nextTick(async () => {
+    await nextTick(() => {
       for (const tag of getTabRefs.value) {
         if (tag.$attrs.route.path === unref(currentRoute).path) {
           moveToTarget(tag)
@@ -147,7 +156,7 @@ export function useTab() {
         const beforePrevTagOffsetLeft = prevTag.$el.offsetLeft - 2;
         const afterNextTagOffsetLeft = nextTag.$el.offsetLeft + nextTag.$el.offsetWidth + 2
 
-        const containerWidth = parseInt(scrollbarRef.value.$el.offsetWidth);
+        const containerWidth = parseInt(scrollbarRef!.value.$el.offsetWidth);
         const scrollWrapper = scrollbarRef.value.$refs.wrap$;
 
         if (afterNextTagOffsetLeft > scrollWrapper.scrollLeft + containerWidth) {
@@ -156,7 +165,7 @@ export function useTab() {
           offsetLeft = beforePrevTagOffsetLeft
         }
       }
-      scrollbarRef.value.setScrollLeft(offsetLeft);
+      scrollbarRef!.value.setScrollLeft(offsetLeft);
     }
   }
 
@@ -197,17 +206,13 @@ export function useTab() {
     return meta && meta.affix;
   }
 
-  watch(currentRoute, async () => {
-    await addTab();
-    await moveToCurrentTab()
-  });
-
   return {
     scrollbarRef,
+    innerRef,
+    max,
     getTabRefs,
     getSelectTab,
     getVisitedTabs,
-
     goTab,
     addTab,
     closeTab,
