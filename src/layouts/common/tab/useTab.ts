@@ -16,9 +16,7 @@ export function useTab() {
   const getTabRefs: Ref<UnwrapRef<any[]>> = ref([]);
   const getSelectTab = ref();
   const getVisitedTabs = computed(() => tabStore.getVisitedTabs);
-  const max = ref(0);
 
-  // 初始化
   onMounted(async () => {
     initTabs();
     addTab();
@@ -156,16 +154,20 @@ export function useTab() {
         const beforePrevTagOffsetLeft = prevTag.$el.offsetLeft - 2;
         const afterNextTagOffsetLeft = nextTag.$el.offsetLeft + nextTag.$el.offsetWidth + 2
 
-        const containerWidth = parseInt(scrollbarRef!.value.$el.offsetWidth);
-        const scrollWrapper = scrollbarRef.value.$refs.wrap$;
+        const containerWidth = parseInt(scrollbarRef!.value!.$el.offsetWidth); //可视区域宽度
+        const scrollWrapper = <HTMLDivElement>scrollbarRef!.value!.$refs.wrap$;
 
         if (afterNextTagOffsetLeft > scrollWrapper.scrollLeft + containerWidth) {
           offsetLeft = afterNextTagOffsetLeft - containerWidth;
         } else if (beforePrevTagOffsetLeft < scrollWrapper.scrollLeft) {
           offsetLeft = beforePrevTagOffsetLeft
+        } else {
+          if (currentTag.$el.offsetLeft >= containerWidth) {
+            offsetLeft = currentTag.$el.offsetLeft;
+          }
         }
       }
-      scrollbarRef!.value.setScrollLeft(offsetLeft);
+      scrollbarRef!.value!.setScrollLeft(offsetLeft);
     }
   }
 
@@ -209,7 +211,6 @@ export function useTab() {
   return {
     scrollbarRef,
     innerRef,
-    max,
     getTabRefs,
     getSelectTab,
     getVisitedTabs,
