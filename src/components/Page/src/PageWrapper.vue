@@ -1,6 +1,6 @@
 <template>
   <div class="page-wrapper w-full min-h-full" :class="$props.class">
-    <el-page-header :bind="$props" @back="back" v-if="$props.title" class="!p-5 content-bg">
+    <el-page-header :bind="$props" @back="back" v-if="$props.title" class="!px-5 pt-5 content-bg">
       <template #breadcrumb>
         <slot name="breadcrumb"></slot>
       </template>

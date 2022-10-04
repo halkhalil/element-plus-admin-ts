@@ -1,5 +1,5 @@
 <template>
-  <PageWrapper :title="$route['meta']['title']" content-full-height content-background>
+  <page-wrapper :title="$route['meta']['title']" content-full-height content-background>
     <div class="flex-center">
       <el-row :gutter="10">
         <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
@@ -23,7 +23,7 @@
         </el-col>
       </el-row>
     </div>
-  </PageWrapper>
+  </page-wrapper>
 </template>
 
 <script lang="ts" setup>

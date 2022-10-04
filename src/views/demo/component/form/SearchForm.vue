@@ -2,7 +2,7 @@
   <page-wrapper
     :title="$route.meta?.title"
     content-full-height>
-    <div class="p-5 mb-2">
+    <div class="mb-2">
       <el-divider content-position="left">表单选项</el-divider>
       <el-form v-model="formProps" inline>
         <el-form-item label="label显示">
