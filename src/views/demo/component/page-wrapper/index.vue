@@ -12,11 +12,10 @@
     </template>
     <template #content>
       <div class="text-sm" style="color: var(--el-text-color-secondary)">
-        <p>
-          内容详情内容详情内容详情内容详情内容详情内容详情内容详情内容详情内容详情内容详情内容详情内容详情内容详情内容详情内容详情</p>
+        内容详情内容详情内容详情内容详情内容详情内容详情内容详情内容详情内容详情内容详情内容详情内容详情内容详情内容详情内容详情
       </div>
     </template>
-    <div class="p-5">
+    <div>
       <el-descriptions title="基本信息" :column="getIsMobile ? 1: 3" border>
         <el-descriptions-item label="姓名" :width="80">shiwuhao</el-descriptions-item>
         <el-descriptions-item label="手机号" :width="80">18100000000</el-descriptions-item>

@@ -24,7 +24,7 @@
     </el-page-header>
     <div class="!p-5 content-bg"
          ref="contentElRef"
-         :style="$props.contentFullHeight ?? {minHeight:getContentHeight+'px'}">
+         :style="[$props.contentFullHeight ? getContentHeight : '']">
       <slot>
       </slot>
     </div>
@@ -69,7 +69,7 @@ defineProps({
 const contentElRef = ref();
 const {top} = useElementBounding(contentElRef);
 const getContentHeight = computed(() => {
-  return document.documentElement.clientHeight - top.value - 10;
+  return {'minHeight':document.documentElement.clientHeight - top.value - 50 + 'px'};
 })
 
 const {back} = useRouter();

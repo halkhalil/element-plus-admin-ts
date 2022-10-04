@@ -1,5 +1,5 @@
 <template>
-  <page-wrapper :title="$route?.meta?.title">
+  <page-wrapper :title="$route?.meta?.title" content-full-height>
     <el-row :gutter="10">
       <el-col :xs="24" :sm="12" :md="8" :lg="4" :xl="3" class="my-1">
         <el-button @click="changFieldLabel(0)" class="w-full">更改字段1Label</el-button>
