@@ -1,6 +1,6 @@
 <template>
   <el-scrollbar ref="scrollbarRef" view-class="flex" wrap-class="scroll-wrap" style="height: auto" noresize>
-    <div ref="innerRef" class="flex p-1 select-none" style="background-color: var(--el-bg-color)">
+    <div ref="innerRef" class="flex p-1 select-none w-full" style="background-color: var(--el-bg-color)">
       <el-tag
         class="mx-0.5 cursor-pointer font-bold"
         ref="getTabRefs"
