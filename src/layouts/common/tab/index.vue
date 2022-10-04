@@ -63,7 +63,7 @@ const {
     color: var(--el-text-color-primary);
 
     &:hover {
-      background-color: var(--el-menu-hover-bg-color);
+      background-color: var(--el-fill-color-light);
     }
   }
 }
