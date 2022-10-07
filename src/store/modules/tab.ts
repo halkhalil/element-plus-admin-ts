@@ -2,10 +2,12 @@ import {defineStore} from "pinia";
 import {RouteMeta} from "~/router/types";
 
 export interface TabView {
-  name: string,
-  path: string,
-  fullPath: string,
-  meta: RouteMeta
+  name: string | undefined,
+  path: string | undefined,
+  fullPath: string | undefined,
+  meta: RouteMeta,
+  params: object | null,
+  query: object | null,
 }
 
 interface TabState {
@@ -27,7 +29,7 @@ export const useTabStore = defineStore({
     // 添加已访问视图
     addVisitedTab(view) {
       if (this.visitedTabs.some(item => item.path === view.path)) return;
-      this.visitedTabs.push({title: view.meta.title || 'no-name', ...view});
+      this.visitedTabs.push(view);
     },
     // 删除已访问视图
     delVisitedTab(view) {
@@ -46,6 +48,11 @@ export const useTabStore = defineStore({
     updateVisitedTab(view) {
       const index = this.visitedTabs.findIndex(item => item.path === view.path);
       index > -1 && (this.visitedTabs[index] = view);
+    },
+    updateOrAddVisitedTab(view) {
+      console.log('updateOrAddVisitedTab');
+      const index = this.visitedTabs.findIndex(item => item.path === view.path);
+      index > -1 ? this.updateVisitedTab(view) : this.addVisitedTab(view);
     },
     // 添加缓存视图
     addCachedTab(view) {

@@ -15,7 +15,7 @@
         @contextmenu.prevent="getSelectTab = item"
         v-contextmenu:contextmenu
       >
-        {{ item.title }}
+        {{ item?.meta?.title || 'no-name'}}
       </el-tag>
     </div>
     <v-contextmenu ref="contextmenu">

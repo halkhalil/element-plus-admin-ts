@@ -1,5 +1,5 @@
 import path from "path";
-import {RouteRecord, useRouter} from "vue-router";
+import {RouteLocationRaw, RouteRecord, RouteRecordRaw, useRouter} from "vue-router";
 import {computed, nextTick, onMounted, Ref, ref, unref, UnwrapRef, watch} from 'vue';
 import {useStore} from "~/store";
 import {TabView} from "~/store/modules/tab";
@@ -19,12 +19,18 @@ export function useTab() {
 
   onMounted(async () => {
     initTabs();
-    addTab();
+
+    const {name, meta, fullPath, path, query, params} = currentRoute.value;
+    addTab({name, meta, fullPath, path, query, params} as unknown as TabView);
+
     await moveToCurrentTab();
   })
 
   watch(currentRoute, async () => {
-    await addTab();
+
+    console.log(11111);
+    const {name, meta, fullPath, path, query, params} = currentRoute.value;
+    // updateOrAddTab({name, meta, fullPath, path, query, params} as unknown as TabView);
     await moveToCurrentTab()
   });
 
@@ -32,8 +38,9 @@ export function useTab() {
   function initTabs() {
     const affixTabs = filterAffixTabs(getRoutes());
     for (const tab of affixTabs) {
-      const {name, path, fullPath, meta} = tab as TabView;
-      name && tabStore.addVisitedTab({name, path, fullPath, meta});
+      console.log('tab',tab)
+      const {name, meta, fullPath, path, query, params} = tab as TabView;
+      name && tabStore.addVisitedTab({name, meta, fullPath, path, query, params});
     }
   }
 
@@ -43,38 +50,46 @@ export function useTab() {
    * @returns {Promise<void>}
    */
   async function goTab(tab: TabView) {
-    const {path, fullPath} = tab;
+    const {path, fullPath, query, params} = tab;
     if (path === unref(currentRoute).path) return;
-    await replace({path: fullPath})
+    await replace({path: fullPath, query, params} as RouteLocationRaw)
   }
 
   // 添加视图
-  function addTab() {
-    const {name, path, fullPath, meta} = currentRoute.value
-    !meta?.hideTab && name && tabStore.addTab({name, path, fullPath, meta});
+  function addTab(view: TabView) {
+    !view?.meta?.hideTab && view?.name && tabStore.addTab(view);
+  }
 
+  // 更新视图
+  function updateTab(view: TabView) {
+    tabStore.updateVisitedTab(view)
+  }
+
+  // 已存在更新，不存在添加
+  function updateOrAddTab(view: TabView) {
+    tabStore.updateOrAddVisitedTab(view);
   }
 
   // 关闭视图
-  async function closeTab({name, path, fullPath, meta}: TabView) {
-    tabStore.delTab({name, path, fullPath, meta});
-    if (tabIsActive({name, path, fullPath, meta} as TabView)) {
-      await toLastTab(tabStore.visitedTabs, {name, path, fullPath, meta} as TabView);
+  async function closeTab(view: TabView) {
+    tabStore.delTab(view);
+    if (tabIsActive(view)) {
+      await toLastTab(tabStore.visitedTabs, view);
     }
   }
 
   // 刷新视图
-  async function refreshTab({name, path, fullPath, meta}: TabView) {
-    tabStore.delCachedTab({name, path, fullPath, meta})
+  async function refreshTab(view: TabView) {
+    tabStore.delCachedTab(view)
     await nextTick(() => {
-      replace({path: '/redirect' + fullPath});
+      replace({path: '/redirect' + view!.fullPath});
     })
   }
 
   // 关闭其他视图
-  async function closeOtherTab({name, path, fullPath, meta}: TabView) {
-    if (fullPath !== currentRoute.value.fullPath) {
-      await push({name, path, fullPath, meta} as TabView);
+  async function closeOtherTab(view: TabView) {
+    if (view!.fullPath !== currentRoute.value.fullPath) {
+      await push(view as RouteLocationRaw);
     }
     tabStore.delOtherTabs(currentRoute)
     await moveToCurrentTab();
@@ -100,7 +115,7 @@ export function useTab() {
     routes.forEach(route => {
       if (route.meta && route.meta.affix) {
         const tabPath = path.resolve(basePath, route.path)
-        tabs.push({fullPath: tabPath, path: tabPath, name: route.name, meta: {...route.meta}})
+        tabs.push({name: route.name, meta: {...route.meta}, fullPath: tabPath, path: tabPath, query: {}, params: {}})
       }
       if (route.children) {
         const childTabs = filterAffixTabs(route.children as RouteRecord[], route.path)

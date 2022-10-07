@@ -3,13 +3,13 @@
     <template #extra>
       <el-button type="primary" @click="addItem">新增</el-button>
     </template>
-    {{ listsReturn.loading }}
+    {{ query }}
     <BasicForm v-model="query" :schemas="querySchemas" :colProps="{xs: 24, sm: 12, md: 12, lg: 8, xl: 6}"
                @submit="submit"></BasicForm>
     <basic-table :columns="tableColumns"
-                 :data="getLists"
-                 :paginate="getPaginate"
-                 :loading="listsReturn.loading"
+                 :data="lists"
+                 :paginate="paginate"
+                 :loading="loading.list"
                  :border="true"
                  @change-page="changePage">
       <template #roles="{row:{roles}}">
@@ -19,7 +19,7 @@
         <el-button type="primary" text @click="editItem(row)">编辑</el-button>
         <el-popconfirm title="删除你是认真的吗？" iconColor="red" @confirm="deleteItem(row)">
           <template #reference>
-            <el-button type="danger" text :loading="deleteReturn.loading">删除</el-button>
+            <el-button type="danger" text :loading="loading.delete">删除</el-button>
           </template>
         </el-popconfirm>
       </template>
@@ -33,10 +33,10 @@ import {PageWrapper} from "~/components/Page"
 import {BasicTable, BasicQuery} from "~/components/Table"
 import {BasicForm} from "~/components/Form";
 import EditTemplate from "./EditTemplate.vue";
-import {provide, reactive, ref} from "vue";
-import {useApiResources} from "~/composables/useApiResources";
+import {provide, ref} from "vue";
+import {useFetchResource} from "~/api/user";
 import {useRouter} from "vue-router";
-import {useFetchLists, useFetchItem, useFetchStore, useFetchUpdate, useFetchDelete} from '~/api/user'
+import {useUrlSearchParams} from "@vueuse/core";
 
 const tableColumns = [
   {prop: 'id', label: 'ID', width: 100},
@@ -52,27 +52,10 @@ const querySchemas = [
   {field: 'username', placeholder: '用户名', component: 'Input'},
   {field: 'nickname', placeholder: '昵称', component: 'Input'},
 ];
-const params = reactive({});
-const item = reactive({})
-const useResources = useApiResources({
-  listsReturn: (params) => useFetchLists({params}, {immediate: false}),
-  itemReturn: (id) => useFetchItem(id, {immediate: false}),
-  storeReturn: (item) => useFetchStore(item),
-  updateReturn: (id,item) => useFetchUpdate(id,item),
-  deleteReturn: (id) => useFetchDelete(item),
-});
-const {
-  dialog,
-  listsReturn,
-  deleteReturn,
-  getLists,
-  getPaginate,
-  addItem,
-  editItem,
-  deleteItem,
-  getQuery,
-  changePage
-} = useResources;
+
+const useResources = useFetchResource();
+const {dialog, loading, lists, paginate, addItem, editItem, deleteItem, getQuery, changePage} = useResources;
+const query =useUrlSearchParams();
 
 const {currentRoute, replace} = useRouter()
 console.log(currentRoute)

@@ -1,7 +1,8 @@
-import {reactive, ref, toRefs, onMounted, nextTick, Ref, watch} from 'vue';
+import {reactive, ref, toRefs, onMounted, nextTick, Ref, watch, unref, computed} from 'vue';
 import {UrlParams, useDebounceFn, useUrlSearchParams} from '@vueuse/core';
 import {AxiosPromise} from "axios";
 import {FormInstance} from "element-plus";
+import {StrictUseAxiosReturn, UseAxiosReturn} from "@vueuse/integrations/useAxios";
 
 export interface UseApiResourceReturn {
   readonly formElRef: Ref<HTMLElement | null>,
@@ -83,12 +84,12 @@ export interface UseApiResourceReturn {
 }
 
 
-interface ApiResource {
-  fetchList: (query?: object) => AxiosPromise,
-  fetchItem?: (item: any) => AxiosPromise,
-  fetchStore: (data: any) => AxiosPromise,
-  fetchUpdate: (data: any) => AxiosPromise,
-  fetchDelete: (item: any) => AxiosPromise,
+interface ApiResources {
+  listsReturn: StrictUseAxiosReturn<any>,
+  itemReturn: StrictUseAxiosReturn<any>,
+  storeReturn: StrictUseAxiosReturn<any>,
+  updateReturn: StrictUseAxiosReturn<any>,
+  deleteReturn: StrictUseAxiosReturn<any>,
 }
 
 interface query {
@@ -104,96 +105,49 @@ interface ApiResourceOptions {
   refreshAfterConfirm?: boolean,// 确认提交后刷新
 }
 
-export function useApiResource(apiResource: ApiResource, options: ApiResourceOptions): UseApiResourceReturn {
+export function useApiResources(apiResources: ApiResources, options?: ApiResourceOptions): UseApiResourceReturn {
 
-  const {fetchList, fetchItem, fetchStore, fetchUpdate, fetchDelete} = apiResource;
-  const {query: defaultQuery = {aa: 'aa'}, form: defaultForm = {}, immediate = true} = options;
-  const query = useUrlSearchParams()
+  const {listsReturn, itemReturn, storeReturn, updateReturn, deleteReturn} = apiResources;
 
-  const state = reactive({
-    form: defaultForm,
-    lists: [],
-    dialog: false,
-    paginate: {},
-    refreshAfterConfirm: true,
-  });
-
-  const loading = reactive({
-    list: false,
-    item: false,
-    confirm: false,
-    delete: false,
+  // 列表
+  const {data: listsData, execute: fetchLists} = listsReturn;
+  const getLists = computed(() => listsData.value?.data);
+  const getPaginate = computed(() => {
+    const {per_page, total, last_page} = listsData.value?.meta || {};
+    return {pageSize: per_page, pageCount: last_page, total};
   })
 
-  // 节流
-  const _throttledQuery = useDebounceFn(async () => {
-    await getList();
-  }, 300);
+  // 详情
+  const {data: itemData, execute: fetchItem} = itemReturn;
 
-  const getQuery = async () => {
-    await _throttledQuery();
-  }
+  // 新增
+  const {data: storeData, execute: fetchStore} = storeReturn;
 
-  // 获取列表
-  const getList = async () => {
-    loading.list = true;
-    const {data: {data, meta: {per_page, total, last_page}}} = await fetchList(query).then(r => r);
-    state.lists = data;
-    state.paginate = {pageSize: per_page, pageCount: last_page, total}
-    loading.list = false;
-  }
+  // 更新
+  const {data: updateData, execute: fetchUpdate} = updateReturn;
 
-  // 获取项
-  const getItem = async (_item: object) => {
-    if (fetchItem) {
-      loading.item = true;
-      const {data: {data}} = await fetchItem(_item).then(r => r);
-      state.form = reactive(data);
-      loading.item = false;
-    }
-  }
+  // 删除
+  const {data: deleteData, execute: fetchDelete} = deleteReturn;
+
+  const dialog = ref<boolean>(false);
 
   // 添加项
   const addItem = () => {
     resetItem();
-    state.dialog = true;
+    dialog.value = true;
   }
 
   // 修改项
   const editItem = async (item) => {
-    state.dialog = true;
-    await getItem(item);
-  }
-
-  // 删除项
-  const deleteItem = async (item) => {
-    loading.delete = true;
-    await fetchDelete(item).then(r => r);
-    loading.delete = false;
-    state.refreshAfterConfirm && await getList();
-  }
-
-  // 更新项
-  const updateItem = async (item) => {
-    loading.confirm = true;
-    await fetchUpdate(item).then(r => r);
-    loading.confirm = false;
-    state.refreshAfterConfirm && await getList();
-  }
-
-  // 保存项
-  const storeItem = async (item) => {
-    loading.confirm = true;
-    await fetchStore(item).then(r => r);
-    loading.confirm = false;
-    state.refreshAfterConfirm && await getList();
+    dialog.value = true;
+    await fetchItem();
   }
 
   // 确认提交
   const submitForm = async (formEl: FormInstance | undefined): Promise<void> => {
     if (!formEl) return;
     const confirm = async () => {
-      state.form['id'] ? await updateItem(state.form) : await storeItem(state.form);
+      state.form['id'] ? await fetchUpdate() : await fetchStore();
       cancelItem(formEl);
     }
 
@@ -204,7 +158,8 @@ export function useApiResource(apiResource: ApiResource, options: ApiResourceOpt
     })
   }
 
-  // 取消提交
+
+  // 重置表单
   const resetForm = (formEl: FormInstance | undefined) => {
     if (!formEl) return;
     formEl.resetFields();
@@ -213,7 +168,7 @@ export function useApiResource(apiResource: ApiResource, options: ApiResourceOpt
   // 取消提交
   const cancelItem = (formEl: FormInstance | undefined) => {
     if (!formEl) return;
-    state.dialog = false;
+    dialog.value = false;
     formEl.resetFields()
   }
 
@@ -224,35 +179,31 @@ export function useApiResource(apiResource: ApiResource, options: ApiResourceOpt
 
   // 分页
   const changePage = async (page) => {
-    query.page = page;
-    await getList();
+    await fetchLists({params:{page:page}});
   }
 
   onMounted(async () => {
-    immediate && await getList();
+   await fetchLists();
   })
 
-  watch(() => state.dialog, () => {
-    if (!state.dialog) {
+  watch(() => dialog, () => {
+    if (!dialog.value) {
       resetItem()
     }
   })
 
   return {
-    ...toRefs(state),
-    query,
-    loading,
-    getList,
-    getQuery,
-    getItem,
+    listsReturn,
+    itemReturn,
+    storeReturn,
+    updateReturn,
+    deleteReturn,
+    getLists,
+    getPaginate,
     addItem,
     editItem,
-    updateItem,
-    storeItem,
-    deleteItem,
     cancelItem,
     changePage,
-
     submitForm,
     resetForm,
   };
