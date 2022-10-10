@@ -3,28 +3,27 @@
     <template #extra>
       <el-button type="primary" @click="addItem">新增</el-button>
     </template>
-    {{ listsReturn.loading }}
     <BasicForm v-model="query" :schemas="querySchemas" :colProps="{xs: 24, sm: 12, md: 12, lg: 8, xl: 6}"
                @submit="submit"></BasicForm>
     <basic-table :columns="tableColumns"
                  :data="getLists"
                  :paginate="getPaginate"
-                 :loading="listsReturn.loading"
+                 :loading="!listsReturn.loading"
                  :border="true"
                  @change-page="changePage">
       <template #roles="{row:{roles}}">
         <el-tag class="mr-2" v-for="(item,index) in roles" :key="index">{{ item.label }}</el-tag>
       </template>
-      <template #actions="{row}">
-        <el-button type="primary" text @click="editItem(row)">编辑</el-button>
-        <el-popconfirm title="删除你是认真的吗？" iconColor="red" @confirm="deleteItem(row)">
+      <template #actions="{row:{id}}">
+        <el-button type="primary" text @click="editItem({id})">编辑</el-button>
+        <el-popconfirm title="确认要删除吗？" iconColor="red" @confirm="deleteItem({id})">
           <template #reference>
-            <el-button type="danger" text :loading="deleteReturn.loading">删除</el-button>
+            <el-button type="danger" text :loading="!deleteReturn.loading">删除</el-button>
           </template>
         </el-popconfirm>
       </template>
     </basic-table>
-    <EditTemplate v-model="dialog"/>
+    <EditTemplate/>
   </page-wrapper>
 </template>
 
@@ -36,7 +35,14 @@ import EditTemplate from "./EditTemplate.vue";
 import {provide, reactive, ref} from "vue";
 import {useApiResources} from "~/composables/useApiResources";
 import {useRouter} from "vue-router";
-import {useFetchLists, useFetchItem, useFetchStore, useFetchUpdate, useFetchDelete} from '~/api/user'
+import {
+  useFetchLists,
+  useFetchItem,
+  useFetchStore,
+  useFetchUpdate,
+  useFetchDelete,
+  useFetchUserApiResource
+} from '~/api/user'
 
 const tableColumns = [
   {prop: 'id', label: 'ID', width: 100},
@@ -54,15 +60,8 @@ const querySchemas = [
 ];
 const params = reactive({});
 const item = reactive({})
-const useResources = useApiResources({
-  listsReturn: (params) => useFetchLists({params}, {immediate: false}),
-  itemReturn: (id) => useFetchItem(id, {immediate: false}),
-  storeReturn: (item) => useFetchStore(item),
-  updateReturn: (id,item) => useFetchUpdate(id,item),
-  deleteReturn: (id) => useFetchDelete(item),
-});
+const useResources = useFetchUserApiResource();
 const {
-  dialog,
   listsReturn,
   deleteReturn,
   getLists,

@@ -1,22 +1,24 @@
 import {reactive, ref, toRefs, onMounted, nextTick, Ref, watch, unref, computed} from 'vue';
 import {UrlParams, useDebounceFn, useUrlSearchParams} from '@vueuse/core';
-import {AxiosPromise} from "axios";
+import {AxiosInstance, AxiosPromise, AxiosRequestConfig} from "axios";
 import {FormInstance} from "element-plus";
-import {StrictUseAxiosReturn, UseAxiosReturn} from "@vueuse/integrations/useAxios";
+import {EasyUseAxiosReturn, StrictUseAxiosReturn, useAxios, UseAxiosReturn} from "@vueuse/integrations/useAxios";
 
 export interface UseApiResourceReturn {
-  readonly formElRef: Ref<HTMLElement | null>,
-  readonly dialog: Ref<boolean>,
-  form: Ref<object>,
-  query: UrlParams,
-  lists: Ref<object>,
-  paginate: Ref<object>,
-  loading: {
-    list: boolean,
-    item: boolean,
-    confirm: boolean,
-    delete: boolean,
-  },
+  listsReturn: EasyUseAxiosReturn<any> & PromiseLike<EasyUseAxiosReturn<any>>,
+  itemReturn: EasyUseAxiosReturn<any> & PromiseLike<EasyUseAxiosReturn<any>>,
+  storeReturn: EasyUseAxiosReturn<any> & PromiseLike<EasyUseAxiosReturn<any>>,
+  updateReturn: EasyUseAxiosReturn<any> & PromiseLike<EasyUseAxiosReturn<any>>,
+  deleteReturn: EasyUseAxiosReturn<any> & PromiseLike<EasyUseAxiosReturn<any>>,
+  getLists: any,
+  getPaginate: any,
+  dialog: any,
+
+  fetchLists: any,
+  fetchItem: any,
+  fetchStore: any,
+  fetchUpdate: any,
+  fetchDelete: any,
 
   /**
    * 添加项
@@ -105,49 +107,99 @@ interface ApiResourceOptions {
   refreshAfterConfirm?: boolean,// 确认提交后刷新
 }
 
-export function useApiResources(apiResources: ApiResources, options?: ApiResourceOptions): UseApiResourceReturn {
+interface ResourceApi {
+  lists(...arg): AxiosRequestConfig,
 
-  const {listsReturn, itemReturn, storeReturn, updateReturn, deleteReturn} = apiResources;
+  item(...arg): AxiosRequestConfig,
+
+  store(...arg): AxiosRequestConfig,
+
+  update(...arg): AxiosRequestConfig,
+
+  delete(...arg): AxiosRequestConfig,
+}
+
+export function useApiResources(resourceApi: ResourceApi, axios: AxiosInstance): UseApiResourceReturn {
+  const params = reactive({id:1})
+
+  const listsReturn = useAxios(resourceApi.lists({params}), axios);
+  const itemReturn = useAxios(resourceApi.item({}), axios);
+  const storeReturn = useAxios(resourceApi.store({}), axios);
+  const updateReturn = useAxios(resourceApi.update({}), axios);
+  const deleteReturn = useAxios(resourceApi.delete({}), axios);
 
   // 列表
-  const {data: listsData, execute: fetchLists} = listsReturn;
-  const getLists = computed(() => listsData.value?.data);
+  const getLists = computed(() => listsReturn.data.value?.data);
   const getPaginate = computed(() => {
-    const {per_page, total, last_page} = listsData.value?.meta || {};
+    const {per_page, total, last_page} = listsReturn.data.value?.meta || {};
     return {pageSize: per_page, pageCount: last_page, total};
   })
-
-  // 详情
-  const {data: itemData, execute: fetchItem} = itemReturn;
-
-  // 新增
-  const {data: storeData, execute: fetchStore} = storeReturn;
-
-  // 更新
-  const {data: updateData, execute: fetchUpdate} = updateReturn;
-
-  // 删除
-  const {data: deleteData, execute: fetchDelete} = deleteReturn;
+  const getConfirmLoading = computed(() => updateReturn.loading || storeReturn.loading)
 
   const dialog = ref<boolean>(false);
 
+
+  const fetchLists = async (params) => {
+    const config = resourceApi.lists({params} || {}) as AxiosRequestConfig;
+    await listsReturn.execute(config.url as string, config);
+  }
+
+  const fetchItem = async (arg) => {
+    const config = resourceApi.item(arg || {}) as AxiosRequestConfig;
+    console.log(arg, config)
+    await itemReturn.execute(config.url as string, config);
+  }
+
+  const fetchStore = async (arg) => {
+    const config = resourceApi.store(arg || {}) as AxiosRequestConfig;
+    await storeReturn.execute(config.url as string, config);
+  }
+
+  const fetchUpdate = async (arg) => {
+    const config = resourceApi.store(arg || {}) as AxiosRequestConfig;
+    await updateReturn.execute(config.url as string, config);
+  }
+
+  const fetchDelete = async (arg) => {
+    const config = resourceApi.delete(arg || {}) as AxiosRequestConfig;
+    await deleteReturn.execute(config.url as string, config);
+  }
+
   // 添加项
   const addItem = () => {
-    resetItem();
+    // resetItem();
     dialog.value = true;
   }
 
   // 修改项
-  const editItem = async (item) => {
+  const editItem = async (arg) => {
     dialog.value = true;
-    await fetchItem();
+    await fetchItem(arg);
   }
 
+  // 修改项
+  const deleteItem = async (arg) => {
+    await fetchDelete(arg);
+  }
+
+  // 取消提交
+  const cancelItem = (formEl: FormInstance | undefined) => {
+    if (!formEl) return;
+    dialog.value = false;
+    formEl.resetFields()
+  }
+
+  // // 重置项
+  // const resetItem = () => {
+  //   state.form = JSON.parse(JSON.stringify(defaultForm));
+  // }
+
   // 确认提交
-  const submitForm = async (formEl: FormInstance | undefined): Promise<void> => {
+  const submitForm = async (formEl: FormInstance | undefined, data: object = {}): Promise<void> => {
     if (!formEl) return;
     const confirm = async () => {
-      state.form['id'] ? await fetchUpdate() : await fetchStore();
+      const {id, ...requestData} = data || {};
+      id ? await fetchUpdate(id, requestData) : await fetchStore(requestData);
       cancelItem(formEl);
     }
 
@@ -158,37 +210,24 @@ export function useApiResources(apiResources: ApiResources, options?: ApiResourc
     })
   }
 
-
   // 重置表单
   const resetForm = (formEl: FormInstance | undefined) => {
     if (!formEl) return;
     formEl.resetFields();
   }
 
-  // 取消提交
-  const cancelItem = (formEl: FormInstance | undefined) => {
-    if (!formEl) return;
-    dialog.value = false;
-    formEl.resetFields()
-  }
-
-  // 重置项
-  const resetItem = () => {
-    state.form = JSON.parse(JSON.stringify(defaultForm));
-  }
-
   // 分页
   const changePage = async (page) => {
-    await fetchLists({params:{page:page}});
+    await fetchLists({params: {page: page}});
   }
 
   onMounted(async () => {
-   await fetchLists();
+    await fetchLists();
   })
 
   watch(() => dialog, () => {
     if (!dialog.value) {
-      resetItem()
+      // resetItem()
     }
   })
 
@@ -200,11 +239,26 @@ export function useApiResources(apiResources: ApiResources, options?: ApiResourc
     deleteReturn,
     getLists,
     getPaginate,
+    getConfirmLoading,
+    dialog,
+
+    fetchLists,
+    fetchItem,
+    fetchStore,
+    fetchUpdate,
+    fetchDelete,
+
     addItem,
     editItem,
+    deleteItem, getItem(item: object): void {
+    }, getList(): void {
+    }, getQuery(): void {
+    }, storeItem(item: object): void {
+    }, updateItem(item: object): void {
+    },
     cancelItem,
     changePage,
     submitForm,
-    resetForm,
+    resetForm
   };
 }
