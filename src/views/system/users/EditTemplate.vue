@@ -17,7 +17,7 @@
                   placeholder="请输入用户密码"></el-input>
       </el-form-item>
       <el-form-item label="用户角色" prop="role_ids">
-        <el-select v-model="formModel.role_ids" multiple placeholder="请选择用户角色" class="w-full">
+        <el-select v-model="formModel.role_ids" :multiple="true" placeholder="请选择用户角色" class="w-full">
           <el-option v-for="item in roles?.data" :key="item.id" :label="item.label" :value="item.id"></el-option>
         </el-select>
       </el-form-item>
@@ -26,7 +26,8 @@
                    :inactive-value="0"/>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm(formRef)"
+        <el-button type="primary"
+                   @click="submitForm(formRef,true,formModel)"
                    :loading="!getConfirmLoading">
           {{ !getConfirmLoading ? '提交中 ...' : '确 定' }}
         </el-button>

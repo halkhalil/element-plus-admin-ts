@@ -3,8 +3,11 @@
     <template #extra>
       <el-button type="primary" @click="addItem">新增</el-button>
     </template>
-    <BasicForm v-model="query" :schemas="querySchemas" :colProps="{xs: 24, sm: 12, md: 12, lg: 8, xl: 6}"
-               @submit="submit"></BasicForm>
+    <basic-form v-model="query"
+                :schemas="querySchemas"
+                :colProps="{xs: 24, sm: 12, md: 12, lg: 8, xl: 6}"
+                @submit="submit"
+                @reset="reset"></basic-form>
     <basic-table :columns="tableColumns"
                  :data="getLists"
                  :paginate="getPaginate"
@@ -12,7 +15,9 @@
                  :border="true"
                  @change-page="changePage">
       <template #roles="{row:{roles}}">
-        <el-tag class="mr-2" v-for="(item,index) in roles" :key="index">{{ item.label }}</el-tag>
+        <el-tag class="mr-2"
+                v-for="(item,index) in roles"
+                :key="index">{{ item.label }}</el-tag>
       </template>
       <template #actions="{row:{id}}">
         <el-button type="primary" text @click="editItem({id})">编辑</el-button>
@@ -23,7 +28,7 @@
         </el-popconfirm>
       </template>
     </basic-table>
-    <EditTemplate/>
+    <edit-template/>
   </page-wrapper>
 </template>
 
@@ -43,6 +48,7 @@ import {
   useFetchDelete,
   useFetchUserApiResource
 } from '~/api/user'
+import {useUrlSearchParams} from "@vueuse/core";
 
 const tableColumns = [
   {prop: 'id', label: 'ID', width: 100},
@@ -58,7 +64,8 @@ const querySchemas = [
   {field: 'username', placeholder: '用户名', component: 'Input'},
   {field: 'nickname', placeholder: '昵称', component: 'Input'},
 ];
-const params = reactive({});
+const query = useUrlSearchParams();
+console.log('query', query);
 const item = reactive({})
 const useResources = useFetchUserApiResource();
 const {
@@ -73,13 +80,17 @@ const {
   changePage
 } = useResources;
 
-const {currentRoute, replace} = useRouter()
+const {currentRoute, replace, push} = useRouter()
 console.log(currentRoute)
 const submit = () => {
   console.log(111);
-  replace({})
+  push({path: '/system/users', query})
 }
-
+const reset = () => {
+  for (let key in query) {
+    delete query[key]
+  }
+}
 provide('useResources', useResources)
 </script>
 

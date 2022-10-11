@@ -97,6 +97,6 @@ export const useTabStore = defineStore({
     }
   },
   persist: {
-    enabled: true,
+    // enabled: true,
   }
 })

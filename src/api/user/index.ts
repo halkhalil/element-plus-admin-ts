@@ -7,31 +7,39 @@ import {AxiosInstance, AxiosRequestConfig} from "axios";
 import {reactive} from "vue";
 
 
-export enum Api {
-  list = '/users',
-  item = '/users/:id'
-}
-
 export const api = {
-  lists: ({params}) => ({method: 'get', url: '/users', params}) as AxiosRequestConfig,
-  item: ({id}) => ({method: 'get', url: `/users/${id}`} as AxiosRequestConfig),
-  store: ({data}) => ({method: 'post', url: `/users`, data}) as AxiosRequestConfig,
-  update: ({id, data}) => ({method: 'put', url: `/users/${id}`, data}) as AxiosRequestConfig,
-  delete: ({id}) => ({method: 'delete', url: `/users/${id}`}) as AxiosRequestConfig,
+  lists: ({params}): AxiosRequestConfig => {
+    return {method: 'get', url: '/users', params};
+  },
+  item: ({id}): AxiosRequestConfig => {
+    return {method: 'get', url: `/users/${id}`};
+  },
+  store: ({data}): AxiosRequestConfig => {
+    return {method: 'post', url: `/users`, data}
+  },
+  update: ({id, data}): AxiosRequestConfig => {
+    return {method: 'put', url: `/users/${id}`, data}
+  },
+  delete: ({id}): AxiosRequestConfig => {
+    return {method: 'delete', url: `/users/${id}`}
+  },
 }
 
+// 使用axios
 export const fetchLists = (options) => axios.request(api.lists(options));
 export const fetchItem = (options) => axios.request(api.item(options));
 export const fetchStore = (options) => axios.request(api.store(options));
 export const fetchUpdate = (options) => axios.request(api.update(options));
 export const fetchDelete = (options) => axios.request(api.delete(options));
 
-export const useFetchLists = ({params}) => useAxios(api.lists({params}), axios);
-export const useFetchItem = ({id}) => useAxios(api.item({id}), axios);
-export const useFetchStore = ({data}) => useAxios(api.store({data}), axios);
-export const useFetchUpdate = ({id, data}) => useAxios(api.update({id, data}), axios);
-export const useFetchDelete = (id) => useAxios(api.delete(id), axios);
+// 使用useAxios
+export const useFetchLists = (options) => useAxios(api.lists(options), axios);
+export const useFetchItem = (options) => useAxios(api.item(options), axios);
+export const useFetchStore = (options) => useAxios(api.store(options), axios);
+export const useFetchUpdate = (options) => useAxios(api.update(options), axios);
+export const useFetchDelete = (options) => useAxios(api.delete(options), axios);
 
+// 使用useApiResources实现增删改查
 export const useFetchUserApiResource = (options?: object) => {
   const params = reactive({});
   const item = reactive<UserItem | {}>({})

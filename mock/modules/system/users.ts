@@ -48,9 +48,8 @@ export default [
     url: '/backend/users',
     method: 'post',
     response: ({query}) => {
-      const {page} = query;
-      // const lists = lists();
-      return responsePageSuccess(lists, page)
+      const item = lists.pop(lists);
+      return responseSuccess(item)
     }
   },
   {

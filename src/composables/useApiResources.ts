@@ -62,7 +62,7 @@ export interface UseApiResourceReturn {
   /**
    * 取消
    */
-  cancelItem(formEl?: FormInstance): void,
+  // cancelItem(formEl?: FormInstance): void,
 
   /**
    * 搜索查询
@@ -120,7 +120,7 @@ interface ResourceApi {
 }
 
 export function useApiResources(resourceApi: ResourceApi, axios: AxiosInstance): UseApiResourceReturn {
-  const params = reactive({id:1})
+  const params = reactive({page: 1})
 
   const listsReturn = useAxios(resourceApi.lists({params}), axios);
   const itemReturn = useAxios(resourceApi.item({}), axios);
@@ -139,29 +139,28 @@ export function useApiResources(resourceApi: ResourceApi, axios: AxiosInstance):
   const dialog = ref<boolean>(false);
 
 
-  const fetchLists = async (params) => {
-    const config = resourceApi.lists({params} || {}) as AxiosRequestConfig;
+  const fetchLists = async (options?: object) => {
+    const config = resourceApi.lists(options || {}) as AxiosRequestConfig;
     await listsReturn.execute(config.url as string, config);
   }
 
-  const fetchItem = async (arg) => {
-    const config = resourceApi.item(arg || {}) as AxiosRequestConfig;
-    console.log(arg, config)
+  const fetchItem = async (options?: object) => {
+    const config = resourceApi.item(options || {}) as AxiosRequestConfig;
     await itemReturn.execute(config.url as string, config);
   }
 
-  const fetchStore = async (arg) => {
-    const config = resourceApi.store(arg || {}) as AxiosRequestConfig;
+  const fetchStore = async (options?: object) => {
+    const config = resourceApi.store(options || {}) as AxiosRequestConfig;
     await storeReturn.execute(config.url as string, config);
   }
 
-  const fetchUpdate = async (arg) => {
-    const config = resourceApi.store(arg || {}) as AxiosRequestConfig;
+  const fetchUpdate = async (options?: object) => {
+    const config = resourceApi.store(options || {}) as AxiosRequestConfig;
     await updateReturn.execute(config.url as string, config);
   }
 
-  const fetchDelete = async (arg) => {
-    const config = resourceApi.delete(arg || {}) as AxiosRequestConfig;
+  const fetchDelete = async (options?: object) => {
+    const config = resourceApi.delete(options || {}) as AxiosRequestConfig;
     await deleteReturn.execute(config.url as string, config);
   }
 
@@ -172,18 +171,18 @@ export function useApiResources(resourceApi: ResourceApi, axios: AxiosInstance):
   }
 
   // 修改项
-  const editItem = async (arg) => {
+  const editItem = async (options?: object) => {
     dialog.value = true;
-    await fetchItem(arg);
+    await fetchItem(options);
   }
 
-  // 修改项
-  const deleteItem = async (arg) => {
-    await fetchDelete(arg);
+  // 删除项
+  const deleteItem = async (options?: object) => {
+    await fetchDelete(options);
   }
 
   // 取消提交
-  const cancelItem = (formEl: FormInstance | undefined) => {
+  const cancelSubmit = (formEl: FormInstance | undefined) => {
     if (!formEl) return;
     dialog.value = false;
     formEl.resetFields()
@@ -195,12 +194,11 @@ export function useApiResources(resourceApi: ResourceApi, axios: AxiosInstance):
   // }
 
   // 确认提交
-  const submitForm = async (formEl: FormInstance | undefined, data: object = {}): Promise<void> => {
+  const submitForm = async (formEl: FormInstance | undefined, isEdit: boolean , options: object = {}): Promise<void> => {
     if (!formEl) return;
     const confirm = async () => {
-      const {id, ...requestData} = data || {};
-      id ? await fetchUpdate(id, requestData) : await fetchStore(requestData);
-      cancelItem(formEl);
+      isEdit ? await fetchUpdate(options) : await fetchStore(options);
+      // cancelItem(formEl);
     }
 
     await formEl.validate((valid) => {
@@ -256,7 +254,7 @@ export function useApiResources(resourceApi: ResourceApi, axios: AxiosInstance):
     }, storeItem(item: object): void {
     }, updateItem(item: object): void {
     },
-    cancelItem,
+    // cancelItem,
     changePage,
     submitForm,
     resetForm
