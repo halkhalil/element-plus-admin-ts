@@ -38,34 +38,26 @@
 </template>
 
 <script lang="ts" setup>
-import {inject, watch, reactive, ref} from "vue";
+import {inject, watch, reactive, ref, toRefs} from "vue";
 import {useFetchRoles} from "~/api/useFetchAll";
 import {UseApiResourceReturn} from "~/composables/useApiResources";
 import {BasicForm} from '~/components/Form';
 import type {FormInstance, FormRules} from 'element-plus';
 import {UserItem} from "~/api/user/UserModel";
+import {Interface} from "readline";
 
 const formSchemas = reactive([
   {filed: 'username', component: 'Input', label: '用户标识', placeholder: '用户标识'}
 ]);
-
 const formRef = ref<FormInstance>();
-let formModel = reactive({
-  id: null,
-  username: '',
-  nickname: '',
-  password: '',
-  role_ids: [],
-  status: 1,
-})
-const formRules = reactive<FormRules>({
+const formModel = ref({});
+const formRules = reactive({
   username: [{required: true, message: '用户标识为必选项', trigger: 'change'}],
   nickname: [{required: true, message: '用户昵称为必选项', trigger: 'change'}],
   password: [{required: true, min: 6, max: 30, message: '密码为6-30个字符', trigger: 'blur'}],
   role_ids: [],
   status: [{required: true}],
 })
-
 
 const {
   dialog,
@@ -75,8 +67,9 @@ const {
   getConfirmLoading,
 } = inject('useResources') as UseApiResourceReturn;
 
-const {data: roles, execute: fetchRoles} = useFetchRoles({}, {immediate: false});
+const {data: roles, execute: fetchRoles} = useFetchRoles();
 
 watch(dialog, async () => dialog.value && fetchRoles());
-watch(itemReturn.data, (newVal) => formModel = itemReturn.data)
+watch(itemReturn.data, (newVal) => formModel.value = newVal.data)
+
 </script>

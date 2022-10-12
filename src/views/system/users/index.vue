@@ -46,7 +46,7 @@ import {
   useFetchStore,
   useFetchUpdate,
   useFetchDelete,
-  useFetchUserApiResource
+  useFetchUserApiResource, useFetchUserResources
 } from '~/api/user'
 import {useUrlSearchParams} from "@vueuse/core";
 
@@ -67,7 +67,7 @@ const querySchemas = [
 const query = useUrlSearchParams();
 console.log('query', query);
 const item = reactive({})
-const useResources = useFetchUserApiResource();
+const useResources = useFetchUserResources();
 const {
   listsReturn,
   deleteReturn,

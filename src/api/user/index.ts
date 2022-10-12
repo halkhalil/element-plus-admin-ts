@@ -1,5 +1,5 @@
 import axios from "~/utils/axios";
-import {useApiResources} from "~/composables/useApiResources";
+import {ApiResourcesConfig, ApiResourcesOptions, useApiResources} from "~/composables/useApiResources";
 import {BaseItem, UserItem} from "~/api/user/UserModel";
 // import {useAxios, UseAxiosOptions} from "~/api/useAxios";
 import {useAxios} from "@vueuse/integrations/useAxios";
@@ -7,7 +7,7 @@ import {AxiosInstance, AxiosRequestConfig} from "axios";
 import {reactive} from "vue";
 
 
-export const api = {
+export const api: ApiResourcesConfig = {
   lists: ({params}): AxiosRequestConfig => {
     return {method: 'get', url: '/users', params};
   },
@@ -40,8 +40,6 @@ export const useFetchUpdate = (options) => useAxios(api.update(options), axios);
 export const useFetchDelete = (options) => useAxios(api.delete(options), axios);
 
 // 使用useApiResources实现增删改查
-export const useFetchUserApiResource = (options?: object) => {
-  const params = reactive({});
-  const item = reactive<UserItem | {}>({})
-  return useApiResources(api, axios)
+export const useFetchUserResources = (options?: ApiResourcesOptions) => {
+  return useApiResources(api, axios, options)
 }

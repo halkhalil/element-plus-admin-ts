@@ -2,7 +2,13 @@ import {reactive, ref, toRefs, onMounted, nextTick, Ref, watch, unref, computed}
 import {UrlParams, useDebounceFn, useUrlSearchParams} from '@vueuse/core';
 import {AxiosInstance, AxiosPromise, AxiosRequestConfig} from "axios";
 import {FormInstance} from "element-plus";
-import {EasyUseAxiosReturn, StrictUseAxiosReturn, useAxios, UseAxiosReturn} from "@vueuse/integrations/useAxios";
+import {
+  EasyUseAxiosReturn,
+  StrictUseAxiosReturn,
+  useAxios,
+  UseAxiosOptions,
+  UseAxiosReturn
+} from "@vueuse/integrations/useAxios";
 
 export interface UseApiResourceReturn {
   listsReturn: EasyUseAxiosReturn<any> & PromiseLike<EasyUseAxiosReturn<any>>,
@@ -62,6 +68,7 @@ export interface UseApiResourceReturn {
   /**
    * 取消
    */
+
   // cancelItem(formEl?: FormInstance): void,
 
   /**
@@ -107,26 +114,35 @@ interface ApiResourceOptions {
   refreshAfterConfirm?: boolean,// 确认提交后刷新
 }
 
-interface ResourceApi {
-  lists(...arg): AxiosRequestConfig,
+export interface ApiResourcesConfig {
+  lists(options?: any): AxiosRequestConfig,
 
-  item(...arg): AxiosRequestConfig,
+  item(options?: any): AxiosRequestConfig,
 
-  store(...arg): AxiosRequestConfig,
+  store(options?: any): AxiosRequestConfig,
 
-  update(...arg): AxiosRequestConfig,
+  update(options?: any): AxiosRequestConfig,
 
-  delete(...arg): AxiosRequestConfig,
+  delete(options?: any): AxiosRequestConfig,
 }
 
-export function useApiResources(resourceApi: ResourceApi, axios: AxiosInstance): UseApiResourceReturn {
-  const params = reactive({page: 1})
+export interface ApiResourcesOptions extends UseAxiosOptions {
+  params?: any,
+  item?: any,
+}
 
-  const listsReturn = useAxios(resourceApi.lists({params}), axios);
-  const itemReturn = useAxios(resourceApi.item({}), axios);
-  const storeReturn = useAxios(resourceApi.store({}), axios);
-  const updateReturn = useAxios(resourceApi.update({}), axios);
-  const deleteReturn = useAxios(resourceApi.delete({}), axios);
+export function useApiResources(apiResources: ApiResourcesConfig, axios: AxiosInstance, options?: ApiResourcesOptions): UseApiResourceReturn {
+  const params = reactive(options?.params || {});
+  const immediate = options?.immediate ?? true;
+  const item = ref<object>({});
+  const isEdit = ref<boolean>(false);
+
+  const listsReturn = useAxios(apiResources.lists({params}), axios);
+  const itemReturn = useAxios(apiResources.item({}), axios);
+  const storeReturn = useAxios(apiResources.store({}), axios);
+  const updateReturn = useAxios(apiResources.update({}), axios);
+  const deleteReturn = useAxios(apiResources.delete({}), axios);
+  const submitReturn = computed(() => isEdit.value ? updateReturn : storeReturn);
 
   // 列表
   const getLists = computed(() => listsReturn.data.value?.data);
@@ -140,27 +156,29 @@ export function useApiResources(resourceApi: ResourceApi, axios: AxiosInstance):
 
 
   const fetchLists = async (options?: object) => {
-    const config = resourceApi.lists(options || {}) as AxiosRequestConfig;
+    const config = apiResources.lists(options || {}) as AxiosRequestConfig;
     await listsReturn.execute(config.url as string, config);
   }
 
   const fetchItem = async (options?: object) => {
-    const config = resourceApi.item(options || {}) as AxiosRequestConfig;
+    const config = apiResources.item(options || {}) as AxiosRequestConfig;
     await itemReturn.execute(config.url as string, config);
+    item.value = unref(itemReturn.data);
+    console.log(item)
   }
 
   const fetchStore = async (options?: object) => {
-    const config = resourceApi.store(options || {}) as AxiosRequestConfig;
+    const config = apiResources.store(options || {}) as AxiosRequestConfig;
     await storeReturn.execute(config.url as string, config);
   }
 
   const fetchUpdate = async (options?: object) => {
-    const config = resourceApi.store(options || {}) as AxiosRequestConfig;
+    const config = apiResources.store(options || {}) as AxiosRequestConfig;
     await updateReturn.execute(config.url as string, config);
   }
 
   const fetchDelete = async (options?: object) => {
-    const config = resourceApi.delete(options || {}) as AxiosRequestConfig;
+    const config = apiResources.delete(options || {}) as AxiosRequestConfig;
     await deleteReturn.execute(config.url as string, config);
   }
 
@@ -194,7 +212,7 @@ export function useApiResources(resourceApi: ResourceApi, axios: AxiosInstance):
   // }
 
   // 确认提交
-  const submitForm = async (formEl: FormInstance | undefined, isEdit: boolean , options: object = {}): Promise<void> => {
+  const submitForm = async (formEl: FormInstance | undefined, isEdit: boolean, options: object = {}): Promise<void> => {
     if (!formEl) return;
     const confirm = async () => {
       isEdit ? await fetchUpdate(options) : await fetchStore(options);
@@ -220,7 +238,7 @@ export function useApiResources(resourceApi: ResourceApi, axios: AxiosInstance):
   }
 
   onMounted(async () => {
-    await fetchLists();
+    immediate && await fetchLists();
   })
 
   watch(() => dialog, () => {
