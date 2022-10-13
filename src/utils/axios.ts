@@ -39,7 +39,6 @@ instance.interceptors.request.use(function (config) {
 
 // 响应拦截
 instance.interceptors.response.use((response) => {
-
   return response;
 }, (err) => {
   const {response: {status, data: {message}}, config: {url}} = err;

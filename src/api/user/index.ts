@@ -1,45 +1,34 @@
 import axios from "~/utils/axios";
-import {ApiResourcesConfig, ApiResourcesOptions, useApiResources} from "~/composables/useApiResources";
-import {BaseItem, UserItem} from "~/api/user/UserModel";
-// import {useAxios, UseAxiosOptions} from "~/api/useAxios";
-import {useAxios} from "@vueuse/integrations/useAxios";
-import {AxiosInstance, AxiosRequestConfig} from "axios";
-import {reactive} from "vue";
+import {
+  ApiResourcesConfig,
+  ApiResourcesOptions,
+  useApiResources,
+  UseApiResourcesReturn
+} from "~/composables/useApiResources";
+import {AxiosResponse} from "axios";
 
-
-export const api: ApiResourcesConfig = {
-  lists: ({params}): AxiosRequestConfig => {
-    return {method: 'get', url: '/users', params};
-  },
-  item: ({id}): AxiosRequestConfig => {
-    return {method: 'get', url: `/users/${id}`};
-  },
-  store: ({data}): AxiosRequestConfig => {
-    return {method: 'post', url: `/users`, data}
-  },
-  update: ({id, data}): AxiosRequestConfig => {
-    return {method: 'put', url: `/users/${id}`, data}
-  },
-  delete: ({id}): AxiosRequestConfig => {
-    return {method: 'delete', url: `/users/${id}`}
-  },
+export const fetchLists = ({params}): Promise<AxiosResponse> => {
+  return axios.get(`/users`, {params});
 }
 
-// 使用axios
-export const fetchLists = (options) => axios.request(api.lists(options));
-export const fetchItem = (options) => axios.request(api.item(options));
-export const fetchStore = (options) => axios.request(api.store(options));
-export const fetchUpdate = (options) => axios.request(api.update(options));
-export const fetchDelete = (options) => axios.request(api.delete(options));
+export const fetchStore = ({data}): Promise<AxiosResponse> => {
+  return axios.get(`/users`, {data});
+}
 
-// 使用useAxios
-export const useFetchLists = (options) => useAxios(api.lists(options), axios);
-export const useFetchItem = (options) => useAxios(api.item(options), axios);
-export const useFetchStore = (options) => useAxios(api.store(options), axios);
-export const useFetchUpdate = (options) => useAxios(api.update(options), axios);
-export const useFetchDelete = (options) => useAxios(api.delete(options), axios);
+export const fetchItem = ({id, params}): Promise<AxiosResponse> => {
+  return axios.get(`/users/${id}`, {params});
+}
+
+export const fetchUpdate = ({id, data}): Promise<AxiosResponse> => {
+  return axios.get(`/users/${id}`, {data});
+}
+
+export const fetchDelete = ({id}): Promise<AxiosResponse> => {
+  return axios.get(`/users/${id}`);
+}
 
 // 使用useApiResources实现增删改查
-export const useFetchUserResources = (options?: ApiResourcesOptions) => {
-  return useApiResources(api, axios, options)
+export const useFetchUserResources = (options?: ApiResourcesOptions): UseApiResourcesReturn => {
+  const apiResources: ApiResourcesConfig = {fetchLists, fetchStore, fetchItem, fetchUpdate, fetchDelete}
+  return useApiResources(apiResources, options)
 }

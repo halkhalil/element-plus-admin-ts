@@ -38,7 +38,6 @@ export function useTab() {
   function initTabs() {
     const affixTabs = filterAffixTabs(getRoutes());
     for (const tab of affixTabs) {
-      console.log('tab',tab)
       const {name, meta, fullPath, path, query, params} = tab as TabView;
       name && tabStore.addVisitedTab({name, meta, fullPath, path, query, params});
     }
