@@ -50,7 +50,6 @@ export const useTabStore = defineStore({
       index > -1 && (this.visitedTabs[index] = view);
     },
     updateOrAddVisitedTab(view) {
-      console.log('updateOrAddVisitedTab');
       const index = this.visitedTabs.findIndex(item => item.path === view.path);
       index > -1 ? this.updateVisitedTab(view) : this.addVisitedTab(view);
     },
@@ -97,6 +96,6 @@ export const useTabStore = defineStore({
     }
   },
   persist: {
-    // enabled: true,
+    enabled: true,
   }
 })

@@ -1,5 +1,5 @@
 import path from "path";
-import {RouteLocationRaw, RouteRecord, RouteRecordRaw, useRouter} from "vue-router";
+import {RouteLocationRaw, RouteRecord, useRouter} from "vue-router";
 import {computed, nextTick, onMounted, Ref, ref, unref, UnwrapRef, watch} from 'vue';
 import {useStore} from "~/store";
 import {TabView} from "~/store/modules/tab";
@@ -27,10 +27,6 @@ export function useTab() {
   })
 
   watch(currentRoute, async () => {
-
-    console.log(11111);
-    const {name, meta, fullPath, path, query, params} = currentRoute.value;
-    // updateOrAddTab({name, meta, fullPath, path, query, params} as unknown as TabView);
     await moveToCurrentTab()
   });
 
@@ -194,7 +190,7 @@ export function useTab() {
   async function toLastTab(visitedTabs: TabView[], {name, fullPath}: TabView) {
     const latestTab: TabView = visitedTabs.slice(-1)[0];
     if (latestTab) {
-      await push({path: latestTab.fullPath})
+      await push({path: latestTab.fullPath || ''})
     } else {
       if (name === 'Dashboard') {
         await replace({path: '/redirect' + fullPath})
