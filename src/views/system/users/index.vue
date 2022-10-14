@@ -51,9 +51,9 @@ const tableColumns = [
   {prop: 'action', label: '操作', minWidth: 45, slot: 'actions'},
 ];
 const querySchemas = [
-  {field: 'id', label: '用户标识', placeholder: '用户ID', component: 'Input'},
-  {field: 'username', label: '用户名', placeholder: '用户名', component: 'Input'},
-  {field: 'nickname', label: '用户昵称', placeholder: '昵称', component: 'Input'},
+  {field: 'id', label: '用户标识', placeholder: '请输入用户唯一表示', component: 'Input'},
+  {field: 'username', label: '用户名', placeholder: '请输入用户名', component: 'Input'},
+  {field: 'nickname', label: '用户昵称', placeholder: '请输入昵称', component: 'Input'},
 ];
 
 const useResources = useFetchUserResources();
