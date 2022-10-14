@@ -12,6 +12,7 @@ const formProps = {
   },
   schemas: {
     type: Array,
+    required: true,
     default: () => ([]),
   },
   showLabel: {

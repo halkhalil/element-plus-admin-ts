@@ -50,20 +50,38 @@
     <el-divider content-position="left">表单预览</el-divider>
     <div class="p-5">
       <basic-form v-model="searchForm"
-                 :schemas="formSchema"
-                 v-bind="formProps"
+                  :schemas="formSchema"
+                  v-bind="formProps"
       ></basic-form>
     </div>
 
-    <el-divider content-position="left">数据预览</el-divider>
     <pre class="m-5">{{ searchForm }}</pre>
+
+    <div class="p-5">
+      <el-divider content-position="left" class="mt-5">基于BasicForm二次封装的搜索表单</el-divider>
+      <query-form v-model="params"
+                  :schemas="formSchema"
+                  :colProps="{xs: 24, sm: 12, md: 12, lg: 8, xl: 6}"
+                  show-label
+                  label-width="100px"
+                  @submit="submit">
+        <template #extra>
+          <el-button type="success" :icon="Plus">添加</el-button>
+          <el-button type="primary" :icon="Edit">编辑</el-button>
+          <el-button type="danger" :icon="Delete">删除</el-button>
+          <el-button type="warning" :icon="Refresh">刷新</el-button>
+        </template>
+      </query-form>
+      <pre class="m-5">{{ params }}</pre>
+    </div>
   </page-wrapper>
 </template>
 <script lang="ts" setup>
 import {reactive, ref} from "vue";
-import {BasicForm} from "~/components/Form";
+import {BasicForm, QueryForm} from "~/components/Form";
 import {getSearchFormData} from './data'
 import {PageWrapper} from '~/components/Page';
+import {Plus, Edit, Delete, Refresh} from '@element-plus/icons-vue'
 
 const formProps = reactive({
   showLabel: true,
@@ -90,5 +108,10 @@ const formSchema = reactive(getSearchFormData());
 const changeButtonLine = (boolean) => {
   const colProps = boolean ? {span: 24} : undefined;
   formProps.actionProps['colProps'] = colProps;
+}
+
+const params = reactive({})
+const submit = (e) => {
+  console.log(e);
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
-  <div class="page-wrapper w-full min-h-full" :class="$props.class">
-    <div class="content-bg p-3">
+  <div class="page-wrapper w-full min-h-full content-bg" :class="$props.class">
+    <div class=" p-3">
       <slot name="page-header">
         <el-page-header :bind="$props" @back="back" v-if="$props.title" class="!px-5 pt-5 content-bg">
           <template #breadcrumb>
@@ -26,7 +26,7 @@
         </el-page-header>
       </slot>
     </div>
-    <div class="!p-3 !pt-0 content-bg"
+    <div class="!p-3 !pt-0"
          ref="contentElRef"
          :style="[$props.contentFullHeight ? getContentHeight : '']">
       <slot>
@@ -73,7 +73,7 @@ defineProps({
 const contentElRef = ref();
 const {top} = useElementBounding(contentElRef);
 const getContentHeight = computed(() => {
-  return {'minHeight': document.documentElement.clientHeight - top.value - 50 + 'px'};
+  return {'minHeight': document.documentElement.clientHeight - top.value - 20 + 'px'};
 })
 
 const {back} = useRouter();

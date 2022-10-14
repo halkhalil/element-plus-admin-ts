@@ -321,6 +321,12 @@ export function getSearchFormData() {
       component: 'Input',
     },
     {
+      field: 'input2',
+      label: '输入框2',
+      placeholder: '请输入要搜索的内容',
+      component: 'Input',
+    },
+    {
       field: 'daterange',
       label: '时间范围',
       placeholder: '请选择时间范围',
