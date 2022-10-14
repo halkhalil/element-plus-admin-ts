@@ -20,10 +20,10 @@
                  :border="true"
                  @change-page="changePage">
       <template #actions="{row:{id}}">
-        <el-button type="primary" :icon="Edit" circle @click="editItem({id})"></el-button>
+        <el-button type="primary" :icon="Edit" @click="editItem({id})"></el-button>
         <el-popconfirm title="确认要删除吗？" iconColor="red" @confirm="deleteItem({id})">
           <template #reference>
-            <el-button type="danger" :icon="Delete" circle :loading="loading.delete"></el-button>
+            <el-button type="danger" :icon="Delete" :loading="loading.delete"></el-button>
           </template>
         </el-popconfirm>
       </template>
@@ -48,7 +48,7 @@ const tableColumns = [
   {prop: 'roles', label: '角色', minWidth: 100, formatter: ({roles}) => roles.map(role => role.label).join(',')},
   {prop: 'status_label', label: '状态', minWidth: 100},
   {prop: 'created_at', label: '创建时间', minWidth: 100},
-  {prop: 'action', label: '操作', minWidth: 45, slot: 'actions'},
+  {prop: 'action', label: '操作', minWidth: 65, slot: 'actions'},
 ];
 const querySchemas = [
   {field: 'id', label: '用户标识', placeholder: '请输入用户唯一表示', component: 'Input'},
