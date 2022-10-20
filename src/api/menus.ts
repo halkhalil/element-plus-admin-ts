@@ -1,5 +1,5 @@
 import axios from "~/utils/axios";
-import {useResourceApi} from "~/composables/useResourceApi.js";
+import {useApiResources} from "~/composables/useApiResources";
 
 export const fetchList = (query = {}) => axios.get('/menus', {params: query});
 export const fetchItem = (item = {}) => axios.get(`/menus/${item.id}`);
@@ -24,7 +24,7 @@ export const fetchStore = (item = {}) => axios.post(`/menus`, {
 export const fetchDelete = (item = {}) => axios.delete(`/menus/${item.id}`);
 
 
-export const useFetchResource = (options = {}) => useResourceApi({
+export const useFetchResource = (options = {}) => useApiResources({
   listApi: fetchList,
   itemApi: fetchItem,
   updateApi: fetchUpdate,

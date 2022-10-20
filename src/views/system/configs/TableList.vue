@@ -23,47 +23,34 @@
   </el-card>
 </template>
 
-<script>
+<script lang="ts" setup>
 import {BasicTable, BasicQuery} from "~/components/Table/index.ts"
 import EditTemplate from "~/views/system/configs/EditTemplate.vue";
 import {listApi, itemApi, updateApi, storeApi, deleteApi} from "~/api/configs.ts";
-import {useResourceApi} from "~/composables/useResourceApi.ts";
-import {defineComponent, reactive, toRefs, provide} from "vue";
+import {useApiResources} from "~/composables/useApiResources";
+import {defineComponent, reactive, toRefs, provide, ref} from "vue";
 
-export default defineComponent({
-  name: "TableList",
-  components: {BasicQuery, BasicTable, EditTemplate},
-  setup() {
-    const state = reactive({
-      columns: [
-        {prop: 'id', label: 'ID', width: 100},
-        {prop: 'title', label: '标题', minWidth: 100},
-        {prop: 'name', label: '标识', minWidth: 100},
-        {prop: 'group_label', label: '分组', minWidth: 100},
-        {prop: 'type_label', label: '类型', minWidth: 100},
-        {prop: 'created_at', label: '创建时间', minWidth: 100},
-      ],
-      schemas: [
-        {field: 'title', placeholder: '标题', component: 'Input'},
-        {field: 'name', placeholder: '标识', component: 'Input'},
-      ],
-    })
+const columns = ref([
+  {prop: 'id', label: 'ID', width: 100},
+  {prop: 'title', label: '标题', minWidth: 100},
+  {prop: 'name', label: '标识', minWidth: 100},
+  {prop: 'group_label', label: '分组', minWidth: 100},
+  {prop: 'type_label', label: '类型', minWidth: 100},
+  {prop: 'created_at', label: '创建时间', minWidth: 100},
+]);
+const schemas = ref([
+  {field: 'title', placeholder: '标题', component: 'Input'},
+  {field: 'name', placeholder: '标识', component: 'Input'},
+])
 
-    const resourceApi = useResourceApi({
-      listApi,
-      itemApi,
-      updateApi,
-      storeApi,
-      deleteApi
-    });
+const resourceApi = useApiResources({
+  listApi,
+  itemApi,
+  updateApi,
+  storeApi,
+  deleteApi
+});
 
-    provide('resourceApi', resourceApi);
-
-    return {
-      ...toRefs(state),
-      ...toRefs(resourceApi),
-    }
-  },
-})
+provide('resourceApi', resourceApi);
 </script>
 

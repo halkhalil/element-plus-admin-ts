@@ -1,69 +1,67 @@
 <template>
-  <page-wrapper :title="$route.meta?.title">
-    <template #extra>
-      <el-button type="primary" @click="addItem">新增</el-button>
+  {{ selections }}
+  <page-wrapper content-full-height>
+    <template #page-header>
+      <query-form v-model="params"
+                  :schemas="querySchemas"
+                  :colProps="{xs: 24, sm: 12, md: 12, lg: 8, xl: 6}"
+                  show-label
+                  label-width="100px"
+                  @submit="handleQuery">
+        <template #extra>
+          <el-button type="success" :icon="Plus" @click="addItem"></el-button>
+          <el-button type="warning" :icon="Refresh" @click="handleQuery" :loading="loading.lists"></el-button>
+        </template>
+      </query-form>
     </template>
-    <el-card shadow="none">
-      <BasicQuery v-model="query" :schemas="schemas" @submit="getQuery"></BasicQuery>
-    </el-card>
-    <el-card shadow="none" class="mt-2">
-      <BasicTable :columns="columns"
-                  :data="lists"
-                  :paginate="paginate"
-                  :loading="listLoading"
-                  @change-page="changePage">
-        <el-table-column label="操作" width="120">
-          <template #default="scope">
-            <el-button type="text" size="small" :disabled="scope.row.name === 'Administrator'"
-                       @click="editItem(scope.row)">编辑
-            </el-button>
-            <el-popconfirm title="删除你是认真的吗？" iconColor="red" @confirm="deleteItem(scope.row)">
-              <template #reference>
-                <el-button type="text" size="small" :disabled="scope.row.name === 'Administrator'">删除</el-button>
-              </template>
-            </el-popconfirm>
+    <basic-table :columns="tableColumns"
+                 :data="lists"
+                 :paginate="paginate"
+                 :loading="loading.lists"
+                 :border="true"
+                 ref="tableRef"
+                 @selection-change="selectChange"
+                 @change-page="changePage">
+      <template #actions="{row:{id}}">
+        <el-button type="primary" :icon="Edit" @click="editItem({id})"></el-button>
+        <el-popconfirm title="确认要删除吗？" iconColor="red" @confirm="deleteItem({id})">
+          <template #reference>
+            <el-button type="danger" :icon="Delete" :loading="loading.delete"></el-button>
           </template>
-        </el-table-column>
-      </BasicTable>
-      <EditTemplate ref="editTemplateRef" v-model="dialog"/>
-    </el-card>
+        </el-popconfirm>
+      </template>
+    </basic-table>
+    <edit-template/>
   </page-wrapper>
 </template>
 
-<script>
-import {PageWrapper} from "~/components/Page/index.ts"
-import {BasicTable, BasicQuery} from "~/components/Table/index.ts"
+<script lang="ts" setup>
+import {PageWrapper} from "~/components/Page"
+import {BasicTable} from "~/components/Table"
+import {QueryForm} from "~/components/Form";
 import EditTemplate from "./EditTemplate.vue";
-import {defineComponent, toRefs, provide, shallowReactive} from "vue";
-import {useFetchResource} from "~/api/roles.ts";
+import {provide} from "vue";
+import {Plus, Edit, Delete, Refresh} from '@element-plus/icons-vue'
+import {useFetchRoleResources} from "~/api/role";
+import {useUrlSearchParams} from "@vueuse/core";
 
-export default defineComponent({
-  name: "index",
-  components: {BasicQuery, BasicTable, EditTemplate, PageWrapper},
-  setup() {
-    const state = shallowReactive({
-      columns: [
-        {prop: 'id', label: 'ID', width: 100},
-        {prop: 'label', label: '角色名称', minWidth: 100},
-        {prop: 'name', label: '角色标识', minWidth: 100},
-        {prop: 'status_label', label: '状态', minWidth: 100},
-        {prop: 'created_at', label: '创建时间', minWidth: 100},
-      ],
-      schemas: [
-        {field: 'id', placeholder: '角色ID', component: 'Input'},
-        {field: 'label', placeholder: '角色名称', component: 'Input'},
-        {field: 'name', placeholder: '角色标识', component: 'Input'},
-      ],
-    })
+const tableColumns = [
+  {prop: 'id', label: 'ID', width: 100},
+  {prop: 'label', label: '角色名称', minWidth: 100},
+  {prop: 'name', label: '角色标识', minWidth: 100},
+  {prop: 'status_label', label: '状态', minWidth: 100},
+  {prop: 'created_at', label: '创建时间', minWidth: 100},
+  {prop: 'action', label: '操作', minWidth: 65, slot: 'actions'},
+];
+const querySchemas = [
+  {field: 'id', label: '角色ID', placeholder: '请输入角色ID', component: 'Input'},
+  {field: 'label', label: '角色名称', placeholder: '请输入角色名称', component: 'Input'},
+  {field: 'name', label: '角色标识', placeholder: '请输入角色标识', component: 'Input'},
+];
 
-    const fetchResource = useFetchResource();
-    provide('fetchResource', fetchResource);
+const params = useUrlSearchParams();
+const useResources = useFetchRoleResources({params});
+const {lists, paginate, loading, addItem, editItem, deleteItem, handleQuery, changePage} = useResources;
 
-    return {
-      ...toRefs(state),
-      ...toRefs(fetchResource),
-    }
-  },
-})
+provide('useResources', useResources);
 </script>
-

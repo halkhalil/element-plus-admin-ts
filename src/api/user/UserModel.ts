@@ -1,5 +1,3 @@
-import {UseFetchResourcesReturn} from "~/composables/useFetchResources";
-
 export interface BaseItem {
   id?: string | number | null
 }

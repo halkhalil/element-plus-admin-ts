@@ -1,5 +1,5 @@
 import axios from "~/utils/axios";
-import {useResourceApi} from "~/composables/useResourceApi.js";
+import {useApiResources} from "~/composables/useApiResources";
 import {AxiosPromise} from "axios";
 import {RoleModel} from "~/api/model/RoleModel";
 
@@ -22,7 +22,7 @@ export const fetchStore = (item: RoleModel): AxiosPromise => axios.post(`/roles`
 });
 export const fetchDelete = (item: RoleModel): AxiosPromise => axios.delete(`/roles/${item.id}`);
 
-export const useFetchResource = (options = {}) => useResourceApi({
+export const useFetchResource = (options = {}) => useApiResources({
   listApi: fetchList,
   itemApi: fetchItem,
   updateApi: fetchUpdate,

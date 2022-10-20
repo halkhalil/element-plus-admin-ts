@@ -26,8 +26,7 @@ export interface Loading {
 }
 
 export interface UseApiResourcesReturn {
-  formRef: Ref<FormInstance | undefined>,
-  formModel: Ref<object>,
+  editable: Ref<object | null>,
   dialog: Ref<boolean>,
   lists: Ref<object[]>,
   paginate: Ref<UnwrapRef<Paginate>>,
@@ -63,15 +62,6 @@ interface query {
   page?: string | number,
 }
 
-interface ApiResourceOptions {
-  query?: query,
-  form?: object,
-  paginate?: object,
-  uniqueId?: string,
-  immediate?: boolean,// 自动加载列表api
-  refreshAfterConfirm?: boolean,// 确认提交后刷新
-}
-
 export interface ApiResourcesConfig {
   fetchLists(options?: any): Promise<AxiosResponse>,
 
@@ -86,19 +76,23 @@ export interface ApiResourcesConfig {
 
 export interface ApiResourcesOptions extends UseAxiosOptions {
   params?: any,
-  formModel?: any,
+  query?: query,
+  form?: object,
+  paginate?: object,
+  uniqueId?: string,
+  immediate?: boolean,// 自动加载列表api
+  refreshListsAfterSubmit?: boolean,// 提交后刷新列表
 }
 
 export function useApiResources(apiResources: ApiResourcesConfig, options?: ApiResourcesOptions): UseApiResourcesReturn {
 
   const dialog = ref<boolean>(false);
-  const isEdit = ref<boolean>(false);
-
-  const formRef = ref<FormInstance>()
+  const editable = ref<object | null>(null);
 
   const params = reactive(options?.params || {});
-  const formModel = ref(options?.formModel || {});
   const immediate = options?.immediate ?? true;
+  const isEdit = ref(false);
+  const refreshListsAfterSubmit = options?.refreshListsAfterSubmit || true;
 
   const lists = ref<object[]>([]);
   const paginate = ref<Paginate>({
@@ -131,7 +125,6 @@ export function useApiResources(apiResources: ApiResourcesConfig, options?: ApiR
   const fetchLists = async (options?: any): Promise<AxiosResponse> => {
     loading.lists = true;
     listsReturn.value = await _fetchLists(options);
-    console.log(listsReturn.value)
     const {data: {data, meta = {}}} = listsReturn.value;
     lists.value = data;
     if (meta) {
@@ -174,16 +167,19 @@ export function useApiResources(apiResources: ApiResourcesConfig, options?: ApiR
 
   // 添加项
   const addItem = () => {
+
+    editable.value = null;
+    console.log(111,editable)
     resetItem();
     dialog.value = true;
   }
 
   // 修改项
   const editItem = async (options?: any) => {
-    isEdit.value = true;
     dialog.value = true;
+    isEdit.value = true;
     const {data: {data}} = await fetchItem(options);
-    formModel.value = data;
+    editable.value = data;
   }
 
   // 删除项
@@ -193,9 +189,8 @@ export function useApiResources(apiResources: ApiResourcesConfig, options?: ApiR
 
   // 重置项
   const resetItem = () => {
-    formModel.value = options?.formModel || {}
+    editable.value = null;
     isEdit.value = false;
-    formRef.value?.resetFields();
   }
 
   // 提交表单
@@ -203,6 +198,7 @@ export function useApiResources(apiResources: ApiResourcesConfig, options?: ApiR
     if (!formEl) return;
     const confirm = async () => {
       isEdit.value ? await fetchUpdate(options) : await fetchStore(options);
+      refreshListsAfterSubmit && await fetchLists({params});
       cancelSubmit(formEl);
     }
 
@@ -217,6 +213,7 @@ export function useApiResources(apiResources: ApiResourcesConfig, options?: ApiR
   const resetForm = (formEl: FormInstance | undefined) => {
     if (!formEl) return;
     formEl.resetFields();
+    resetItem();
   }
 
   // 取消提交
@@ -247,8 +244,7 @@ export function useApiResources(apiResources: ApiResourcesConfig, options?: ApiR
   })
 
   return {
-    formRef,
-    formModel,
+    editable,
     dialog,
     lists,
     paginate,

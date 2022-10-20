@@ -36,41 +36,29 @@
   </page-wrapper>
 </template>
 
-<script>
+<script lang="ts" setup>
 import {PageWrapper} from "~/components/Page"
 import {BasicTable, BasicQuery} from "~/components/Table"
 import EditTemplate from "./EditTemplate.vue";
-import {defineComponent, toRefs, provide, shallowReactive} from "vue";
+import {defineComponent, toRefs, provide, shallowReactive, ref} from "vue";
 import {useFetchResource} from '~/api/menus';
 
-export default defineComponent({
-  name: "index",
-  components: {BasicQuery, BasicTable, EditTemplate, PageWrapper},
-  setup() {
-    const state = shallowReactive({
-      columns: [
-        {prop: 'id', label: 'ID', width: 100},
-        {prop: 'label', label: '菜单名称', minWidth: 120, slot: 'label'},
-        {prop: 'name', label: '英文标识', minWidth: 120},
-        {prop: 'type_label', label: '菜单类型', minWidth: 80},
-        {prop: 'url', label: '目标地址', minWidth: 150},
-        {prop: 'created_at', label: '创建时间', minWidth: 135},
-      ],
-      schemas: [
-        {field: 'id', placeholder: '菜单ID', component: 'Input'},
-        {field: 'title', placeholder: '菜单名称', component: 'Input'},
-        {field: 'name', placeholder: '菜单标识', component: 'Input'},
-      ],
-    })
+const columns = ref([
+  {prop: 'id', label: 'ID', width: 100},
+  {prop: 'label', label: '菜单名称', minWidth: 120, slot: 'label'},
+  {prop: 'name', label: '英文标识', minWidth: 120},
+  {prop: 'type_label', label: '菜单类型', minWidth: 80},
+  {prop: 'url', label: '目标地址', minWidth: 150},
+  {prop: 'created_at', label: '创建时间', minWidth: 135},
+])
 
-    const fetchResource = useFetchResource({item: {type: 'route'}});
-    provide('fetchResource', fetchResource);
+const schemas = ref([
+  {field: 'id', placeholder: '菜单ID', component: 'Input'},
+  {field: 'title', placeholder: '菜单名称', component: 'Input'},
+  {field: 'name', placeholder: '菜单标识', component: 'Input'},
+])
 
-    return {
-      ...toRefs(state),
-      ...toRefs(fetchResource),
-    }
-  },
-})
+const fetchResource = useFetchResource({item: {type: 'route'}});
+provide('fetchResource', fetchResource);
 </script>
 

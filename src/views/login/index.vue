@@ -7,7 +7,7 @@
         </el-col>
         <el-col>
           <el-form-item prop="username">
-            <el-input v-model="form.username" placeholder="Username">
+            <el-input v-model="form.email" placeholder="Username">
               <template #prefix>
                 <el-icon :size="15">
                   <Icon icon='ep:user'/>
@@ -43,9 +43,9 @@ import {useStore} from "~/store";
 
 const title = import.meta.env.VITE_TITLE;
 const formElRef = ref<FormInstance>()
-const form = reactive({username: 'admin', password: '111111'})
+const form = reactive({email: 'admin@shiwuhao.com', password: '111111'})
 const rules = reactive({
-  username: [{required: true, trigger: 'blur'}],
+  email: [{required: true, trigger: 'blur'}],
   password: [{required: true, trigger: 'blur'}]
 })
 const loading = ref(false)
@@ -58,7 +58,6 @@ const login = async (formEl: FormInstance) => {
       loading.value = true;
       await userStore.fetchLogin(form);
       if (userStore.getToken) {
-        console.log(userStore.getToken)
         const {query: {redirect, ...otherQuery}} = currentRoute.value;
         await push({path: redirect || '/', query: {...otherQuery}} as RouteLocationRaw);
         loading.value = false;

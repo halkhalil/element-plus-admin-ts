@@ -11,5 +11,5 @@ import {useStore} from "~/store";
 const {configStore} = useStore();
 
 const {getGlobalSize} = useRootSetting();
-configStore.setConfig();
+// configStore.setConfig();
 </script>

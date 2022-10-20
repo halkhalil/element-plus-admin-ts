@@ -1,117 +1,74 @@
 <template>
-  <BasicDrawer
-    custom-class="drawer"
-    :title="!item.id ? '新增角色' : '编辑角色'"
-    v-model="dialog"
-    @close="cancelItem">
-    <template #default>
-      <el-form ref="formRef" :model="item" :rules="rules" v-loading="itemLoading" label-width="80px">
-        <el-form-item label="英文标识" prop="name">
-          <el-input v-model="item.name" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="显示名称" prop="label">
-          <el-input v-model="item.label" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="角色备注" prop="textarea">
-          <el-input v-model="item.remark" type="textarea" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="角色状态" prop="status">
-          <el-radio-group v-model="item.status">
-            <el-radio-button :label="1">启用</el-radio-button>
-            <el-radio-button :label="0">禁用</el-radio-button>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="访问授权" prop="permission_ids">
-          <el-tree
-            v-if="dialog"
-            :data="permissions"
-            :props="{ children: 'children'}"
-            :default-expanded-keys="[0]"
-            :default-checked-keys="defaultCheckedKeys"
-            :check-strictly="true"
-            node-key="id"
-            show-checkbox
-            class="w-full"
-            @check="handlePermissionCheck">
-            <template #default="{ node:{data: {permissible,permissible_type,permissible_type_label}} }">
-              <span class="custom-tree-node">
-                <span>{{ permissible?.label }}</span>
-                <el-tag size="small" effect="plain"
-                        :type="permissible_type==='actions'?'success':'danger'">{{ permissible_type_label }}</el-tag>
-              </span>
-            </template>
-          </el-tree>
-        </el-form-item>
-        <el-form-item>
-          <el-button @click="cancelItem">取 消</el-button>
-          <el-button type="primary" @click="confirmItem" :loading="confirmLoading">
-            {{ confirmLoading ? '提交中 ...' : '确 定' }}
-          </el-button>
-        </el-form-item>
-      </el-form>
-    </template>
-  </BasicDrawer>
+  <el-drawer :title="!formModel?.id ? '新增' : '编辑'" v-model="dialog">
+    <el-form ref="formRef" :model="formModel" :rules="formRules" label-width="80px" autocomplete="off">
+      <el-form-item label="自增标识" v-if="formModel?.id">
+        <el-input v-model="formModel.id" disabled></el-input>
+      </el-form-item>
+      <el-form-item label="英文标识" prop="name">
+        <el-input v-model="formModel.name" placeholder="请输入角色英文标识"></el-input>
+      </el-form-item>
+      <el-form-item label="角色名称" prop="label">
+        <el-input v-model="formModel.label" placeholder="请输入角色中文名称"></el-input>
+      </el-form-item>
+      <el-form-item label="角色状态" prop="status">
+        <el-switch v-model="formModel.status" active-text="启用" inactive-text="禁用" :active-value="1"
+                   :inactive-value="0"/>
+      </el-form-item>
+      <el-form-item label="访问授权" prop="permission_ids">
+        <el-tree
+          ref="treeRef"
+          v-if="dialog"
+          v-loading="permissionLoading"
+          :data="treePermissions"
+          :props="{ children: 'children',label:({permissible}) => permissible.label}"
+          :check-strictly="false"
+          default-expand-all
+          node-key="id"
+          show-checkbox
+          class="w-full"
+          @check="permissionChecked">
+        </el-tree>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary"
+                   @click="submitForm(formRef,{data:formModel})"
+                   :loading="loading.submit">
+          {{ loading.submit ? '提交中 ...' : '确 定' }}
+        </el-button>
+      </el-form-item>
+    </el-form>
+  </el-drawer>
 </template>
 
-<script>
-import {BasicDrawer} from "~/components/Drawer/index.ts";
-import {toRefs, shallowReactive, inject, watch, nextTick} from "vue";
-import {useFetchAllPermissions} from "~/api/all.ts";
+<script lang="ts" setup>
+import {inject, watch, shallowReactive, ref, computed} from "vue";
+import {useFetchPermissions} from "~/api/useFetchAll";
+import {UseApiResourcesReturn} from "~/composables/useApiResources";
+import {listToTree} from "~/utils/helper/treeHelper";
+import {ElTree, FormInstance, FormRules} from "element-plus";
+import {RoleItem} from "~/api/role/RoleModel";
 
-export default {
-  name: "editTemplate",
-  components: {BasicDrawer},
-  setup() {
-    const state = shallowReactive({
-      defaultCheckedKeys: [],
-      rules: {
-        name: [{required: true, pattern: /^(\w|:){3,50}$/, message: '标识为必填项，3-50个英文字符', trigger: 'blur'}],
-        label: [{required: true, message: '请输入显示名称', trigger: 'blur'}],
-        status: [{required: true, message: '请选择状态', trigger: 'blur'}],
-        permission_ids: [{required: true, message: '请选择权限节点', type: 'array', trigger: 'change'}],
-      }
-    })
+const _from: RoleItem = {id: null, name: '', label: '', permission_ids: [], status: true};
 
-    const {formRef, item, dialog, itemLoading, confirmLoading, cancelItem, confirmItem} = inject('fetchResource');
+const formRef = ref<FormInstance>();
+const formModel = ref<RoleItem>(_from);
 
-    // 初始化默认节点
-    const initDefaultCheckedKeys = () => state.defaultCheckedKeys = item.value.permission_ids;
+const formRules = shallowReactive<FormRules>({
+  name: [{required: true, pattern: /^(\w|:){3,50}$/, message: '标识为必填项，3-50个英文字符', trigger: 'blur'}],
+  label: [{required: true, message: '请输入显示名称', trigger: 'blur'}],
+  permission_ids: [{required: true, message: '请选择权限节点', type: 'array', trigger: 'change'}],
+})
 
-    const {lists: permissions, fetch: fetchAllPermissions} = useFetchAllPermissions();
+const {dialog, editable, loading, submitForm} = <UseApiResourcesReturn>inject('useResources');
 
-    // 设置勾选的节点
-    const handlePermissionCheck = (checkedData, {checkedKeys}) => item.value.permission_ids = checkedKeys;
+const treeRef = ref<InstanceType<typeof ElTree>>()
+const setCheckedKeys = () => treeRef.value?.setCheckedKeys(formModel.value.permission_ids || []);
+const permissionChecked = (checkedData, {checkedKeys}) => formModel.value.permission_ids = checkedKeys;
 
-    // 监控编辑事件
-    watch(dialog, async () => {
-      if (dialog.value) {
-        await fetchAllPermissions();
-        await nextTick(() => initDefaultCheckedKeys())
-      }
-    });
+const {data: permissions, loading: permissionLoading, execute: fetchPermissions} = useFetchPermissions();
+const treePermissions = computed(() => listToTree(permissions.value?.data || []))
 
-    return {
-      ...toRefs(state),
-      permissions,
-      formRef,
-      item,
-      dialog,
-      itemLoading,
-      confirmLoading,
-      cancelItem,
-      confirmItem,
-      handlePermissionCheck,
-    }
-  }
-}
+// 监控编辑事件
+watch(dialog, async () => dialog.value && await fetchPermissions());
+watch(editable, () => (formModel.value = editable.value as RoleItem ?? _from) && setCheckedKeys());
 </script>
-<style lang="scss">
-.custom-tree-node {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 14px;
-  padding-right: 8px;
-}
-</style>

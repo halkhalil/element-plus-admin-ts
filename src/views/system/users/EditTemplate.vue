@@ -1,6 +1,5 @@
 <template>
   <el-drawer :title="!isEdit ? '新增用户' : '编辑用户'" v-model="dialog">
-    <!--      <BasicForm :schemas="formSchemas" :rules="rules"></BasicForm>-->
     <el-form ref="formRef" :model="formModel" :rules="formRules" label-width="80px" autocomplete="off">
       <el-form-item label="自增标识" v-if="formModel?.id" required>
         <el-input v-model="formModel.id" disabled></el-input>
@@ -37,13 +36,15 @@
 </template>
 
 <script lang="ts" setup>
-import {inject, watch, reactive} from "vue";
+import {inject, watch, reactive, ref} from "vue";
 import {useFetchRoles} from "~/api/useFetchAll";
 import {UseApiResourcesReturn} from "~/composables/useApiResources";
+import {FormInstance} from "element-plus";
+import {UserItem} from "~/api/user/UserModel";
 
-const formSchemas = reactive([
-  {filed: 'username', component: 'Input', label: '用户标识', placeholder: '用户标识'}
-]);
+const _from: UserItem = {id: null, username: '', nickname: '', password: '', role_ids: [], status: true};
+const formRef = ref<FormInstance>();
+const formModel = ref<UserItem>(_from);
 const formRules = reactive({
   username: [{required: true, message: '用户标识为必选项', trigger: 'change'}],
   nickname: [{required: true, message: '用户昵称为必选项', trigger: 'change'}],
@@ -52,17 +53,9 @@ const formRules = reactive({
   status: [{required: true}],
 })
 
-const {
-  formRef,
-  formModel,
-  dialog,
-  isEdit,
-  loading,
-  submitForm,
-  resetForm
-} = <UseApiResourcesReturn>inject('useResources');
+const {dialog, editable, loading, submitForm, resetForm} = <UseApiResourcesReturn>inject('useResources');
 
 const {data: roles, execute: fetchRoles} = useFetchRoles();
 watch(dialog, async () => dialog.value && fetchRoles());
-
+watch(editable, () => formModel.value = editable.value as UserItem ?? _from);
 </script>
