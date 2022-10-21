@@ -12,3 +12,13 @@
     z-index: 5;
   }
 }
+
+.el-tree-node.is-expanded.is-penultimate > .el-tree-node__children {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.is-penultimate > .el-tree-node__children > div {
+  width: 25%;
+}

@@ -46,7 +46,7 @@ export const useUserStore = defineStore({
       this.setUser(null);
     },
     async fetchUserInfo() {
-      const {data: {data: {roles, ...user}}} = await personal.info();
+      const {data: {data: {roles = [], ...user}}} = await personal.info();
       this.setUser(user)
       this.setRoles(roles.map(item => item.name))
     },

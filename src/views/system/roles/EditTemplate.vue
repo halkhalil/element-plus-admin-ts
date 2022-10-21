@@ -1,43 +1,47 @@
 <template>
-  <el-drawer :title="!formModel?.id ? '新增' : '编辑'" v-model="dialog">
-    <el-form ref="formRef" :model="formModel" :rules="formRules" label-width="80px" autocomplete="off">
-      <el-form-item label="自增标识" v-if="formModel?.id">
-        <el-input v-model="formModel.id" disabled></el-input>
-      </el-form-item>
-      <el-form-item label="英文标识" prop="name">
-        <el-input v-model="formModel.name" placeholder="请输入角色英文标识"></el-input>
-      </el-form-item>
-      <el-form-item label="角色名称" prop="label">
-        <el-input v-model="formModel.label" placeholder="请输入角色中文名称"></el-input>
-      </el-form-item>
-      <el-form-item label="角色状态" prop="status">
-        <el-switch v-model="formModel.status" active-text="启用" inactive-text="禁用" :active-value="1"
-                   :inactive-value="0"/>
-      </el-form-item>
-      <el-form-item label="访问授权" prop="permission_ids">
-        <el-tree
-          ref="treeRef"
-          v-if="dialog"
-          v-loading="permissionLoading"
-          :data="treePermissions"
-          :props="{ children: 'children',label:({permissible}) => permissible.label}"
-          :check-strictly="false"
-          default-expand-all
-          node-key="id"
-          show-checkbox
-          class="w-full"
-          @check="permissionChecked">
-        </el-tree>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary"
-                   @click="submitForm(formRef,{data:formModel})"
-                   :loading="loading.submit">
-          {{ loading.submit ? '提交中 ...' : '确 定' }}
-        </el-button>
-      </el-form-item>
-    </el-form>
-  </el-drawer>
+  <el-dialog v-model="dialog" top="10vh">
+    <template #header>
+      <div class="title">
+        {{ !formModel?.id ? '新增' : '编辑' }}
+      </div>
+    </template>
+    <el-scrollbar height="50vh" v-loading="loading.item">
+      <el-form ref="formRef" :model="formModel" :rules="formRules" label-width="80px" autocomplete="off">
+        <el-form-item label="英文标识" prop="name">
+          <el-input v-model="formModel.name" placeholder="请输入角色英文标识"></el-input>
+        </el-form-item>
+        <el-form-item label="角色名称" prop="label">
+          <el-input v-model="formModel.label" placeholder="请输入角色中文名称"></el-input>
+        </el-form-item>
+        <el-form-item label="角色状态" prop="status">
+          <el-switch v-model="formModel.status" active-text="启用" inactive-text="禁用" :active-value="1"
+                     :inactive-value="0"/>
+        </el-form-item>
+        <el-form-item label="访问授权" prop="permission_ids">
+          <el-tree
+            ref="treeRef"
+            v-if="dialog"
+            v-loading="permissionLoading"
+            :data="treePermissions"
+            :props="{ children: 'children',label:treeShowLabel,class:treeShowClass}"
+            :check-strictly="false"
+            default-expand-all
+            node-key="id"
+            show-checkbox
+            class="w-full"
+            @check="permissionChecked">
+          </el-tree>
+        </el-form-item>
+      </el-form>
+    </el-scrollbar>
+    <template #footer>
+      <el-button type="primary"
+                 @click="submitForm(formRef,{data:formModel})"
+                 :loading="loading.submit">
+        {{ loading.submit ? '提交中 ...' : '确 定' }}
+      </el-button>
+    </template>
+  </el-dialog>
 </template>
 
 <script lang="ts" setup>
@@ -67,6 +71,8 @@ const permissionChecked = (checkedData, {checkedKeys}) => formModel.value.permis
 
 const {data: permissions, loading: permissionLoading, execute: fetchPermissions} = useFetchPermissions();
 const treePermissions = computed(() => listToTree(permissions.value?.data || []))
+const treeShowLabel = ({permissible}) => permissible.label;
+const treeShowClass = (data, {level}) => level === 2 ? 'is-penultimate' : null;
 
 // 监控编辑事件
 watch(dialog, async () => dialog.value && await fetchPermissions());

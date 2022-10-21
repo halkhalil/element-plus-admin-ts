@@ -1,5 +1,4 @@
 <template>
-  {{ selections }}
   <page-wrapper content-full-height>
     <template #page-header>
       <query-form v-model="params"
@@ -20,7 +19,6 @@
                  :loading="loading.lists"
                  :border="true"
                  ref="tableRef"
-                 @selection-change="selectChange"
                  @change-page="changePage">
       <template #actions="{row:{id}}">
         <el-button type="primary" :icon="Edit" @click="editItem({id})"></el-button>
@@ -59,9 +57,8 @@ const querySchemas = [
   {field: 'name', label: '角色标识', placeholder: '请输入角色标识', component: 'Input'},
 ];
 
-const params = useUrlSearchParams();
-const useResources = useFetchRoleResources({params});
-const {lists, paginate, loading, addItem, editItem, deleteItem, handleQuery, changePage} = useResources;
+const useResources = useFetchRoleResources();
+const {params,dialog, lists, paginate, loading, addItem, editItem, deleteItem, handleQuery, changePage} = useResources;
 
 provide('useResources', useResources);
 </script>
