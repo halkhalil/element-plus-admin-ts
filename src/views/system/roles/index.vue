@@ -47,12 +47,12 @@ import {useFetchRoleResources} from "~/api/role";
 
 const tableColumns = [
   {prop: 'id', label: 'ID', width: 100},
-  {prop: 'label', label: '角色名称', minWidth: 100},
-  {prop: 'name', label: '角色标识', minWidth: 100},
+  {prop: 'label', label: '角色名称', minWidth: 150},
+  {prop: 'name', label: '角色标识', minWidth: 150},
   {prop: 'status_label', label: '状态', minWidth: 100,slot: 'status'},
-  {prop: 'updated_at', label: '修改时间', minWidth: 100},
-  {prop: 'created_at', label: '创建时间', minWidth: 100},
-  {prop: 'action', label: '操作', minWidth: 65, slot: 'actions'},
+  {prop: 'updated_at', label: '修改时间', minWidth: 160},
+  {prop: 'created_at', label: '创建时间', minWidth: 160},
+  {prop: 'action', label: '操作', minWidth: 130, slot: 'actions'},
 ];
 const querySchemas = [
   {field: 'id', label: '角色ID', placeholder: '请输入角色ID', component: 'Input'},

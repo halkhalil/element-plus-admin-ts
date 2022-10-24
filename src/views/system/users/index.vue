@@ -5,7 +5,7 @@
                   :schemas="querySchemas"
                   :colProps="{xs: 24, sm: 12, md: 12, lg: 8, xl: 6}"
                   show-label
-                  label-width="100px"
+                  label-width="50px"
                   @submit="handleQuery">
         <template #extra>
           <el-button type="success" :icon="Plus" @click="addItem"></el-button>
@@ -43,13 +43,13 @@ import {Plus, Edit, Delete, Refresh} from '@element-plus/icons-vue'
 
 const tableColumns = [
   {prop: 'id', label: 'ID', width: 100},
-  {prop: 'email', label: '邮箱', minWidth: 100},
+  {prop: 'email', label: '邮箱', minWidth: 240},
   {prop: 'realname', label: '姓名', minWidth: 100},
-  {prop: 'nickname', label: '昵称', minWidth: 100},
-  {prop: 'roles', label: '角色', minWidth: 100, formatter: ({roles}) => roles.map(role => role.label).join(',')},
+  {prop: 'nickname', label: '昵称', minWidth: 160},
+  {prop: 'roles', label: '角色', minWidth: 150, formatter: ({roles}) => roles.map(role => role.label).join(',')},
   {prop: 'status_label', label: '状态', minWidth: 100},
-  {prop: 'created_at', label: '创建时间', minWidth: 100},
-  {prop: 'action', label: '操作', minWidth: 65, slot: 'actions'},
+  {prop: 'created_at', label: '创建时间', minWidth: 150},
+  {prop: 'action', label: '操作', minWidth: 130, slot: 'actions'},
 ];
 const querySchemas = [
   {field: 'id', label: '标识', placeholder: '请输入用户唯一表示', component: 'Input'},

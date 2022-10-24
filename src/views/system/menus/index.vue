@@ -56,12 +56,11 @@ import {RoleItem} from "~/api/role/RoleModel";
 const tableColumns = shallowRef([
   {prop: 'id', label: 'ID', width: 100},
   {prop: 'label', label: '菜单名称', minWidth: 120, slot: 'label'},
-  {prop: 'name', label: '英文标识', minWidth: 120},
-  {prop: 'type', label: '菜单类型', minWidth: 80},
-  {prop: 'type_label', label: '菜单类型', minWidth: 80},
-  {prop: 'path', label: '目标地址', minWidth: 150},
-  {prop: 'created_at', label: '创建时间', minWidth: 135},
-  {prop: 'action', label: '操作', minWidth: 65, slot: 'actions'},
+  {prop: 'name', label: '英文标识', minWidth: 150},
+  {prop: 'type_label', label: '菜单类型', minWidth: 100},
+  {prop: 'path', label: '目标地址', minWidth: 180},
+  {prop: 'created_at', label: '创建时间', minWidth: 150},
+  {prop: 'action', label: '操作', minWidth: 130, slot: 'actions'},
 ]);
 
 const querySchemas = shallowRef([

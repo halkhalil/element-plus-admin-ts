@@ -45,11 +45,11 @@ import {useFetchActionResources} from "~/api/action";
 const tableColumns = [
   {prop: 'id', label: 'ID', width: 100},
   {prop: 'label', label: '显示名称', minWidth: 120},
-  {prop: 'name', label: '英文标识', minWidth: 120},
-  {prop: 'method', label: '请求方式', minWidth: 80},
-  {prop: 'uri', label: '请求地址', minWidth: 150},
-  {prop: 'created_at', label: '创建时间', minWidth: 135},
-  {prop: 'action', label: '操作', minWidth: 65, slot: 'actions'},
+  {prop: 'name', label: '英文标识', minWidth: 200},
+  {prop: 'method', label: '请求方式', minWidth: 100},
+  {prop: 'uri', label: '请求地址', minWidth: 200},
+  {prop: 'created_at', label: '创建时间', minWidth: 160},
+  {prop: 'action', label: '操作', minWidth: 130, slot: 'actions'},
 ];
 const querySchemas = [
   {field: 'id', label: 'ID', placeholder: '请输入动作ID', component: 'Input'},
