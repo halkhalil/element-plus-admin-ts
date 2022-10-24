@@ -52,13 +52,13 @@ const tableColumns = [
   {prop: 'action', label: '操作', minWidth: 65, slot: 'actions'},
 ];
 const querySchemas = [
-  {field: 'id', label: '动作ID', placeholder: '请输入动作ID', component: 'Input'},
-  {field: 'label', label: '动作名称', placeholder: '请输入动作名称', component: 'Input'},
-  {field: 'name', label: '动作标识', placeholder: '请输入动作标识', component: 'Input'},
+  {field: 'id', label: 'ID', placeholder: '请输入动作ID', component: 'Input'},
+  {field: 'name', label: '标识', placeholder: '请输入动作标识', component: 'Input'},
+  {field: 'label', label: '名称', placeholder: '请输入动作名称', component: 'Input'},
 ];
 
 const useResources = useFetchActionResources();
-const {params,dialog, lists, paginate, loading, addItem, editItem, deleteItem, handleQuery, changePage} = useResources;
+const {params, dialog, lists, paginate, loading, addItem, editItem, deleteItem, handleQuery, changePage} = useResources;
 
 provide('useResources', useResources);
 </script>

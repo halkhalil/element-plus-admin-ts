@@ -23,9 +23,11 @@
                  :tree-props="{children: 'children', hasChildren: 'children_count'}"
                  @change-page="changePage">
       <template #label="{row:{icon,label}}">
-        <div class="flex-row align-center">
-          <span style="width: 14px;"><icon v-if="icon" :name="icon" :size="14"/></span>
-          <span class="ml-1">{{ label }}</span>
+        <div class="flex flex-row">
+          <div class="flex flex-col justify-center">
+            <icon v-if="icon" :icon="icon" :size="14"/>
+          </div>
+          <div class="ml-1">{{ label }}</div>
         </div>
       </template>
       <template #actions="{row:{id}}">
@@ -55,6 +57,7 @@ const tableColumns = shallowRef([
   {prop: 'id', label: 'ID', width: 100},
   {prop: 'label', label: '菜单名称', minWidth: 120, slot: 'label'},
   {prop: 'name', label: '英文标识', minWidth: 120},
+  {prop: 'type', label: '菜单类型', minWidth: 80},
   {prop: 'type_label', label: '菜单类型', minWidth: 80},
   {prop: 'path', label: '目标地址', minWidth: 150},
   {prop: 'created_at', label: '创建时间', minWidth: 135},

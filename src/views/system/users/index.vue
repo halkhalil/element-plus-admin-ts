@@ -58,7 +58,7 @@ const querySchemas = [
 ];
 
 const useResources = useFetchUserResources();
-const {params, lists, paginate, loading, addItem, editItem, deleteItem, handleQuery, changePage} = useResources;
+const {params, lists, paginate, dialog, loading, addItem, editItem, deleteItem, handleQuery, changePage} = useResources;
 
 provide('useResources', useResources);
 </script>

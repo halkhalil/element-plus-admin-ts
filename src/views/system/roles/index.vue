@@ -20,6 +20,9 @@
                  :border="true"
                  ref="tableRef"
                  @change-page="changePage">
+      <template #status="{row:{status,status_label}}">
+        <el-tag :type="status ? 'success' : 'danger'">{{ status_label }}</el-tag>
+      </template>
       <template #actions="{row:{id}}">
         <el-button type="primary" :icon="Edit" @click="editItem({id})"></el-button>
         <el-popconfirm title="确认要删除吗？" iconColor="red" @confirm="deleteItem({id})">
@@ -41,13 +44,13 @@ import EditTemplate from "./EditTemplate.vue";
 import {provide} from "vue";
 import {Plus, Edit, Delete, Refresh} from '@element-plus/icons-vue'
 import {useFetchRoleResources} from "~/api/role";
-import {useUrlSearchParams} from "@vueuse/core";
 
 const tableColumns = [
   {prop: 'id', label: 'ID', width: 100},
   {prop: 'label', label: '角色名称', minWidth: 100},
   {prop: 'name', label: '角色标识', minWidth: 100},
-  {prop: 'status_label', label: '状态', minWidth: 100},
+  {prop: 'status_label', label: '状态', minWidth: 100,slot: 'status'},
+  {prop: 'updated_at', label: '修改时间', minWidth: 100},
   {prop: 'created_at', label: '创建时间', minWidth: 100},
   {prop: 'action', label: '操作', minWidth: 65, slot: 'actions'},
 ];

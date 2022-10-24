@@ -52,6 +52,7 @@ const formModel = ref<RoleItem>(defaultForm);
 const formRules = shallowReactive<FormRules>({
   name: [{required: true, pattern: /^(\w|:){3,50}$/, message: '标识为必填项，3-50个英文字符', trigger: 'blur'}],
   label: [{required: true, message: '请输入显示名称', trigger: 'blur'}],
+  status: [{required: true, message: '角色状态是必选项', trigger: 'change'}],
   permission_ids: [{required: true, message: '请选择权限节点', type: 'array', trigger: 'change'}],
 })
 

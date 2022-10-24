@@ -2,10 +2,10 @@
   <el-dialog :title="!formModel.id ? '新增' : '编辑'" v-model="dialog" top="10vh">
     <el-form ref="formRef" :model="formModel" :rules="formRules" v-loading="loading.item" label-width="80px">
       <el-form-item label="英文标识" prop="name">
-        <el-input v-model="formModel.name" placeholder="请输入角色英文标识"></el-input>
+        <el-input v-model="formModel.name" placeholder="请输入英文标识"></el-input>
       </el-form-item>
-      <el-form-item label="动作名称" prop="label">
-        <el-input v-model="formModel.label" placeholder="请输入角色中文名称"></el-input>
+      <el-form-item label="显示名称" prop="label">
+        <el-input v-model="formModel.label" placeholder="请输入中文名称"></el-input>
       </el-form-item>
       <el-form-item label="请求方式" prop="method">
         <el-select v-model="formModel.method"

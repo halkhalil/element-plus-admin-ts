@@ -3,7 +3,9 @@
     <el-form ref="formRef" :model="formModel" :rules="formRules" v-loading="loading.item" label-width="80px">
       <el-form-item label="菜单类型" prop="type">
         <el-radio-group v-model="formModel.type">
-          <el-radio-button v-for="(key,value) in MenuTypeEnum" :key="key" :label="value">{{ key }}</el-radio-button>
+          <el-radio-button v-for="(key,value) in MenuTypeEnum" :key="key" :label="(value+'').toLowerCase()">
+            {{ key }}
+          </el-radio-button>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="父级节点" prop="pid">
@@ -15,6 +17,7 @@
           :render-after-expand="false"
           :default-expand-all="true"
           :check-strictly="true"
+          :clearable="true"
           filterable
           style="width: 100%;"
         />
@@ -81,8 +84,8 @@ const {getPermissionRoutes} = useConfig();
 const {dialog, editable, loading, submitForm, resetForm} = <UseApiResourcesReturn>inject('useResources');
 const {data: menus, execute: fetchTree} = useFetchMenus();
 const treeMenus = computed(() => {
-  const _menus = menus.value?.data.map(item => ({...item, value: item.id}))
-  return listToTree(_menus || [])
+  const _menus = menus.value?.data.map(item => ({...item, value: item.id}));
+  return [{label: '根节点', value: 0}].concat(listToTree((_menus || [])));
 });
 
 watch(dialog, async () => dialog.value && await fetchTree());

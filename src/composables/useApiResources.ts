@@ -1,17 +1,12 @@
-import {reactive, ref, toRefs, onMounted, nextTick, Ref, watch, unref, computed, UnwrapRef} from 'vue';
-import {UrlParams, useDebounceFn, useUrlSearchParams} from '@vueuse/core';
-import {AxiosInstance, AxiosPromise, AxiosRequestConfig, AxiosResponse} from "axios";
+import {reactive, ref, onMounted, Ref, UnwrapRef} from 'vue';
+import {useDebounceFn} from '@vueuse/core';
+import {AxiosResponse} from "axios";
 import {FormInstance} from "element-plus";
-import {
-  EasyUseAxiosReturn,
-  StrictUseAxiosReturn,
-  useAxios,
-  UseAxiosOptions,
-  UseAxiosReturn
-} from "@vueuse/integrations/useAxios";
+import {StrictUseAxiosReturn, UseAxiosOptions,} from "@vueuse/integrations/useAxios";
 import {UnwrapNestedRefs} from "@vue/reactivity";
 
 export interface Paginate {
+  pageSizes?: number[],
   pageSize: number,
   pagerCount: number,
   total: number,
@@ -96,10 +91,11 @@ export function useApiResources(apiResources: ApiResourcesConfig, options?: ApiR
 
   const lists = ref<object[]>([]);
   const paginate = ref<Paginate>({
+    pageSizes: [10, 15, 30, 50],
     pageSize: 0,
     pagerCount: 0,
     total: 0,
-    layout: 'prev, pager, next, jumper, ->, total',
+    layout: 'pages, prev, pager, next, jumper, ->, total',
   });
   const loading = reactive({
     lists: false,
@@ -167,9 +163,7 @@ export function useApiResources(apiResources: ApiResourcesConfig, options?: ApiR
 
   // 添加项
   const addItem = () => {
-
     editable.value = null;
-    console.log(111,editable)
     resetItem();
     dialog.value = true;
   }
