@@ -9,3 +9,11 @@ export interface RoleItem extends BaseItem {
   status: boolean,
   permission_ids?: string[] | number[],
 }
+
+export const defaultForm: RoleItem = {
+  id: null,
+  name: '',
+  label: '',
+  permission_ids: [],
+  status: true
+};

@@ -56,7 +56,7 @@ const tableColumns = shallowRef([
   {prop: 'label', label: '菜单名称', minWidth: 120, slot: 'label'},
   {prop: 'name', label: '英文标识', minWidth: 120},
   {prop: 'type_label', label: '菜单类型', minWidth: 80},
-  {prop: 'url', label: '目标地址', minWidth: 150},
+  {prop: 'path', label: '目标地址', minWidth: 150},
   {prop: 'created_at', label: '创建时间', minWidth: 135},
   {prop: 'action', label: '操作', minWidth: 65, slot: 'actions'},
 ]);

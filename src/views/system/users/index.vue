@@ -43,7 +43,8 @@ import {Plus, Edit, Delete, Refresh} from '@element-plus/icons-vue'
 
 const tableColumns = [
   {prop: 'id', label: 'ID', width: 100},
-  {prop: 'username', label: '用户名', minWidth: 100},
+  {prop: 'email', label: '邮箱', minWidth: 100},
+  {prop: 'realname', label: '姓名', minWidth: 100},
   {prop: 'nickname', label: '昵称', minWidth: 100},
   {prop: 'roles', label: '角色', minWidth: 100, formatter: ({roles}) => roles.map(role => role.label).join(',')},
   {prop: 'status_label', label: '状态', minWidth: 100},
@@ -51,9 +52,9 @@ const tableColumns = [
   {prop: 'action', label: '操作', minWidth: 65, slot: 'actions'},
 ];
 const querySchemas = [
-  {field: 'id', label: '用户标识', placeholder: '请输入用户唯一表示', component: 'Input'},
-  {field: 'username', label: '用户名', placeholder: '请输入用户名', component: 'Input'},
-  {field: 'nickname', label: '用户昵称', placeholder: '请输入昵称', component: 'Input'},
+  {field: 'id', label: '标识', placeholder: '请输入用户唯一表示', component: 'Input'},
+  {field: 'email', label: '邮箱', placeholder: '请输入邮箱', component: 'Input'},
+  {field: 'realname', label: '姓名', placeholder: '请输入昵称', component: 'Input'},
 ];
 
 const useResources = useFetchUserResources();

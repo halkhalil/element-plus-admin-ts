@@ -1,10 +1,5 @@
 <template>
-  <el-dialog v-model="dialog" top="10vh">
-    <template #header>
-      <div class="title">
-        {{ !formModel?.id ? '新增' : '编辑' }}
-      </div>
-    </template>
+  <el-dialog v-model="dialog" :title="!formModel?.id ?'新增':'编辑'" top="10vh">
     <el-scrollbar height="50vh" v-loading="loading.item">
       <el-form ref="formRef" :model="formModel" :rules="formRules" label-width="80px" autocomplete="off">
         <el-form-item label="英文标识" prop="name">
@@ -50,13 +45,10 @@ import {useFetchPermissions} from "~/api/useFetchAll";
 import {UseApiResourcesReturn} from "~/composables/useApiResources";
 import {listToTree} from "~/utils/helper/treeHelper";
 import {ElTree, FormInstance, FormRules} from "element-plus";
-import {RoleItem} from "~/api/role/RoleModel";
-
-const _from: RoleItem = {id: null, name: '', label: '', permission_ids: [], status: true};
+import {RoleItem, defaultForm} from "~/api/role/RoleModel";
 
 const formRef = ref<FormInstance>();
-const formModel = ref<RoleItem>(_from);
-
+const formModel = ref<RoleItem>(defaultForm);
 const formRules = shallowReactive<FormRules>({
   name: [{required: true, pattern: /^(\w|:){3,50}$/, message: '标识为必填项，3-50个英文字符', trigger: 'blur'}],
   label: [{required: true, message: '请输入显示名称', trigger: 'blur'}],
@@ -76,5 +68,5 @@ const treeShowClass = (data, {level}) => level === 2 ? 'is-penultimate' : null;
 
 // 监控编辑事件
 watch(dialog, async () => dialog.value && await fetchPermissions());
-watch(editable, () => (formModel.value = editable.value as RoleItem ?? _from) && setCheckedKeys());
+watch(editable, () => (formModel.value = editable.value as RoleItem ?? defaultForm) && setCheckedKeys());
 </script>

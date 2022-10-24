@@ -3,9 +3,22 @@ export interface BaseItem {
 }
 
 export interface UserItem extends BaseItem {
-  username: string,
+  email: string,
+  realname?: string,
+  mobile: string,
   nickname: string,
   password?: string,
   status?: boolean,
   role_ids?: string[] | number[],
 }
+
+export const defaultForm: UserItem = {
+  id: null,
+  email: '',
+  mobile: '',
+  nickname: '',
+  realname: '',
+  password: '',
+  role_ids: [],
+  status: true
+};

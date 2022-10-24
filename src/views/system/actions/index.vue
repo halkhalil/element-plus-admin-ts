@@ -1,75 +1,64 @@
 <template>
-  <page-wrapper :title="$route.meta['title']">
-    <template #extra>
-      <el-button type="primary" @click="addItem">新增</el-button>
-    </template>
-    <el-card shadow="none">
-      <BasicQuery v-model="query" :schemas="schemas" @submit="getQuery"></BasicQuery>
-    </el-card>
-    <el-card shadow="none" class="mt-2">
-      <BasicTable row-key="id" lazy
-                  :columns="columns"
-                  :data="lists"
-                  :paginate="paginate"
-                  :loading="listLoading"
-                  :tree-props="{children: 'children', hasChildren: 'children_count'}"
-                  @change-page="changePage">
-        <template #label="{row:{icon,label}}">
-          <div class="flex-row align-center">
-            <span style="width: 14px;"><icon v-if="icon" :name="icon" :size="14"/></span>
-            <span class="ml-1">{{ label }}</span>
-          </div>
+  <page-wrapper content-full-height>
+    <template #page-header>
+      <query-form v-model="params"
+                  :schemas="querySchemas"
+                  :colProps="{xs: 24, sm: 12, md: 12, lg: 8, xl: 6}"
+                  show-label
+                  label-width="100px"
+                  @submit="handleQuery">
+        <template #extra>
+          <el-button type="success" :icon="Plus" @click="addItem"></el-button>
+          <el-button type="warning" :icon="Refresh" @click="handleQuery" :loading="loading.lists"></el-button>
         </template>
-        <el-table-column label="操作" width="120">
-          <template #default="{row}">
-            <el-button type="text" size="small" @click="editItem(row)">编辑</el-button>
-            <el-popconfirm title="删除你是认真的吗？" iconColor="red" @confirm="deleteItem(row)">
-              <template #reference>
-                <el-button type="text" size="small">删除</el-button>
-              </template>
-            </el-popconfirm>
+      </query-form>
+    </template>
+    <basic-table :columns="tableColumns"
+                 :data="lists"
+                 :paginate="paginate"
+                 :loading="loading.lists"
+                 :border="true"
+                 ref="tableRef"
+                 @change-page="changePage">
+      <template #actions="{row:{id}}">
+        <el-button type="primary" :icon="Edit" @click="editItem({id})"></el-button>
+        <el-popconfirm title="确认要删除吗？" iconColor="red" @confirm="deleteItem({id})">
+          <template #reference>
+            <el-button type="danger" :icon="Delete" :loading="loading.delete"></el-button>
           </template>
-        </el-table-column>
-      </BasicTable>
-      <EditTemplate ref="editTemplateRef" v-model="dialog"/>
-    </el-card>
+        </el-popconfirm>
+      </template>
+    </basic-table>
+    <edit-template/>
   </page-wrapper>
 </template>
 
-<script>
+<script lang="ts" setup>
 import {PageWrapper} from "~/components/Page"
-import {BasicTable, BasicQuery} from "~/components/Table"
+import {BasicTable} from "~/components/Table"
+import {QueryForm} from "~/components/Form";
 import EditTemplate from "./EditTemplate.vue";
-import {defineComponent, toRefs, provide, shallowReactive} from "vue";
-import {useFetchResource} from '~/api/actions';
+import {provide} from "vue";
+import {Plus, Edit, Delete, Refresh} from '@element-plus/icons-vue'
+import {useFetchActionResources} from "~/api/action";
 
-export default defineComponent({
-  name: "index",
-  components: {BasicQuery, BasicTable, EditTemplate, PageWrapper},
-  setup() {
-    const state = shallowReactive({
-      columns: [
-        {prop: 'id', label: 'ID', width: 100},
-        {prop: 'label', label: '显示名称', minWidth: 120},
-        {prop: 'name', label: '英文标识', minWidth: 120},
-        {prop: 'method', label: '请求方式', minWidth: 80},
-        {prop: 'uri', label: '请求地址', minWidth: 150},
-        {prop: 'created_at', label: '创建时间', minWidth: 135},
-      ],
-      schemas: [
-        {field: 'label', placeholder: '显示名称', component: 'Input'},
-        {field: 'name', placeholder: '英文标识', component: 'Input'},
-      ],
-    })
+const tableColumns = [
+  {prop: 'id', label: 'ID', width: 100},
+  {prop: 'label', label: '显示名称', minWidth: 120},
+  {prop: 'name', label: '英文标识', minWidth: 120},
+  {prop: 'method', label: '请求方式', minWidth: 80},
+  {prop: 'uri', label: '请求地址', minWidth: 150},
+  {prop: 'created_at', label: '创建时间', minWidth: 135},
+  {prop: 'action', label: '操作', minWidth: 65, slot: 'actions'},
+];
+const querySchemas = [
+  {field: 'id', label: '动作ID', placeholder: '请输入动作ID', component: 'Input'},
+  {field: 'label', label: '动作名称', placeholder: '请输入动作名称', component: 'Input'},
+  {field: 'name', label: '动作标识', placeholder: '请输入动作标识', component: 'Input'},
+];
 
-    const fetchResource = useFetchResource({item: {type: 'route'}});
-    provide('fetchResource', fetchResource);
+const useResources = useFetchActionResources();
+const {params,dialog, lists, paginate, loading, addItem, editItem, deleteItem, handleQuery, changePage} = useResources;
 
-    return {
-      ...toRefs(state),
-      ...toRefs(fetchResource),
-    }
-  },
-})
+provide('useResources', useResources);
 </script>
-
