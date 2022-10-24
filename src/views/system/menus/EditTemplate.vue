@@ -43,7 +43,7 @@
         <el-input v-else v-model="formModel.path" placeholder="请输入地址"></el-input>
       </el-form-item>
       <el-form-item label="菜单图标">
-        <icon-picker v-model="formModel.icon" clearable/>
+        <icon-picker v-model="formModel.icon" clearable class="w-full" />
       </el-form-item>
     </el-form>
     <template #footer>

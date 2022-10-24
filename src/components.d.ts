@@ -11,6 +11,7 @@ declare module '@vue/runtime-core' {
     CodeEditor: typeof import('./components/CodeEditor/src/CodeEditor.vue')['default']
     Cropper: typeof import('./components/Cropper/src/Cropper.vue')['default']
     Drawer: typeof import('./components/Drawer/src/Drawer.vue')['default']
+    ElAlert: typeof import('element-plus/es')['ElAlert']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElBadge: typeof import('element-plus/es')['ElBadge']

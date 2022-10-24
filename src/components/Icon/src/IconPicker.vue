@@ -16,6 +16,7 @@
 
     <el-popover
       ref="popoverRef"
+      v-model:visible="visible"
       :virtual-ref="inputElRef"
       trigger="click"
       show-arrow
@@ -30,7 +31,7 @@
                    :key="index"
                    @click="handleSelect(item)"
                    :size="$props.size"
-                   class="w-10 h-10 cursor-pointer hover:bg-gray-100 ">
+                   class="cursor-pointer hover:bg-gray-100 p-1">
             <Icon :icon="item"/>
           </el-icon>
         </div>
@@ -91,12 +92,10 @@ const {width: popWrapWidth} = useElementBounding(inputElRef)
 
 const handleSelect = (item) => {
   selectIcon.value = item;
+  visible.value = false;
 }
 
 const handleSearch = useDebounceFn((value) => {
-  icons.value = icons.value.filter(item => item.includes(value))
+  icons.value = value ? icons.value.filter(item => item.includes(value)) : iconData;
 }, 200)
-
-const handleFocus = () => visible.value = true;
-const handleBlur = () => visible.value = false;
 </script>
