@@ -40,6 +40,7 @@ import EditTemplate from "./EditTemplate.vue";
 import {provide} from "vue";
 import {useFetchUserResources} from '~/api/user'
 import {Plus, Edit, Delete, Refresh} from '@element-plus/icons-vue'
+import {useUrlSearchParams} from "@vueuse/core";
 
 const tableColumns = [
   {prop: 'id', label: 'ID', width: 100},
@@ -57,7 +58,8 @@ const querySchemas = [
   {field: 'realname', label: '姓名', placeholder: '请输入昵称', component: 'Input'},
 ];
 
-const useResources = useFetchUserResources();
+const query = useUrlSearchParams();
+const useResources = useFetchUserResources({params: query});
 const {params, lists, paginate, dialog, loading, addItem, editItem, deleteItem, handleQuery, changePage} = useResources;
 
 provide('useResources', useResources);

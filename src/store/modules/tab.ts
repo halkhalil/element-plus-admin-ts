@@ -50,7 +50,8 @@ export const useTabStore = defineStore({
       index > -1 && (this.visitedTabs[index] = view);
     },
     updateOrAddVisitedTab(view) {
-      const index = this.visitedTabs.findIndex(item => item.path === view.path);
+      console.log(view)
+      const index = this.visitedTabs.findIndex(item => item === view);
       index > -1 ? this.updateVisitedTab(view) : this.addVisitedTab(view);
     },
     // 添加缓存视图

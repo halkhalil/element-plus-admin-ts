@@ -26,7 +26,6 @@ const useStore = () => {
 
 export {
   store,
-
   useStore,
   setupStore,
 }

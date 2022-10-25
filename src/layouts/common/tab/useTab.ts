@@ -18,17 +18,20 @@ export function useTab() {
   const getVisitedTabs = computed(() => tabStore.getVisitedTabs);
 
   onMounted(async () => {
-    initTabs();
+    // initTabs();
 
-    const {name, meta, fullPath, path, query, params} = currentRoute.value;
-    addTab({name, meta, fullPath, path, query, params} as unknown as TabView);
+    // const {name, meta, fullPath, path, query, params} = currentRoute.value;
+    // addTab({name, meta, fullPath, path, query, params} as unknown as TabView);
 
     await moveToCurrentTab();
   })
 
   watch(currentRoute, async () => {
+    // console.log(currentRoute)
+    const {name, meta, fullPath, path, query, params} = currentRoute.value;
+    // updateOrAddTab({name, meta, fullPath, path, query, params} as unknown as TabView);
     await moveToCurrentTab()
-  });
+  },{deep:true});
 
   // 初始化视图
   function initTabs() {
@@ -129,6 +132,7 @@ export function useTab() {
   async function moveToCurrentTab() {
     await nextTick(() => {
       for (const tag of getTabRefs.value) {
+        console.log(tag.$attrs,currentRoute)
         if (tag.$attrs.route.path === unref(currentRoute).path) {
           moveToTarget(tag)
           if (tag.$attrs.route.fullPath !== unref(currentRoute).fullPath) {
