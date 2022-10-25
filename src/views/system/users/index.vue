@@ -19,6 +19,9 @@
                  :loading="loading.lists"
                  :border="true"
                  @change-page="changePage">
+      <template #status="{row:{status,status_label}}">
+        <el-tag :type="status ? 'success' : 'danger'">{{ status_label }}</el-tag>
+      </template>
       <template #actions="{row:{id}}">
         <el-button type="primary" :icon="Edit" @click="editItem({id})"></el-button>
         <el-popconfirm title="确认要删除吗？" iconColor="red" @confirm="deleteItem({id})">
@@ -49,7 +52,7 @@ const tableColumns = [
   {prop: 'realname', label: '姓名', minWidth: 100},
   {prop: 'nickname', label: '昵称', minWidth: 160},
   {prop: 'roles', label: '角色', minWidth: 150, formatter: ({roles}) => roles.map(role => role.label).join(',')},
-  {prop: 'status_label', label: '状态', minWidth: 100},
+  {prop: 'status', label: '状态', minWidth: 100, slot: 'status'},
   {prop: 'created_at', label: '创建时间', minWidth: 150},
   {prop: 'action', label: '操作', minWidth: 130, slot: 'actions'},
 ];

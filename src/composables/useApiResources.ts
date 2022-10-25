@@ -11,6 +11,7 @@ export interface Paginate {
   pagerCount: number,
   total: number,
   layout?: string,
+  currentPage: number | string,
 }
 
 export interface Loading {
@@ -94,6 +95,7 @@ export function useApiResources(apiResources: ApiResourcesConfig, options?: ApiR
     pageSizes: [10, 15, 30, 50],
     pageSize: 0,
     pagerCount: 0,
+    currentPage: 1,
     total: 0,
     layout: 'pages, prev, pager, next, jumper, ->, total',
   });
@@ -124,10 +126,11 @@ export function useApiResources(apiResources: ApiResourcesConfig, options?: ApiR
     const {data: {data, meta = {}}} = listsReturn.value;
     lists.value = data;
     if (meta) {
-      const {per_page, total, last_page} = meta
+      const {per_page, total, last_page, current_page} = meta
       paginate.value.total = total;
       paginate.value.pageSize = per_page;
       paginate.value.pagerCount = last_page;
+      paginate.value.currentPage = current_page;
     }
     loading.lists = false;
     return listsReturn.value;
@@ -179,6 +182,7 @@ export function useApiResources(apiResources: ApiResourcesConfig, options?: ApiR
   // 删除项
   const deleteItem = async (options?: any) => {
     await fetchDelete(options);
+    await fetchLists({params});
   }
 
   // 重置项

@@ -1,4 +1,7 @@
 <template>
+  <div class="lg:bg-red <lg:bg-yellow @lg:bg-green">
+    111
+  </div>
   <page-wrapper content-full-height>
     <template #page-header>
       <query-form v-model="params"
