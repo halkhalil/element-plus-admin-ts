@@ -5,7 +5,6 @@
     content-full-height>
     <el-row :gutter="20">
       <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
-        <el-divider>组件预览</el-divider>
         <basic-form class="p-4"
                     ref="formRef"
                     v-model="form"
@@ -21,7 +20,6 @@
         </basic-form>
       </el-col>
       <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
-        <el-divider>数据预览</el-divider>
         <pre>{{ form }}</pre>
       </el-col>
     </el-row>

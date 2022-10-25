@@ -1,15 +1,15 @@
 <template>
   <div class="page-wrapper w-full min-h-full content-bg" :class="$props.class">
-    <div class=" p-3">
+    <div class="p-4">
       <slot name="page-header">
-        <el-page-header :bind="$props" @back="back" v-if="$props.title" class="!px-5 pt-5 content-bg">
-          <template #breadcrumb>
+        <el-page-header :bind="$props" @back="back" v-if="$props.title">
+          <template #breadcrumb v-if="slots.breadcrumb">
             <slot name="breadcrumb"></slot>
           </template>
-          <template #icon>
+          <template #icon v-if="slots.icon">
             <slot name="icon"></slot>
           </template>
-          <template #title>
+          <template #title v-if="slots.extrbacka">
             <slot name="back"></slot>
           </template>
           <template #content>
@@ -17,10 +17,10 @@
               <span class="text-sm font-600">{{ $props.title }}</span>
             </slot>
           </template>
-          <template #extra>
+          <template #extra v-if="slots.extra">
             <slot name="extra"></slot>
           </template>
-          <template #default>
+          <template #default v-if="slots.content">
             <slot name="content"></slot>
           </template>
         </el-page-header>
@@ -78,6 +78,8 @@ const getContentHeight = computed(() => {
 
 const {back} = useRouter();
 
+const slots = useSlots();
+console.log(slots)
 </script>
 
 <style lang="scss" scoped>

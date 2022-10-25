@@ -3,7 +3,6 @@
     <div class="flex-center">
       <el-row :gutter="10">
         <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
-          <el-divider content-position="left">组件预览</el-divider>
           <BasicForm
             v-model="form"
             :schemas="formSchemas"
@@ -18,7 +17,6 @@
           </BasicForm>
         </el-col>
         <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
-          <el-divider content-position="left">数据预览</el-divider>
           <pre class="m-5">{{ form }}</pre>
         </el-col>
       </el-row>

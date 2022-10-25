@@ -9,6 +9,7 @@ import 'element-plus/es/components/checkbox-button/style/css';
 import 'element-plus/es/components/upload/style/css';
 import 'element-plus/es/components/slider/style/css';
 import 'element-plus/es/components/cascader/style/css';
+import 'element-plus/es/components/tree-select/style/css';
 import {
   ElInput,
   ElRadio,

@@ -1,5 +1,5 @@
 <template>
-  <page-wrapper content-full-height title="12321">
+  <page-wrapper content-full-height :title="$route?.meta?.title">
     <template #extra>
       <el-button @click="treeToggleExpand">{{ !expandAll ? '节点展开' : '节点收起' }}</el-button>
     </template>
