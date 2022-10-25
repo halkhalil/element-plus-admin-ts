@@ -37,10 +37,11 @@ import {PageWrapper} from "~/components/Page"
 import {BasicTable} from "~/components/Table"
 import {QueryForm} from "~/components/Form";
 import EditTemplate from "./EditTemplate.vue";
-import {provide} from "vue";
+import {provide, watch} from "vue";
 import {useFetchUserResources} from '~/api/user'
 import {Plus, Edit, Delete, Refresh} from '@element-plus/icons-vue'
 import {useUrlSearchParams} from "@vueuse/core";
+import {useTab} from "~/layouts/common/tab/useTab";
 
 const tableColumns = [
   {prop: 'id', label: 'ID', width: 100},
@@ -58,9 +59,11 @@ const querySchemas = [
   {field: 'realname', label: '姓名', placeholder: '请输入昵称', component: 'Input'},
 ];
 
-const query = useUrlSearchParams();
-const useResources = useFetchUserResources({params: query});
+const useResources = useFetchUserResources({params: useUrlSearchParams()});
 const {params, lists, paginate, dialog, loading, addItem, editItem, deleteItem, handleQuery, changePage} = useResources;
+
+const {updateCurrentTab} = useTab();
+watch(params, () => updateCurrentTab({query: params}));
 
 provide('useResources', useResources);
 </script>

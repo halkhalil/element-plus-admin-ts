@@ -45,12 +45,11 @@ export const useTabStore = defineStore({
       this.visitedTabs = this.visitedTabs.filter(item => item.meta.affix);
     },
     // 更新访问视图
-    updateVisitedTab(view) {
+    updateVisitedTab(view: TabView) {
       const index = this.visitedTabs.findIndex(item => item.path === view.path);
       index > -1 && (this.visitedTabs[index] = view);
     },
     updateOrAddVisitedTab(view) {
-      console.log(view)
       const index = this.visitedTabs.findIndex(item => item === view);
       index > -1 ? this.updateVisitedTab(view) : this.addVisitedTab(view);
     },
