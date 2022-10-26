@@ -52,7 +52,7 @@ const tableColumns = [
   {prop: 'status_label', label: '状态', minWidth: 100, slot: 'status'},
   {prop: 'updated_at', label: '修改时间', minWidth: 160},
   {prop: 'created_at', label: '创建时间', minWidth: 160},
-  {prop: 'action', label: '操作', minWidth: 130, slot: 'actions'},
+  {prop: 'action', label: '操作', width: 130, slot: 'actions'},
 ];
 const querySchemas = [
   {field: 'id', label: '角色ID', placeholder: '请输入角色ID', component: 'Input'},

@@ -54,7 +54,7 @@ const tableColumns = [
   {prop: 'roles', label: '角色', minWidth: 150, formatter: ({roles}) => roles.map(role => role.label).join(',')},
   {prop: 'status', label: '状态', minWidth: 100, slot: 'status'},
   {prop: 'created_at', label: '创建时间', minWidth: 150},
-  {prop: 'action', label: '操作', minWidth: 130, slot: 'actions'},
+  {prop: 'action', label: '操作', width: 130, slot: 'actions'},
 ];
 const querySchemas = [
   {field: 'id', label: '标识', placeholder: '请输入用户唯一表示', component: 'Input'},
