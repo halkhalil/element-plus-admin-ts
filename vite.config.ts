@@ -8,12 +8,10 @@ import Components from "unplugin-vue-components/vite";
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import {ElementPlusResolver} from "unplugin-vue-components/resolvers";
 import WindiCSS from 'vite-plugin-windicss'
-import presetWind from '@unocss/preset-wind'
 import Unocss from 'unocss/vite'
 import {
   presetAttributify,
-  presetIcons,
-  presetUno,
+  presetWind,
   transformerDirectives,
   transformerVariantGroup,
 } from 'unocss'
@@ -81,10 +79,6 @@ export default ({command}: ConfigEnv): UserConfig => {
         presets: [
           presetWind(),
           presetAttributify(),
-          // presetIcons({
-          //   scale: 1.2,
-          //   warn: true,
-          // }),
         ],
         transformers: [
           transformerDirectives(),

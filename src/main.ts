@@ -11,8 +11,8 @@ import {setupProjectConfig} from "~/logics/setupProjectConfig";
 import {setupPlugins} from "~/logics/setupPlugins";
 
 
-import "~/styles/index.scss";
 import 'uno.css'
+import "~/styles/index.scss";
 import "element-plus/theme-chalk/src/message.scss"
 
 

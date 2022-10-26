@@ -1,7 +1,4 @@
 <template>
-  <div class="lg:bg-red <lg:bg-yellow @lg:bg-green">
-    111
-  </div>
   <page-wrapper content-full-height>
     <template #page-header>
       <query-form v-model="params"
@@ -52,7 +49,7 @@ const tableColumns = [
   {prop: 'id', label: 'ID', width: 100},
   {prop: 'label', label: '角色名称', minWidth: 150},
   {prop: 'name', label: '角色标识', minWidth: 150},
-  {prop: 'status_label', label: '状态', minWidth: 100,slot: 'status'},
+  {prop: 'status_label', label: '状态', minWidth: 100, slot: 'status'},
   {prop: 'updated_at', label: '修改时间', minWidth: 160},
   {prop: 'created_at', label: '创建时间', minWidth: 160},
   {prop: 'action', label: '操作', minWidth: 130, slot: 'actions'},
@@ -64,7 +61,7 @@ const querySchemas = [
 ];
 
 const useResources = useFetchRoleResources();
-const {params,dialog, lists, paginate, loading, addItem, editItem, deleteItem, handleQuery, changePage} = useResources;
+const {params, dialog, lists, paginate, loading, addItem, editItem, deleteItem, handleQuery, changePage} = useResources;
 
 provide('useResources', useResources);
 </script>
