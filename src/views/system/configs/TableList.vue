@@ -1,56 +1,64 @@
 <template>
-  <el-card shadow="none">
-    <BasicQuery v-model="query" :schemas="schemas" @submit="getQuery"></BasicQuery>
-  </el-card>
-  <el-card shadow="none" class="mt-2">
-    <BasicTable :columns="columns"
-                :data="lists"
-                :paginate="paginate"
-                :loading="listLoading"
-                @change-page="changePage">
-      <el-table-column label="操作" width="120">
-        <template #default="scope">
-          <el-button type="text" size="small" @click="editItem(scope.row)">编辑</el-button>
-          <el-popconfirm title="删除你是认真的吗？" iconColor="red" @confirm="deleteItem(scope.row)">
-            <template #reference>
-              <el-button type="text" size="small">删除</el-button>
-            </template>
-          </el-popconfirm>
+  <page-wrapper content-full-height>
+    <template #page-header>
+      <query-form v-model="params"
+                  :schemas="querySchemas"
+                  :colProps="{xs: 24, sm: 12, md: 12, lg: 8, xl: 6}"
+                  show-label
+                  label-width="100px"
+                  @submit="handleQuery">
+        <template #extra>
+          <el-button type="success" :icon="Plus" @click="addItem"></el-button>
+          <el-button type="warning" :icon="Refresh" @click="handleQuery" :loading="loading.lists"></el-button>
         </template>
-      </el-table-column>
-    </BasicTable>
-    <EditTemplate ref="editTemplateRef" v-model="dialog"/>
-  </el-card>
+      </query-form>
+    </template>
+    <basic-table :columns="tableColumns"
+                 :data="lists"
+                 :paginate="paginate"
+                 :loading="loading.lists"
+                 :border="true"
+                 ref="tableRef"
+                 @change-page="changePage">
+      <template #actions="{row:{id}}">
+        <el-button type="primary" :icon="Edit" @click="editItem({id})"></el-button>
+        <el-popconfirm title="确认要删除吗？" iconColor="red" @confirm="deleteItem({id})">
+          <template #reference>
+            <el-button type="danger" :icon="Delete" :loading="loading.delete"></el-button>
+          </template>
+        </el-popconfirm>
+      </template>
+    </basic-table>
+    <edit-template/>
+  </page-wrapper>
 </template>
 
 <script lang="ts" setup>
-import {BasicTable, BasicQuery} from "~/components/Table/index.ts"
-import EditTemplate from "~/views/system/configs/EditTemplate.vue";
-import {listApi, itemApi, updateApi, storeApi, deleteApi} from "~/api/configs.ts";
-import {useApiResources} from "~/composables/useApiResources";
-import {defineComponent, reactive, toRefs, provide, ref} from "vue";
+import {PageWrapper} from "~/components/Page"
+import {BasicTable} from "~/components/Table"
+import {QueryForm} from "~/components/Form";
+import EditTemplate from "./EditTemplate.vue";
+import {provide} from "vue";
+import {Plus, Edit, Delete, Refresh} from '@element-plus/icons-vue'
+import {useFetchActionResources} from "~/api/action";
 
-const columns = ref([
+const tableColumns = [
   {prop: 'id', label: 'ID', width: 100},
   {prop: 'title', label: '标题', minWidth: 100},
   {prop: 'name', label: '标识', minWidth: 100},
   {prop: 'group_label', label: '分组', minWidth: 100},
   {prop: 'type_label', label: '类型', minWidth: 100},
-  {prop: 'created_at', label: '创建时间', minWidth: 100},
-]);
-const schemas = ref([
-  {field: 'title', placeholder: '标题', component: 'Input'},
-  {field: 'name', placeholder: '标识', component: 'Input'},
-])
+  {prop: 'created_at', label: '创建时间', width: 160},
+  {slot: 'actions', label: '操作', width: 130},
+];
+const querySchemas = [
+  {field: 'id', label: 'ID', placeholder: '请输入动作ID', component: 'Input'},
+  {field: 'name', label: '标识', placeholder: '请输入动作标识', component: 'Input'},
+  {field: 'label', label: '名称', placeholder: '请输入动作名称', component: 'Input'},
+];
 
-const resourceApi = useApiResources({
-  listApi,
-  itemApi,
-  updateApi,
-  storeApi,
-  deleteApi
-});
+const useResources = useFetchActionResources();
+const {params, dialog, lists, paginate, loading, addItem, editItem, deleteItem, handleQuery, changePage} = useResources;
 
-provide('resourceApi', resourceApi);
+provide('useResources', useResources);
 </script>
-

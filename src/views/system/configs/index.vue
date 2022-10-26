@@ -15,26 +15,14 @@
 
 </template>
 
-<script>
+<script lang="ts" setup>
 import {PageWrapper} from "~/components/Page/index.ts";
 import TableList from "~/views/system/configs/TableList.vue";
 import GroupList from "~/views/system/configs/GroupList.vue";
 import {ref} from "vue";
 
-export default {
-  name: "index",
-  components: {PageWrapper, TableList, GroupList},
-  setup() {
-    const mode = ref('config');
-    const tableListRef = ref(null);
+const mode = ref('config');
+const tableListRef = ref(null);
 
-    const handleAdd = () => tableListRef.value.addItem();
-
-    return {
-      mode,
-      tableListRef,
-      handleAdd,
-    }
-  },
-}
+const handleAdd = () => tableListRef.value.addItem();
 </script>
