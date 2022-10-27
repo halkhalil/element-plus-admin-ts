@@ -19,31 +19,35 @@
           :check-strictly="true"
           :clearable="true"
           filterable
-          style="width: 100%;"
+          class="w-full"
         />
       </el-form-item>
       <el-form-item label="英文标识" prop="name">
-        <el-input v-model="formModel.name" autocomplete="off"></el-input>
+        <el-input v-model="formModel.name"></el-input>
       </el-form-item>
       <el-form-item label="显示名称" prop="label">
-        <el-input v-model="formModel.label" autocomplete="off"></el-input>
+        <el-input v-model="formModel.label"></el-input>
       </el-form-item>
-      <el-form-item label="目标地址" prop="path">
-        <el-select v-if="formModel.type === 'route'"
-                   v-model="formModel.path"
-                   placeholder="请选择路由页面"
-                   :filterable="true"
-                   :clearable="true"
-                   class="w-full">
-          <el-option v-for="(item,index) in getPermissionRoutes" :key="index" :value="item.path">
-            <span style="float: left">{{ item.path }}</span>
-            <span style="float: right">{{ item.meta.title }}</span>
-          </el-option>
-        </el-select>
-        <el-input v-else v-model="formModel.path" placeholder="请输入地址"></el-input>
+      <el-form-item label="路由地址" prop="path">
+        <el-input v-model="formModel.path" placeholder="请输入地址"></el-input>
+      </el-form-item>
+      <el-form-item label="组件路径" prop="component">
+        <el-input v-model="formModel.component" placeholder="请输入地址"></el-input>
       </el-form-item>
       <el-form-item label="菜单图标">
         <icon-picker v-model="formModel.icon" clearable class="w-full" />
+      </el-form-item>
+      <el-form-item label="是否缓存" prop="keepalive">
+        <el-switch v-model="formModel.keepalive" active-text="是" inactive-text="否" :active-value="1" :inactive-value="0"/>
+      </el-form-item>
+      <el-form-item label="是否外链" prop="keepalive">
+        <el-switch v-model="formModel.keepalive" active-text="是" inactive-text="否" :active-value="1" :inactive-value="0"/>
+      </el-form-item>
+      <el-form-item label="固定标签" prop="affix">
+        <el-switch v-model="formModel.affix" active-text="是" inactive-text="否" :active-value="1" :inactive-value="0"/>
+      </el-form-item>
+      <el-form-item label="菜单状态" prop="status">
+        <el-switch v-model="formModel.status" active-text="启用" inactive-text="禁用" :active-value="1" :inactive-value="0"/>
       </el-form-item>
     </el-form>
     <template #footer>
