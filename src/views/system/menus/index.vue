@@ -30,6 +30,9 @@
           <div class="ml-1">{{ label }}</div>
         </div>
       </template>
+      <template #status="{row:{status,status_label}}">
+        <el-tag :type="status ? 'success' : 'danger'">{{ status_label }}</el-tag>
+      </template>
       <template #actions="{row:{id}}">
         <el-button type="primary" :icon="Edit" @click="editItem({id})"></el-button>
         <el-popconfirm title="确认要删除吗？" iconColor="red" @confirm="deleteItem({id})">
@@ -54,13 +57,15 @@ import {useFetchMenuResources} from "~/api/menu";
 import {RoleItem} from "~/api/role/RoleModel";
 
 const tableColumns = shallowRef([
-  {prop: 'id', label: 'ID', width: 100},
-  {prop: 'label', label: '菜单名称', minWidth: 120, slot: 'label'},
-  {prop: 'name', label: '英文标识', minWidth: 150},
-  {prop: 'type_label', label: '菜单类型', minWidth: 100},
-  {prop: 'path', label: '目标地址', minWidth: 180},
+  {prop: 'id', label: 'ID', width: 80},
+  {slot: 'label', label: '菜单名称', minWidth: 120},
+  {prop: 'type_label', label: '菜单类型', width: 85, align: 'center'},
+  {prop: 'name', label: '路由命名', minWidth: 150},
+  {prop: 'path', label: '路由地址', minWidth: 180},
+  {prop: 'component', label: '路由组件', minWidth: 180},
+  {slot: 'status', label: '状态', width: 70, align: 'center'},
   {prop: 'created_at', label: '创建时间', minWidth: 150},
-  {prop: 'action', label: '操作', minWidth: 130, slot: 'actions'},
+  {slot: 'actions', label: '操作', minWidth: 130},
 ]);
 
 const querySchemas = shallowRef([

@@ -12,6 +12,11 @@ export interface MenuItem extends BaseItem {
   remark?: string,
   path?: string,
   icon?: string,
+  component?: string,
+  href?: string,
+  status?: number,
+  keepalive?: number,
+  affix?: number,
 }
 
 export const defaultForm: MenuItem = {
@@ -21,5 +26,10 @@ export const defaultForm: MenuItem = {
   name: '',
   label: '',
   path: '',
-  icon: ''
+  icon: '',
+  component: '',
+  href: '',
+  status: 1,
+  keepalive: 1,
+  affix: 0,
 };

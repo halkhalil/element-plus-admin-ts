@@ -52,9 +52,9 @@ const tableColumns = [
   {prop: 'realname', label: '姓名', minWidth: 100},
   {prop: 'nickname', label: '昵称', minWidth: 160},
   {prop: 'roles', label: '角色', minWidth: 150, formatter: ({roles}) => roles.map(role => role.label).join(',')},
-  {prop: 'status', label: '状态', minWidth: 100, slot: 'status'},
-  {prop: 'created_at', label: '创建时间', minWidth: 150},
-  {prop: 'action', label: '操作', width: 130, slot: 'actions'},
+  {slot: 'status', label: '状态', width: 80},
+  {prop: 'created_at', label: '创建时间', width: 140},
+  {slot: 'actions', label: '操作', width: 130},
 ];
 const querySchemas = [
   {field: 'id', label: '标识', placeholder: '请输入用户唯一表示', component: 'Input'},

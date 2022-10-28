@@ -48,9 +48,9 @@ export enum ThemeColorEnum {
 
 // 菜单类型
 export enum MenuTypeEnum {
-  ROUTE = '路由',
-  LINK = '外链',
-  IFRAME = '内嵌',
+  DIR = '目录',
+  MENU = '菜单',
+  BUTTON = '按钮',
 }
 
 

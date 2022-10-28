@@ -48,7 +48,7 @@ export const usePermissionStore = defineStore({
       }
 
       const menus = transformRouteToMenu(routes) as unknown as Menu[];
-      menus.sort((a, b) => (a?.sort || 0) - (b?.sort || 0));
+      menus.sort((a, b) => (a?.sort || 0) - (b?.sort || 0) );
       this.menus = menus;
       this.isLoaded = true;
       return Promise.resolve(routes);
