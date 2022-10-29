@@ -54,7 +54,6 @@ import EditTemplate from "./EditTemplate.vue";
 import {Plus, Edit, Delete, Refresh} from '@element-plus/icons-vue'
 import {provide, shallowRef, watch} from "vue";
 import {useFetchMenuResources} from "~/api/menu";
-import {RoleItem} from "~/api/role/RoleModel";
 
 const tableColumns = shallowRef([
   {prop: 'id', label: 'ID', width: 80},
