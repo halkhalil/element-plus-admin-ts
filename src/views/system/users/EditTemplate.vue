@@ -40,7 +40,7 @@
 </template>
 
 <script lang="ts" setup>
-import {inject, watch, ref, shallowReactive} from "vue";
+import {inject, watch, ref, reactive} from "vue";
 import {useFetchRoles} from "~/api/useFetchAll";
 import {UseApiResourcesReturn} from "~/composables/useApiResources";
 import {FormInstance, FormItemRule, FormRules} from "element-plus";
@@ -48,7 +48,7 @@ import {UserItem, defaultForm} from "~/api/user/UserModel";
 
 const formRef = ref<FormInstance>();
 const formModel = ref<UserItem>(defaultForm);
-const formRules = shallowReactive<FormRules>({
+const formRules = reactive<FormRules>({
   email: [{required: true, message: '邮箱为必选项', trigger: 'blur'}],
   realname: [{required: true, message: '姓名为必选项', trigger: 'blur'}],
   mobile: [{required: true, message: '手机为必选项', trigger: 'blur'}],

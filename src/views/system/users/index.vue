@@ -63,7 +63,7 @@ const querySchemas = [
 ];
 
 const useResources = useFetchUserResources({params: useUrlSearchParams()});
-const {params, lists, paginate, dialog, loading, addItem, editItem, deleteItem, handleQuery, changePage} = useResources;
+const {params, lists, paginate, loading, addItem, editItem, deleteItem, handleQuery, changePage} = useResources;
 
 const {updateCurrentTab} = useTab();
 watch(params, () => updateCurrentTab({query: params}));
