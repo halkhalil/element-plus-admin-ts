@@ -1,16 +1,16 @@
 <template>
   <page-wrapper>
-    <template #title>
+    <template #page-header>
       <el-radio-group v-model="mode">
-        <el-radio-button label="config">配置模式</el-radio-button>
-        <el-radio-button label="manage">管理模式</el-radio-button>
+        <el-radio-button label="group">分组模式</el-radio-button>
+        <el-radio-button label="list">列表模式</el-radio-button>
       </el-radio-group>
     </template>
     <template #extra>
-      <el-button type="primary" :disabled="mode === 'config'" @click="handleAdd">新增</el-button>
+      <el-button type="primary" :disabled="mode === 'group'" @click="handleAdd">新增</el-button>
     </template>
-    <table-list v-if="mode === 'manage'" ref="tableListRef"></table-list>
-    <group-list v-if="mode === 'config'"></group-list>
+    <table-list ></table-list>
+<!--    <group-list v-if="mode === 'config'"></group-list>-->
   </page-wrapper>
 
 </template>
@@ -21,7 +21,7 @@ import TableList from "~/views/system/configs/TableList.vue";
 import GroupList from "~/views/system/configs/GroupList.vue";
 import {ref} from "vue";
 
-const mode = ref('config');
+const mode = ref('group');
 const tableListRef = ref(null);
 
 const handleAdd = () => tableListRef.value.addItem();

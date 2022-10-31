@@ -40,7 +40,7 @@ import {QueryForm} from "~/components/Form";
 import EditTemplate from "./EditTemplate.vue";
 import {provide} from "vue";
 import {Plus, Edit, Delete, Refresh} from '@element-plus/icons-vue'
-import {useFetchActionResources} from "~/api/action";
+import {useFetchConfigResources} from "~/api/config";
 
 const tableColumns = [
   {prop: 'id', label: 'ID', width: 100},
@@ -57,7 +57,7 @@ const querySchemas = [
   {field: 'label', label: '名称', placeholder: '请输入动作名称', component: 'Input'},
 ];
 
-const useResources = useFetchActionResources();
+const useResources = useFetchConfigResources();
 const {params, dialog, lists, paginate, loading, addItem, editItem, deleteItem, handleQuery, changePage} = useResources;
 
 provide('useResources', useResources);

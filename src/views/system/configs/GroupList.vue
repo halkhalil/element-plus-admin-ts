@@ -12,28 +12,16 @@
   </el-card>
 </template>
 
-<script>
+<script lang="ts" setup>
 import {BasicForm} from "~/components/Form/index.ts";
 import EditGroup from "~/views/system/configs/EditGroup.vue";
 import {useConfig} from "~/composables/config/useConfig";
 import {useRootSetting} from "~/composables/setting/useRootSeeting";
 import {ref} from "vue";
 
-export default {
-  name: "GroupList",
-  components: {BasicForm, EditGroup},
-  setup() {
-    const {getConfigGroups} = useConfig();
-    const {getIsMobile} = useRootSetting();
-    const group = ref('basic');
-
-    return {
-      getConfigGroups,
-      getIsMobile,
-      group,
-    }
-  },
-}
+const {getConfigGroups} = useConfig();
+const {getIsMobile} = useRootSetting();
+const group = ref('basic');
 </script>
 
 <style scoped>
