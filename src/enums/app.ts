@@ -48,9 +48,16 @@ export enum ThemeColorEnum {
 
 // 菜单类型
 export enum MenuTypeEnum {
-  DIR = '目录',
-  MENU = '菜单',
-  BUTTON = '按钮',
+  DIR = 'dir',
+  MENU = 'menu',
+  BUTTON = 'button',
+}
+
+// 菜单规则类型
+export enum MenuRuleEnum {
+  TAB = 'tab',
+  LINK = 'link',
+  IFRAME = 'iframe',
 }
 
 

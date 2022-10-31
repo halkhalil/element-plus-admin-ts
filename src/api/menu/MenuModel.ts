@@ -1,4 +1,4 @@
-import {MenuTypeEnum} from "~/enums/app";
+import {MenuRuleEnum, MenuTypeEnum} from "~/enums/app";
 
 export interface BaseItem {
   id?: string | number | null
@@ -13,7 +13,8 @@ export interface MenuItem extends BaseItem {
   path?: string,
   icon?: string,
   component?: string,
-  href?: string,
+  link?: string,
+  rule?: string,
   status?: number,
   keepalive?: number,
   affix?: number,
@@ -22,13 +23,14 @@ export interface MenuItem extends BaseItem {
 export const defaultForm: MenuItem = {
   id: null,
   pid: null,
-  type: '',
+  type: MenuTypeEnum.DIR,
   name: '',
   label: '',
   path: '',
   icon: '',
   component: '',
-  href: '',
+  link: '',
+  rule: MenuRuleEnum.TAB,
   status: 1,
   keepalive: 1,
   affix: 0,

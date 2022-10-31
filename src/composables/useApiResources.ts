@@ -39,6 +39,7 @@ export interface UseApiResourcesReturn {
   addItem: () => void,
   editItem: (options?: any) => void,
   deleteItem: (options?: any) => void,
+  resetItem: (formEl?: FormInstance | undefined) => void,
   submitForm: (formEl: FormInstance | undefined, options: any) => void,
   resetForm: (formEl: FormInstance | undefined) => void,
   changePage: (page?: number) => void,
@@ -186,9 +187,12 @@ export function useApiResources(apiResources: ApiResourcesConfig, options?: ApiR
   }
 
   // 重置项
-  const resetItem = () => {
+  const resetItem = (formEl?: FormInstance | undefined) => {
     editable.value = null;
     isEdit.value = false;
+    if (formEl) {
+      formEl.resetFields();
+    }
   }
 
   // 提交表单
@@ -258,6 +262,7 @@ export function useApiResources(apiResources: ApiResourcesConfig, options?: ApiR
 
     addItem,
     editItem,
+    resetItem,
     deleteItem,
     submitForm,
     resetForm,

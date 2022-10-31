@@ -52,19 +52,20 @@ import {BasicTable,} from "~/components/Table"
 import {QueryForm} from "~/components/Form";
 import EditTemplate from "./EditTemplate.vue";
 import {Plus, Edit, Delete, Refresh} from '@element-plus/icons-vue'
-import {provide, shallowRef, watch} from "vue";
+import {provide, shallowRef} from "vue";
 import {useFetchMenuResources} from "~/api/menu";
 
 const tableColumns = shallowRef([
   {prop: 'id', label: 'ID', width: 80},
-  {slot: 'label', label: '菜单名称', minWidth: 120},
+  {slot: 'label', label: '菜单名称', width: 120},
   {prop: 'type_label', label: '菜单类型', width: 85, align: 'center'},
-  {prop: 'name', label: '路由命名', minWidth: 150},
+  {prop: 'rule_label', label: '规则类型', width: 85, align: 'center'},
+  {prop: 'name', label: '菜单标识', minWidth: 150},
   {prop: 'path', label: '路由地址', minWidth: 180},
   {prop: 'component', label: '路由组件', minWidth: 180},
   {slot: 'status', label: '状态', width: 70, align: 'center'},
-  {prop: 'created_at', label: '创建时间', minWidth: 150},
-  {slot: 'actions', label: '操作', minWidth: 130},
+  {prop: 'created_at', label: '创建时间', width: 150},
+  {slot: 'actions', label: '操作', width: 130},
 ]);
 
 const querySchemas = shallowRef([
