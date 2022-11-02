@@ -31,44 +31,32 @@ export interface UseApiResourcesReturn {
   isEdit: Ref<boolean>,
 
   fetchLists: (options?: any) => Promise<AxiosResponse>,
-  fetchItem: (options?: any) => Promise<AxiosResponse>,
-  fetchStore: (options?: any) => Promise<AxiosResponse>,
-  fetchUpdate: (options?: any) => Promise<AxiosResponse>,
-  fetchDelete: (options?: any) => Promise<AxiosResponse>,
+  fetchItem: (options?: any) => Promise<AxiosResponse | undefined>,
+  fetchStore: (options?: any) => Promise<AxiosResponse | undefined>,
+  fetchUpdate: (options?: any) => Promise<AxiosResponse | undefined>,
+  fetchDelete: (options?: any) => Promise<AxiosResponse | undefined>,
 
   addItem: () => void,
   editItem: (options?: any) => void,
   deleteItem: (options?: any) => void,
   resetItem: (formEl?: FormInstance | undefined) => void,
-  submitForm: (formEl: FormInstance | undefined, options: any) => void,
+  submitForm: (formEl: FormInstance | undefined, options: any, edit?: boolean) => void,
   resetForm: (formEl: FormInstance | undefined) => void,
   changePage: (page?: number) => void,
   handleQuery: () => void,
 }
 
 
-interface ApiResources {
-  listsReturn: StrictUseAxiosReturn<any>,
-  itemReturn: StrictUseAxiosReturn<any>,
-  storeReturn: StrictUseAxiosReturn<any>,
-  updateReturn: StrictUseAxiosReturn<any>,
-  deleteReturn: StrictUseAxiosReturn<any>,
-}
-
 interface query {
   page?: string | number,
 }
 
 export interface ApiResourcesConfig {
-  fetchLists(options?: any): Promise<AxiosResponse>,
-
-  fetchStore(options?: any): Promise<AxiosResponse>,
-
-  fetchItem(options?: any): Promise<AxiosResponse>,
-
-  fetchUpdate(options?: any): Promise<AxiosResponse>,
-
-  fetchDelete(options?: any): Promise<AxiosResponse>,
+  fetchLists: (options?: any) => Promise<AxiosResponse>,
+  fetchStore?: (options?: any) => Promise<AxiosResponse>,
+  fetchItem?: (options?: any) => Promise<AxiosResponse>,
+  fetchUpdate?: (options?: any) => Promise<AxiosResponse>,
+  fetchDelete?: (options?: any) => Promise<AxiosResponse>,
 }
 
 export interface ApiResourcesOptions extends UseAxiosOptions {
@@ -108,7 +96,7 @@ export function useApiResources(apiResources: ApiResourcesConfig, options?: ApiR
   })
 
   const listsReturn = ref<AxiosResponse>();
-  const storeReturn = ref<AxiosResponse>()
+  const storeReturn = ref<AxiosResponse | undefined>()
   const itemReturn = ref<AxiosResponse>()
   const updateReturn = ref<AxiosResponse>()
   const deleteReturn = ref<AxiosResponse>()
@@ -137,31 +125,39 @@ export function useApiResources(apiResources: ApiResourcesConfig, options?: ApiR
     return listsReturn.value;
   }
 
-  const fetchStore = async (options?: any): Promise<AxiosResponse> => {
-    loading.submit = true;
-    storeReturn.value = await _fetchStore(options);
-    loading.submit = false;
+  const fetchStore = async (options?: any): Promise<AxiosResponse | undefined> => {
+    if (_fetchStore) {
+      loading.submit = true;
+      storeReturn.value = await _fetchStore(options);
+      loading.submit = false;
+    }
     return storeReturn.value;
   }
 
-  const fetchItem = async (options?: any): Promise<AxiosResponse> => {
-    loading.item = true;
-    itemReturn.value = await _fetchItem(options);
-    loading.item = false;
+  const fetchItem = async (options?: any): Promise<AxiosResponse | undefined> => {
+    if (_fetchItem) {
+      loading.item = true;
+      itemReturn.value = await _fetchItem(options);
+      loading.item = false;
+    }
     return itemReturn.value;
   }
 
-  const fetchUpdate = async (options?: any): Promise<AxiosResponse> => {
-    loading.submit = true;
-    updateReturn.value = await _fetchUpdate(options);
-    loading.submit = false;
+  const fetchUpdate = async (options?: any): Promise<AxiosResponse | undefined> => {
+    if (_fetchUpdate) {
+      loading.submit = true;
+      updateReturn.value = await _fetchUpdate(options);
+      loading.submit = false;
+    }
     return updateReturn.value;
   }
 
-  const fetchDelete = async (options?: any): Promise<AxiosResponse> => {
-    loading.delete = true;
-    deleteReturn.value = await _fetchDelete(options);
-    loading.delete = false;
+  const fetchDelete = async (options?: any): Promise<AxiosResponse | undefined> => {
+    if (_fetchDelete) {
+      loading.delete = true;
+      deleteReturn.value = await _fetchDelete(options);
+      loading.delete = false;
+    }
     return deleteReturn.value;
   }
 
@@ -176,7 +172,7 @@ export function useApiResources(apiResources: ApiResourcesConfig, options?: ApiR
   const editItem = async (options?: any) => {
     dialog.value = true;
     isEdit.value = true;
-    const {data: {data}} = await fetchItem(options);
+    const {data: {data}} = await fetchItem(options) || {};
     editable.value = data;
   }
 
@@ -196,10 +192,10 @@ export function useApiResources(apiResources: ApiResourcesConfig, options?: ApiR
   }
 
   // 提交表单
-  const submitForm = async (formEl: FormInstance | undefined, options: any): Promise<void> => {
+  const submitForm = async (formEl: FormInstance | undefined, options: any, edit?: boolean): Promise<void> => {
     if (!formEl) return;
     const confirm = async () => {
-      isEdit.value ? await fetchUpdate(options) : await fetchStore(options);
+      isEdit.value || edit ? await fetchUpdate(options) : await fetchStore(options);
       refreshListsAfterSubmit && await fetchLists({params});
       cancelSubmit(formEl);
     }

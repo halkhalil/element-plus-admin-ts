@@ -1,5 +1,5 @@
 <template>
-  <el-form ref="formElRef" v-bind="props" :rules="rules" :model="formModel"
+  <el-form ref="formRef" v-bind="props" :rules="rules" :model="formModel"
            :label-width="showLabel && props.labelWidth">
     <el-row :gutter="10" v-if="schemas.length > 0">
       <el-col v-for="(schema,index) in schemas" v-bind="colProps" v-show="showSchema(schema,index)">
@@ -13,13 +13,17 @@
         </FormItem>
       </el-col>
 
-      <FormAction v-bind="actionProps"
-                  :advanced="advanced"
-                  @toggle-advanced="toggleAdvanced">
-        <template v-for="item in ['resetBefore', 'submitBefore', 'advanceBefore', 'advanceAfter']" #[item]="data">
-          <slot :name="item" v-bind="data"></slot>
-        </template>
-      </FormAction>
+      <el-form-item label-width="50px">
+        <slot name="actions" :model="formModel" :formRef="formRef">
+          <FormAction v-bind="actionProps"
+                      :advanced="advanced"
+                      @toggle-advanced="toggleAdvanced">
+            <template v-for="item in ['resetBefore', 'submitBefore', 'advanceBefore', 'advanceAfter']" #[item]="data">
+              <slot :name="item" v-bind="data"></slot>
+            </template>
+          </FormAction>
+        </slot>
+      </el-form-item>
     </el-row>
     <el-empty v-else></el-empty>
   </el-form>
@@ -40,7 +44,7 @@ const emits = defineEmits(['update:modelValue', 'reset', 'submit', 'toggle-advan
 
 const {schemas = [] as FormSchema[], rules = [] as FormRules[], actionProps, colProps, showLabel} = toRefs(props);
 
-const formElRef = ref<FormInstance>();
+const formRef = ref<FormInstance>();
 const formModel = useVModel(props, 'modelValue', emits);
 const advanced = ref<boolean>(unref(actionProps)?.advanced);
 
@@ -76,7 +80,7 @@ const toggleAdvanced = () => {
 }
 
 provide('colProps', colProps);
-provide('formElRef', formElRef);
+provide('formRef', formRef);
 provide('submitForm', submitForm);
 provide('resetForm', resetForm)
 provide('toggleAdvanced', toggleAdvanced)

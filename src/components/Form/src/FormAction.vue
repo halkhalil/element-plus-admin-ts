@@ -1,26 +1,24 @@
 <template>
   <el-col v-bind="actionColProps || colProps">
-    <el-form-item label-width="50px">
-      <div :style="{textAlign:position}" class="w-full">
-        <slot name="submitBefore"></slot>
-        <el-button type="primary" v-bind="submitButtonProps" @click="submitForm(formElRef)">
-          {{ submitButtonText }}
-        </el-button>
-        <slot name="resetBefore"></slot>
-        <el-button type="default" v-bind="resetButtonProps" v-if="showResetButton" @click="resetForm(formElRef)">
-          {{ resetButtonText }}
-        </el-button>
-        <slot name="advanceBefore"></slot>
-        <el-button v-if="showAdvancedButton"
-                   type="primary"
-                   link
-                   :icon="!advanced ? ArrowDownBold : ArrowUpBold"
-                   @click="toggleAdvanced">
-          {{ !advanced ? '展开' : '收起' }}
-        </el-button>
-        <slot name="advanceAfter"></slot>
-      </div>
-    </el-form-item>
+    <div :style="{textAlign:position}" class="w-full">
+      <slot name="submitBefore"></slot>
+      <el-button type="primary" v-bind="submitButtonProps" @click="submitForm(formElRef)">
+        {{ submitButtonText }}
+      </el-button>
+      <slot name="resetBefore"></slot>
+      <el-button type="default" v-bind="resetButtonProps" v-if="showResetButton" @click="resetForm(formElRef)">
+        {{ resetButtonText }}
+      </el-button>
+      <slot name="advanceBefore"></slot>
+      <el-button v-if="showAdvancedButton"
+                 type="primary"
+                 link
+                 :icon="!advanced ? ArrowDownBold : ArrowUpBold"
+                 @click="toggleAdvanced">
+        {{ !advanced ? '展开' : '收起' }}
+      </el-button>
+      <slot name="advanceAfter"></slot>
+    </div>
   </el-col>
 </template>
 

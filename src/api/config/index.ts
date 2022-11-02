@@ -27,10 +27,24 @@ export const fetchDelete = ({id}): Promise<AxiosResponse> => {
   return axios.delete(`/configs/${id}`);
 }
 
+export const fetchGroupLists = ({params}) => {
+  return axios.get(`/configs/groups`, {params});
+}
+
+export const fetchGroupUpdate = ({data}) => {
+  return axios.put(`/configs/groups`, data);
+}
+
 export const fetchConfigItems = (query = {}) => axios.get('/configs/items', {params: query});
 
 // 使用useApiResources实现增删改查
 export const useFetchConfigResources = (options?: ApiResourcesOptions): UseApiResourcesReturn => {
   const apiResources: ApiResourcesConfig = {fetchLists, fetchStore, fetchItem, fetchUpdate, fetchDelete}
+  return useApiResources(apiResources, options)
+}
+
+
+export const useFetchConfigGroupResources = (options?: ApiResourcesOptions) => {
+  const apiResources: ApiResourcesConfig = {fetchLists: fetchGroupLists, fetchUpdate: fetchGroupUpdate}
   return useApiResources(apiResources, options)
 }

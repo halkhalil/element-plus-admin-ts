@@ -44,8 +44,8 @@ import {useFetchConfigResources} from "~/api/config";
 
 const tableColumns = [
   {prop: 'id', label: 'ID', width: 100},
-  {prop: 'title', label: '标题', minWidth: 100},
-  {prop: 'name', label: '标识', minWidth: 100},
+  {prop: 'label', label: '显示名称', minWidth: 100},
+  {prop: 'name', label: '唯一标识', minWidth: 100},
   {prop: 'group_label', label: '分组', minWidth: 100},
   {prop: 'type_label', label: '类型', minWidth: 100},
   {prop: 'created_at', label: '创建时间', width: 160},

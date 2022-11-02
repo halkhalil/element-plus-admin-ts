@@ -11,10 +11,12 @@ export interface ConfigItem extends BaseItem {
   type: string,
   component: string,
   component_props: string,
-  item: string,
+  enum: string,
+  parse_enum: object | null,
   value: string,
   validate: string,
   sort: number,
+  parse_component_props?: object,
 }
 
 export const defaultForm: ConfigItem = {
@@ -25,7 +27,8 @@ export const defaultForm: ConfigItem = {
   type: '',
   component: 'input',
   component_props: '',
-  item: '',
+  enum: '',
+  parse_enum: null,
   value: '',
   validate: '',
   sort: 0,
