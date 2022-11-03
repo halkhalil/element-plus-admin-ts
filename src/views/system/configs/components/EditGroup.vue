@@ -1,5 +1,4 @@
 <template>
-  {{formModel}}
   <div v-loading="loading.lists">
     <basic-form
       ref="formRef"
@@ -8,7 +7,8 @@
       label-width="120px"
       :schemas="formSchemas">
       <template #actions="{formRef}">
-        <el-button type="primary" @click="submitForm(formRef,{data:formModel},true)" :loading="loading.submit">提交
+        <el-button type="primary" @click="submitForm(formRef,{data:formModel},true)" :loading="loading.submit">
+          提交
         </el-button>
       </template>
     </basic-form>
@@ -17,12 +17,11 @@
 
 <script lang="ts" setup>
 import {BasicForm} from "~/components/Form";
-import {inject, ref, watch} from "vue";
+import {inject, nextTick, ref, watch} from "vue";
 import {UseApiResourcesReturn} from "~/composables/useApiResources";
 import {FormSchema} from "~/components/Form/src/types";
 import {ConfigItem} from "~/api/config/ConfigModel";
 import {FormInstance} from "element-plus";
-import {startCase} from 'lodash-es'
 
 const formRef = ref<FormInstance>()
 const formModel = ref({})
@@ -37,21 +36,23 @@ const object2array = (object) => {
   });
 }
 
-watch(lists, () => {
+const init = () => {
   formModel.value = {};
   formSchemas.value = [];
   (lists.value as ConfigItem[]).forEach((config: ConfigItem) => {
-    const {name, value, label, component, component_props, parse_enum} = config;
-    formModel.value[name] = value;
+    const {name, label, component, parse_props = {}, group_value, parse_extra = {}} = config;
+    formModel.value[name] = group_value;
 
     const schemas: FormSchema = {
       field: name,
       label: label,
-      component: startCase(component),
-      componentProps: {...config.parse_component_props, options: object2array(parse_enum)},
+      component: component,
+      componentProps: {...parse_props, options: object2array(parse_extra)},
     }
 
-    formSchemas.value?.push(schemas);
+    formSchemas.value.push(schemas);
   });
-});
+}
+
+watch(lists, () => nextTick(() => init()));
 </script>

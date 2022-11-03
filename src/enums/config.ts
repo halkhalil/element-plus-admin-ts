@@ -1,4 +1,4 @@
-export enum ConfigComponentEnum {
+export enum RenderComponentEnum {
   Input = 'Input',
   Select = 'Select',
   Radio = 'Radio',
@@ -15,6 +15,7 @@ export enum ConfigComponentEnum {
   TreeSelect = 'TreeSelect',
   Upload = 'Upload',
 }
+
 
 export enum ConfigTypeEnum {
   Number = 'number',

@@ -25,22 +25,21 @@
       </el-form-item>
       <el-form-item label="渲染组件" prop="component">
         <el-select v-model="formModel.component" :clearable="true" placeholder="请选择渲染组件" class="w-full">
-          <el-option v-for="(item,index) in getConfigComponents" :label="item.label" :value="item.value"
-                     :key="index"></el-option>
+          <el-option v-for="(item,index) in RenderComponentEnum" :label="item" :value="item" :key="index"/>
         </el-select>
       </el-form-item>
-      <el-form-item label="验证规则" prop="validate">
-        <el-select v-model="formModel.validate" :clearable="true" placeholder="请选择渲染组件" class="w-full">
-          <el-option v-for="(item,index) in ConfigComponentEnum" :label="item" :value="item"
-                     :key="index"></el-option>
-        </el-select>
-      </el-form-item>
+      <!--      <el-form-item label="验证规则" prop="validate">-->
+      <!--        <el-select v-model="formModel.validate" :clearable="true" placeholder="请选择渲染组件" class="w-full">-->
+      <!--          <el-option v-for="(item,index) in ConfigComponentEnum" :label="item" :value="item"-->
+      <!--                     :key="index"></el-option>-->
+      <!--        </el-select>-->
+      <!--      </el-form-item>-->
       <el-form-item label="扩展参数" prop="component_props">
-        <el-input v-model="formModel.component_props" placeholder="一行一组配置项 示例：class=demo" type="textarea"
+        <el-input v-model="formModel.props" placeholder="一行一组配置项 示例：class=demo" type="textarea"
                   rows="3"></el-input>
       </el-form-item>
-      <el-form-item label="枚举项" prop="enum" v-if="formModel.type === ConfigTypeEnum.Enum">
-        <el-input v-model="formModel.enum" type="textarea" placeholder="一行一组配置项 示例：key1=value1"
+      <el-form-item label="枚举项" prop="extra" v-if="showExtraComponent.includes(formModel.component)">
+        <el-input v-model="formModel.extra" type="textarea" placeholder="一行一组配置项 示例：key1=value1"
                   rows="3"></el-input>
       </el-form-item>
       <el-form-item label="配置值" prop="value">
@@ -64,7 +63,7 @@ import {FormInstance, FormRules} from "element-plus";
 import {ConfigItem} from "~/api/config/ConfigModel";
 import {defaultForm} from "~/api/config/ConfigModel";
 import {useConfig} from "~/composables/config/useConfig";
-import {ConfigComponentEnum, ConfigTypeEnum} from "~/enums/config";
+import {RenderComponentEnum, ConfigTypeEnum} from "~/enums/config";
 
 const formRef = ref<FormInstance>();
 const formModel = ref<ConfigItem>(defaultForm);
@@ -74,9 +73,17 @@ const formRules = shallowReactive<FormRules>({
   label: [{required: true, message: '请输入配置标题', trigger: 'blur'}],
   type: [{required: true, message: '请选择配置类型', trigger: 'change'}],
   component: [{required: true, message: '请选择渲染组件', trigger: 'change'}],
-  enum: [{required: true, message: '请输入配置项', trigger: 'blur'}],
+  extra: [{required: true, message: '请输入配置项', trigger: 'blur'}],
   value: [{required: true, message: '请输入配置值', trigger: 'blur'}]
 })
+
+const showExtraComponent = [
+  RenderComponentEnum.Select,
+  RenderComponentEnum.Radio,
+  RenderComponentEnum.RadioGroup,
+  RenderComponentEnum.Checkbox,
+  RenderComponentEnum.CheckboxGroup,
+];
 
 const {dialog, editable, loading, submitForm} = <UseApiResourcesReturn>inject('useResources');
 

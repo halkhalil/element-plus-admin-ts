@@ -48,6 +48,7 @@ const tableColumns = [
   {prop: 'name', label: '唯一标识', minWidth: 100},
   {prop: 'group_label', label: '分组', minWidth: 100},
   {prop: 'type_label', label: '类型', minWidth: 100},
+  {prop: 'component', label: '渲染组件', minWidth: 100},
   {prop: 'created_at', label: '创建时间', width: 160},
   {slot: 'actions', label: '操作', width: 130},
 ];

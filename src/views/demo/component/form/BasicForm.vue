@@ -36,6 +36,7 @@ const form = ref({
   input_number: 0,
   select: "",
   switch: false,
+  checkbox_group: [],
 });
 const formSchemas = reactive(getBasicFormData())
 const loading = ref(false);
