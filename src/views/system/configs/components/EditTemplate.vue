@@ -16,9 +16,7 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item label="配置标识" prop="name">
-        <el-input v-model="formModel.name" placeholder="请输入英文唯一标识">
-          <template #prepend v-if="formModel.group">{{ formModel.group }}</template>
-        </el-input>
+        <el-input v-model="formModel.name" placeholder="请输入英文唯一标识" />
       </el-form-item>
       <el-form-item label="配置名称" prop="label">
         <el-input v-model="formModel.label" placeholder="请输入中文配置名称"></el-input>
@@ -34,7 +32,7 @@
       <!--                     :key="index"></el-option>-->
       <!--        </el-select>-->
       <!--      </el-form-item>-->
-      <el-form-item label="扩展参数" prop="component_props">
+      <el-form-item label="扩展参数" prop="props">
         <el-input v-model="formModel.props" placeholder="一行一组配置项 示例：class=demo" type="textarea"
                   rows="3"></el-input>
       </el-form-item>
@@ -42,7 +40,7 @@
         <el-input v-model="formModel.extra" type="textarea" placeholder="一行一组配置项 示例：key1=value1"
                   rows="3"></el-input>
       </el-form-item>
-      <el-form-item label="配置值" prop="value">
+      <el-form-item label="配置值">
         <el-input v-model="formModel.value" type="textarea" rows="3"></el-input>
       </el-form-item>
     </el-form>
@@ -74,7 +72,6 @@ const formRules = shallowReactive<FormRules>({
   type: [{required: true, message: '请选择配置类型', trigger: 'change'}],
   component: [{required: true, message: '请选择渲染组件', trigger: 'change'}],
   extra: [{required: true, message: '请输入配置项', trigger: 'blur'}],
-  value: [{required: true, message: '请输入配置值', trigger: 'blur'}]
 })
 
 const showExtraComponent = [

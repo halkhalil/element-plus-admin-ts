@@ -1,27 +1,30 @@
 <template>
-  <el-tabs v-model="activeGroup"
-           :tab-position="getIsMobile ? 'top' : 'left'"
-           @tab-change="tabChange">
-    <el-tab-pane v-for="(item,index) in getConfigGroups"
-                 :key="index"
-                 :label="item.label"
-                 :name="item.value"
-                 :lazy="activeGroup !== item.value">
-      <edit-group/>
-    </el-tab-pane>
-  </el-tabs>
+  <page-wrapper content-full-height>
+    <el-tabs v-model="activeGroup"
+             :tab-position="getIsMobile ? 'top' : 'left'"
+             class="pt-3"
+             @tab-change="tabChange">
+      <el-tab-pane v-for="(item,index) in getConfigGroups"
+                   :key="index"
+                   :label="item.label"
+                   :name="item.value"
+                   :lazy="activeGroup !== item.value">
+        <edit-group/>
+      </el-tab-pane>
+    </el-tabs>
+  </page-wrapper>
 </template>
 
 <script lang="ts" setup>
 import EditGroup from "~/views/system/configs/components/EditGroup.vue";
 import {useConfig} from "~/composables/config/useConfig";
 import {useRootSetting} from "~/composables/setting/useRootSeeting";
-import {computed, provide} from "vue";
+import {provide, ref} from "vue";
 import {useFetchConfigGroupResources} from "~/api/config";
 
 const {getConfigGroups} = useConfig();
 const {getIsMobile} = useRootSetting();
-const activeGroup = computed(() => getConfigGroups.value[0]?.value);
+const activeGroup = ref('basic');
 
 const apiResources = useFetchConfigGroupResources();
 const {fetchLists} = apiResources;

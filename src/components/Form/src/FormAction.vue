@@ -1,35 +1,22 @@
 <template>
-  <el-col v-bind="actionColProps || colProps">
-    <div :style="{textAlign:position}" class="w-full">
-      <slot name="submitBefore"></slot>
-      <el-button type="primary" v-bind="submitButtonProps" @click="submitForm(formElRef)">
-        {{ submitButtonText }}
-      </el-button>
-      <slot name="resetBefore"></slot>
-      <el-button type="default" v-bind="resetButtonProps" v-if="showResetButton" @click="resetForm(formElRef)">
-        {{ resetButtonText }}
-      </el-button>
-      <slot name="advanceBefore"></slot>
-      <el-button v-if="showAdvancedButton"
-                 type="primary"
-                 link
-                 :icon="!advanced ? ArrowDownBold : ArrowUpBold"
-                 @click="toggleAdvanced">
-        {{ !advanced ? '展开' : '收起' }}
-      </el-button>
-      <slot name="advanceAfter"></slot>
-    </div>
-  </el-col>
+  <div :style="{textAlign:position}" class="w-full">
+    <slot name="submitBefore"></slot>
+    <el-button type="primary" v-bind="submitButtonProps" @click="submitForm(formRef)">
+      {{ submitButtonText }}
+    </el-button>
+    <slot name="resetBefore"></slot>
+    <el-button type="default" v-bind="resetButtonProps" v-if="showResetButton" @click="resetForm(formRef)">
+      {{ resetButtonText }}
+    </el-button>
+  </div>
 </template>
 
 <script lang="ts" setup>
 import {inject, toRefs} from "vue";
 import {FormInstance} from "element-plus";
 import {formActionProps} from "./props";
-import {ArrowDownBold, ArrowUpBold} from '@element-plus/icons'
 
 const props = defineProps(formActionProps);
-const emits = defineEmits(['toggle-advanced']);
 
 const {
   submitButtonProps,
@@ -37,15 +24,10 @@ const {
   resetButtonProps,
   resetButtonText,
   showResetButton,
-  advanced,
   position,
-  showAdvancedButton,
-  colProps: actionColProps,
 } = toRefs(props);
 
-const formElRef = inject<FormInstance>('formElRef');
+const formRef = inject<FormInstance>('formRef');
 const submitForm = inject('submitForm');
 const resetForm = inject('resetForm');
-const toggleAdvanced = inject('toggleAdvanced');
-const colProps = inject('colProps');
 </script>

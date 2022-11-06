@@ -2,14 +2,19 @@
   <div v-loading="loading.lists">
     <basic-form
       ref="formRef"
+      class="sm:w-full lg-sm:w-screen-lg"
       v-model="formModel"
-      label-position="right"
+      :label-position="getIsMobile ? 'top' : 'right'"
       label-width="120px"
       :schemas="formSchemas">
       <template #actions="{formRef}">
-        <el-button type="primary" @click="submitForm(formRef,{data:formModel},true)" :loading="loading.submit">
-          提交
-        </el-button>
+        <el-form-item>
+          <el-button class="lt-sm:w-full"
+                     type="primary"
+                     @click="submitForm(formRef,{data:formModel},true)"
+                     :loading="loading.submit">提交
+          </el-button>
+        </el-form-item>
       </template>
     </basic-form>
   </div>
@@ -22,6 +27,7 @@ import {UseApiResourcesReturn} from "~/composables/useApiResources";
 import {FormSchema} from "~/components/Form/src/types";
 import {ConfigItem} from "~/api/config/ConfigModel";
 import {FormInstance} from "element-plus";
+import {useRootSetting} from "~/composables/setting/useRootSeeting";
 
 const formRef = ref<FormInstance>()
 const formModel = ref({})
@@ -29,6 +35,7 @@ const formSchemas = ref<FormSchema[]>([]);
 
 const apiResources = <UseApiResourcesReturn>inject('apiResources');
 const {lists, loading, submitForm} = apiResources
+const {getIsMobile} = useRootSetting()
 
 const object2array = (object) => {
   return Object.keys(object).map(item => {

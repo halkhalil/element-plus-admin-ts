@@ -1,11 +1,11 @@
 <template>
   <page-wrapper content-full-height>
-    <template #page-header>
+    <template #header>
       <query-form v-model="params"
                   :schemas="querySchemas"
                   :colProps="{xs: 24, sm: 12, md: 12, lg: 8, xl: 6}"
                   show-label
-                  label-width="100px"
+                  label-width="50px"
                   @submit="handleQuery">
         <template #extra>
           <el-button type="success" :icon="Plus" @click="addItem"></el-button>

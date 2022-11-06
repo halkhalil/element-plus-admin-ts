@@ -1,7 +1,7 @@
 <template>
   <div class="page-wrapper w-full min-h-full content-bg" :class="$props.class">
-    <div class="p-4">
-      <slot name="page-header">
+    <div class="not-empty:p-3">
+      <slot name="header">
         <el-page-header :bind="$props" @back="back" v-if="$props.title">
           <template #breadcrumb v-if="slots.breadcrumb">
             <slot name="breadcrumb"></slot>
@@ -79,6 +79,7 @@ const getContentHeight = computed(() => {
 const {back} = useRouter();
 
 const slots = useSlots();
+console.log(slots)
 </script>
 
 <style lang="scss" scoped>

@@ -8,7 +8,7 @@
                        :disabled="advanced"
                        @change="resetForm"
                        placeholder="请选择"
-                       style="width: 100px;">
+                       class="w-100px">
               <template v-for="schema in inputSchemas">
                 <el-option :label="schema.label || schema.placeholder" :value="schema.field"/>
               </template>

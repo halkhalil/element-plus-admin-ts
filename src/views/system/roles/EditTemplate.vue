@@ -1,7 +1,11 @@
 <template>
-  <el-dialog v-model="dialog" :title="!formModel?.id ?'新增':'编辑'" top="10vh">
-    <el-scrollbar height="50vh" v-loading="loading.item">
-      <el-form ref="formRef" :model="formModel" :rules="formRules" label-width="80px" autocomplete="off">
+  <el-dialog v-model="dialog" :title="!formModel?.id ?'新增':'编辑'" top="10vh" :fullscreen="getIsMobile">
+    <el-scrollbar  v-loading="loading.item">
+      <el-form ref="formRef"
+               :model="formModel"
+               :rules="formRules"
+               label-width="80px"
+               :label-position="getIsMobile ? 'top' : 'right'">
         <el-form-item label="英文标识" prop="name">
           <el-input v-model="formModel.name" placeholder="请输入角色英文标识"></el-input>
         </el-form-item>
@@ -46,6 +50,7 @@ import {UseApiResourcesReturn} from "~/composables/useApiResources";
 import {listToTree} from "~/utils/helper/treeHelper";
 import {ElTree, FormInstance, FormRules} from "element-plus";
 import {RoleItem, defaultForm} from "~/api/role/RoleModel";
+import {useRootSetting} from "~/composables/setting/useRootSeeting";
 
 const formRef = ref<FormInstance>();
 const formModel = ref<RoleItem>(defaultForm);
@@ -66,6 +71,7 @@ const {data: permissions, loading: permissionLoading, execute: fetchPermissions}
 const treePermissions = computed(() => listToTree(permissions.value?.data || []))
 const treeShowLabel = ({permissible}) => permissible.label;
 const treeShowClass = (data, {level}) => level === 2 ? 'is-penultimate' : null;
+const {getIsMobile} = useRootSetting()
 
 // 监控编辑事件
 watch(dialog, async () => dialog.value && await fetchPermissions());

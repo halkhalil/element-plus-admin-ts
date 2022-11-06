@@ -45,8 +45,3 @@ const getComponentEvents = computed(() => {
 })
 
 </script>
-<style lang="scss">
-.el-date-editor .el-input__wrapper {
-  width: 93% !important;
-}
-</style>

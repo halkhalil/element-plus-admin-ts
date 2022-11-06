@@ -3,7 +3,12 @@
              v-model="dialog" top="10vh"
              @closed="resetForm(formRef)"
              :fullscreen="getIsMobile">
-    <el-form ref="formRef" :model="formModel" :rules="formRules" v-loading="loading.item" label-width="80px">
+    <el-form ref="formRef"
+             :model="formModel"
+             :rules="formRules"
+             v-loading="loading.item"
+             :label-position="getIsMobile ? 'top' : 'right'"
+             label-width="80px">
       <el-form-item label="菜单类型" prop="type">
         <el-radio-group v-model="formModel.type">
           <el-radio v-for="item in MenuTypeEnum" :key="item" :label="item" border/>

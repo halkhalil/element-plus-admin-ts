@@ -13,17 +13,19 @@
         </FormItem>
       </el-col>
 
-      <el-form-item label-width="50px">
+      <el-col v-bind="colProps">
         <slot name="actions" :model="formModel" :formRef="formRef">
-          <FormAction v-bind="actionProps"
-                      :advanced="advanced"
-                      @toggle-advanced="toggleAdvanced">
-            <template v-for="item in ['resetBefore', 'submitBefore', 'advanceBefore', 'advanceAfter']" #[item]="data">
-              <slot :name="item" v-bind="data"></slot>
-            </template>
-          </FormAction>
+          <el-form-item :label-width="props.labelWidth">
+            <FormAction v-bind="actionProps"
+                        :advanced="advanced"
+                        @toggle-advanced="toggleAdvanced">
+              <template v-for="item in ['resetBefore', 'submitBefore', 'advanceBefore', 'advanceAfter']" #[item]="data">
+                <slot :name="item" v-bind="data"></slot>
+              </template>
+            </FormAction>
+          </el-form-item>
         </slot>
-      </el-form-item>
+      </el-col>
     </el-row>
     <el-empty v-else></el-empty>
   </el-form>

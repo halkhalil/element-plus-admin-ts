@@ -1,11 +1,11 @@
 <template>
   <page-wrapper :title="$route.meta['title']">
-    <template #page-header>
+    <template #header>
       <query-form v-model="params"
                   :schemas="querySchemas"
                   :colProps="{xs: 24, sm: 12, md: 12, lg: 8, xl: 6}"
                   show-label
-                  label-width="100px"
+                  label-width="70px"
                   @submit="handleQuery">
         <template #extra>
           <el-button type="success" :icon="Plus" @click="addItem"></el-button>
@@ -69,9 +69,9 @@ const tableColumns = shallowRef([
 ]);
 
 const querySchemas = shallowRef([
-  {field: 'id', placeholder: '菜单ID', component: 'Input'},
-  {field: 'title', placeholder: '菜单名称', component: 'Input'},
-  {field: 'name', placeholder: '菜单标识', component: 'Input'},
+  {field: 'id', label: '菜单ID', placeholder: '菜单ID', component: 'Input'},
+  {field: 'title', label: '菜单名称', placeholder: '菜单名称', component: 'Input'},
+  {field: 'name', label: '菜单标识', placeholder: '菜单标识', component: 'Input'},
 ])
 
 const useResources = useFetchMenuResources();

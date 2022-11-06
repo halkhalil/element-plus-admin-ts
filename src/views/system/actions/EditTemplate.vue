@@ -1,6 +1,11 @@
 <template>
-  <el-dialog :title="!formModel.id ? '新增' : '编辑'" v-model="dialog" top="10vh">
-    <el-form ref="formRef" :model="formModel" :rules="formRules" v-loading="loading.item" label-width="80px">
+  <el-dialog :title="!formModel.id ? '新增' : '编辑'" v-model="dialog" top="10vh" :fullscreen="getIsMobile">
+    <el-form ref="formRef"
+             :model="formModel"
+             :rules="formRules"
+             v-loading="loading.item"
+             :label-position="getIsMobile ? 'top' : 'right'"
+             label-width="80px">
       <el-form-item label="英文标识" prop="name">
         <el-input v-model="formModel.name" placeholder="请输入英文标识"></el-input>
       </el-form-item>
@@ -37,6 +42,7 @@ import {FormInstance, FormRules} from "element-plus";
 import {RoleItem} from "~/api/role/RoleModel";
 import {MethodEnum} from "~/enums/http";
 import {ActionItem, defaultForm} from "~/api/action/ActionModel";
+import {useRootSetting} from "~/composables/setting/useRootSeeting";
 
 const formRef = ref<FormInstance>();
 const formModel = ref<ActionItem>(defaultForm);
@@ -47,6 +53,7 @@ const formRules = shallowReactive<FormRules>({
   uri: [{required: true, message: '请输入后端url地址', trigger: 'blur'}],
 })
 
+const {getIsMobile} = useRootSetting();
 const {dialog, editable, loading, submitForm} = <UseApiResourcesReturn>inject('useResources');
 
 // 监控编辑事件

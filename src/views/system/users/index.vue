@@ -1,6 +1,6 @@
 <template>
   <page-wrapper>
-    <template #page-header>
+    <template #header>
       <query-form v-model="params"
                   :schemas="querySchemas"
                   :colProps="{xs: 24, sm: 12, md: 12, lg: 8, xl: 6}"
