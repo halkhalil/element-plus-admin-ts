@@ -3,7 +3,7 @@ import {isEmpty} from "lodash-es";
 import {useStore} from "~/store";
 
 export const setupProjectConfig = () => {
-  const {appStore} = useStore();
+  const {appStore,localeStore} = useStore();
 
   if (isEmpty(appStore.getProjectConfig)) {
     appStore.setProjectConfig(setting);
@@ -11,4 +11,6 @@ export const setupProjectConfig = () => {
 
   appStore.setTheme(appStore.getProjectConfig?.theme);
   appStore.setLayout(appStore.getProjectConfig?.layout);
+
+  localeStore.initLocale();
 }

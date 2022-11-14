@@ -6,6 +6,7 @@ import {useUserStore} from "~/store/modules/user";
 import {usePermissionStore} from "~/store/modules/permission";
 import {useTabStore} from "~/store/modules/tab";
 import {useConfigStore} from "~/store/modules/config";
+import {useLocaleStore} from "~/store/modules/locale";
 
 const store = createPinia();
 store.use(piniaPersist)
@@ -21,6 +22,7 @@ const useStore = () => {
     permissionStore: usePermissionStore(),
     tabStore: useTabStore(),
     configStore: useConfigStore(),
+    localeStore: useLocaleStore(),
   }
 }
 

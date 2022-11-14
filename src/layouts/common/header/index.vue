@@ -17,6 +17,9 @@
         <GitHub/>
       </div>
       <div class="action flex items-center">
+        <LangDropdown/>
+      </div>
+      <div class="action flex items-center">
         <Notify/>
       </div>
       <div class="action flex items-center">
@@ -42,6 +45,7 @@ import GitHub from "~/layouts/common/header/components/GitHub.vue";
 import Setting from "~/layouts/common/setting/index.vue";
 import HorizontalMenu from '~/layouts/common/menu/horizontal.vue';
 import HeaderTrigger from "~/layouts/common/trigger/HeaderTrigger.vue";
+import LangDropdown from "~/layouts/common/header/components/LangDropdown.vue";
 import {useRootSetting} from "~/composables/setting/useRootSeeting";
 
 const {

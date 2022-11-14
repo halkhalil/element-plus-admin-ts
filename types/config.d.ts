@@ -2,6 +2,18 @@ import {MenuModeEnum, MenuTrigger} from "~/enums/menu";
 import {SizeEnum, LayoutEnum, TransitionEnum, ThemeEnum} from "~/enums/app";
 import {PermissionModeEnum} from "~/enums/permission";
 
+export type LocaleType = 'zh_CN' | 'en';
+
+export interface LocaleSetting {
+  showPicker?: boolean;
+  // Current language
+  locale: LocaleType;
+  // default language
+  fallback?: LocaleType;
+  // available Locales
+  availableLocales?: LocaleType[];
+}
+
 // menu
 export interface MenuSetting {
   mode: MenuModeEnum,

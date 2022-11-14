@@ -1,4 +1,5 @@
 <template>
+  {{ $t('routes.dashboard.dashboard') }}
   <el-config-provider :size="getGlobalSize" :zIndex="3000">
     <router-view/>
   </el-config-provider>

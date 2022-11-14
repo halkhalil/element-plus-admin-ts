@@ -9,7 +9,7 @@ import {setupGlobalDirectives} from "~/directives";
 import {registerGlobComp} from "~/components/registerGlobComp";
 import {setupProjectConfig} from "~/logics/setupProjectConfig";
 import {setupPlugins} from "~/logics/setupPlugins";
-
+import {setupI18n} from "~/locales/setupI18n";
 
 import 'uno.css'
 import "~/styles/index.scss";
@@ -20,6 +20,8 @@ import "element-plus/theme-chalk/src/message.scss"
   const app = createApp(App);
 
   setupStore(app);
+
+  await setupI18n(app);
 
   setupRouter(app);
 
