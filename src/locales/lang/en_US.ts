@@ -1,6 +1,7 @@
-import {genMessage} from "~/locales/setupI18n";
+import {genMessage} from "~/locales/helper";
 
-const modules = import.meta.globEager('./en/**/*.ts');
+
+const modules = import.meta.globEager('./en-US/**/*.ts');
 export default {
   message: {
     ...genMessage(modules, 'en-US'),

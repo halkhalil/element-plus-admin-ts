@@ -1,4 +1,4 @@
-import {MenuRuleEnum, MenuTypeEnum} from "~/enums/app";
+import {MenuRuleEnum, MenuTypeEnum} from "~/enums/menu";
 
 export interface BaseItem {
   id?: string | number | null

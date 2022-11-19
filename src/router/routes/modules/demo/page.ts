@@ -1,6 +1,7 @@
 import {LAYOUT} from "~/router/constant";
 import LayoutContent from "~/layouts/page/index.vue"
 import {AppRouteRecordRaw} from "~/router/types";
+import {$t} from "~/locales";
 
 const pageRoute: AppRouteRecordRaw[] = [
   {
@@ -8,25 +9,25 @@ const pageRoute: AppRouteRecordRaw[] = [
     name: 'Page',
     component: LAYOUT,
     redirect: '/page/personal/center',
-    meta: {title: '页面', icon: 'ep:document', sort:40},
+    meta: {title: $t('routes.demo.page.page'), icon: 'ep:document', sort: 40},
     children: [
       {
         path: 'personal',
         name: 'Personal',
         component: LayoutContent,
-        meta: {title: '个人页'},
+        meta: {title: $t('routes.demo.page.personal.personal')},
         children: [
           {
             path: 'center',
             name: 'PersonalCenter',
             component: () => import('~/views/demo/page/personal/center/index.vue'),
-            meta: {title: '个人中心'}
+            meta: {title: $t('routes.demo.page.personal.center')}
           },
           {
             path: 'setting',
             name: 'PersonalSetting',
             component: () => import('~/views/demo/page/personal/setting/index.vue'),
-            meta: {title: '个人设置'}
+            meta: {title: $t('routes.demo.page.personal.setting')}
           },
         ]
       },
@@ -34,18 +35,18 @@ const pageRoute: AppRouteRecordRaw[] = [
         path: 'form',
         name: 'FormPage',
         component: LayoutContent,
-        meta: {title: '表单页'},
+        meta: {title: $t('routes.demo.page.form.form')},
         children: [
           {
-            path: 'basic',
+            path: 'basic-form',
             name: 'BasicFormPage',
-            meta: {title: '基础表单'},
+            meta: {title: $t('routes.demo.page.form.basic')},
             component: () => import('~/views/demo/page/form/basic/index.vue'),
           },
           {
-            path: 'step',
+            path: 'step-form',
             name: 'StepFormPage',
-            meta: {title: '分步表单'},
+            meta: {title: $t('routes.demo.page.form.step')},
             component: () => import('~/views/demo/page/form/step/index.vue'),
           },
         ]
@@ -54,19 +55,13 @@ const pageRoute: AppRouteRecordRaw[] = [
         path: 'list',
         name: 'list-page',
         component: LayoutContent,
-        meta: {title: '列表页'},
+        meta: {title: $t('routes.demo.page.list.list')},
         children: [
           {
             path: 'basic',
             name: 'BasicListPage',
-            meta: {title: '基础表单'},
+            meta: {title: $t('routes.demo.page.list.basic')},
             component: () => import('~/views/demo/page/form/basic/index.vue'),
-          },
-          {
-            path: 'step',
-            name: 'BasicStepPage',
-            meta: {title: '分步表单'},
-            component: () => import('~/views/demo/page/form/step/index.vue'),
           },
         ]
       },
@@ -74,7 +69,7 @@ const pageRoute: AppRouteRecordRaw[] = [
         path: 'error',
         name: 'Error',
         component: LayoutContent,
-        meta: {title: '错误页'},
+        meta: {title: $t('routes.demo.page.error')},
         children: [
           {
             path: '403',

@@ -1,27 +1,30 @@
 <template>
-  <el-dropdown>
-    <span class="el-dropdown-link">
-      Dropdown List
-      <el-icon class="el-icon--right">
-        <arrow-down />
-      </el-icon>
-    </span>
+  <el-dropdown size="small" @command="toggleLocale">
+    <el-icon :size="18">
+      <Icon icon="ion:language-outline"/>
+    </el-icon>
     <template #dropdown>
-      <el-dropdown-menu>
-        <el-dropdown-item>简体中文</el-dropdown-item>
-        <el-dropdown-item>English</el-dropdown-item>
+      <el-dropdown-menu class="fontsize-ensurer">
+        <el-dropdown-item command="zh_CN" :class="getLocale === 'zh_CN' ? 'active' : ''">简体中文</el-dropdown-item>
+        <el-dropdown-item command="en_US" :class="getLocale === 'en_US' ? 'active' : ''">English</el-dropdown-item>
       </el-dropdown-menu>
     </template>
   </el-dropdown>
 </template>
 <script lang="ts" setup>
-import {useStore} from "~/store";
+import {useLocale} from "~/composables/useLocale";
 
-const {userStore} = useStore()
-const getUser = userStore.getUser || {}
+const {changeLocale, getLocale} = useLocale()
 
-const logout = async () => {
-  await userStore.fetchLogout();
+const toggleLocale = async (lang) => {
+  await changeLocale(lang);
   location.reload();
 }
+
 </script>
+<style lang="scss" scoped>
+:deep(.el-dropdown-menu__item.active:not(.is-disabled)) {
+  background-color: var(--el-dropdown-menuItem-hover-fill);
+  color: var(--el-dropdown-menuItem-hover-color);
+}
+</style>

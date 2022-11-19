@@ -15,7 +15,7 @@
         @contextmenu.prevent="getSelectTab = item"
         v-contextmenu:contextmenu
       >
-        {{ item?.meta?.title || 'no-name'}}
+        {{ t(item?.meta?.title || 'no-name') }}
       </el-tag>
     </div>
     <v-contextmenu ref="contextmenu">
@@ -28,6 +28,7 @@
 </template>
 <script lang="ts" setup>
 import {useTab} from "~/layouts/common/tab/useTab";
+import {useI18n} from "vue-i18n";
 
 const {
   scrollbarRef,
@@ -43,7 +44,7 @@ const {
   tabIsActive,
   tabIsAffix
 } = useTab();
-
+const {t} = useI18n();
 </script>
 <style lang="scss" scoped>
 :deep(.scroll-wrap) {

@@ -1,6 +1,7 @@
 import {LAYOUT} from "~/router/constant";
 import LayoutContent from "~/layouts/page/index.vue"
 import {AppRouteRecordRaw} from "~/router/types";
+import {$t} from "~/locales";
 
 const componentRoute: AppRouteRecordRaw[] = [
   {
@@ -8,43 +9,43 @@ const componentRoute: AppRouteRecordRaw[] = [
     name: 'Component',
     component: LAYOUT,
     redirect: '/component/table/basicTable',
-    meta: {title: '组件', icon: 'ep:coin', sort: 20},
+    meta: {title: $t('routes.demo.component'), icon: 'ep:coin', sort: 20},
     children: [
       {
         path: 'form',
         name: 'Form',
         component: LayoutContent,
         redirect: '/component/form/basicForm',
-        meta: {title: '表单', icon: 'fluent:form-28-regular'},
+        meta: {title: $t('routes.demo.form.form'), icon: 'fluent:form-28-regular'},
         children: [
           {
             path: 'basicForm',
             name: 'BasicForm',
-            meta: {title: '基础表单'},
+            meta: {title: $t('routes.demo.form.basic')},
             component: () => import('~/views/demo/component/form/BasicForm.vue'),
           },
           {
             path: 'searchForm',
             name: 'SearchForm',
-            meta: {title: '搜索表单'},
+            meta: {title: $t('routes.demo.form.search')},
             component: () => import('~/views/demo/component/form/SearchForm.vue'),
           },
           {
             path: 'dynamicForm',
             name: 'DynamicForm',
-            meta: {title: '动态表单'},
+            meta: {title: $t('routes.demo.form.dynamic')},
             component: () => import('~/views/demo/component/form/DynamicForm.vue'),
           },
           {
             path: 'ruleForm',
             name: 'RuleForm',
-            meta: {title: '表单验证'},
+            meta: {title: $t('routes.demo.form.rule')},
             component: () => import('~/views/demo/component/form/RuleForm.vue'),
           },
           {
             path: 'customForm',
             name: 'CustomForm',
-            meta: {title: '自定义组件'},
+            meta: {title: $t('routes.demo.form.custom')},
             component: () => import('~/views/demo/component/form/CustomForm.vue'),
           },
         ],
@@ -53,31 +54,31 @@ const componentRoute: AppRouteRecordRaw[] = [
         path: 'table',
         name: 'Table',
         redirect: '/component/table/basicTable',
-        meta: {title: '表格', icon: 'ant-design:table-outlined'},
+        meta: {title: $t('routes.demo.table.table'), icon: 'ant-design:table-outlined'},
         component: LayoutContent,
         children: [
           {
             path: 'basicTable',
             name: 'BasicTable',
-            meta: {title: '基础表格'},
+            meta: {title: $t('routes.demo.table.basic')},
             component: () => import('~/views/demo/component/table/BasicTable.vue'),
           },
           {
             path: 'treeTable',
             name: 'TreeTable',
-            meta: {title: '树形表格'},
+            meta: {title: $t('routes.demo.table.tree')},
             component: () => import('~/views/demo/component/table/TreeTable.vue'),
           },
           {
             path: 'queryTable',
             name: 'QueryTable',
-            meta: {title: '查询表格'},
+            meta: {title: $t('routes.demo.table.query')},
             component: () => import('~/views/demo/component/table/QueryTable.vue'),
           },
           {
             path: 'customTable',
             name: 'CustomTable',
-            meta: {title: '自定义列'},
+            meta: {title: $t('routes.demo.table.custom')},
             component: () => import('~/views/demo/component/table/CustomTable.vue'),
           },
         ],
@@ -87,24 +88,24 @@ const componentRoute: AppRouteRecordRaw[] = [
         name: 'Editor',
         component: LayoutContent,
         redirect: '/component/editor/code',
-        meta: {title: '编辑器', icon: 'ep:edit-pen'},
+        meta: {title: $t('routes.demo.editor.editor'), icon: 'ep:edit-pen'},
         children: [
           {
             path: 'code',
             name: 'Code',
-            meta: {title: '代码编辑器'},
+            meta: {title: $t('routes.demo.editor.code')},
             component: () => import('~/views/demo/component/editor/codeEditor.vue'),
           },
           {
             path: 'markdown',
             name: 'Markdown',
-            meta: {title: 'markdown编辑器'},
+            meta: {title: $t('routes.demo.editor.markdown')},
             component: () => import('~/views/demo/component/editor/markdownEditor.vue'),
           },
           {
             path: 'rich',
             name: 'Rich',
-            meta: {title: '富文本编辑器'},
+            meta: {title: $t('routes.demo.editor.rich')},
             component: () => import('~/views/demo/component/editor/richEditor.vue'),
           },
         ],
@@ -114,24 +115,24 @@ const componentRoute: AppRouteRecordRaw[] = [
         name: 'Charts',
         component: LayoutContent,
         redirect: '/component/echarts/bar',
-        meta: {title: '图表', icon: 'akar-icons:map'},
+        meta: {title: $t('routes.demo.charts.charts'), icon: 'akar-icons:map'},
         children: [
           {
             path: 'bar',
             name: 'Bar',
-            meta: {title: '柱状图'},
+            meta: {title: $t('routes.demo.charts.bar')},
             component: () => import('~/views/demo/component/echarts/bar.vue'),
           },
           {
             path: 'line',
             name: 'Line',
-            meta: {title: '折线图'},
+            meta: {title: $t('routes.demo.charts.line')},
             component: () => import('~/views/demo/component/echarts/line.vue'),
           },
           {
             path: 'pie',
             name: 'Pie',
-            meta: {title: '饼图'},
+            meta: {title: $t('routes.demo.charts.pie')},
             component: () => import('~/views/demo/component/echarts/pie.vue'),
           }
         ]
@@ -140,40 +141,40 @@ const componentRoute: AppRouteRecordRaw[] = [
         path: 'icon',
         name: 'Icon',
         redirect: '/component/icon/iconfont',
-        meta: {title: '图标', icon: 'simple-icons:iconify'},
+        meta: {title: $t('routes.demo.icon.icon'), icon: 'simple-icons:iconify'},
         component: LayoutContent,
         children: [
           {
             path: 'icon-basic',
             name: 'IconBasic',
-            meta: {title: '基本使用'},
+            meta: {title: $t('routes.demo.icon.basic')},
             component: () => import('~/views/demo/component/icon/index.vue'),
           },
-          {
-            path: 'icon-preview',
-            name: 'IconPreview',
-            meta: {title: '图标预览'},
-            component: () => import('~/views/demo/component/icon/preview.vue'),
-          },
+          // {
+          //   path: 'icon-preview',
+          //   name: 'IconPreview',
+          //   meta: {title: $t('routes.demo.icon.preview')},
+          //   component: () => import('~/views/demo/component/icon/preview.vue'),
+          // },
         ]
       },
       {
         path: 'upload',
         name: 'Upload',
         redirect: '/component/upload/basic-upload',
-        meta: {title: '上传', icon: 'ep:upload'},
+        meta: {title: $t('routes.demo.upload.upload'), icon: 'ep:upload'},
         component: LayoutContent,
         children: [
           {
             path: 'basic-upload',
             name: 'BasicUpload',
-            meta: {title: '基本使用'},
+            meta: {title: $t('routes.demo.upload.basic')},
             component: () => import('~/views/demo/component/upload/BasicUpload.vue'),
           },
           {
             path: 'oss-upload',
             name: 'OssUpload',
-            meta: {title: 'OSS直传'},
+            meta: {title: $t('routes.demo.upload.oss')},
             component: () => import('~/views/demo/component/upload/OssUpload.vue'),
           },
         ]
@@ -181,7 +182,7 @@ const componentRoute: AppRouteRecordRaw[] = [
       {
         path: 'page-wrapper',
         name: 'PageWrapper',
-        meta: {title: '页面包裹'},
+        meta: {title: $t('routes.demo.pageWrapper')},
         component: () => import('~/views/demo/component/page-wrapper/index.vue'),
       },
     ]

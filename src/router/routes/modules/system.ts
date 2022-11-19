@@ -1,5 +1,6 @@
 import {LAYOUT} from "~/router/constant";
 import {AppRouteRecordRaw} from "~/router/types";
+import {$t} from "~/locales";
 
 const systemRoute: AppRouteRecordRaw[] = [
   {
@@ -7,42 +8,42 @@ const systemRoute: AppRouteRecordRaw[] = [
     name: 'System',
     redirect: '/system/users',
     component: LAYOUT,
-    meta: {title: '系统', icon: 'ant-design:windows-outlined', sort: 60},
+    meta: {title: $t('routes.system.system'), icon: 'ant-design:windows-outlined', sort: 60},
     children: [
       {
         path: 'users',
         name: 'Users',
-        meta: {title: '用户管理'},
+        meta: {title: $t('routes.system.user')},
         component: () => import('~/views/system/users/index.vue'),
       },
       {
         path: 'roles',
         name: 'Roles',
-        meta: {title: '角色管理'},
+        meta: {title: $t('routes.system.role')},
         component: () => import('~/views/system/roles/index.vue'),
       },
       {
         path: 'menus',
         name: 'Menus',
-        meta: {title: '菜单管理'},
+        meta: {title: $t('routes.system.menu')},
         component: () => import('~/views/system/menus/index.vue'),
       },
       {
         path: 'actions',
         name: 'Actions',
-        meta: {title: '动作管理'},
+        meta: {title: $t('routes.system.action')},
         component: () => import('~/views/system/actions/index.vue'),
       },
       {
         path: 'permissions',
         name: 'Permissions',
-        meta: {title: '权限节点'},
+        meta: {title: $t('routes.system.permission')},
         component: () => import('~/views/system/permissions/index.vue'),
       },
       {
         path: 'configs',
         name: 'Config',
-        meta: {title: '站点配置'},
+        meta: {title: $t('routes.system.config')},
         component: () => import('~/views/system/configs/index.vue'),
       }
     ]

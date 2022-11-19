@@ -1,6 +1,6 @@
 export default {
   dashboard: 'Dashboard',
-  workbench: 'Workbench',
+  workplace: 'Workplace',
   analysis: 'Analysis',
   monitor: 'Monitor',
 };

@@ -45,17 +45,3 @@ export enum ThemeColorEnum {
   PINK = '#eb2f96',
   SAUCEPURPLE = '#722ed1',
 }
-
-// 菜单类型
-export enum MenuTypeEnum {
-  DIR = 'dir',
-  MENU = 'menu',
-  BUTTON = 'button',
-}
-
-// 菜单规则类型
-export enum MenuRuleEnum {
-  TAB = 'tab',
-  LINK = 'link',
-  IFRAME = 'iframe',
-}

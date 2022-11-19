@@ -4,7 +4,7 @@
       <el-icon v-if="menu.icon" :size="18">
         <Icon :icon="menu.icon" class="mr-1" />
       </el-icon>
-      <span>{{ menu.title }}</span>
+      <span>{{ t(menu.title) }}</span>
     </template>
     <template v-for="child in menu.children">
       <sub-menu v-if="child.children && child.children.length > 1" :menu="child" :key="child.path"/>
@@ -15,6 +15,7 @@
 </template>
 <script lang="ts" setup>
 import ItemMenu from "~/layouts/common/menu/components/ItemMenu.vue";
+import {useI18n} from "vue-i18n";
 defineProps({
   menu: {
     type: Object,
@@ -26,5 +27,6 @@ defineProps({
   }
 })
 
-const logo = import.meta.env.VITE_LOGO
+const logo = import.meta.env.VITE_LOGO;
+const {t} = useI18n();
 </script>

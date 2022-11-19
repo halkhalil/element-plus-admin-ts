@@ -3,10 +3,12 @@
     <el-icon v-if="menu.icon" :size="18">
       <Icon :icon="menu.icon" class="mr-1"/>
     </el-icon>
-    <template #title>{{ menu.title }}</template>
+    <template #title>{{ t(menu?.title) }}</template>
   </el-menu-item>
 </template>
 <script lang="ts" setup>
+import {useI18n} from "vue-i18n";
+
 defineProps({
   menu: {
     type: Object,
@@ -17,4 +19,6 @@ defineProps({
     default: '',
   }
 });
+
+const {t} = useI18n();
 </script>

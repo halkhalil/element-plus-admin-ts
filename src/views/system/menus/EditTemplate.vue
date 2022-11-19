@@ -11,7 +11,10 @@
              label-width="80px">
       <el-form-item label="菜单类型" prop="type">
         <el-radio-group v-model="formModel.type">
-          <el-radio v-for="item in MenuTypeEnum" :key="item" :label="item" border/>
+          <el-radio v-for="item in MenuTypeEnum" :key="item" :label="item" border>{{
+              t(`enums.menu.${item}`)
+            }}
+          </el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="父级节点" prop="pid">
@@ -42,7 +45,10 @@
       </el-form-item>
       <el-form-item label="规则类型" prop="type" v-if="formModel.type === MenuTypeEnum.MENU">
         <el-radio-group v-model="formModel.rule">
-          <el-radio v-for="item in MenuRuleEnum" :key="item" :label="item" border/>
+          <el-radio v-for="item in MenuRuleEnum" :key="item" :label="item" border>{{
+              t(`enums.menu.${item}`)
+            }}
+          </el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="组件路径" prop="component"
@@ -79,13 +85,14 @@
 <script lang="ts" setup>
 import {inject, watch, ref, computed, shallowReactive} from "vue";
 import {IconPicker} from '~/components/Icon'
-import {MenuTypeEnum, MenuRuleEnum} from "~/enums/app";
+import {MenuTypeEnum, MenuRuleEnum} from "~/enums/menu";
 import {FormInstance, FormRules} from "element-plus";
 import {useFetchMenus} from "~/api/useFetchAll";
 import {UseApiResourcesReturn} from "~/composables/useApiResources";
 import {MenuItem, defaultForm} from "~/api/menu/MenuModel";
 import {listToTree} from "~/utils/helper/treeHelper";
 import {useRootSetting} from "~/composables/setting/useRootSeeting";
+import {useI18n} from "vue-i18n";
 
 const formRef = ref<FormInstance>();
 const formModel = ref<MenuItem>(defaultForm);
@@ -99,6 +106,7 @@ const formRules = shallowReactive<FormRules>({
   component: [{required: true, message: '请输入组件路径', trigger: 'blur'}],
 });
 
+const {t} = useI18n()
 const {getIsMobile} = useRootSetting();
 const {dialog, editable, loading, submitForm, resetForm} = <UseApiResourcesReturn>inject('useResources');
 const {data: menus, execute: fetchTree} = useFetchMenus();

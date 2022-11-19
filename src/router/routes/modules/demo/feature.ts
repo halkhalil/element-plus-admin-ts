@@ -1,5 +1,6 @@
 import {IFRAME, LAYOUT} from "~/router/constant";
 import {AppRouteRecordRaw} from "~/router/types";
+import {$t} from "~/locales";
 
 const featureRoute: AppRouteRecordRaw[] = [
   {
@@ -7,65 +8,54 @@ const featureRoute: AppRouteRecordRaw[] = [
     name: 'Feature',
     component: LAYOUT,
     redirect: '/feature/element-plus',
-    meta: {title: '功能', icon: 'tabler:function', sort: 30},
+    meta: {title: $t('routes.demo.feature.feature'), icon: 'tabler:function', sort: 30},
     children: [
-      {
-        path: 'element-plus',
-        name: 'ElementPlusIframe',
-        component: IFRAME,
-        meta: {title: '菜单内嵌',frameSrc:'https://element-plus.gitee.io/zh-CN/'},
-      },
-      {
-        path: 'element-plus-blank',
-        name: 'ElementPlusTarget',
-        meta: {title: '菜单外链',href:'https://element-plus.gitee.io/zh-CN/'},
-      },
       {
         path: 'context-menu',
         name: 'ContextMenu',
-        meta: {title: '右键菜单'},
+        meta: {title: $t('routes.demo.feature.contextMenu')},
         component: () => import('~/views/demo/feature/context-menu/index.vue'),
       },
       {
         path: 'full-screen',
         name: 'FullScreen',
-        meta: {title: '全屏'},
+        meta: {title: $t('routes.demo.feature.fullScreen')},
         component: () => import('~/views/demo/feature/full-screen/index.vue'),
       },
       {
         path: 'clipboard',
         name: 'Clipboard',
-        meta: {title: '剪贴板'},
+        meta: {title: $t('routes.demo.feature.clipboard')},
         component: () => import('~/views/demo/feature/clipboard/index.vue'),
       },
       {
         path: 'click-out-side',
         name: 'ClickOutSide',
-        meta: {title: '单击外部'},
+        meta: {title: $t('routes.demo.feature.clickOutSide')},
         component: () => import('~/views/demo/feature/click-out-side/index.vue'),
       },
       {
         path: 'qr-code',
         name: 'QrCode',
-        meta: {title: '二维码'},
+        meta: {title: $t('routes.demo.feature.qrCode')},
         component: () => import('~/views/demo/feature/qr-code/index.vue'),
       },
       {
         path: 'drauu',
         name: 'Drauu',
-        meta: {title: '画图'},
+        meta: {title: $t('routes.demo.feature.drauu')},
         component: () => import('~/views/demo/feature/drauu/index.vue'),
       },
       {
         path: 'debounce',
         name: 'Debounce',
-        meta: {title: '防抖'},
+        meta: {title: $t('routes.demo.feature.debounce')},
         component: () => import('~/views/demo/feature/debounce/index.vue'),
       },
       {
         path: 'throttle',
         name: 'Throttle',
-        meta: {title: '节流'},
+        meta: {title: $t('routes.demo.feature.throttle')},
         component: () => import('~/views/demo/feature/throttle/index.vue'),
       },
     ]
