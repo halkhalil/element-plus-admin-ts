@@ -1,4 +1,4 @@
-import {IFRAME, LAYOUT} from "~/router/constant";
+import {LAYOUT} from "~/router/constant";
 import {AppRouteRecordRaw} from "~/router/types";
 import {$t} from "~/locales";
 
@@ -7,7 +7,7 @@ const featureRoute: AppRouteRecordRaw[] = [
     path: '/feature',
     name: 'Feature',
     component: LAYOUT,
-    redirect: '/feature/element-plus',
+    redirect: '/feature/context-menu',
     meta: {title: $t('routes.demo.feature.feature'), icon: 'tabler:function', sort: 30},
     children: [
       {

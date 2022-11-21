@@ -2,7 +2,7 @@
   <el-sub-menu :index="menu.path" v-if="menu.children && menu.children.length >= 1" popper-append-to-body>
     <template #title>
       <el-icon v-if="menu.icon" :size="18">
-        <Icon :icon="menu.icon" class="mr-1" />
+        <Icon :icon="menu.icon" class="mr-1"/>
       </el-icon>
       <span>{{ t(menu.title) }}</span>
     </template>
@@ -15,7 +15,8 @@
 </template>
 <script lang="ts" setup>
 import ItemMenu from "~/layouts/common/menu/components/ItemMenu.vue";
-import {useI18n} from "vue-i18n";
+import {useLocale} from "~/composables/useLocale";
+
 defineProps({
   menu: {
     type: Object,
@@ -28,5 +29,5 @@ defineProps({
 })
 
 const logo = import.meta.env.VITE_LOGO;
-const {t} = useI18n();
+const {t} = useLocale();
 </script>
