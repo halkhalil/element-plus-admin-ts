@@ -30,7 +30,7 @@
   </div>
   <div v-if="advanced">
     <el-divider>高级搜索</el-divider>
-    <basic-form v-bind="$props" @submit="handleSubmit" @reset="handleReset"></basic-form>
+    <basic-form class="query-form" v-bind="$props" @submit="handleSubmit" @reset="handleReset"></basic-form>
   </div>
 </template>
 
@@ -66,3 +66,18 @@ const handleReset = () => emit('reset');
 
 watch(advanced, () => resetForm());
 </script>
+<style lang="scss" scoped>
+.query-form {
+  :deep(.el-select) {
+    width: 100% !important;
+  }
+
+  :deep(.el-cascader,.el-input--default,.el-input__inner) {
+    width: 100% !important;
+  }
+
+  :deep(.el-input__wrapper,.el-input__inner) {
+    width: 100% !important;
+  }
+}
+</style>

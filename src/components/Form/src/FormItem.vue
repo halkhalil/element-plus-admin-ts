@@ -4,8 +4,7 @@
                :is="getComponent"
                v-model="VModel"
                v-bind="getComponentProps"
-               v-on="getComponentEvents"
-               class="!w-full"></component>
+               v-on="getComponentEvents"></component>
     <slot v-else :name="slot" v-bind="props.schema"></slot>
     <template #[item]="data" v-for="item in Object.keys($slots)">
       <slot :name="item" v-bind="data"></slot>
