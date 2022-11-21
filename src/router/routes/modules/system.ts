@@ -8,7 +8,7 @@ const systemRoute: AppRouteRecordRaw[] = [
     name: 'System',
     redirect: '/system/users',
     component: LAYOUT,
-    meta: {title: $t('routes.system.system'), icon: 'ant-design:windows-outlined', sort: 60},
+    meta: {title: $t('routes.system.system'), icon: 'ant-design:windows-outlined', sort: 20},
     children: [
       {
         path: 'users',

@@ -9,7 +9,7 @@ const componentRoute: AppRouteRecordRaw[] = [
     name: 'Component',
     component: LAYOUT,
     redirect: '/component/table/basicTable',
-    meta: {title: $t('routes.demo.component'), icon: 'ep:coin', sort: 20},
+    meta: {title: $t('routes.demo.component'), icon: 'ep:coin', sort: 80},
     children: [
       {
         path: 'form',
