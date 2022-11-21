@@ -79,7 +79,6 @@ const getContentHeight = computed(() => {
 const {back} = useRouter();
 
 const slots = useSlots();
-console.log(slots)
 </script>
 
 <style lang="scss" scoped>
