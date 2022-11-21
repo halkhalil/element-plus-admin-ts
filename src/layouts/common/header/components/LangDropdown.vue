@@ -17,6 +17,7 @@ import {useLocale} from "~/composables/useLocale";
 const {changeLocale, getLocale} = useLocale()
 
 const toggleLocale = async (lang) => {
+  if (getLocale.value == lang) return ;
   await changeLocale(lang);
   location.reload();
 }

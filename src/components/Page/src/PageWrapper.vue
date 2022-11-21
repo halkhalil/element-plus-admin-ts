@@ -14,7 +14,7 @@
           </template>
           <template #content>
             <slot name="title">
-              <span class="text-sm font-600">{{ $props.title }}</span>
+              <span class="text-sm font-600">{{ t($props.title) }}</span>
             </slot>
           </template>
           <template #extra v-if="slots.extra">
@@ -41,6 +41,7 @@ import {ref, computed} from "vue";
 import {useElementBounding} from '@vueuse/core'
 import {useSlots} from "vue";
 import {useRouter} from "vue-router";
+import {useLocale} from "~/composables/useLocale";
 
 defineProps({
   showHeader: Boolean,
@@ -79,6 +80,8 @@ const getContentHeight = computed(() => {
 const {back} = useRouter();
 
 const slots = useSlots();
+
+const {t} = useLocale()
 </script>
 
 <style lang="scss" scoped>
