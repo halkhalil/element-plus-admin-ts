@@ -1,10 +1,9 @@
-import Icon from '~/components/Icon'
+// import {BaDialog} from "~/components/Dialog";
+// import {BaForm} from "~/components/Form";
 import {App} from "vue";
 
-const compList = [Icon];
 
 export function registerGlobComp(app: App<Element>) {
-  compList.forEach(item => {
-    app.component(item.name, item)
-  })
+  // app.component('BaDialog', BaDialog)
+  // app.component('BaForm', BaForm)
 }

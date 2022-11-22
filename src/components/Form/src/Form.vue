@@ -1,6 +1,7 @@
 <template>
   <el-form ref="formRef" v-bind="props" :rules="rules" :model="formModel"
-           :label-width="showLabel && props.labelWidth">
+           :label-width="showLabel && props.labelWidth"
+           :label-position="getIsMobile ? 'top' : labelPosition">
     <el-row :gutter="10" v-if="schemas.length > 0">
       <el-col v-for="(schema,index) in schemas" v-bind="colProps" v-show="showSchema(schema,index)">
         <FormItem :key="index"
@@ -40,11 +41,19 @@ import {FormInstance, FormRules} from "element-plus";
 import {formProps} from "./props";
 import {FormProps, FormSchema} from "./types";
 import {isBoolean, isFunction} from "~/utils/is";
+import {useRootSetting} from "~/composables/setting/useRootSeeting";
 
 const props = defineProps(formProps);
 const emits = defineEmits(['update:modelValue', 'reset', 'submit', 'toggle-advanced']);
 
-const {schemas = [] as FormSchema[], rules = [] as FormRules[], actionProps, colProps, showLabel} = toRefs(props);
+const {
+  schemas = [] as FormSchema[],
+  rules = [] as FormRules[],
+  actionProps,
+  colProps,
+  showLabel,
+  labelPosition
+} = toRefs(props);
 
 const formRef = ref<FormInstance>();
 const formModel = useVModel(props, 'modelValue', emits);
@@ -80,6 +89,8 @@ const toggleAdvanced = () => {
   advanced.value = !advanced.value;
   emits('toggle-advanced', advanced.value);
 }
+
+const {getIsMobile} = useRootSetting();
 
 provide('colProps', colProps);
 provide('formRef', formRef);

@@ -42,6 +42,7 @@ export interface UseApiResourcesReturn {
   resetItem: (formEl?: FormInstance | undefined) => void,
   submitForm: (formEl: FormInstance | undefined, options: any, edit?: boolean) => void,
   resetForm: (formEl: FormInstance | undefined) => void,
+  cancelForm: (formEl: FormInstance | undefined) => void,
   changePage: (page?: number) => void,
   handleQuery: () => void,
 }
@@ -197,7 +198,7 @@ export function useApiResources(apiResources: ApiResourcesConfig, options?: ApiR
     const confirm = async () => {
       isEdit.value || edit ? await fetchUpdate(options) : await fetchStore(options);
       refreshListsAfterSubmit && await fetchLists({params});
-      cancelSubmit(formEl);
+      cancelForm(formEl);
     }
 
     await formEl.validate((valid) => {
@@ -215,7 +216,7 @@ export function useApiResources(apiResources: ApiResourcesConfig, options?: ApiR
   }
 
   // 取消提交
-  const cancelSubmit = (formEl: FormInstance | undefined) => {
+  const cancelForm = (formEl: FormInstance | undefined) => {
     if (!formEl) return;
     dialog.value = false;
     formEl.resetFields()
@@ -262,6 +263,7 @@ export function useApiResources(apiResources: ApiResourcesConfig, options?: ApiR
     deleteItem,
     submitForm,
     resetForm,
+    cancelForm,
     changePage,
     handleQuery,
   };

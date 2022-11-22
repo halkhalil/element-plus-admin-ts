@@ -24,8 +24,7 @@
       <el-button :icon="Search" @click="advanced=!advanced"/>
     </div>
     <div>
-      <slot name="extra">
-      </slot>
+      <slot name="extra"></slot>
     </div>
   </div>
   <div v-if="advanced">

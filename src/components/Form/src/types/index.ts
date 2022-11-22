@@ -4,6 +4,8 @@ import type {
 } from 'element-plus'
 import {callbackFn} from "@tinymce/tinymce-vue/lib/es2015/main/ts/ScriptLoader";
 
+
+
 export interface FormSchema {
   field: string,
   label?: string,
@@ -15,6 +17,7 @@ export interface FormSchema {
   // 是否显示
   show?: boolean | callbackFn,
 }
+export type FormSchemas = FormSchema[];
 
 export interface FormProps extends ElFormProps {
   readonly schemas: FormSchema[],
