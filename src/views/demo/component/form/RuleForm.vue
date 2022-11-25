@@ -1,30 +1,29 @@
 <template>
-  <page-wrapper :title="$route['meta']['title']" content-background content-full-height>
+  <PageWrapper :title="$route['meta']['title']" content-background content-full-height>
     <el-row :gutter="20">
       <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
-        <basic-form class="p-2"
-                    ref="formRef"
-                    v-model="form"
-                    :schemas="schemas"
-                    :rules="rules"
-                    @reset="handleReset"
-                    @submit="handleSubmit"
-                    auto-width
-                    label-width="150px"
-                    :label-position="getIsMobile ? 'top' : 'right'">
-        </basic-form>
+        <Form class="p-2"
+                 ref="formRef"
+                 v-model="form"
+                 :schemas="schemas"
+                 :rules="rules"
+                 @reset="handleReset"
+                 @submit="handleSubmit"
+                 auto-width
+                 label-width="150px"
+                 :label-position="getIsMobile ? 'top' : 'right'">
+        </Form>
       </el-col>
       <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
-        <pre>{{form}}</pre>
+        <pre>{{ form }}</pre>
       </el-col>
     </el-row>
 
-  </page-wrapper>
+  </PageWrapper>
 </template>
 
 <script lang="ts" setup>
-import {BasicForm} from "~/components/Form";
-import {PageWrapper} from '~/components/Page';
+import {PageWrapper, Form} from '~/components';
 import {getRuleFormData} from "~/views/demo/component/form/data";
 import {useRootSetting} from "~/composables/setting/useRootSeeting";
 import {reactive} from "vue";

@@ -13,7 +13,7 @@
         </template>
       </query-form>
     </template>
-    <basic-table :columns="tableColumns"
+    <ba-table :columns="tableColumns"
                  :data="lists"
                  :paginate="paginate"
                  :loading="loading.lists"
@@ -28,14 +28,14 @@
           </template>
         </el-popconfirm>
       </template>
-    </basic-table>
+    </ba-table>
     <edit-template/>
   </page-wrapper>
 </template>
 
 <script lang="ts" setup>
 import {PageWrapper} from "~/components/Page"
-import {BasicTable} from "~/components/Table"
+import {BaTable} from "~/components/Table"
 import {QueryForm} from "~/components/Form";
 import EditTemplate from "./EditTemplate.vue";
 import {provide} from "vue";

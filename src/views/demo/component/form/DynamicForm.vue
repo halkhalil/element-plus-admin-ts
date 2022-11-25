@@ -1,5 +1,5 @@
 <template>
-  <page-wrapper :title="$route?.meta?.title" content-full-height>
+  <PageWrapper :title="$route?.meta?.title" content-full-height>
     <el-row :gutter="10">
       <el-col :xs="24" :sm="12" :md="8" :lg="4" :xl="3" class="my-1">
         <el-button @click="changFieldLabel(0)" class="w-full">更改字段1Label</el-button>
@@ -20,28 +20,27 @@
     <el-divider></el-divider>
     <el-row :gutter="50">
       <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
-        <BasicForm class="m-2"
-                   ref="formRef"
-                   v-model="form"
-                   :schemas="schemas"
-                   @reset="handleReset"
-                   @submit="handleSubmit"
-                   :auto-width="autoWidth"
-                   label-width="90px"
-                   :label-position="getIsMobile ? 'top' : 'right'">
-        </BasicForm>
+        <Form class="m-2"
+              ref="formRef"
+              v-model="form"
+              :schemas="schemas"
+              @reset="handleReset"
+              @submit="handleSubmit"
+              :auto-width="autoWidth"
+              label-width="90px"
+              :label-position="getIsMobile ? 'top' : 'right'">
+        </Form>
       </el-col>
       <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
-        <pre>{{form}}</pre>
+        <pre>{{ form }}</pre>
       </el-col>
     </el-row>
-  </page-wrapper>
+  </PageWrapper>
 </template>
 
 <script lang="ts" setup>
 import {getDynamicFormData} from "./data";
-import {BasicForm} from "~/components/Form/index.ts";
-import {PageWrapper} from '~/components/Page/index.ts';
+import {PageWrapper, Form} from "~/components";
 import {reactive, ref} from "vue";
 import {useRootSetting} from "~/composables/setting/useRootSeeting";
 import {FormSchema} from "~/components/Form/src/types";

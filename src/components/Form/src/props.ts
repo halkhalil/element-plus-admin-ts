@@ -1,8 +1,15 @@
-import {
-  formProps as elFormProps,
-  formItemProps as elFormItemProps,
-  buttonProps as ElButtonProps,
-} from "element-plus";
+import {formProps as elFormProps,} from "element-plus";
+import {PropType} from "vue";
+import {FormAction, FormSchema, FormSchemas} from "~/components";
+
+const defaultFormActionProps = {
+  singleLine: false,
+  position: 'left',
+  resetText: '重置',
+  submitText: '提交',
+}
+
+const defaultColProps = {span: 24}
 
 const formProps = {
   ...elFormProps,
@@ -11,7 +18,7 @@ const formProps = {
     default: () => ({})
   },
   schemas: {
-    type: Array,
+    type: Array as PropType<FormSchemas>,
     required: true,
     default: () => ([]),
   },
@@ -19,13 +26,21 @@ const formProps = {
     type: Boolean,
     default: true,
   },
-  actionProps: {
-    type: Object,
-    default: () => ({})
+  action: {
+    type: Object as PropType<FormAction>,
+    default: () => (defaultFormActionProps),
   },
   colProps: {
     type: Object,
-    default: () => ({})
+    default: () => (defaultColProps)
+  },
+  refObj: {
+    type: Object,
+    default: null,
+  },
+  widthFull: {
+    type: Boolean,
+    default: false,
   }
 }
 
@@ -39,54 +54,24 @@ const formItemProps = {
     default: true,
   },
   schema: {
-    type: Object,
+    type: Object as PropType<FormSchema>,
     default: () => ({})
   },
 }
 
-const formActionProps = {
-  submitButtonProps: {
-    type: Object,
-    default: () => ({})
-  },
-  resetButtonProps: {
-    type: Object,
-    default: () => ({})
-  },
-  showResetButton: {
-    type: Boolean,
-    default: true,
-  },
-  resetButtonText: {
-    type: String,
-    default: '重置'
-  },
-  submitButtonText: {
-    type: String,
-    default: '提交'
-  },
-  showAdvancedButton: {
+const formQueryProps = {
+  ...formProps,
+  simple: {
     type: Boolean,
     default: false,
   },
-  showAdvancedLength: {
-    type: Number,
-    default: 3,
-  },
   advanced: {
     type: Boolean,
-    default: true,
-  },
-  position: {
-    type: String,
-    default: 'left',
+    default: false,
   },
   colProps: {
-    type: Object,
-    default: undefined,
+    default: () => ({xs: 24, sm: 12, md: 12, lg: 8, xl: 6})
   }
 }
 
-const defaultColProps = {xs: 24, sm: 24, md: 12, lg: 12, xl: 12}
-
-export {formProps, formItemProps, formActionProps, defaultColProps}
+export {formProps, formItemProps, formQueryProps, defaultColProps, defaultFormActionProps}

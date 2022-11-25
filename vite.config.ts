@@ -62,7 +62,6 @@ export default ({command}: ConfigEnv): UserConfig => {
             importStyle: 'sass',
           }),
         ],
-        dts: 'src/components.d.ts',
       }),
       viteMockServe({
         mockPath: 'mock',

@@ -9,18 +9,18 @@
                 :action-props="{showAdvancedButton:true}"
                 :col-props="{span:6}"
                 @submit="handleSearch"></basic-form>
-    <basic-table :data="tableData" :columns="tableColumns" :border="true">
+    <ba-table :data="tableData" :columns="tableColumns" :border="true">
       <template #action="{row,$index}">
         <el-button link @click="handleEdit(row,$index)">编辑</el-button>
         <el-button link type="danger" @click="handleDelete(row,$index)">删除</el-button>
       </template>
-    </basic-table>
+    </ba-table>
   </page-wrapper>
 </template>
 
 <script lang="ts" setup>
 import {PageWrapper} from '~/components/Page';
-import {BasicTable} from "~/components/Table";
+import {BaTable} from "~/components/Table";
 import {BasicForm} from "~/components/Form";
 import {getBasicColumns, getBasicData} from './data';
 import {getSearchFormData} from './../form/data';

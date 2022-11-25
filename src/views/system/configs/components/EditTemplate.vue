@@ -16,7 +16,7 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item label="配置标识" prop="name">
-        <el-input v-model="formModel.name" placeholder="请输入英文唯一标识" />
+        <el-input v-model="formModel.name" placeholder="请输入英文唯一标识"/>
       </el-form-item>
       <el-form-item label="配置名称" prop="label">
         <el-input v-model="formModel.label" placeholder="请输入中文配置名称"></el-input>
@@ -55,7 +55,7 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, inject, ref, shallowReactive, watch} from "vue";
+import {inject, ref, shallowReactive, watch} from "vue";
 import {UseApiResourcesReturn} from "~/composables/useApiResources";
 import {FormInstance, FormRules} from "element-plus";
 import {ConfigItem} from "~/api/config/ConfigModel";

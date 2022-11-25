@@ -12,8 +12,8 @@
 </template>
 
 <script lang="ts" setup>
-import TableList from "~/views/system/configs/components/TableList.vue";
-import GroupList from "~/views/system/configs/components/GroupList.vue";
+import TableList from "./components/TableList.vue";
+import GroupList from "./components/GroupList.vue";
 import {ref} from "vue";
 
 const mode = ref('groups');

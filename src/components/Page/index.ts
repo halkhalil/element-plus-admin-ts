@@ -1,3 +1,7 @@
-import PageWrapper from "~/components/Page/src/PageWrapper.vue";
+import PageWrapper from "./src/PageWrapper.vue";
 
-export {PageWrapper}
+export {
+  PageWrapper,
+}
+
+export default PageWrapper;

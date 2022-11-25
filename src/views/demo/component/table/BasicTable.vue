@@ -6,17 +6,17 @@
       <el-button type="default">操作1</el-button>
       <el-button type="primary">操作2</el-button>
     </template>
-    <BasicTable :data="tableData" :columns="tableColumns" :border="true">
+    <BaTable :data="tableData" :columns="tableColumns" :border="true">
       <template #action>
         <el-button type="text">编辑</el-button>
         <el-button type="text" style="color: red">删除</el-button>
       </template>
-    </BasicTable>
+    </BaTable>
   </page-wrapper>
 </template>
 
 <script lang="ts" setup>
-import {BasicTable} from "~/components/Table";
+import {BaTable} from "~/components/Table";
 import {PageWrapper} from '~/components/Page';
 
 import {getBasicColumns, getBasicData} from './data';

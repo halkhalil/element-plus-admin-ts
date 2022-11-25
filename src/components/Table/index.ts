@@ -1,7 +1,7 @@
-import BasicTable from "~/components/Table/src/BasicTable.vue";
-import BasicQuery from "~/components/Table/src/BasicQuery.vue";
+import Table from "./src/Table.vue";
 
 export {
-  BasicTable,
-  BasicQuery
+  Table,
 };
+
+export default Table;

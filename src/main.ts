@@ -1,12 +1,10 @@
 import {createApp} from "vue";
 import App from "./App.vue";
 import {router, setupRouter} from '~/router'
-// import 'virtual:windi.css'
 import 'virtual:svg-icons-register';
 import {setupStore} from '~/store'
 import {setupRouterGuard} from "~/router/guard";
 import {setupGlobalDirectives} from "~/directives";
-import {registerGlobComp} from "~/components/registerGlobComp";
 import {setupProjectConfig} from "~/logics/setupProjectConfig";
 import {setupPlugins} from "~/logics/setupPlugins";
 import {setupI18n} from "~/./locales";
@@ -20,8 +18,6 @@ import "element-plus/theme-chalk/src/message.scss"
   const app = createApp(App);
 
   setupStore(app);
-
-  registerGlobComp(app);
 
   setupProjectConfig();
 

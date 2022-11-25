@@ -1,7 +1,5 @@
 <template>
-  <el-dialog :title="!formModel.id ? '新增' : '编辑'"
-             v-model="dialog" top="10vh"
-             @closed="resetForm(formRef)"
+  <el-dialog :title="!formModel.id ? '新增' : '编辑'" v-model="dialog" top="10vh" @closed="resetForm(formRef)"
              :fullscreen="getIsMobile">
     <el-form ref="formRef"
              :model="formModel"
@@ -11,9 +9,8 @@
              label-width="80px">
       <el-form-item label="菜单类型" prop="type">
         <el-radio-group v-model="formModel.type">
-          <el-radio v-for="item in MenuTypeEnum" :key="item" :label="item" border>{{
-              t(`enums.menu.${item}`)
-            }}
+          <el-radio v-for="item in MenuTypeEnum" :key="item" :label="item" border>
+            {{ t(`enums.menu.${item}`) }}
           </el-radio>
         </el-radio-group>
       </el-form-item>
@@ -45,9 +42,8 @@
       </el-form-item>
       <el-form-item label="规则类型" prop="type" v-if="formModel.type === MenuTypeEnum.MENU">
         <el-radio-group v-model="formModel.rule">
-          <el-radio v-for="item in MenuRuleEnum" :key="item" :label="item" border>{{
-              t(`enums.menu.${item}`)
-            }}
+          <el-radio v-for="item in MenuRuleEnum" :key="item" :label="item" border>
+            {{ t(`enums.menu.${item}`) }}
           </el-radio>
         </el-radio-group>
       </el-form-item>
@@ -84,7 +80,7 @@
 
 <script lang="ts" setup>
 import {inject, watch, ref, computed, shallowReactive} from "vue";
-import {IconPicker} from '~/components/Icon'
+import {IconPicker} from '~/components'
 import {MenuTypeEnum, MenuRuleEnum} from "~/enums/menu";
 import {FormInstance, FormRules} from "element-plus";
 import {useFetchMenus} from "~/api/useFetchAll";
@@ -106,7 +102,7 @@ const formRules = shallowReactive<FormRules>({
   component: [{required: true, message: '请输入组件路径', trigger: 'blur'}],
 });
 
-const {t} = useI18n()
+const {t} = useI18n();
 const {getIsMobile} = useRootSetting();
 const {dialog, editable, loading, submitForm, resetForm} = <UseApiResourcesReturn>inject('useResources');
 const {data: menus, execute: fetchTree} = useFetchMenus();

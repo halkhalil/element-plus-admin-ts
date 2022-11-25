@@ -59,9 +59,9 @@ const componentRoute: AppRouteRecordRaw[] = [
         children: [
           {
             path: 'basicTable',
-            name: 'BasicTable',
+            name: 'BaTable',
             meta: {title: $t('routes.demo.table.basic')},
-            component: () => import('~/views/demo/component/table/BasicTable.vue'),
+            component: () => import('~/views/demo/component/table/BaTable.vue'),
           },
           {
             path: 'treeTable',

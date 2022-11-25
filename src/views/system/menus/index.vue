@@ -1,27 +1,25 @@
 <template>
-  <page-wrapper :title="$route.meta['title']">
+  <PageWrapper :title="$route.meta['title']">
     <template #header>
-      <query-form v-model="params"
-                  :schemas="querySchemas"
-                  :colProps="{xs: 24, sm: 12, md: 12, lg: 8, xl: 6}"
-                  show-label
-                  label-width="70px"
-                  @submit="handleQuery">
+      <FormQuery v-model="params"
+                 :schemas="querySchemas"
+                 label-width="70px"
+                 @submit="handleQuery">
         <template #extra>
           <el-button type="success" :icon="Plus" @click="addItem"></el-button>
           <el-button type="warning" :icon="Refresh" @click="handleQuery" :loading="loading.lists"></el-button>
         </template>
-      </query-form>
+      </FormQuery>
     </template>
-    <basic-table row-key="id" lazy
-                 :columns="tableColumns"
-                 :data="lists"
-                 :paginate="paginate"
-                 :loading="loading.lists"
-                 :border="true"
-                 ref="tableRef"
-                 :tree-props="{children: 'children', hasChildren: 'children_count'}"
-                 @change-page="changePage">
+    <Table row-key="id" lazy
+           :columns="tableColumns"
+           :data="lists"
+           :paginate="paginate"
+           :loading="loading.lists"
+           :border="true"
+           ref="tableRef"
+           :tree-props="{children: 'children', hasChildren: 'children_count'}"
+           @change-page="changePage">
       <template #label="{row:{icon,label}}">
         <div class="flex flex-row">
           <div class="flex flex-col justify-center">
@@ -41,15 +39,13 @@
           </template>
         </el-popconfirm>
       </template>
-    </basic-table>
+    </Table>
     <edit-template/>
-  </page-wrapper>
+  </PageWrapper>
 </template>
 
 <script lang="ts" setup>
-import {PageWrapper} from "~/components/Page"
-import {BasicTable,} from "~/components/Table"
-import {QueryForm} from "~/components/Form";
+import {PageWrapper, FormQuery, Table} from "~/components"
 import EditTemplate from "./EditTemplate.vue";
 import {Plus, Edit, Delete, Refresh} from '@element-plus/icons-vue'
 import {provide, shallowRef} from "vue";

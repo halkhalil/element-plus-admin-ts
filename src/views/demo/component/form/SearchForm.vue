@@ -1,10 +1,8 @@
 <template>
-  <page-wrapper
-    :title="$route.meta?.title"
-    content-full-height>
+  <PageWrapper :title="$route.meta?.title" content-full-height>
     <div class="mb-2">
       <el-divider content-position="left">表单选项</el-divider>
-      <el-form v-model="formProps" inline>
+      <el-form v-model="formProps" label-width="100px" inline>
         <el-form-item label="label显示">
           <el-switch v-model="formProps.showLabel"></el-switch>
         </el-form-item>
@@ -25,18 +23,18 @@
             <el-radio-button label="small"/>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="超过数量折叠">
-          <el-input-number v-model="formProps.actionProps.showAdvancedLength"></el-input-number>
-        </el-form-item>
         <el-form-item label="按钮位置">
-          <el-radio-group v-model="formProps.actionProps.position">
+          <el-radio-group v-model="formProps.action.position">
             <el-radio-button label="left"/>
             <el-radio-button label="center"/>
             <el-radio-button label="right"/>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="按钮单独一行">
-          <el-switch v-model="otherForm.buttonLine" @change="changeButtonLine"></el-switch>
+          <el-switch v-model="formProps.action.singleLine"></el-switch>
+        </el-form-item>
+        <el-form-item label="表单宽度铺满">
+          <el-switch v-model="formProps.widthFull"></el-switch>
         </el-form-item>
         <el-form-item label="每行展示个数">
           <el-select v-model="formProps.colProps" value-key="xl">
@@ -49,38 +47,48 @@
     </div>
     <el-divider content-position="left">表单预览</el-divider>
     <div class="p-5">
-      <basic-form v-model="searchForm"
-                  :schemas="formSchema"
-                  v-bind="formProps"
-      ></basic-form>
+      <Form v-model="searchForm"
+            :schemas="formSchema"
+            v-bind="formProps"
+      ></Form>
     </div>
 
-    <pre class="m-5">{{ searchForm }}</pre>
-
     <div class="p-5">
-      <el-divider content-position="left" class="mt-5">基于BasicForm二次封装的搜索表单</el-divider>
-      <query-form v-model="params"
-                  :schemas="formSchema"
-                  :colProps="{xs: 24, sm: 12, md: 12, lg: 8, xl: 6}"
-                  show-label
-                  label-width="100px"
-                  @submit="submit">
+      <el-divider content-position="left" class="mt-5">基于BaForm二次封装的搜索表单</el-divider>
+      <FormQuery v-model="params"
+                 :schemas="formSchema"
+                 :advanced="true"
+                 label-width="100px"
+                 @submit="submit">
         <template #extra>
           <el-button type="success" :icon="Plus">添加</el-button>
           <el-button type="primary" :icon="Edit">编辑</el-button>
           <el-button type="danger" :icon="Delete">删除</el-button>
           <el-button type="warning" :icon="Refresh">刷新</el-button>
         </template>
-      </query-form>
-      <pre class="m-5">{{ params }}</pre>
+      </FormQuery>
+
+      <el-divider content-position="left" class="mt-5">只显示按钮</el-divider>
+      <FormQuery v-model="params"
+                 :schemas="formSchema"
+                 simple
+                 :advanced="true"
+                 label-width="100px"
+                 @submit="submit">
+        <template #extra>
+          <el-button type="success" :icon="Plus">添加</el-button>
+          <el-button type="primary" :icon="Edit">编辑</el-button>
+          <el-button type="danger" :icon="Delete">删除</el-button>
+          <el-button type="warning" :icon="Refresh">刷新</el-button>
+        </template>
+      </FormQuery>
     </div>
-  </page-wrapper>
+  </PageWrapper>
 </template>
 <script lang="ts" setup>
-import {reactive, ref} from "vue";
-import {BasicForm, QueryForm} from "~/components/Form";
+import {reactive} from "vue";
+import {PageWrapper, Form, FormQuery} from "~/components";
 import {getSearchFormData} from './data'
-import {PageWrapper} from '~/components/Page';
 import {Plus, Edit, Delete, Refresh} from '@element-plus/icons-vue'
 
 const formProps = reactive({
@@ -88,27 +96,19 @@ const formProps = reactive({
   labelPosition: 'right',
   labelWidth: 100,
   size: 'default',
-  actionProps: {
-    position: 'left',
-    advanced: false,
-    actionPosition: 'right',
-    showAdvancedButton: true,
-    showAdvancedLength: 3,
+  action: {
+    singleLine: true,
+    position: 'center',
+    resetText: '重置',
+    submitText: '提交',
   },
+  widthFull: true,
   colProps: {xs: 24, sm: 12, md: 12, lg: 8, xl: 6}
 })
 
-const otherForm = reactive({
-  buttonLine: false,
-})
 
 const searchForm = reactive({});
 const formSchema = reactive(getSearchFormData());
-
-const changeButtonLine = (boolean) => {
-  const colProps = boolean ? {span: 24} : undefined;
-  formProps.actionProps['colProps'] = colProps;
-}
 
 const params = reactive({})
 const submit = (e) => {

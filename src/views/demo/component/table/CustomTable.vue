@@ -2,7 +2,7 @@
   <page-wrapper
     :title="$route['meta']['title']"
     :sub-title="$route['meta']['title']">
-    <basic-table :data="tableData" :columns="tableColumns" :border="true">
+    <ba-table :data="tableData" :columns="tableColumns" :border="true">
       <template #name="{row,$index}">
         <el-button type="text">{{ row.name }}</el-button>
       </template>
@@ -14,12 +14,12 @@
           </template>
         </el-popconfirm>
       </template>
-    </basic-table>
+    </ba-table>
   </page-wrapper>
 </template>
 
 <script lang="ts" setup>
-import {BasicTable} from "~/components/Table";
+import {BaTable} from "~/components/Table";
 import {PageWrapper} from '~/components/Page';
 import {getCustomColumns, getBasicData} from './data';
 import {reactive} from "vue";

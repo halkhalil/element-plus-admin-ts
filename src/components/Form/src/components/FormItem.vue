@@ -1,23 +1,23 @@
 <template>
-  <el-form-item v-bind="elFormItemProps" :prop="field" :label="props.showLabel && label">
+  <el-form-item v-bind="elFormItemProps" :prop="field" :label="props.showLabel && label" class="ba-form-component">
     <component v-if="!slot"
                :is="getComponent"
                v-model="VModel"
                v-bind="getComponentProps"
-               v-on="getComponentEvents"></component>
+               v-on="getComponentEvents" :class="{'ba-component_w-full':widthFull}"></component>
     <slot v-else :name="slot" v-bind="props.schema"></slot>
-    <template #[item]="data" v-for="item in Object.keys($slots)">
+    <template v-for="item in Object.keys($slots)" #[item]="data">
       <slot :name="item" v-bind="data"></slot>
     </template>
   </el-form-item>
 </template>
 
 <script lang="ts" setup>
-import {computed, toRefs, h} from 'vue'
+import {computed, toRefs, h, inject} from 'vue'
 import {isFunction} from "~/utils/is";
-import {componentMap} from './componentMap'
+import {componentMap} from '../componentMap'
 import {useVModel} from "@vueuse/core";
-import {formItemProps} from "./props";
+import {formItemProps} from "../props";
 
 const props = defineProps(formItemProps);
 const emits = defineEmits(['update:modelValue'])
@@ -43,4 +43,17 @@ const getComponentEvents = computed(() => {
   return componentEvents;
 })
 
+const widthFull = <boolean>inject('widthFull')
 </script>
+<style lang="scss">
+.ba-component_w-full {
+  width: 100% !important;
+
+  &.el-date-editor {
+    .el-input__wrapper {
+      display: flex !important;
+    }
+  }
+}
+
+</style>

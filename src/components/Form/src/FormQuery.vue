@@ -29,54 +29,32 @@
   </div>
   <div v-if="advanced">
     <el-divider>高级搜索</el-divider>
-    <basic-form class="query-form" v-bind="$props" @submit="handleSubmit" @reset="handleReset"></basic-form>
+    <Form class="query-form" v-bind="$props" width-full @submit="handleSubmit" @reset="handleReset"></Form>
   </div>
 </template>
 
 <script lang="ts" setup>
-import BasicForm from './Form.vue'
+import Form from './Form.vue'
 import {Search} from '@element-plus/icons-vue'
-import {computed, ref, watch} from "vue";
-import {formProps} from "./props";
+import {ref, watch} from "vue";
+import {formQueryProps} from "./props";
 import {FormSchema} from "~/components/Form/src/types";
 import {useVModel} from "@vueuse/core";
 import {useRootSetting} from "~/composables/setting/useRootSeeting";
 
-const props = defineProps({
-  ...formProps,
-  simple: {
-    type: Boolean,
-    default: false,
-  },
-});
-const emit = defineEmits(['update:modelValue', 'reset', 'submit']);
+const props = defineProps(formQueryProps);
+const emits = defineEmits(['update:modelValue', 'reset', 'submit']);
 
-const {schemas} = props;
-const formModel = useVModel(props, 'modelValue', emit);
+const formModel = useVModel(props, 'modelValue', emits);
 
-const inputSchemas: FormSchema[] = (schemas as FormSchema[]).filter(item => item.component === 'Input');
+const inputSchemas: FormSchema[] = (props.schemas as FormSchema[]).filter(item => item.component === 'Input');
 const select = ref(inputSchemas.length > 0 ? inputSchemas[0].field : '');
-const advanced = ref(false);
+const advanced = ref(props.advanced);
 const {getIsMobile} = useRootSetting();
 
 const resetForm = () => Object.keys(formModel.value).forEach(key => delete formModel.value[key]);
-const handleSubmit = () => emit('submit', formModel.value)
-const handleReset = () => emit('reset');
+const handleSubmit = () => emits('submit', formModel.value)
+const handleReset = () => emits('reset');
 
 watch(advanced, () => resetForm());
 </script>
-<style lang="scss" scoped>
-.query-form {
-  :deep(.el-select) {
-    width: 100% !important;
-  }
-
-  :deep(.el-cascader,.el-input--default,.el-input__inner) {
-    width: 100% !important;
-  }
-
-  :deep(.el-input__wrapper,.el-input__inner) {
-    width: 100% !important;
-  }
-}
-</style>

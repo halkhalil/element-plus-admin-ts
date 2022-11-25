@@ -11,8 +11,8 @@
 </template>
 
 <script>
-// import {PageWrapper} from '~/components/Page/index.d.ts'
-// import {groups} from '~/components/Icon/data/index.d.ts'
+// import {PageWrapper} from '~/components/Page/index.ts'
+// import {groups} from '~/components/Icon/data/index.ts'
 // import {ref, shallowRef} from "vue";
 // import GroupPreview from './GroupPreview.vue'
 //

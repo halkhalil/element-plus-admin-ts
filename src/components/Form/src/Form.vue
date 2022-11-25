@@ -1,9 +1,13 @@
 <template>
-  <el-form ref="formRef" v-bind="props" :rules="rules" :model="formModel"
+  <el-form ref="formRef" v-bind="$props" :rules="rules" :model="formModel"
            :label-width="showLabel && props.labelWidth"
            :label-position="getIsMobile ? 'top' : labelPosition">
     <el-row :gutter="10" v-if="schemas.length > 0">
-      <el-col v-for="(schema,index) in schemas" v-bind="colProps" v-show="showSchema(schema,index)">
+
+      <el-col v-for="(schema,index) in schemas"
+              v-bind="colProps"
+              v-if="ifShowSchema(schema)"
+              v-show="showSchema(schema)">
         <FormItem :key="index"
                   :schema="schema"
                   :show-label="showLabel"
@@ -14,16 +18,13 @@
         </FormItem>
       </el-col>
 
-      <el-col v-bind="colProps">
-        <slot name="actions" :model="formModel" :formRef="formRef">
-          <el-form-item :label-width="props.labelWidth">
-            <FormAction v-bind="actionProps"
-                        :advanced="advanced"
-                        @toggle-advanced="toggleAdvanced">
-              <template v-for="item in ['resetBefore', 'submitBefore', 'advanceBefore', 'advanceAfter']" #[item]="data">
-                <slot :name="item" v-bind="data"></slot>
-              </template>
-            </FormAction>
+      <el-col v-bind="action.singleLine ? {span:24} : colProps">
+        <slot name="action" :model="formModel" :formRef="formRef">
+          <el-form-item :label-width="showLabel ? labelWidth : 0">
+            <div :style="{textAlign:action.position}" class="w-full">
+              <el-button type="default" @click="resetForm(formRef)">{{ action.resetText }}</el-button>
+              <el-button type="primary" @click="submitForm(formRef)">{{ action.submitText }}</el-button>
+            </div>
           </el-form-item>
         </slot>
       </el-col>
@@ -33,50 +34,55 @@
 </template>
 
 <script lang="ts" setup>
-import FormItem from "./FormItem.vue";
-import FormAction from "./FormAction.vue";
-import {computed, provide, ref, toRefs, unref,} from "vue";
+import FormItem from "./components/FormItem.vue";
+import {computed, onMounted, provide, ref, toRefs} from "vue";
 import {useVModel} from "@vueuse/core";
 import {FormInstance, FormRules} from "element-plus";
-import {formProps} from "./props";
-import {FormProps, FormSchema} from "./types";
-import {isBoolean, isFunction} from "~/utils/is";
+import {formProps, defaultFormActionProps} from "./props";
+import {FormAction, FormSchema} from "./types";
 import {useRootSetting} from "~/composables/setting/useRootSeeting";
 
 const props = defineProps(formProps);
-const emits = defineEmits(['update:modelValue', 'reset', 'submit', 'toggle-advanced']);
+const emits = defineEmits(['update:modelValue', 'update:refObj', 'reset', 'submit']);
 
 const {
   schemas = [] as FormSchema[],
   rules = [] as FormRules[],
-  actionProps,
   colProps,
   showLabel,
-  labelPosition
+  labelWidth,
+  labelPosition,
+  widthFull,
 } = toRefs(props);
+
+const action = computed(() => {
+  return {...defaultFormActionProps, ...props.action} as FormAction;
+});
 
 const formRef = ref<FormInstance>();
 const formModel = useVModel(props, 'modelValue', emits);
-const advanced = ref<boolean>(unref(actionProps)?.advanced);
+const {getIsMobile} = useRootSetting();
 
-const showSchema = (schema, index) => {
+// v-show控制隐藏显示
+const showSchema = (schema: FormSchema) => {
   let isShow = true;
-  if (isBoolean(schema.show)) isShow = schema.show;
-  if (isFunction(schema.show)) isShow = schema.show(schema);
-
-  const {showAdvancedButton = false, showAdvancedLength = 3} = actionProps?.value;
-  if (showAdvancedButton) {
-    isShow = index < showAdvancedLength || advanced.value
-  }
-
+  if (typeof schema?.show === 'boolean') isShow = schema.show;
+  if (typeof schema?.show === 'function') isShow = schema.show(schema);
   return isShow;
 };
 
-const submitForm = (formEl: FormInstance | undefined) => {
+// v-if控制隐藏显示
+const ifShowSchema = (schema: FormSchema) => {
+  let isIfShow = true;
+  if (typeof schema?.ifShow === 'boolean') isIfShow = schema?.ifShow;
+  if (typeof schema?.ifShow === 'function') isIfShow = schema?.ifShow(schema);
+  return isIfShow;
+};
+
+const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
-  formEl.validate((valid, fields) => {
-    emits('submit', valid, fields);
-  })
+  const valid = await formEl.validate()
+  emits('submit', valid);
 }
 
 const resetForm = (formEl: FormInstance | undefined) => {
@@ -85,16 +91,9 @@ const resetForm = (formEl: FormInstance | undefined) => {
   emits('reset');
 }
 
-const toggleAdvanced = () => {
-  advanced.value = !advanced.value;
-  emits('toggle-advanced', advanced.value);
-}
 
-const {getIsMobile} = useRootSetting();
+onMounted(() => emits('update:refObj', formRef.value));
 
-provide('colProps', colProps);
+provide('widthFull', widthFull);
 provide('formRef', formRef);
-provide('submitForm', submitForm);
-provide('resetForm', resetForm)
-provide('toggleAdvanced', toggleAdvanced)
 </script>

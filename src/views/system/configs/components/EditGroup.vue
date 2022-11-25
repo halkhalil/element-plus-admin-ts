@@ -1,27 +1,29 @@
 <template>
   <div v-loading="loading.lists">
-    <basic-form
+    <Form
       ref="formRef"
-      class="sm:w-full lg-sm:w-screen-lg"
+      class="sm:w-full lg-sm:w-screen-xxl"
       v-model="formModel"
       :label-position="getIsMobile ? 'top' : 'right'"
       label-width="120px"
+      width-full
+      :action="{singleLine:true}"
       :schemas="formSchemas">
-      <template #actions="{formRef}">
-        <el-form-item>
+      <template #action="{formRef}">
+        <div class="text-center">
           <el-button class="lt-sm:w-full"
                      type="primary"
                      @click="submitForm(formRef,{data:formModel},true)"
                      :loading="loading.submit">提交
           </el-button>
-        </el-form-item>
+        </div>
       </template>
-    </basic-form>
+    </Form>
   </div>
 </template>
 
 <script lang="ts" setup>
-import {BasicForm} from "~/components/Form";
+import {Form} from "~/components";
 import {inject, nextTick, ref, watch} from "vue";
 import {UseApiResourcesReturn} from "~/composables/useApiResources";
 import {FormSchema} from "~/components/Form/src/types";

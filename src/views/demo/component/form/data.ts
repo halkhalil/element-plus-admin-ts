@@ -335,7 +335,7 @@ export function getSearchFormData() {
         type: 'daterange',
         startPlaceholder: '开始时间',
         endPlaceholder: '结束时间',
-        valueFormat: 'YYYY-MM-DD'
+        valueFormat: 'YYYY-MM-DD',
       },
     },
     {
@@ -343,7 +343,16 @@ export function getSearchFormData() {
       label: '时间',
       placeholder: '请选择时间',
       component: 'DatePicker',
-      componentProps: {type: 'date', valueFormat: 'YYYY-MM-DD'},
+      componentProps: {
+        type: 'date',
+        valueFormat: 'YYYY-MM-DD',
+      },
+    },
+    {
+      field: 'timeSelect',
+      label: '时间选择器',
+      placeholder: '请选择时间',
+      component: 'TimeSelect',
     },
     {
       field: 'selectSingle',
@@ -351,7 +360,7 @@ export function getSearchFormData() {
       placeholder: '这是一个单选select选择器',
       component: 'Select',
       componentProps: {
-        options: selectGroupOptions
+        options: selectGroupOptions,
       },
     },
     {

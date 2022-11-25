@@ -1,11 +1,10 @@
 import Form from "./src/Form.vue";
-import FormItem from "./src/FormItem.vue";
-import QueryForm from "./src/QueryForm.vue";
-
+import FormQuery from "./src/FormQuery.vue";
 
 export {
-  Form as BasicForm,
-  Form as BaForm,
-  FormItem as BasicFormItem,
-  QueryForm,
+  Form as Form,
+  FormQuery as FormQuery,
 };
+
+export * from './src/types'
+export default Form;

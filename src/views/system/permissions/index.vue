@@ -1,5 +1,5 @@
 <template>
-  <page-wrapper content-full-height :title="$route?.meta?.title">
+  <PageWrapper content-full-height :title="$route?.meta?.title">
     <template #extra>
       <el-button @click="treeToggleExpand">{{ !expandAll ? '节点展开' : '节点收起' }}</el-button>
     </template>
@@ -32,16 +32,16 @@
         </el-card>
       </el-col>
     </el-row>
-  </page-wrapper>
+  </PageWrapper>
 </template>
 
 <script lang="ts" setup>
-import {PageWrapper} from "~/components/Page"
+import {PageWrapper} from "~/components"
 import {onMounted, ref, computed, reactive} from "vue";
 import {fetchUpdate} from '~/api/permissions'
 import {useFetchPermissions} from "~/api/useFetchAll";
 import {listToTree} from "~/utils/helper/treeHelper";
-import {ElTree} from "element-plus";
+import type {ElTree} from "element-plus";
 
 const expandAll = ref(true)
 const types = ref([

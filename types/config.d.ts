@@ -70,3 +70,5 @@ export interface ProjectSetting {
   size: SizeEnum,
   permissionMode: PermissionModeEnum, // 权限模式
 }
+
+export type CallbackFn = (schema) => void;

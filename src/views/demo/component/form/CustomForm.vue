@@ -1,36 +1,35 @@
 <template>
-  <page-wrapper
+  <PageWrapper
     :title="$route['meta']['title']"
     content-background
     content-full-height>
     <el-row :gutter="20">
       <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
-        <basic-form class="p-4"
-                    ref="formRef"
-                    v-model="form"
-                    :schemas="schemas"
-                    @reset="handleReset"
-                    @submit="handleSubmit"
-                    auto-width
-                    label-width="150px"
-                    :label-position="getIsMobile ? 'top' : 'right'">
+        <Form class="p-4"
+              ref="formRef"
+              v-model="form"
+              :schemas="schemas"
+              @reset="handleReset"
+              @submit="handleSubmit"
+              auto-width
+              label-width="150px"
+              :label-position="getIsMobile ? 'top' : 'right'">
           <template #custom>
             <el-input v-model="form.input3" placeholder="自定义Slot"></el-input>
           </template>
-        </basic-form>
+        </Form>
       </el-col>
       <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
         <pre>{{ form }}</pre>
       </el-col>
     </el-row>
 
-  </page-wrapper>
+  </PageWrapper>
 </template>
 
 <script lang="ts" setup>
-import {BasicForm} from "~/components/Form/index.ts";
+import {PageWrapper, Form} from "~/components";
 import {ElInput, FormInstance} from 'element-plus';
-import {PageWrapper} from '~/components/Page/index.ts';
 import {reactive, ref} from "vue";
 import {useRootSetting} from "~/composables/setting/useRootSeeting";
 

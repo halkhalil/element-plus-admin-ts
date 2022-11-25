@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="!formModel.id ? '新增' : '编辑'" v-model="dialog" :fullscreen="getIsMobile">
+  <el-dialog :title="!formModel.id ? '新增' : '编辑'" v-model="dialog">
     <el-form ref="formRef" :model="formModel" :rules="formRules" v-loading="loading.item"
              :label-position="getIsMobile ? 'top' : 'right'" label-width="80px">
       <el-form-item label="用户主键" v-if="formModel?.id" required>
@@ -32,10 +32,8 @@
       </el-form-item>
     </el-form>
     <template #footer>
-      <el-button type="primary" @click="submitForm(formRef,{data:formModel})" :loading="loading.submit">
-        {{ loading.submit ? '提交中 ...' : '确 定' }}
-      </el-button>
       <el-button @click="resetForm(formRef)">重 置</el-button>
+      <el-button type="primary" @click="submitForm(formRef,{data:formModel})" :loading="loading.submit">提交</el-button>
     </template>
   </el-dialog>
 </template>

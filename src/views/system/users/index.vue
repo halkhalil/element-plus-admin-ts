@@ -1,24 +1,22 @@
 <template>
-  <page-wrapper>
+  <PageWrapper>
     <template #header>
-      <query-form v-model="params"
-                  :schemas="querySchemas"
-                  :colProps="{xs: 24, sm: 12, md: 12, lg: 8, xl: 6}"
-                  show-label
-                  label-width="50px"
-                  @submit="handleQuery">
+      <FormQuery v-model="params"
+                 :schemas="querySchemas"
+                 label-width="50px"
+                 @submit="handleQuery">
         <template #extra>
           <el-button type="success" :icon="Plus" @click="addItem"></el-button>
           <el-button type="warning" :icon="Refresh" @click="handleQuery" :loading="loading.lists"></el-button>
         </template>
-      </query-form>
+      </FormQuery>
     </template>
-    <basic-table :columns="tableColumns"
-                 :data="lists"
-                 :paginate="paginate"
-                 :loading="loading.lists"
-                 :border="true"
-                 @change-page="changePage">
+    <Table :columns="tableColumns"
+           :data="lists"
+           :paginate="paginate"
+           :loading="loading.lists"
+           :border="true"
+           @change-page="changePage">
       <template #status="{row:{status,status_label}}">
         <el-tag :type="status ? 'success' : 'danger'">{{ status_label }}</el-tag>
       </template>
@@ -30,15 +28,13 @@
           </template>
         </el-popconfirm>
       </template>
-    </basic-table>
+    </Table>
     <edit-template/>
-  </page-wrapper>
+  </PageWrapper>
 </template>
 
 <script lang="ts" setup>
-import {PageWrapper} from "~/components/Page"
-import {BasicTable} from "~/components/Table"
-import {QueryForm} from "~/components/Form";
+import {PageWrapper, FormQuery, Table} from "~/components"
 import EditTemplate from "./EditTemplate.vue";
 import {provide, watch} from "vue";
 import {useFetchUserResources} from '~/api/user'

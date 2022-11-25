@@ -1,5 +1,5 @@
 <template>
-  <page-wrapper content-full-height>
+  <PageWrapper content-full-height>
     <el-tabs v-model="activeGroup"
              :tab-position="getIsMobile ? 'top' : 'left'"
              class="pt-3"
@@ -12,10 +12,11 @@
         <edit-group/>
       </el-tab-pane>
     </el-tabs>
-  </page-wrapper>
+  </PageWrapper>
 </template>
 
 <script lang="ts" setup>
+import {PageWrapper} from '~/components';
 import EditGroup from "~/views/system/configs/components/EditGroup.vue";
 import {useConfig} from "~/composables/config/useConfig";
 import {useRootSetting} from "~/composables/setting/useRootSeeting";
