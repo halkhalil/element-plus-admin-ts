@@ -1,10 +1,5 @@
 import axios from "~/utils/axios";
-import {
-  ApiResourcesConfig,
-  ApiResourcesOptions,
-  useApiResources,
-  UseApiResourcesReturn
-} from "~/composables/useApiResources";
+import {ApiResourcesOptions, UseApiResourcesReturn, useApiResources,} from "~/composables/useApiResources";
 import {AxiosResponse} from "axios";
 
 export const fetchLists = ({params}): Promise<AxiosResponse> => {
@@ -29,6 +24,11 @@ export const fetchDelete = ({id}): Promise<AxiosResponse> => {
 
 // 使用useApiResources实现增删改查
 export const useFetchActionResources = (options?: ApiResourcesOptions): UseApiResourcesReturn => {
-  const apiResources: ApiResourcesConfig = {fetchLists, fetchStore, fetchItem, fetchUpdate, fetchDelete}
-  return useApiResources(apiResources, options)
+  return useApiResources({
+    fetchLists,
+    fetchStore,
+    fetchItem,
+    fetchUpdate,
+    fetchDelete
+  }, options)
 }

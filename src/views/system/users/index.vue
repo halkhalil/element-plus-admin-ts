@@ -26,7 +26,7 @@
         </template>
       </el-table-column>
       <el-table-column property="created_at" label="创建时间" show-overflow-tooltip/>
-      <el-table-column property="roles" label="操作" width="110">
+      <el-table-column property="roles" label="操作" width="120">
         <template #default="{row:{id}}">
           <el-button size="small" type="primary" :icon="Edit" @click="editItem({id})"/>
           <el-popconfirm title="确认要删除吗？" iconColor="red" @confirm="deleteItem({id})">
