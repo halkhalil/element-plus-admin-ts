@@ -1,6 +1,7 @@
 import {useAxios} from "@vueuse/integrations/useAxios";
 import axios from "~/utils/axios";
 import {computed} from "vue";
+import {listToTree} from "~/utils/helper/treeHelper";
 
 enum Api {
   users = '/all/users',
@@ -25,4 +26,11 @@ export const useFetchRoles = (params?: any) => {
   }
 }
 
-export const useFetchPermissions = (params?: any) => useAxios(Api.permissions, {params}, axios, {immediate: false})
+export const useFetchPermissions = (params?: any) => {
+  const axiosReturn = useAxios(Api.permissions, {params}, axios, {immediate: false});
+  const treePermissions = computed(() => listToTree(axiosReturn.data.value?.data || []))
+  return {
+    treePermissions,
+    ...axiosReturn,
+  }
+}

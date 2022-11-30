@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-table v-bind="$attrs" v-loading="$attrs.loading">
+    <el-table ref="tableRef" v-bind="$attrs" v-loading="$attrs.loading">
       <template v-for="(column,index) in columns" :key="index">
         <el-table-column v-if="column.slot" v-bind="column">
           <template #default="scope">
@@ -20,6 +20,8 @@
 </template>
 
 <script lang="ts" setup>
+import {onMounted, ref} from "vue";
+
 const props = defineProps({
   columns: {
     type: Array,
@@ -34,5 +36,11 @@ const emit = defineEmits(['change-page'])
 const changePage = (currentPage) => {
   emit('change-page', currentPage);
 }
+
+const tableRef = ref()
+
+onMounted(()=>{
+  console.log(tableRef)
+})
 
 </script>

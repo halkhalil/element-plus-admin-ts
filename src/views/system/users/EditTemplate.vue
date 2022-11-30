@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="!formModel.id ? '新增' : '编辑'" v-model="dialog">
+  <el-dialog :title="!formModel.id ? '新增' : '编辑'" v-model="dialog" :fullscreen="getIsMobile">
     <el-form ref="formRef" :model="formModel" :rules="formRules" v-loading="loading.item"
              :label-position="getIsMobile ? 'top' : 'right'" label-width="80px">
       <el-form-item label="用户主键" v-if="formModel?.id" required>

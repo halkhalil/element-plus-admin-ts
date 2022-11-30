@@ -27,7 +27,8 @@ export interface UseApiResourcesReturn {
   lists: Ref<object[]>,
   paginate: Ref<UnwrapRef<Paginate>>,
   loading: UnwrapNestedRefs<Loading>,
-  params: UnwrapNestedRefs<any>,
+  params: UnwrapNestedRefs<Record<any, any>>,
+  query: UnwrapNestedRefs<Record<any, any>>,
   isEdit: Ref<boolean>,
 
   fetchLists: (options?: any) => Promise<AxiosResponse>,
@@ -75,7 +76,7 @@ export function useApiResources(apiResources: ApiResourcesConfig, options?: ApiR
   const dialog = ref<boolean>(false);
   const editable = ref<object | null>(null);
 
-  const params = reactive(options?.params || {});
+  const params = reactive(options?.params || options?.query || {});
   const immediate = options?.immediate ?? true;
   const isEdit = ref(false);
   const refreshListsAfterSubmit = options?.refreshListsAfterSubmit || true;
@@ -87,7 +88,7 @@ export function useApiResources(apiResources: ApiResourcesConfig, options?: ApiR
     pagerCount: 0,
     currentPage: 1,
     total: 0,
-    layout: 'pages, prev, pager, next, jumper, ->, total',
+    layout: 'pages, prev, pager, next, total',
   });
   const loading = reactive({
     lists: false,
@@ -249,6 +250,7 @@ export function useApiResources(apiResources: ApiResourcesConfig, options?: ApiR
     paginate,
     loading,
     params,
+    query: params,
     isEdit,
 
     fetchLists,

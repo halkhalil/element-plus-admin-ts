@@ -203,7 +203,7 @@ export function useTab() {
         const afterNextTagOffsetLeft = nextTag.$el.offsetLeft + nextTag.$el.offsetWidth + 2
 
         const containerWidth = parseInt(scrollbarRef!.value!.$el.offsetWidth); //可视区域宽度
-        const scrollWrapper = <HTMLDivElement>scrollbarRef!.value!.$refs.wrap$;
+        const scrollWrapper = <HTMLDivElement>scrollbarRef!.value!.wrapRef;
 
         if (afterNextTagOffsetLeft > scrollWrapper.scrollLeft + containerWidth) {
           offsetLeft = afterNextTagOffsetLeft - containerWidth;

@@ -2,7 +2,7 @@
   <div v-loading="loading.lists">
     <Form
       ref="formRef"
-      class="sm:w-full lg-sm:w-screen-xxl"
+      class="sm:w-full lg-sm:w-screen-md"
       v-model="formModel"
       :label-position="getIsMobile ? 'top' : 'right'"
       label-width="120px"

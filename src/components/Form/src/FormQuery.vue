@@ -29,7 +29,7 @@
   </div>
   <div v-if="advanced">
     <el-divider>高级搜索</el-divider>
-    <Form class="query-form" v-bind="$props" width-full @submit="handleSubmit" @reset="handleReset"></Form>
+    <Form class="query-form" v-bind="$props" :action="{submitText:'搜索'}" width-full @submit="handleSubmit" @reset="handleReset"></Form>
   </div>
 </template>
 
