@@ -45,11 +45,9 @@
 <script lang="ts" setup>
 import {PageWrapper, FormQuery} from "~/components"
 import EditTemplate from "./EditTemplate.vue";
-import {provide, watch} from "vue";
+import {provide} from "vue";
 import {useFetchUserResources} from '~/api/user'
 import {Plus, Edit, Delete, Refresh} from '@element-plus/icons-vue'
-import {useUrlSearchParams} from "@vueuse/core";
-import {useTab} from "~/layouts/common/tab/useTab";
 
 const querySchemas = [
   {field: 'id', label: '标识', placeholder: '请输入用户唯一表示', component: 'Input'},
@@ -57,11 +55,8 @@ const querySchemas = [
   {field: 'realname', label: '姓名', placeholder: '请输入昵称', component: 'Input'},
 ];
 
-const useResources = useFetchUserResources({query: useUrlSearchParams()});
+const useResources = useFetchUserResources();
 const {query, lists, paginate, loading, addItem, editItem, deleteItem, handleQuery, changePage} = useResources;
-
-const {updateCurrentTab} = useTab();
-watch(query, () => updateCurrentTab({query}));
 
 provide('useResources', useResources);
 </script>

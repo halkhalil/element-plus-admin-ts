@@ -1,13 +1,11 @@
 <template>
-  <router-view>
-    <template v-slot="{ Component, route }">
-      <transition :name="getTransitionName(route)" mode="out-in">
-        <keep-alive v-if="getOpenKeepAlive" :include="tabStore.getCachedTabs">
-          <component :is="Component" :key="route.fullPath"/>
-        </keep-alive>
-        <component v-else :is="Component" :key="route.fullPath"/>
-      </transition>
-    </template>
+  <router-view v-slot="{ Component, route }">
+    <transition :name="getTransitionName(route)" mode="out-in">
+      <keep-alive v-if="getOpenKeepAlive">
+        <component :is="Component" :key="route.fullPath"/>
+      </keep-alive>
+      <component v-else :is="Component" :key="route.fullPath"/>
+    </transition>
   </router-view>
 </template>
 

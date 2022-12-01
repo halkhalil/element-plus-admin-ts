@@ -39,9 +39,9 @@ export const setting: ProjectSetting = {
   showLogo: true,
   showBreadcrumb: true,
   showSettingDrawer: false,
-  openKeepAlive: false,
+  openKeepAlive: true,
   size: SizeEnum.DEFAULT,
-  permissionMode:PermissionModeEnum.FRONT_MENU,
+  permissionMode: PermissionModeEnum.BACK_MENU,
 }
 
 export default setting;

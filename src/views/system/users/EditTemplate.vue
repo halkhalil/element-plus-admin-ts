@@ -63,6 +63,6 @@ const {data: roles, execute: fetchRoles} = useFetchRoles();
 watch(dialog, async () => dialog.value && await fetchRoles());
 watch(editable, () => {
   formModel.value = editable.value as UserItem ?? defaultForm;
-  (formRules.password as FormItemRule)[0].required = !formModel.value.id;
+  formRules.password![0].required = !formModel.value.id;
 });
 </script>

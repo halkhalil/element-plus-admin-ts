@@ -1,6 +1,6 @@
 <template>
   <el-card header="Failed Jobs">
-    <BaTable :columns="tableColumn" :data="tableData" size="small">
+    <Table :columns="tableColumn" :data="tableData" size="small">
       <template #action="scope">
         <el-button type="primary">
           <el-icon :size="14">
@@ -8,12 +8,12 @@
           </el-icon>
         </el-button>
       </template>
-    </BaTable>
+    </Table>
   </el-card>
 </template>
 
 <script lang="ts" setup>
-import {BaTable} from '~/components/Table'
+import {Table} from '~/components'
 import {shallowReactive} from "vue";
 import {Refresh} from "@element-plus/icons";
 

@@ -1,10 +1,8 @@
 import {MethodEnum} from "~/enums/http";
 
-export interface BaseItem {
-  id?: string | number | null
-}
 
-export interface ActionItem extends BaseItem {
+export interface ActionItem {
+  id?: null | string | number,
   name: string,
   label: string,
   method?: MethodEnum,

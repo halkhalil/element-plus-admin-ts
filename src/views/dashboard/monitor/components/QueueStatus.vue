@@ -9,13 +9,13 @@
       </el-card>
     </div>
     <div class="mt-2">
-      <BaTable :columns="tableColumn" :data="tableData"></BaTable>
+      <Table :columns="tableColumn" :data="tableData"></Table>
     </div>
   </el-card>
 </template>
 
 <script lang="ts" setup>
-import {BaTable} from '~/components/Table'
+import {Table} from '~/components'
 import {shallowReactive} from "vue";
 
 const tableColumn = shallowReactive([
