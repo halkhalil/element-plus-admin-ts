@@ -17,7 +17,7 @@
 
 <script lang="ts" setup>
 import {PageWrapper} from '~/components';
-import EditGroup from "~/views/system/configs/components/EditGroup.vue";
+import EditGroup from "~/views/routine/configs/components/EditGroup.vue";
 import {useConfig} from "~/composables/config/useConfig";
 import {useRootSetting} from "~/composables/setting/useRootSeeting";
 import {provide, ref} from "vue";

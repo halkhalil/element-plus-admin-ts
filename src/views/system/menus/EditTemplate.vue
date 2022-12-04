@@ -21,7 +21,6 @@
           check-strictly
           placeholder="请选择父级菜单"
           :render-after-expand="false"
-          :default-expand-all="true"
           :check-strictly="true"
           :clearable="true"
           filterable

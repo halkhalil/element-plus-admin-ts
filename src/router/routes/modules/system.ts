@@ -40,12 +40,6 @@ const systemRoute: AppRouteRecordRaw[] = [
         meta: {title: $t('routes.system.permission')},
         component: () => import('~/views/system/permissions/index.vue'),
       },
-      {
-        path: 'configs',
-        name: 'Config',
-        meta: {title: $t('routes.system.config')},
-        component: () => import('~/views/system/configs/index.vue'),
-      }
     ]
   },
 ];
