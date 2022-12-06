@@ -1,10 +1,10 @@
 <template>
+  {{ $options }}
   <PageWrapper content-full-height>
     <template #header>
-      <FormQuery v-model="query"
+      <FormQuery v-model="params"
                  :schemas="querySchemas"
-                 :advanced="query.advanced"
-                 label-width="50px"
+                 label-width="70px"
                  @submit="handleQuery">
         <template #extra>
           <el-button type="success" :icon="Plus" @click="addItem"></el-button>
@@ -14,12 +14,8 @@
     </template>
     <el-table :data="lists" v-loading="loading.lists">
       <el-table-column property="id" label="ID" width="100"/>
-      <el-table-column property="email" label="邮箱" show-overflow-tooltip/>
-      <el-table-column property="realname" label="姓名" show-overflow-tooltip/>
-      <el-table-column property="nickname" label="昵称" show-overflow-tooltip/>
-      <el-table-column label="角色" show-overflow-tooltip>
-        <template #default="{row:{roles}}">{{ roles.map(role => role.label).join(',') }}</template>
-      </el-table-column>
+      <el-table-column property="label" label="角色名称" show-overflow-tooltip/>
+      <el-table-column property="name" label="英文标识" show-overflow-tooltip/>
       <el-table-column label="状态">
         <template #default="{row:{status,status_label}}">
           <el-tag :type="status ? 'success' : 'danger'">{{ status_label }}</el-tag>
@@ -41,23 +37,21 @@
     <EditTemplate/>
   </PageWrapper>
 </template>
-
-<script lang="ts" setup>
+<script lang="ts" setup name="roles">
 import {PageWrapper, FormQuery} from "~/components"
 import EditTemplate from "./EditTemplate.vue";
-import {provide} from "vue";
-import {useFetchUserResources} from '~/api/user'
 import {Plus, Edit, Delete, Refresh} from '@element-plus/icons-vue'
+import {useFetchRoleResources} from "~/api/role";
+import {provide} from "vue";
 
 const querySchemas = [
-  {field: 'id', label: '标识', placeholder: '请输入用户唯一表示', component: 'Input'},
-  {field: 'email', label: '邮箱', placeholder: '请输入邮箱', component: 'Input'},
-  {field: 'realname', label: '姓名', placeholder: '请输入昵称', component: 'Input'},
+  {field: 'id', label: '角色ID', placeholder: '请输入角色ID', component: 'Input'},
+  {field: 'label', label: '角色名称', placeholder: '请输入角色名称', component: 'Input'},
+  {field: 'name', label: '角色标识', placeholder: '请输入角色标识', component: 'Input'},
 ];
 
-const useResources = useFetchUserResources();
-const {query, lists, paginate, loading, addItem, editItem, deleteItem, handleQuery, changePage} = useResources;
+const useResources = useFetchRoleResources();
+const {params, dialog, lists, paginate, loading, addItem, editItem, deleteItem, handleQuery, changePage} = useResources;
 
 provide('useResources', useResources);
 </script>
-

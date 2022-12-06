@@ -130,8 +130,7 @@ export function useApiResources(apiResources: ApiResourcesConfig, options?: ApiR
   const fetchStore = async (options?: any): Promise<AxiosResponse | undefined> => {
     if (_fetchStore) {
       loading.submit = true;
-      storeReturn.value = await _fetchStore(options);
-      loading.submit = false;
+      storeReturn.value = await _fetchStore(options).finally(() => loading.submit = false);
     }
     return storeReturn.value;
   }
@@ -139,8 +138,7 @@ export function useApiResources(apiResources: ApiResourcesConfig, options?: ApiR
   const fetchItem = async (options?: any): Promise<AxiosResponse | undefined> => {
     if (_fetchItem) {
       loading.item = true;
-      itemReturn.value = await _fetchItem(options);
-      loading.item = false;
+      itemReturn.value = await _fetchItem(options).finally(() => loading.item = false);
     }
     return itemReturn.value;
   }
@@ -148,8 +146,7 @@ export function useApiResources(apiResources: ApiResourcesConfig, options?: ApiR
   const fetchUpdate = async (options?: any): Promise<AxiosResponse | undefined> => {
     if (_fetchUpdate) {
       loading.submit = true;
-      updateReturn.value = await _fetchUpdate(options);
-      loading.submit = false;
+      updateReturn.value = await _fetchUpdate(options).finally(() => loading.submit = false);
     }
     return updateReturn.value;
   }
@@ -157,8 +154,7 @@ export function useApiResources(apiResources: ApiResourcesConfig, options?: ApiR
   const fetchDelete = async (options?: any): Promise<AxiosResponse | undefined> => {
     if (_fetchDelete) {
       loading.delete = true;
-      deleteReturn.value = await _fetchDelete(options);
-      loading.delete = false;
+      deleteReturn.value = await _fetchDelete(options).finally(() => loading.delete = false);
     }
     return deleteReturn.value;
   }

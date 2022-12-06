@@ -7,6 +7,7 @@ import AutoImport from 'unplugin-auto-import/vite';
 import Components from "unplugin-vue-components/vite";
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import {ElementPlusResolver} from "unplugin-vue-components/resolvers";
+import VueSetupExtend from 'vite-plugin-vue-setup-extend'
 import WindiCSS from 'vite-plugin-windicss'
 import Unocss from 'unocss/vite'
 import {
@@ -45,6 +46,7 @@ export default ({command}: ConfigEnv): UserConfig => {
       vue(),
       vueJsx(),
       WindiCSS(),
+      VueSetupExtend(),
       viteSvgIcons({
         iconDirs: [pathResolve('src/assets/svg')],
         symbolId: 'svg-[dir]-[name]',

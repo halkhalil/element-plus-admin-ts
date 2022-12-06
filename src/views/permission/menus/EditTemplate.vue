@@ -47,7 +47,7 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item label="组件路径" prop="component"
-                    v-if="formModel.type === MenuTypeEnum.MENU && formModel.rule === MenuRuleEnum.TAB">
+                    v-if="formModel.rule === MenuRuleEnum.TAB">
         <el-input v-model="formModel.component"
                   placeholder="请输入组件路径地址，示例：/views/dashboard/workplace/index.vue"/>
       </el-form-item>

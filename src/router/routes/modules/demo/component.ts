@@ -1,5 +1,4 @@
-import {LAYOUT} from "~/router/constant";
-import LayoutContent from "~/layouts/page/index.vue"
+import {LAYOUT, CONTENT} from "~/router/constant";
 import {AppRouteRecordRaw} from "~/router/types";
 import {$t} from "~/locales";
 
@@ -14,7 +13,7 @@ const componentRoute: AppRouteRecordRaw[] = [
       {
         path: 'form',
         name: 'Form',
-        component: LayoutContent,
+        component: CONTENT,
         redirect: '/component/form/basicForm',
         meta: {title: $t('routes.demo.form.form'), icon: 'fluent:form-28-regular'},
         children: [
@@ -55,7 +54,7 @@ const componentRoute: AppRouteRecordRaw[] = [
         name: 'Table',
         redirect: '/component/table/basicTable',
         meta: {title: $t('routes.demo.table.table'), icon: 'ant-design:table-outlined'},
-        component: LayoutContent,
+        component: CONTENT,
         children: [
           {
             path: 'basicTable',
@@ -86,7 +85,7 @@ const componentRoute: AppRouteRecordRaw[] = [
       {
         path: 'editor',
         name: 'Editor',
-        component: LayoutContent,
+        component: CONTENT,
         redirect: '/component/editor/code',
         meta: {title: $t('routes.demo.editor.editor'), icon: 'ep:edit-pen'},
         children: [
@@ -113,7 +112,7 @@ const componentRoute: AppRouteRecordRaw[] = [
       {
         path: 'charts',
         name: 'Charts',
-        component: LayoutContent,
+        component: CONTENT,
         redirect: '/component/echarts/bar',
         meta: {title: $t('routes.demo.charts.charts'), icon: 'akar-icons:map'},
         children: [
@@ -142,7 +141,7 @@ const componentRoute: AppRouteRecordRaw[] = [
         name: 'Icon',
         redirect: '/component/icon/iconfont',
         meta: {title: $t('routes.demo.icon.icon'), icon: 'simple-icons:iconify'},
-        component: LayoutContent,
+        component: CONTENT,
         children: [
           {
             path: 'icon-basic',
@@ -163,7 +162,7 @@ const componentRoute: AppRouteRecordRaw[] = [
         name: 'Upload',
         redirect: '/component/upload/basic-upload',
         meta: {title: $t('routes.demo.upload.upload'), icon: 'ep:upload'},
-        component: LayoutContent,
+        component: CONTENT,
         children: [
           {
             path: 'basic-upload',

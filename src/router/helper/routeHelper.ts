@@ -1,6 +1,6 @@
 import {AppRouteRecordRaw} from "~/router/types";
 import {filter} from "~/utils/helper/treeHelper";
-import {LAYOUT, IFRAME, EXCEPTION_COMPONENT} from "~/router/constant";
+import {LAYOUT, CONTENT, IFRAME, EXCEPTION_COMPONENT, getParentLayout} from "~/router/constant";
 import {warn} from "~/utils/log";
 import {fetchMenus} from "~/api/account";
 import {asyncRoutes} from "~/router/routes";
@@ -12,6 +12,7 @@ let dynamicViewsModules: Record<string, () => Promise<Record<any, any>>>;
 
 const LayoutMap = new Map();
 LayoutMap.set('LAYOUT', LAYOUT);
+// LayoutMap.set('CONTENT', CONTENT);
 LayoutMap.set('IFRAME', IFRAME);
 
 
@@ -60,7 +61,7 @@ export const buildRouteByBackMenu = async () => {
   const {data: {data: routes}} = await fetchMenus();
 
   asyncImportRoute(routes as AppRouteRecordRaw[]);
-
+console.log(routes)
   return routes as AppRouteRecordRaw[];
 }
 
@@ -75,10 +76,13 @@ const asyncImportRoute = (routes: AppRouteRecordRaw[]) => {
     if (!item.component && item.meta?.frameSrc) {
       item.component = 'IFRAME';
     }
-    const {component, children} = item;
+    const {component, children, name} = item;
     if (component) {
       const layout = LayoutMap.get(component.toUpperCase());
+      // console.log(component,layout)
       item.component = layout ? layout : dynamicImport(dynamicViewsModules, component as string);
+    } else if (name) {
+      item.component = getParentLayout();
     }
     children && asyncImportRoute(children);
   });

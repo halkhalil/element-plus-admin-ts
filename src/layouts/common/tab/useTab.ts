@@ -25,6 +25,7 @@ export function useTab() {
   })
 
   watch(currentRoute, async () => {
+    addTab(currentRouteToView());
     updateOrAddTab(currentRouteToView());
     await moveToCurrentTab()
   }, {deep: true});
