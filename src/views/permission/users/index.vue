@@ -42,10 +42,10 @@
   </PageWrapper>
 </template>
 
-<script setup lang="ts" name="users">
+<script setup lang="ts" name="PermissionUsers">
 import {PageWrapper, FormQuery} from "~/components"
 import EditTemplate from "./EditTemplate.vue";
-import {provide} from "vue";
+import {onMounted, provide} from "vue";
 import {useFetchUserResources} from '~/api/user'
 import {Plus, Edit, Delete, Refresh} from '@element-plus/icons-vue'
 
@@ -57,6 +57,8 @@ const querySchemas = [
 
 const useResources = useFetchUserResources();
 const {query, lists, paginate, loading, addItem, editItem, deleteItem, handleQuery, changePage} = useResources;
+
+onMounted(()=>console.log('users'))
 
 provide('useResources', useResources);
 </script>

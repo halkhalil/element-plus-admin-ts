@@ -36,12 +36,12 @@
     <EditTemplate/>
   </PageWrapper>
 </template>
-<script lang="ts" setup>
+<script setup lang="ts" name="PermissionRoles">
 import {PageWrapper, FormQuery} from "~/components"
 import EditTemplate from "./EditTemplate.vue";
 import {Plus, Edit, Delete, Refresh} from '@element-plus/icons-vue'
 import {useFetchRoleResources} from "~/api/role";
-import {provide} from "vue";
+import {onMounted, provide} from "vue";
 
 const querySchemas = [
   {field: 'id', label: '角色ID', placeholder: '请输入角色ID', component: 'Input'},
@@ -51,6 +51,6 @@ const querySchemas = [
 
 const useResources = useFetchRoleResources();
 const {params, dialog, lists, paginate, loading, addItem, editItem, deleteItem, handleQuery, changePage} = useResources;
-
+onMounted(() => console.log('roles'))
 provide('useResources', useResources);
 </script>
