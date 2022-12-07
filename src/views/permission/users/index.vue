@@ -1,5 +1,4 @@
 <template>
-  {{ $options }}
   <PageWrapper content-full-height>
     <template #header>
       <FormQuery v-model="query"

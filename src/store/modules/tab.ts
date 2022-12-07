@@ -55,7 +55,7 @@ export const useTabStore = defineStore({
     },
     // 添加缓存视图
     addCachedTab(view) {
-      if (view.name && !this.cachedTabs.includes(view.name) && view.meta.cache !== false) {
+      if (view.name && !this.cachedTabs.includes(view.name) && view.meta.keepalive === true) {
         this.cachedTabs.push(view.name);
       }
     },

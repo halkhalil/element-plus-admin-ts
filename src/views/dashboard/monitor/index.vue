@@ -11,10 +11,12 @@
     </el-col>
   </el-row>
 </template>
-<script lang="ts" setup>
+<script lang="ts" setup name="Monitor">
 import Information from "~/views/dashboard/monitor/components/Information.vue";
 import ServerStatus from "~/views/dashboard/monitor/components/ServerStatus.vue";
 import QueueStatus from "~/views/dashboard/monitor/components/QueueStatus.vue";
 import FailedJobs from "~/views/dashboard/monitor/components/FailedJobs.vue";
 import Throughput from "~/views/dashboard/monitor/components/Throughput.vue";
+import {onMounted} from "vue";
+onMounted(()=>console.log('dashboard:monitor'))
 </script>

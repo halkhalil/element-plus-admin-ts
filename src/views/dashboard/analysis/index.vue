@@ -16,10 +16,12 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="Analysis">
 import GrowCard from './components/GrowCard.vue'
 import VisitCard from "./components/VisitCard.vue";
 import AreaStackGradientChart from "./components/AreaStackGradientChart.vue";
 import BarPolarStackChart from "./components/BarPolarStackChart.vue";
 import FunnelChart from "./components/FunnelChart.vue";
+import {onMounted} from "vue";
+onMounted(()=>console.log('dashboard:Analysis'))
 </script>

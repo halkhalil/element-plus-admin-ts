@@ -1,5 +1,4 @@
 <template>
-  {{ $options }}
   <PageWrapper content-full-height>
     <template #header>
       <FormQuery v-model="params"
@@ -37,7 +36,7 @@
     <EditTemplate/>
   </PageWrapper>
 </template>
-<script lang="ts" setup name="roles">
+<script lang="ts" setup>
 import {PageWrapper, FormQuery} from "~/components"
 import EditTemplate from "./EditTemplate.vue";
 import {Plus, Edit, Delete, Refresh} from '@element-plus/icons-vue'

@@ -14,11 +14,14 @@
     </el-row>
   </div>
 </template>
-<script lang="ts" setup>
+<script lang="ts" setup name="Workplace">
 import UserInfo from "~/views/dashboard/workplace/components/UserInfo.vue";
 import Project from "~/views/dashboard/workplace/components/Project.vue";
 import Dynamic from "~/views/dashboard/workplace/components/Dynamic.vue";
 import QuickNav from "~/views/dashboard/workplace/components/QuickNav.vue";
 import Carousel from "~/views/dashboard/workplace/components/Carousel.vue";
 import ProjectStatistic from "~/views/dashboard/workplace/components/ProjectStatistic.vue";
+import {onMounted} from "vue";
+
+onMounted(()=>console.log('dashboard:workplace'))
 </script>

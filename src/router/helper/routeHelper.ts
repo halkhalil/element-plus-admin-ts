@@ -12,7 +12,7 @@ let dynamicViewsModules: Record<string, () => Promise<Record<any, any>>>;
 
 const LayoutMap = new Map();
 LayoutMap.set('LAYOUT', LAYOUT);
-// LayoutMap.set('CONTENT', CONTENT);
+LayoutMap.set('CONTENT', CONTENT);
 LayoutMap.set('IFRAME', IFRAME);
 
 
@@ -61,7 +61,7 @@ export const buildRouteByBackMenu = async () => {
   const {data: {data: routes}} = await fetchMenus();
 
   asyncImportRoute(routes as AppRouteRecordRaw[]);
-console.log(routes)
+  console.log(routes)
   return routes as AppRouteRecordRaw[];
 }
 
@@ -79,10 +79,10 @@ const asyncImportRoute = (routes: AppRouteRecordRaw[]) => {
     const {component, children, name} = item;
     if (component) {
       const layout = LayoutMap.get(component.toUpperCase());
-      // console.log(component,layout)
       item.component = layout ? layout : dynamicImport(dynamicViewsModules, component as string);
     } else if (name) {
-      item.component = getParentLayout();
+      // @TODO 参考vben 没理解这行代码的意义
+      item.component = getParentLayout('ParentLayout');
     }
     children && asyncImportRoute(children);
   });
