@@ -1,16 +1,17 @@
 <template>
   <router-view v-slot="{ Component, route }">
     <transition :name="getTransitionName(route)" mode="out-in">
-      <keep-alive v-if="getOpenKeepAlive">
-        <component :is="Component" :key="route.fullPath"/>
-      </keep-alive>
-      <component v-else :is="Component" :key="route.fullPath"/>
+      <div>
+        <keep-alive v-if="getOpenKeepAlive && route.meta.keepalive" :include="tabStore.getCachedTabs">
+          <component :is="Component" :key="route.name"/>
+        </keep-alive>
+        <component v-else :is="Component" :key="route.name"/>
+      </div>
     </transition>
   </router-view>
-  <!--    <router-view></router-view>-->
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="PageLayout">
 import {useTransitionSetting} from "~/composables/setting/useTransitionSeeting";
 import {useRootSetting} from "~/composables/setting/useRootSeeting";
 import {_RouteLocationBase} from "vue-router";
@@ -26,7 +27,6 @@ function getTransitionName(route: _RouteLocationBase) {
   if (getOpenKeepAlive) {
     name = route.meta.loaded ? "fade-slide" : null;
   }
-
   return name || route.meta.transitionName || getBasicTransition.value;
 }
 </script>
